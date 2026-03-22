@@ -11,7 +11,7 @@ export default function TenantDashboard() {
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Main Balance Card */}
-                <div className="md:col-span-2 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl p-8 text-white shadow-xl shadow-blue-600/20 relative overflow-hidden">
+                <div className="md:col-span-2 bg-linear-to-br from-blue-600 to-indigo-700 rounded-3xl p-8 text-white shadow-xl shadow-blue-600/20 relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none"></div>
                     
                     <h3 className="text-blue-200 font-bold uppercase tracking-wider text-sm mb-2">Current Balance Due</h3>
