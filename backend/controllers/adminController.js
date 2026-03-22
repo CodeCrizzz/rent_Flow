@@ -1,16 +1,10 @@
 const db = require('../config/db');
 
 // @desc    Get Admin Dashboard Statistics
-// @route   GET /api/admin/dashboard
 const getDashboardStats = async (req, res) => {
     try {
-        // 1. Get Total Rooms
         const roomsResult = await db.query('SELECT COUNT(*) FROM rooms');
-        
-        // 2. Get Total Tenants
         const tenantsResult = await db.query("SELECT COUNT(*) FROM users WHERE role = 'tenant'");
-        
-        // 3. Get Total Pending Payments
         const paymentsResult = await db.query("SELECT SUM(amount) FROM payments WHERE status = 'pending'");
 
         res.status(200).json({
@@ -19,8 +13,26 @@ const getDashboardStats = async (req, res) => {
             pendingDues: paymentsResult.rows[0].sum || 0
         });
     } catch (error) {
-        console.error('Admin Dashboard Error:', error);
         res.status(500).json({ message: 'Server error fetching admin stats' });
+    }
+};
+
+// @desc    Get all Rooms with their current tenant
+// @route   GET /api/admin/rooms
+const getAllRooms = async (req, res) => {
+    try {
+        // This query gets the room and tries to find a user assigned to it
+        const query = `
+            SELECT r.*, u.name as tenant_name 
+            FROM rooms r 
+            LEFT JOIN users u ON r.id = u.room_id
+            ORDER BY r.room_number ASC
+        `;
+        const rooms = await db.query(query);
+        res.status(200).json(rooms.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error fetching rooms' });
     }
 };
 
@@ -28,11 +40,54 @@ const getDashboardStats = async (req, res) => {
 // @route   GET /api/admin/tenants
 const getAllTenants = async (req, res) => {
     try {
-        const tenants = await db.query("SELECT id, name, email, created_at FROM users WHERE role = 'tenant' ORDER BY created_at DESC");
+        // Fetch tenants and join with the rooms table to see their room number
+        const query = `
+            SELECT u.id, u.name, u.email, u.phone, u.created_at, r.room_number 
+            FROM users u 
+            LEFT JOIN rooms r ON u.room_id = r.id 
+            WHERE u.role = 'tenant' 
+            ORDER BY u.created_at DESC
+        `;
+        const tenants = await db.query(query);
         res.status(200).json(tenants.rows);
     } catch (error) {
+        console.error(error);
         res.status(500).json({ message: 'Server error fetching tenants' });
     }
 };
 
-module.exports = { getDashboardStats, getAllTenants };
+// @desc    Get all Payments/Billing
+const getAllPayments = async (req, res) => {
+    try {
+        const query = `
+            SELECT p.*, u.name as tenant_name, r.room_number 
+            FROM payments p 
+            JOIN users u ON p.tenant_id = u.id 
+            LEFT JOIN rooms r ON u.room_id = r.id 
+            ORDER BY p.due_date DESC
+        `;
+        const payments = await db.query(query);
+        res.status(200).json(payments.rows);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error fetching payments' });
+    }
+};
+
+// @desc    Get all Maintenance Requests
+const getAllRequests = async (req, res) => {
+    try {
+        const query = `
+            SELECT req.*, u.name as tenant_name, r.room_number 
+            FROM requests req 
+            JOIN users u ON req.tenant_id = u.id 
+            LEFT JOIN rooms r ON u.room_id = r.id 
+            ORDER BY req.created_at DESC
+        `;
+        const requests = await db.query(query);
+        res.status(200).json(requests.rows);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error fetching requests' });
+    }
+};
+
+module.exports = { getDashboardStats, getAllRooms, getAllTenants, getAllPayments, getAllRequests };

@@ -28,4 +28,53 @@ const getTenantDashboard = async (req, res) => {
     }
 };
 
-module.exports = { getTenantDashboard };
+// @desc    Get Tenant Profile & Room In    fo
+const getTenantProfile = async (req, res) => {
+    const tenantId = req.user.id;
+    try {
+        const result = await db.query(
+            `SELECT u.name, u.email, u.phone, r.room_number, r.capacity, r.price 
+             FROM users u 
+             LEFT JOIN rooms r ON u.room_id = r.id 
+             WHERE u.id = $1`,
+            [tenantId]
+        );
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Tenant not found' });
+        }
+        res.status(200).json(result.rows[0]);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error fetching profile' });
+    }
+};
+
+// @desc    Submit Maintenance Request
+const submitRequest = async (req, res) => {
+    const { title, description } = req.body;
+    const tenantId = req.user.id;
+    try {
+        await db.query(
+            'INSERT INTO requests (tenant_id, title, description) VALUES ($1, $2, $3)',
+            [tenantId, title, description]
+        );
+        res.status(201).json({ message: 'Request submitted successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error submitting request' });
+    }
+};
+
+// @desc    Get Tenant's Own Requests
+const getMyRequests = async (req, res) => {
+    const tenantId = req.user.id;
+    try {
+        const result = await db.query(
+            'SELECT * FROM requests WHERE tenant_id = $1 ORDER BY created_at DESC',
+            [tenantId]
+        );
+        res.status(200).json(result.rows);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error fetching requests' });
+    }
+};
+
+module.exports = { getTenantDashboard, getTenantProfile, submitRequest, getMyRequests };

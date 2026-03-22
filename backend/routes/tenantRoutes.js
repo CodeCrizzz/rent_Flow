@@ -7,5 +7,8 @@ const { getTenantDashboard } = require('../controllers/tenantController');
 router.use(protect);
 
 router.get('/dashboard', getTenantDashboard);
+router.get('/payments', getTenantPayments);
+router.get('/requests', getTenantRequests);
+router.get('/profile', getTenantProfile);
 
 module.exports = router;

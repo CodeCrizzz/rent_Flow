@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { protect } = require('../middleware/authMiddleware');
-const { getDashboardStats, getAllTenants } = require('../controllers/adminController');
+const { getDashboardStats, getAllTenants, getAllRooms } = require('../controllers/adminController');
 
-// Extra security: Only allow Admins
 const adminOnly = (req, res, next) => {
     if (req.user && req.user.role === 'admin') {
         next();
@@ -12,11 +11,13 @@ const adminOnly = (req, res, next) => {
     }
 };
 
-// Apply protect AND adminOnly to ALL routes in this file
 router.use(protect);
 router.use(adminOnly);
 
 router.get('/dashboard', getDashboardStats);
 router.get('/tenants', getAllTenants);
+router.get('/rooms', getAllRooms); // NEW: Route for Rooms!
+router.get('/payments', getAllPayments);
+router.get('/requests', getAllRequests);
 
 module.exports = router;
