@@ -28,63 +28,52 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     ];
 
     return (
-        <div className="flex h-screen bg-[#FDFDFD] overflow-hidden selection:bg-blue-100 selection:text-blue-900">
-            {/* Minimalist Sidebar */}
-            <aside className="w-[260px] bg-[#0A0A0B] text-white flex-col hidden md:flex border-r border-zinc-800/50">
-                <div className="p-7">
-                    <Link href="/" className="inline-flex items-center gap-2.5 hover:opacity-80 transition-opacity">
-                        <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
-                            <svg className="w-5 h-5 text-zinc-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+        <div className="flex h-screen bg-slate-50 overflow-hidden selection:bg-indigo-100 selection:text-indigo-900">
+            {/* Deep Navy Sidebar */}
+            <aside className="w-[280px] bg-[#0B1121] text-white flex-col hidden md:flex border-r border-slate-800/60 shadow-2xl z-20">
+                <div className="p-8">
+                    <Link href="/" className="inline-flex items-center gap-3 hover:opacity-80 transition-opacity">
+                        <div className="w-9 h-9 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(79,70,229,0.4)]">
+                            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                         </div>
-                        <span className="text-xl font-bold tracking-tight">RentFlow</span>
+                        <span className="text-2xl font-black tracking-tight text-white">Rent<span className="text-indigo-400">Flow</span></span>
                     </Link>
                 </div>
 
-                <nav className="flex-1 px-4 space-y-1 mt-4">
-                    <div className="px-3 mb-2 text-xs font-semibold text-zinc-500 uppercase tracking-wider">Menu</div>
+                <nav className="flex-1 px-5 space-y-2 mt-4">
+                    <div className="px-3 mb-4 text-xs font-bold text-slate-500 uppercase tracking-widest">Navigation</div>
                     {navItems.map((item) => {
                         const isActive = pathname === item.path;
                         return (
-                            <Link key={item.name} href={item.path} className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${isActive ? 'bg-zinc-800/80 text-white' : 'text-zinc-400 hover:bg-zinc-900 hover:text-zinc-200'}`}>
-                                <svg className={`w-4 h-4 ${isActive ? 'text-white' : 'text-zinc-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={item.icon}></path></svg>
+                            <Link key={item.name} href={item.path} className={`flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 ${isActive ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/25' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'}`}>
+                                <svg className={`w-5 h-5 ${isActive ? 'text-white' : 'text-slate-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={item.icon}></path></svg>
                                 {item.name}
                             </Link>
                         );
                     })}
                 </nav>
 
-                <div className="p-4 border-t border-zinc-800/50">
-                    <div className="flex items-center gap-3 px-3 py-2 mb-2">
-                        <div className="w-8 h-8 rounded-full bg-zinc-800 flex items-center justify-center text-xs font-bold text-white border border-zinc-700">
+                <div className="p-5 border-t border-slate-800/60 bg-[#070b14]">
+                    <div className="flex items-center gap-3 px-3 py-2 mb-3">
+                        <div className="w-10 h-10 rounded-full bg-indigo-900/50 flex items-center justify-center text-sm font-bold text-indigo-300 border border-indigo-500/30">
                             {adminName.charAt(0).toUpperCase()}
                         </div>
                         <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-white truncate">{adminName}</p>
-                            <p className="text-xs text-zinc-500 truncate">Administrator</p>
+                            <p className="text-sm font-bold text-white truncate">{adminName}</p>
+                            <p className="text-xs text-slate-400 font-medium truncate">Master Admin</p>
                         </div>
                     </div>
-                    <button onClick={handleLogout} className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl text-sm font-medium text-zinc-400 hover:bg-zinc-900 hover:text-white transition-colors">
-                        <svg className="w-4 h-4 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                    <button onClick={handleLogout} className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg text-sm font-bold text-slate-400 bg-slate-800/40 hover:bg-slate-800 hover:text-white transition-colors">
                         Sign Out
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                     </button>
                 </div>
             </aside>
 
-            {/* Main Content Area */}
-            <main className="flex-1 flex flex-col relative h-screen overflow-hidden bg-slate-50/50">
-                {/* Crisp Topbar */}
-                <header className="h-16 border-b border-slate-200/80 bg-white flex items-center justify-between px-8 shrink-0">
-                    <h2 className="text-sm font-semibold text-slate-800 capitalize">
-                        {pathname.split('/').pop()?.replace('-', ' ')}
-                    </h2>
-                    <div className="flex items-center gap-3">
-                        <span className="flex h-2 w-2 rounded-full bg-green-500"></span>
-                        <span className="text-xs font-medium text-slate-500">System Online</span>
-                    </div>
-                </header>
-
+            {/* Main Content Area without Topbar */}
+            <main className="flex-1 flex flex-col relative h-screen overflow-hidden">
                 {/* Page Content */}
-                <div className="flex-1 overflow-y-auto p-8">
+                <div className="flex-1 overflow-y-auto p-10 md:p-12 relative z-0">
                     {children}
                 </div>
             </main>
