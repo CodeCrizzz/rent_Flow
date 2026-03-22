@@ -21,20 +21,20 @@ export default function LoginPage() {
         setIsLoading(true);
         setErrorMsg('');
         try {
+            // 1. Send credentials to the backend
             const { data } = await api.post('/auth/login', { email, password });
 
-            if (data.user.role !== selectedRole) {
-                throw new Error(`Account not authorized for ${selectedRole} portal.`);
-            }
-
+            // 2. Save the secure token and user data to local storage
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user));
 
-            if (selectedRole === 'admin') {
+            // 3. SMART ROUTING: Ignore the UI toggle and trust the Database Role
+            if (data.user.role === 'admin') {
                 router.push('/admin/dashboard');
             } else {
                 router.push('/tenant/dashboard');
             }
+            
         } catch (err: any) {
             setErrorMsg(err.response?.data?.message || err.message || "Login Failed. Please check your credentials.");
         } finally {

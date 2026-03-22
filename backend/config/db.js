@@ -1,16 +1,17 @@
 const { Pool } = require('pg');
 
 const pool = new Pool({
-    user: 'rentFlow_role',            // name of the log-in / Group role
-    host: 'localhost',                // DB host
-    database: 'rentFlow_db',          //DB name
-    password: 'codecrizzz',            //DB password
-    port: 5432,                       // DB port
-    options: '-c search_path="rentFlow_db"'  // To use my own schema
+    user: 'postgres',            
+    host: 'localhost',
+    database: 'rentFlow_db',          
+    password: 'codecrizzz',   
+    port: 5432,
+    
+    options: '-c search_path="rentFlow_schema"' 
 });
 
 pool.on('connect', () => {
-    console.log('✅ Connected to PostgreSQL Database as rentFlow_role');
+    console.log('✅ Connected to PostgreSQL Database (Schema: rentFlow_schema)');
 });
 
 pool.on('error', (err) => {
@@ -18,6 +19,6 @@ pool.on('error', (err) => {
     process.exit(-1);
 });
 
-module.exports = {
+module.exports = db = {
     query: (text, params) => pool.query(text, params),
 };

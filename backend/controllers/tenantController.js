@@ -77,4 +77,18 @@ const getMyRequests = async (req, res) => {
     }
 };
 
-module.exports = { getTenantDashboard, getTenantProfile, submitRequest, getMyRequests };
+// @desc    Get Tenant Payments
+const getTenantPayments = async (req, res) => {
+    const tenantId = req.user.id;
+    try {
+        const result = await db.query(
+            'SELECT * FROM payments WHERE tenant_id = $1 ORDER BY due_date DESC',
+            [tenantId]
+        );
+        res.status(200).json(result.rows);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error fetching payments' });
+    }
+};
+
+module.exports = { getTenantDashboard, getTenantProfile, submitRequest, getMyRequests, getTenantPayments };

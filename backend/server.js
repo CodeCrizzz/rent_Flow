@@ -17,6 +17,10 @@ app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);                      // ADDED THIS
 app.use('/api/tenant', tenantRoutes);                    // ADDED THIS
 
+app.get('/', (req, res) => {
+    res.send('Welcome to the RentFlow API');
+});
+
 app.get('/api/health', (req, res) => {
     res.status(200).json({ status: 'success', message: 'RentFlow API is running!' });
 });
