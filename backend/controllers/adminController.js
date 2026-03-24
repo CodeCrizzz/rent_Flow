@@ -196,36 +196,49 @@ const createTenant = async (req, res) => {
     }
 };
 
+// @desc    Update Tenant details or Status
+// @route   PUT /api/admin/tenants/:id
 const updateTenant = async (req, res) => {
     const { id } = req.params;
-    const allowedFields = ['name', 'email', 'phone', 'room_id', 'address', 'gender', 'date_moved_in', 'contract_end_date', 'monthly_rent', 'status'];
-    const values = [];
-    const setClause = [];
-
-    allowedFields.forEach((field) => {
-        if (req.body[field] !== undefined) {
-            if (req.body[field] === '') {
-                 values.push(null); // Convert empty strings to null for DB consistency (e.g. room_id)
-            } else {
-                 values.push(req.body[field]);
-            }
-            setClause.push(`${field} = $${values.length}`);
-        }
-    });
-
-    if (setClause.length === 0) {
-        return res.status(400).json({ message: 'No fields provided for update' });
-    }
 
     try {
-        values.push(id);
+        // If ONLY updating the status (Approve/Decline button)
+        if (req.body.status && Object.keys(req.body).length === 1) {
+            const result = await db.query(
+                "UPDATE users SET status = $1 WHERE id = $2 AND role = 'tenant' RETURNING *",
+                [req.body.status, id]
+            );
+            return res.status(200).json({ message: 'Status updated', tenant: result.rows[0] });
+        }
+
+        const { name, email, phone, room_id, gender, date_moved_in, contract_end_date, status } = req.body;
+
         const query = `
             UPDATE users 
-            SET ${setClause.join(', ')}
-            WHERE id = $${values.length} AND role = 'tenant'
+            SET 
+                name = $1, 
+                email = $2, 
+                phone = $3, 
+                room_id = $4,
+                gender = $5,
+                date_moved_in = $6,
+                contract_end_date = $7,
+                status = $8
+            WHERE id = $9 AND role = 'tenant'
             RETURNING *
         `;
-        const result = await db.query(query, values);
+        
+        const result = await db.query(query, [
+            name, 
+            email, 
+            phone, 
+            room_id || null, 
+            gender || 'Not Specified',
+            date_moved_in || null,
+            contract_end_date || null,
+            status || 'Pending',
+            id
+        ]);
 
         if (result.rows.length === 0) {
             return res.status(404).json({ message: 'Tenant not found' });

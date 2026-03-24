@@ -28,10 +28,10 @@ export default function LoginPage() {
     // Custom handler to trigger the transition before swapping roles
     const handleRoleChange = (role: 'tenant' | 'admin') => {
         if (role === selectedRole) return;
-        setIsSwitching(true); // Trigger fade/blur out
+        setIsSwitching(true); 
         setTimeout(() => {
-            setSelectedRole(role); // Swap data while hidden
-            setIsSwitching(false); // Trigger fade/blur in
+            setSelectedRole(role); 
+            setIsSwitching(false); 
         }, 200); 
     };
 
@@ -48,8 +48,10 @@ export default function LoginPage() {
             if (data.user.role === 'admin') router.push('/admin/dashboard');
             else router.push('/tenant/dashboard');
         } catch (err: any) {
-            if (err.response?.status === 401 || err.response?.status === 404) {
-                setErrorMsg("Invalid account. Incorrect email or password.");
+            if (err.response?.status === 404) {
+                setErrorMsg("Account does not exist.");
+            } else if (err.response?.status === 401) {
+                setErrorMsg("Incorrect password. Please try again.");
             } else {
                 setErrorMsg(err.response?.data?.message || "Login Failed. Please try again.");
             }

@@ -46,8 +46,10 @@ const loginUser = async (req, res) => {
     try {
         // 1. Find the user by email
         const result = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+        
+        // --- CRITICAL FIX: Change 401 to 404 here ---
         if (result.rows.length === 0) {
-            return res.status(401).json({ message: 'Invalid email or password' });
+            return res.status(404).json({ message: 'Account does not exist' });
         }
 
         const user = result.rows[0];
@@ -55,14 +57,25 @@ const loginUser = async (req, res) => {
         // 2. Check if password matches
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.status(401).json({ message: 'Invalid email or password' });
+            // Keep 401 here for actual incorrect passwords
+            return res.status(401).json({ message: 'Incorrect password' });
+        }
+
+        // 3. New Requirement: Check if tenant is approved an prevent access if not
+        if (user.role === 'tenant') {
+            if (user.status === 'Pending') {
+                return res.status(403).json({ message: 'Your account is pending admin approval' });
+            }
+            if (user.status === 'Declined') {
+                return res.status(403).json({ message: 'Your account application was declined' });
+            }
         }
 
         // 3. Generate JWT Token
         const token = jwt.sign(
             { id: user.id, role: user.role }, 
             JWT_SECRET, 
-            { expiresIn: '30d' } // Token lasts for 30 days
+            { expiresIn: '30d' } 
         );
 
         // 4. Send response back to Next.js

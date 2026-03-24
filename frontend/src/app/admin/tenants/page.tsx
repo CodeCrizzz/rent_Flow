@@ -2,7 +2,6 @@
 import { useState, useEffect } from 'react';
 import api from '@/lib/api';
 
-// 1. Updated Interface matching all your required fields
 interface Tenant {
     id: number;
     name: string;
@@ -11,8 +10,6 @@ interface Tenant {
     created_at: string;
     room_number: string | null;
     room_id: number | null;
-    
-    // New Fields
     gender?: string;
     address?: string;
     id_document?: string;
@@ -65,8 +62,6 @@ export default function AdminTenants() {
         try {
             const { data } = await api.get('/admin/tenants');
             
-            // Mapping backend data and adding fallbacks for the new fields 
-            // so the UI works while you update your database
             const enrichedData = data.map((t: any) => ({
                 ...t,
                 gender: t.gender || 'Not Specified',
@@ -436,9 +431,14 @@ export default function AdminTenants() {
                                             <div className="flex items-center justify-end gap-2">
                                                 {tenant.status === 'Pending' ? (
                                                     <>
-                                                        <button onClick={() => handleOpenModal(tenant, 'approve')} className="px-4 py-2 text-emerald-600 font-black text-[10px] uppercase tracking-widest hover:bg-emerald-50 rounded-lg transition-colors">
-                                                            Approve
+                                                        <button 
+                                                            onClick={() => handleUpdateStatus(tenant.id, 'Active')} 
+                                                            disabled={isStatusUpdating === tenant.id} 
+                                                            className="px-4 py-2 text-emerald-600 font-black text-[10px] uppercase tracking-widest hover:bg-emerald-50 rounded-lg transition-colors disabled:opacity-50"
+                                                        >
+                                                            {isStatusUpdating === tenant.id ? '...' : 'Approve'}
                                                         </button>
+                                                        
                                                         <button onClick={() => handleUpdateStatus(tenant.id, 'Declined')} disabled={isStatusUpdating === tenant.id} className="px-4 py-2 text-amber-600 font-black text-[10px] uppercase tracking-widest hover:bg-amber-50 rounded-lg transition-colors disabled:opacity-50">
                                                             {isStatusUpdating === tenant.id ? '...' : 'Decline'}
                                                         </button>

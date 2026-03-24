@@ -109,8 +109,8 @@ export default function SignupPage() {
                             {/* Gender Input */}
                             <div className="sm:col-span-1">
                                 <label className="block text-sm font-bold text-zinc-300 mb-2">Gender</label>
-                                <select className="w-full bg-zinc-900/50 border border-white/5 text-white placeholder-zinc-600 px-5 py-4 rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-zinc-900 outline-none transition-all text-sm font-medium appearance-none" onChange={(e) => setGender(e.target.value)} required>
-                                    <option value="" disabled selected>Select Gender</option>
+                                <select value={gender} className="w-full bg-zinc-900/50 border border-white/5 text-white placeholder-zinc-600 px-5 py-4 rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-zinc-900 outline-none transition-all text-sm font-medium appearance-none" onChange={(e) => setGender(e.target.value)} required>
+                                    <option value="" disabled>Select Gender</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
                                     <option value="Other">Other</option>
