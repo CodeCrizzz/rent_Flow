@@ -36,22 +36,81 @@ const getAllRooms = async (req, res) => {
     }
 };
 
-// @desc    Get all Tenants
-// @route   GET /api/admin/tenants
-const getAllTenants = async (req, res) => {
+// @desc    Create a new Room
+// @route   POST /api/admin/rooms
+const createRoom = async (req, res) => {
+    const { room_number, capacity, price, status } = req.body;
+    try {
+        // 1. Check if room number already exists to prevent duplicates
+        const roomExists = await db.query('SELECT * FROM rooms WHERE room_number = $1', [room_number]);
+        if (roomExists.rows.length > 0) {
+            return res.status(400).json({ message: 'Room number already exists' });
+        }
+
+        // 2. Insert the new room
+        const query = `
+            INSERT INTO rooms (room_number, capacity, price, status) 
+            VALUES ($1, $2, $3, $4) 
+            RETURNING *
+        `;
+        const newRoom = await db.query(query, [room_number, capacity, price, status || 'available']);
+        
+        res.status(201).json({ message: 'Room created successfully', room: newRoom.rows[0] });
+    } catch (error) {
+        console.error('Create Room Error:', error);
+        res.status(500).json({ message: 'Server error creating room' });
+    }
+};
+
+// @desc    Update a Room
+// @route   PUT /api/admin/rooms/:id
+const updateRoom = async (req, res) => {
+    const { id } = req.params;
+    const { room_number, capacity, price, status } = req.body;
+    
     try {
         const query = `
-            SELECT u.id, u.name, u.email, u.phone, u.created_at, r.room_number 
-            FROM users u 
-            LEFT JOIN rooms r ON u.room_id = r.id 
-            WHERE u.role = 'tenant' 
-            ORDER BY u.created_at DESC
+            UPDATE rooms 
+            SET room_number = $1, capacity = $2, price = $3, status = $4 
+            WHERE id = $5 
+            RETURNING *
         `;
-        const tenants = await db.query(query);
-        res.status(200).json(tenants.rows);
+        const updatedRoom = await db.query(query, [room_number, capacity, price, status, id]);
+        
+        if (updatedRoom.rows.length === 0) {
+            return res.status(404).json({ message: 'Room not found' });
+        }
+
+        res.status(200).json({ message: 'Room updated successfully', room: updatedRoom.rows[0] });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server error fetching tenants' });
+        console.error('Update Room Error:', error);
+        res.status(500).json({ message: 'Server error updating room' });
+    }
+};
+
+// @desc    Delete a Room
+// @route   DELETE /api/admin/rooms/:id
+const deleteRoom = async (req, res) => {
+    const { id } = req.params;
+    
+    try {
+        // 1. Safety Check: Don't delete if a tenant is still assigned to this room
+        const tenantCheck = await db.query("SELECT * FROM users WHERE room_id = $1 AND role = 'tenant'", [id]);
+        if (tenantCheck.rows.length > 0) {
+            return res.status(400).json({ message: 'Cannot delete this room because a tenant is currently assigned to it.' });
+        }
+
+        // 2. Delete the room
+        const result = await db.query('DELETE FROM rooms WHERE id = $1 RETURNING id', [id]);
+        
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Room not found' });
+        }
+
+        res.status(200).json({ message: 'Room deleted successfully' });
+    } catch (error) {
+        console.error('Delete Room Error:', error);
+        res.status(500).json({ message: 'Server error deleting room' });
     }
 };
 
@@ -86,6 +145,25 @@ const getAllRequests = async (req, res) => {
         res.status(200).json(requests.rows);
     } catch (error) {
         res.status(500).json({ message: 'Server error fetching requests' });
+    }
+};
+
+// @desc    Get all Tenants
+// @route   GET /api/admin/tenants
+const getAllTenants = async (req, res) => {
+    try {
+        const query = `
+            SELECT u.*, r.room_number 
+            FROM users u 
+            LEFT JOIN rooms r ON u.room_id = r.id 
+            WHERE u.role = 'tenant' 
+            ORDER BY u.created_at DESC
+        `;
+        const tenants = await db.query(query);
+        res.status(200).json(tenants.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Server error fetching tenants' });
     }
 };
 
@@ -163,13 +241,70 @@ const deleteTenant = async (req, res) => {
     }
 };
 
+// @desc    Get all Messages (Admin Chat)
+// @route   GET /api/admin/chat
+const getMessages = async (req, res) => {
+    try {
+        const { tenant_id } = req.query;
+        
+        if (!tenant_id) {
+            return res.status(400).json({ message: 'Tenant ID is required' });
+        }
+
+        const query = `
+            SELECT * FROM messages 
+            WHERE (sender_id = $1 AND receiver_id = 1) 
+               OR (sender_id = 1 AND receiver_id = $1)
+            ORDER BY created_at ASC
+        `;
+        const result = await db.query(query, [tenant_id]);
+        
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error('Get Messages Error:', error);
+        res.status(500).json({ message: 'Server error fetching messages' });
+    }
+};
+
+// @desc    Send Message (Admin Chat)
+// @route   POST /api/admin/chat
+const sendMessage = async (req, res) => {
+    try {
+        const { message, tenant_id } = req.body;
+        
+        if (!message || !tenant_id) {
+            return res.status(400).json({ message: 'Message and Tenant ID are required' });
+        }
+
+        // Assuming admin user ID is 1 (based on your frontend logic)
+        const adminId = 1;
+
+        const query = `
+            INSERT INTO messages (sender_id, receiver_id, message, sender_type, status) 
+            VALUES ($1, $2, $3, 'admin', 'sent') 
+            RETURNING *;
+        `;
+        const result = await db.query(query, [adminId, tenant_id, message]);
+        
+        res.status(201).json(result.rows[0]);
+    } catch (error) {
+        console.error('Send Message Error:', error);
+        res.status(500).json({ message: 'Server error sending message' });
+    }
+};
+
 module.exports = { 
     getDashboardStats, 
     getAllRooms, 
+    createRoom, 
+    updateRoom, 
+    deleteRoom,
     getAllTenants, 
     getAllPayments, 
     getAllRequests, 
     updateTenant, 
     deleteTenant,
-    createTenant
+    createTenant,
+    getMessages,  
+    sendMessage    
 };

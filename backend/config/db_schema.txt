@@ -1,0 +1,90 @@
+-- 1. Create the new schema and switch to it
+CREATE SCHEMA IF NOT EXISTS "rentFlow_schema";
+SET search_path TO "rentFlow_schema";
+
+-- 2. Drop existing tables if they exist (Order matters due to foreign keys)
+DROP TABLE IF EXISTS messages CASCADE;
+DROP TABLE IF EXISTS requests CASCADE;
+DROP TABLE IF EXISTS payments CASCADE;
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS rooms CASCADE;
+
+-- 3. Create Rooms Table
+CREATE TABLE rooms (
+    id SERIAL PRIMARY KEY,
+    room_number VARCHAR(50) UNIQUE NOT NULL,
+    capacity INT NOT NULL,
+    price DECIMAL(10, 2) NOT NULL,
+    status VARCHAR(20) DEFAULT 'available', -- 'available', 'occupied', 'maintenance'
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 4. Create Users Table (UPDATED WITH NEW TENANT FIELDS)
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(20) DEFAULT 'tenant',
+    phone VARCHAR(20),
+    emergency_contact VARCHAR(100),
+    room_id INT REFERENCES rooms(id) ON DELETE SET NULL,
+    
+    -- NEW FIELDS ADDED HERE --
+    gender VARCHAR(50) DEFAULT 'Not Specified',
+    id_document VARCHAR(50) DEFAULT 'Pending',
+    bed_space VARCHAR(50),
+    date_moved_in DATE,
+    contract_end_date DATE,
+    status VARCHAR(50) DEFAULT 'Pending', -- 'Active', 'Inactive', 'Moved Out', 'Pending'
+    ---------------------------
+    
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 5. Create Payments Table
+CREATE TABLE payments (
+    id SERIAL PRIMARY KEY,
+    tenant_id INT REFERENCES users(id) ON DELETE CASCADE,
+    invoice_id VARCHAR(50) UNIQUE,
+    description VARCHAR(255) NOT NULL,
+    amount DECIMAL(10, 2) NOT NULL,
+    status VARCHAR(20) DEFAULT 'pending', -- 'pending', 'paid', 'overdue'
+    due_date TIMESTAMP NOT NULL,
+    payment_date TIMESTAMP
+);
+
+-- 6. Create Maintenance Requests Table
+CREATE TABLE requests (
+    id SERIAL PRIMARY KEY,
+    tenant_id INT REFERENCES users(id) ON DELETE CASCADE,
+    title VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    priority VARCHAR(20) DEFAULT 'Normal',
+    status VARCHAR(20) DEFAULT 'Pending', -- 'Pending', 'In Progress', 'Resolved'
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 7. Create Chat Messages Table (UPDATED TO MATCH NODE.JS CONTROLLERS)
+CREATE TABLE messages (
+    id SERIAL PRIMARY KEY,
+    sender_id INT REFERENCES users(id) ON DELETE CASCADE,
+    receiver_id INT REFERENCES users(id) ON DELETE CASCADE,
+    message TEXT NOT NULL,                  -- Changed from 'content' to 'message' to match backend
+    status VARCHAR(20) DEFAULT 'sent',      -- Added status (sent, delivered, read) to match backend
+    sender_type VARCHAR(20),                -- Added sender_type ('admin' or 'tenant') to match your UI
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 8. Enable the PostgreSQL encryption extension for the password
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
+-- 9. Insert the Admin user with a securely hashed password
+INSERT INTO users (name, email, password, role, status) 
+VALUES (
+    'Master Admin', 
+    'admin@rentflow.com', 
+    crypt('admin123', gen_salt('bf')),
+    'admin',
+    'Active'
+);

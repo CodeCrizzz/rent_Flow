@@ -12,6 +12,10 @@ export default function LoginPage() {
     const [errorMsg, setErrorMsg] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
+    
+    // New state to control the form transition animation
+    const [isSwitching, setIsSwitching] = useState(false);
+    
     const router = useRouter();
 
     useEffect(() => { setIsMounted(true); }, []);
@@ -20,6 +24,16 @@ export default function LoginPage() {
         setEmail('');
         setPassword('');
     }, [selectedRole]);
+
+    // Custom handler to trigger the transition before swapping roles
+    const handleRoleChange = (role: 'tenant' | 'admin') => {
+        if (role === selectedRole) return;
+        setIsSwitching(true); // Trigger fade/blur out
+        setTimeout(() => {
+            setSelectedRole(role); // Swap data while hidden
+            setIsSwitching(false); // Trigger fade/blur in
+        }, 200); 
+    };
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -54,35 +68,53 @@ export default function LoginPage() {
 
             <div className={`w-full max-w-5xl bg-zinc-950 rounded-[2.5rem] shadow-2xl shadow-black/50 overflow-hidden flex flex-col md:flex-row relative z-10 border border-white/5 transition-all duration-1000 transform ${isMounted ? 'opacity-100 translate-y-0 scale-100 blur-0' : 'opacity-0 translate-y-12 scale-95 blur-md'}`}>
                 
+                {/* LEFT PANEL */}
                 <div className={`md:w-5/12 bg-[#0a0a0a] p-10 lg:p-14 flex flex-col justify-between relative overflow-hidden border-r border-white/5 transition-all duration-1000 delay-300 ${isMounted ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}`}>
                     <div className={`absolute top-[-20%] left-[-20%] w-64 h-64 rounded-full mix-blend-screen filter blur-[80px] opacity-30 animate-pulse-slow transition-colors duration-1000 ${primaryGlow}`}></div>
                     <div className={`absolute bottom-[-20%] right-[-20%] w-64 h-64 rounded-full mix-blend-screen filter blur-[80px] opacity-30 transition-colors duration-1000 ${secondaryGlow}`}></div>
 
                     <div className="relative z-10">
-                        <Link href="/" className="inline-flex items-center gap-3 mb-12 hover:opacity-90 transition-opacity">
-                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-colors duration-700 shadow-lg ${selectedRole === 'tenant' ? 'bg-blue-500' : 'bg-purple-500'}`}>
+                        <Link href="/" className="inline-flex items-center gap-3 mb-12 group">
+                            <div className={`w-12 h-12 rounded-xl flex items-center justify-center transition-all duration-500 shadow-lg group-hover:scale-110 group-hover:rotate-3 ${
+                                selectedRole === 'tenant' 
+                                    ? 'bg-blue-500 group-hover:shadow-[0_0_25px_rgba(59,130,246,0.6)]' 
+                                    : 'bg-purple-500 group-hover:shadow-[0_0_25px_rgba(168,85,247,0.6)]'
+                            }`}>
                                 <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                             </div>
-                            <span className="text-3xl font-black tracking-tight text-white">Rent<span className={selectedRole === 'tenant' ? 'text-blue-500' : 'text-purple-500'}>Flow</span></span>
+                            
+                            <span className="text-3xl font-black tracking-tight text-white transition-colors">
+                                Rent<span className={selectedRole === 'tenant' ? 'text-blue-500' : 'text-purple-500'}>Flow</span>
+                            </span>
                         </Link>
                     </div>
 
                     <div className="relative z-10 mt-auto">
-                        <h2 className="text-4xl font-bold text-white mb-4 leading-tight">{selectedRole === 'tenant' ? "Manage your stay" : "Manage your property"}<br />with ease.</h2>
+                        {/* Title transitions smoothly */}
+                        <div className={`transition-all duration-300 ${isSwitching ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}>
+                            <h2 className="text-4xl font-bold text-white mb-4 leading-tight">{selectedRole === 'tenant' ? "Manage your stay" : "Manage your property"}<br />with ease.</h2>
+                        </div>
                         <p className="text-zinc-500 text-sm leading-relaxed max-w-xs">Secure access to the RentFlow ecosystem.</p>
                     </div>
                 </div>
 
+                {/* RIGHT PANEL */}
                 <div className={`md:w-7/12 p-10 lg:p-14 bg-zinc-950 flex flex-col justify-center transition-all duration-1000 delay-500 ${isMounted ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
-                    <div className="flex bg-zinc-900/50 p-1.5 rounded-2xl mb-8 border border-white/5 relative z-20">
-                        <button type="button" onClick={() => setSelectedRole('tenant')} className={`flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 ${selectedRole === 'tenant' ? 'bg-zinc-800 text-white shadow-md border border-white/10' : 'text-zinc-500 hover:text-zinc-300'}`}>Tenant Portal</button>
-                        <button type="button" onClick={() => setSelectedRole('admin')} className={`flex-1 py-3 rounded-xl text-sm font-bold transition-all duration-300 ${selectedRole === 'admin' ? 'bg-zinc-800 text-white shadow-md border border-white/10' : 'text-zinc-500 hover:text-zinc-300'}`}>Admin Portal</button>
+                    
+                    {/* Modern Sliding Toggle Switch */}
+                    <div className="flex bg-zinc-900/50 p-1.5 rounded-2xl mb-8 border border-white/5 relative z-20 overflow-hidden">
+                        {/* The Sliding Pill */}
+                        <div className={`absolute top-1.5 bottom-1.5 w-[calc(50%-6px)] bg-zinc-800 rounded-xl shadow-md border border-white/10 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${selectedRole === 'admin' ? 'translate-x-full' : 'translate-x-0'}`}></div>
+                        
+                        <button type="button" onClick={() => handleRoleChange('tenant')} className={`flex-1 py-3 rounded-xl text-sm font-bold relative z-10 transition-colors duration-300 ${selectedRole === 'tenant' ? 'text-white' : 'text-zinc-500 hover:text-zinc-300'}`}>Tenant Portal</button>
+                        <button type="button" onClick={() => handleRoleChange('admin')} className={`flex-1 py-3 rounded-xl text-sm font-bold relative z-10 transition-colors duration-300 ${selectedRole === 'admin' ? 'text-white' : 'text-zinc-500 hover:text-zinc-300'}`}>Admin Portal</button>
                     </div>
 
-                    <div key={selectedRole} className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                    {/* Form Container with Blur/Fade Transition */}
+                    <div className={`transition-all duration-300 ${isSwitching ? 'opacity-0 scale-[0.98] blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
                         <div className="mb-8">
-                            <h2 className="text-3xl font-bold text-white tracking-tight mb-2">{selectedRole === 'tenant' ? 'Welcome back' : 'Admin Access'}</h2>
-                            <p className="text-zinc-500 text-sm">Please authenticate to continue.</p>
+                            <h2 className="text-3xl font-bold text-white tracking-tight mb-2">{selectedRole === 'tenant' ? 'Welcome to RentFlow' : 'Admin Access'}</h2>
+                            <p className="text-zinc-500 text-sm">Please enter your account credentials.</p>
                         </div>
 
                         {errorMsg && (
@@ -129,6 +161,7 @@ export default function LoginPage() {
                             </div>
                         </form>
                     </div>
+
                 </div>
             </div>
         </div>

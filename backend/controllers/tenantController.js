@@ -91,4 +91,47 @@ const getTenantPayments = async (req, res) => {
     }
 };
 
-module.exports = { getTenantDashboard, getTenantProfile, submitRequest, getMyRequests, getTenantPayments };
+// @desc    Get Tenant Messages
+const getTenantMessages = async (req, res) => {
+    const tenantId = req.user.id;
+    try {
+        const query = `
+            SELECT * FROM messages 
+            WHERE (sender_id = $1 AND receiver_id = 1) 
+               OR (sender_id = 1 AND receiver_id = $1)
+            ORDER BY created_at ASC
+        `;
+        const result = await db.query(query, [tenantId]);
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error('Get Messages Error:', error);
+        res.status(500).json({ message: 'Server error fetching messages' });
+    }
+};
+
+// @desc    Send Message to Admin
+const sendTenantMessage = async (req, res) => {
+    const tenantId = req.user.id;
+    const { message } = req.body;
+    
+    if (!message) return res.status(400).json({ message: 'Message is required' });
+
+    try {
+        const adminId = 1; // Assuming admin user ID is 1
+        const query = `
+            INSERT INTO messages (sender_id, receiver_id, message, sender_type, status) 
+            VALUES ($1, $2, $3, 'tenant', 'sent') 
+            RETURNING *;
+        `;
+        const result = await db.query(query, [tenantId, adminId, message]);
+        res.status(201).json(result.rows[0]);
+    } catch (error) {
+        console.error('Send Message Error:', error);
+        res.status(500).json({ message: 'Server error sending message' });
+    }
+};
+
+module.exports = { 
+    getTenantDashboard, getTenantProfile, submitRequest, 
+    getMyRequests, getTenantPayments, getTenantMessages, sendTenantMessage 
+};

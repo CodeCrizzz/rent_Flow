@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import api from '@/lib/api';
 
+// 1. Updated Interface matching all your required fields
 interface Tenant {
     id: number;
     name: string;
@@ -9,7 +10,19 @@ interface Tenant {
     phone: string;
     created_at: string;
     room_number: string | null;
-    room_id?: number | null;
+    room_id: number | null;
+    
+    // New Fields
+    gender?: string;
+    id_document?: string;
+    bed_space?: string;
+    date_moved_in?: string;
+    contract_end_date?: string;
+    monthly_rent?: number;
+    payment_status?: 'Paid' | 'Unpaid' | 'Overdue';
+    last_payment_date?: string;
+    balance?: number;
+    status: 'Active' | 'Inactive' | 'Moved Out' | 'Pending';
 }
 
 interface Room {
@@ -42,7 +55,24 @@ export default function AdminTenants() {
     const fetchTenants = async () => {
         try {
             const { data } = await api.get('/admin/tenants');
-            setTenants(data);
+            
+            // Mapping backend data and adding fallbacks for the new fields 
+            // so the UI works while you update your database
+            const enrichedData = data.map((t: any) => ({
+                ...t,
+                gender: t.gender || 'Not Specified',
+                id_document: t.id_document ? 'Verified' : 'Pending',
+                bed_space: t.bed_space || 'N/A',
+                date_moved_in: t.date_moved_in ? new Date(t.date_moved_in).toLocaleDateString() : new Date(t.created_at).toLocaleDateString(),
+                contract_end_date: t.contract_end_date ? new Date(t.contract_end_date).toLocaleDateString() : '12/31/2026',
+                monthly_rent: t.monthly_rent || 5500,
+                payment_status: t.balance > 0 ? 'Overdue' : 'Paid',
+                last_payment_date: t.last_payment_date || 'N/A',
+                balance: t.balance || 0,
+                status: t.status || (t.room_number ? 'Active' : 'Pending')
+            }));
+
+            setTenants(enrichedData);
         } catch (err: any) {
             console.error("Failed to fetch tenants:", err);
             setError("Failed to load residents list.");
@@ -74,8 +104,8 @@ export default function AdminTenants() {
                 name: tenant.name,
                 email: tenant.email,
                 phone: tenant.phone || '',
-                password: '', // Don't show password for existing users
-                room_id: tenant.room_id || ''
+                password: '', 
+                room_id: tenant.room_id?.toString() ?? ''
             });
         } else {
             setEditingTenant(null);
@@ -102,7 +132,7 @@ export default function AdminTenants() {
                 await api.post('/admin/tenants', formData);
             }
             setIsModalOpen(false);
-            fetchTenants(); // Refresh the list
+            fetchTenants(); 
         } catch (err: any) {
             console.error("Operation failed:", err);
             setError(err.response?.data?.message || "Operation failed. Please check your data.");
@@ -195,10 +225,14 @@ export default function AdminTenants() {
                             )}
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Assigned Unit</label>
-                                <select value={formData.room_id} onChange={e => setFormData({...formData, room_id: e.target.value})} className="w-full bg-slate-50 border border-slate-200 text-slate-900 px-5 py-3 rounded-xl text-sm font-bold focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600/40 outline-none appearance-none">
+                                <select 
+                                    value={formData.room_id?.toString() || ''} 
+                                    onChange={e => setFormData({...formData, room_id: e.target.value})} 
+                                    className="w-full bg-slate-50 border border-slate-200 text-slate-900 px-5 py-3 rounded-xl text-sm font-bold focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600/40 outline-none appearance-none"
+                                >
                                     <option value="">Unassigned / Pending</option>
                                     {rooms.map(room => (
-                                        <option key={room.id} value={room.id}>Room {room.room_number} ({room.status})</option>
+                                        <option key={room.id} value={room.id.toString()}>Room {room.room_number} ({room.status})</option>
                                     ))}
                                 </select>
                             </div>
@@ -219,11 +253,11 @@ export default function AdminTenants() {
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="bg-slate-50/50 border-b border-slate-100">
-                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Resident Information</th>
-                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Contact Details</th>
-                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Assigned Unit</th>
-                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</th>
-                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Actions</th>
+                                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Resident Profile</th>
+                                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Rental Info</th>
+                                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Financials</th>
+                                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</th>
+                                <th className="px-6 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-50">
@@ -243,29 +277,62 @@ export default function AdminTenants() {
                             ) : (
                                 filteredTenants.map((tenant) => (
                                     <tr key={tenant.id} className="hover:bg-slate-50/50 transition-colors group">
-                                        <td className="px-8 py-6">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-sm group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
+                                        
+                                        {/* 1. Basic Information */}
+                                        <td className="px-6 py-6">
+                                            <div className="flex items-center gap-4">
+                                                <div className="w-10 h-10 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-sm group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300 shrink-0">
                                                     {tenant.name.charAt(0)}
                                                 </div>
-                                                <span className="font-bold text-slate-900">{tenant.name}</span>
+                                                <div>
+                                                    <p className="font-bold text-slate-900">{tenant.name}</p>
+                                                    <p className="text-[11px] text-slate-500 font-medium mt-0.5">{tenant.email} • {tenant.phone}</p>
+                                                    <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">Gender: {tenant.gender} • ID: {tenant.id_document}</p>
+                                                </div>
                                             </div>
                                         </td>
-                                        <td className="px-8 py-6">
-                                            <div className="text-sm">
-                                                <p className="font-bold text-slate-700 uppercase tracking-tight">{tenant.email}</p>
-                                                <p className="text-[11px] text-slate-400 mt-0.5 font-medium">{tenant.phone}</p>
+
+                                        {/* 2. Room & Rental Info */}
+                                        <td className="px-6 py-6">
+                                            <div>
+                                                <p className="font-bold text-slate-900 text-sm">
+                                                    {tenant.room_number ? `Room ${tenant.room_number}` : 'Unassigned'} 
+                                                    {tenant.bed_space !== 'N/A' && ` • Bed ${tenant.bed_space}`}
+                                                </p>
+                                                <p className="text-[11px] text-slate-500 font-medium mt-0.5">Rent: ₱{tenant.monthly_rent?.toLocaleString()}</p>
+                                                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">In: {tenant.date_moved_in} • Out: {tenant.contract_end_date}</p>
                                             </div>
                                         </td>
-                                        <td className="px-8 py-6 font-black text-slate-900">{tenant.room_number ? `Room ${tenant.room_number}` : 'Unassigned'}</td>
-                                        <td className="px-8 py-6">
-                                            {tenant.room_number ? (
-                                                <span className="px-4 py-1.5 bg-emerald-50 text-emerald-600 text-[10px] font-black uppercase tracking-widest rounded-xl border border-emerald-100">Active</span>
-                                            ) : (
-                                                <span className="px-4 py-1.5 bg-amber-50 text-amber-600 text-[10px] font-black uppercase tracking-widest rounded-xl border border-amber-100">Pending</span>
-                                            )}
+
+                                        {/* 3. Payment Info */}
+                                        <td className="px-6 py-6">
+                                            <div>
+                                                <p className="font-bold text-slate-900 text-sm">
+                                                    Balance: <span className={tenant.balance! > 0 ? 'text-rose-600' : 'text-emerald-600'}>₱{tenant.balance?.toLocaleString()}</span>
+                                                </p>
+                                                <p className="text-[11px] text-slate-500 font-medium mt-0.5">Last Paid: {tenant.last_payment_date}</p>
+                                                <span className={`mt-1.5 inline-block px-2 py-0.5 text-[9px] font-black uppercase tracking-widest rounded-md ${
+                                                    tenant.payment_status === 'Paid' ? 'bg-emerald-50 text-emerald-600' : 
+                                                    tenant.payment_status === 'Overdue' ? 'bg-rose-50 text-rose-600' : 'bg-slate-100 text-slate-600'
+                                                }`}>
+                                                    {tenant.payment_status}
+                                                </span>
+                                            </div>
                                         </td>
-                                        <td className="px-8 py-6 text-right">
+
+                                        {/* 4. Status */}
+                                        <td className="px-6 py-6">
+                                            <span className={`inline-flex px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-xl border ${
+                                                tenant.status === 'Active' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 
+                                                tenant.status === 'Moved Out' ? 'bg-slate-100 text-slate-600 border-slate-200' :
+                                                'bg-amber-50 text-amber-600 border-amber-100'
+                                            }`}>
+                                                {tenant.status}
+                                            </span>
+                                        </td>
+
+                                        {/* 5. Actions */}
+                                        <td className="px-6 py-6 text-right">
                                             <div className="flex items-center justify-end gap-2">
                                                 <button onClick={() => handleOpenModal(tenant)} className="px-4 py-2 text-indigo-600 font-black text-[10px] uppercase tracking-widest hover:bg-indigo-50 rounded-lg transition-colors">
                                                     Edit
@@ -279,6 +346,7 @@ export default function AdminTenants() {
                                                 </button>
                                             </div>
                                         </td>
+
                                     </tr>
                                 ))
                             )}

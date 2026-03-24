@@ -99,7 +99,7 @@ export default function AdminRooms() {
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Capacity</label>
-                                    <input required type="number" value={formData.capacity} onChange={e => setFormData({...formData, capacity: parseInt(e.target.value)})} className="w-full bg-slate-50 border border-slate-200 text-slate-900 px-5 py-3 rounded-xl text-sm font-bold focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600/40 outline-none" />
+                                    <input required type="number" value={formData.capacity} onChange={e => setFormData({...formData, capacity: e.target.value === '' ? '' as any : parseInt(e.target.value)})} className="w-full bg-slate-50 border border-slate-200 text-slate-900 px-5 py-3 rounded-xl text-sm font-bold focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600/40 outline-none" />
                                 </div>
                             </div>
                             <div className="space-y-2">

@@ -2,10 +2,25 @@
 import { useEffect, useState, useRef } from 'react';
 import api from '@/lib/api';
 
+interface TenantShort {
+    id: number;
+    name: string;
+    room_number: string | null;
+}
+
+interface Message {
+    sender_id: number;
+    receiver_id: number;
+    message: string;
+    sender_type: 'admin' | 'tenant';
+    status: string;
+    created_at: string;
+}
+
 export default function AdminChat() {
-    const [tenants, setTenants] = useState<any[]>([]);
-    const [selectedTenant, setSelectedTenant] = useState<any>(null);
-    const [messages, setMessages] = useState<any[]>([]);
+    const [tenants, setTenants] = useState<TenantShort[]>([]);
+    const [selectedTenant, setSelectedTenant] = useState<TenantShort | null>(null);
+    const [messages, setMessages] = useState<Message[]>([]);
     const [newMessage, setNewMessage] = useState('');
     const [isLoading, setIsLoading] = useState(true);
     const scrollRef = useRef<HTMLDivElement>(null);
@@ -26,7 +41,7 @@ export default function AdminChat() {
 
     const fetchMessages = async (tenantId: number) => {
         try {
-            const { data } = await api.get(`/chat?tenant_id=${tenantId}`);
+            const { data } = await api.get(`/admin/chat?tenant_id=${tenantId}`);
             setMessages(data);
         } catch (error) {
             console.error("Failed to fetch messages:", error);
@@ -51,11 +66,11 @@ export default function AdminChat() {
         }
     }, [messages]);
 
-    const handleSend = async (e: any) => {
+    const handleSend = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!newMessage.trim() || !selectedTenant) return;
         try {
-            const res = await api.post('/chat', { 
+            const res = await api.post('/admin/chat', { 
                 message: newMessage,
                 tenant_id: selectedTenant.id 
             });
@@ -124,18 +139,21 @@ export default function AdminChat() {
                                 {messages.length === 0 ? (
                                     <div className="h-full flex items-center justify-center text-slate-400 font-bold text-sm">No message history with {selectedTenant.name}.</div>
                                 ) : (
-                                    messages.map((msg, index) => (
-                                        <div key={index} className={`flex ${msg.sender_type === 'admin' ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-${msg.sender_type === 'admin' ? 'right' : 'left'}-4 duration-500`}>
-                                            <div className="relative">
-                                                <div className={`${msg.sender_type === 'admin' ? 'bg-indigo-600 text-white rounded-tr-lg' : 'bg-white border border-slate-200 text-slate-700 rounded-tl-lg'} rounded-3xl px-6 py-4 max-w-sm text-sm font-medium shadow-sm leading-relaxed`}>
-                                                    {msg.message}
+                                    messages.map((msg, index) => {
+                                        const isFromAdmin = msg.sender_type === 'admin' || msg.sender_id === 1;
+                                        return (
+                                            <div key={index} className={`flex ${isFromAdmin ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-${isFromAdmin ? 'right' : 'left'}-4 duration-500`}>
+                                                <div className="relative">
+                                                    <div className={`${isFromAdmin ? 'bg-indigo-600 text-white rounded-tr-lg' : 'bg-white border border-slate-200 text-slate-700 rounded-tl-lg'} rounded-3xl px-6 py-4 max-w-sm text-sm font-medium shadow-sm leading-relaxed`}>
+                                                        {msg.message}
+                                                    </div>
+                                                    <p className={`text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mt-2 ${isFromAdmin ? 'text-right mr-2' : 'ml-2'}`}>
+                                                        {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • {isFromAdmin ? 'SENT' : 'RECEIVED'}
+                                                    </p>
                                                 </div>
-                                                <p className={`text-[9px] font-black text-slate-400 uppercase tracking-[0.2em] mt-2 ${msg.sender_type === 'admin' ? 'text-right mr-2' : 'ml-2'}`}>
-                                                    {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })} • {msg.sender_type === 'admin' ? 'SENT' : 'RECEIVED'}
-                                                </p>
                                             </div>
-                                        </div>
-                                    ))
+                                        );
+                                    })
                                 )}
                             </div>
 
