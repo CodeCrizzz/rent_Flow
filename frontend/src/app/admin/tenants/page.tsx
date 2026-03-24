@@ -14,6 +14,7 @@ interface Tenant {
     
     // New Fields
     gender?: string;
+    address?: string;
     id_document?: string;
     bed_space?: string;
     date_moved_in?: string;
@@ -22,7 +23,7 @@ interface Tenant {
     payment_status?: 'Paid' | 'Unpaid' | 'Overdue';
     last_payment_date?: string;
     balance?: number;
-    status: 'Active' | 'Inactive' | 'Moved Out' | 'Pending';
+    status: 'Active' | 'Inactive' | 'Moved Out' | 'Pending' | 'Declined';
 }
 
 interface Room {
@@ -36,6 +37,7 @@ export default function AdminTenants() {
     const [rooms, setRooms] = useState<Room[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [searchQuery, setSearchQuery] = useState('');
+    const [statusFilter, setStatusFilter] = useState('All');
     const [error, setError] = useState('');
     
     // --- MODAL & FORM STATES ---
@@ -43,13 +45,20 @@ export default function AdminTenants() {
     const [editingTenant, setEditingTenant] = useState<Tenant | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isDeleting, setIsDeleting] = useState<number | null>(null);
+    const [isStatusUpdating, setIsStatusUpdating] = useState<number | null>(null);
 
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         phone: '',
         password: '',
-        room_id: '' as string | number
+        room_id: '' as string | number,
+        address: '',
+        gender: '',
+        monthly_rent: '',
+        date_moved_in: '',
+        contract_end_date: '',
+        status: 'Pending'
     });
 
     const fetchTenants = async () => {
@@ -61,11 +70,12 @@ export default function AdminTenants() {
             const enrichedData = data.map((t: any) => ({
                 ...t,
                 gender: t.gender || 'Not Specified',
+                address: t.address || '',
                 id_document: t.id_document ? 'Verified' : 'Pending',
                 bed_space: t.bed_space || 'N/A',
-                date_moved_in: t.date_moved_in ? new Date(t.date_moved_in).toLocaleDateString() : new Date(t.created_at).toLocaleDateString(),
-                contract_end_date: t.contract_end_date ? new Date(t.contract_end_date).toLocaleDateString() : '12/31/2026',
-                monthly_rent: t.monthly_rent || 5500,
+                date_moved_in: t.date_moved_in ? new Date(t.date_moved_in).toISOString().split('T')[0] : '', // Format for input type="date"
+                contract_end_date: t.contract_end_date ? new Date(t.contract_end_date).toISOString().split('T')[0] : '', // Format for input type="date"
+                monthly_rent: t.monthly_rent || 0,
                 payment_status: t.balance > 0 ? 'Overdue' : 'Paid',
                 last_payment_date: t.last_payment_date || 'N/A',
                 balance: t.balance || 0,
@@ -97,7 +107,7 @@ export default function AdminTenants() {
         init();
     }, []);
 
-    const handleOpenModal = (tenant?: Tenant) => {
+    const handleOpenModal = (tenant?: Tenant, intention: 'approve' | 'edit' = 'edit') => {
         if (tenant) {
             setEditingTenant(tenant);
             setFormData({
@@ -105,7 +115,13 @@ export default function AdminTenants() {
                 email: tenant.email,
                 phone: tenant.phone || '',
                 password: '', 
-                room_id: tenant.room_id?.toString() ?? ''
+                room_id: tenant.room_id?.toString() ?? '',
+                address: tenant.address || '',
+                gender: tenant.gender || '',
+                monthly_rent: tenant.monthly_rent?.toString() || '',
+                date_moved_in: tenant.date_moved_in || '',
+                contract_end_date: tenant.contract_end_date || '',
+                status: intention === 'approve' ? 'Active' : tenant.status
             });
         } else {
             setEditingTenant(null);
@@ -114,7 +130,13 @@ export default function AdminTenants() {
                 email: '',
                 phone: '',
                 password: '',
-                room_id: ''
+                room_id: '',
+                address: '',
+                gender: '',
+                monthly_rent: '',
+                date_moved_in: '',
+                contract_end_date: '',
+                status: 'Pending'
             });
         }
         setIsModalOpen(true);
@@ -158,10 +180,25 @@ export default function AdminTenants() {
         }
     };
 
+    const handleUpdateStatus = async (id: number, status: string) => {
+        setIsStatusUpdating(id);
+        setError('');
+        try {
+            await api.put(`/admin/tenants/${id}`, { status });
+            fetchTenants();
+        } catch (err: any) {
+             console.error(`Failed to update status to ${status}:`, err);
+             setError(`Failed to set status to ${status}.`);
+        } finally {
+             setIsStatusUpdating(null);
+        }
+    };
+
     const filteredTenants = tenants.filter(t => 
-        t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (statusFilter === 'All' || t.status === statusFilter) &&
+        (t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         t.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        (t.room_number && t.room_number.toString().includes(searchQuery))
+        (t.room_number && t.room_number.toString().includes(searchQuery)))
     );
 
     return (
@@ -171,12 +208,23 @@ export default function AdminTenants() {
                     <h1 className="text-4xl font-black text-slate-900 tracking-tight">Tenants Directory</h1>
                     <p className="text-slate-500 font-medium mt-2">Manage all active residents and pending applications.</p>
                 </div>
-                <div className="flex items-center gap-4">
-                    <div className="relative group">
-                        <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search residents..." className="pl-12 pr-6 py-3.5 bg-white border border-slate-200 rounded-2xl text-sm font-medium focus:outline-none focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600/40 w-full sm:w-80 shadow-sm transition-all" />
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                    <select 
+                        value={statusFilter} 
+                        onChange={(e) => setStatusFilter(e.target.value)} 
+                        className="py-3.5 px-4 bg-white border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 focus:outline-none focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600/40 shadow-sm appearance-none outline-none"
+                    >
+                        <option value="All">All Statuses</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Active">Active</option>
+                        <option value="Declined">Declined</option>
+                        <option value="Moved Out">Moved Out</option>
+                    </select>
+                    <div className="relative group w-full sm:w-auto">
+                        <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search residents..." className="pl-12 pr-6 py-3.5 bg-white border border-slate-200 rounded-2xl text-sm font-medium focus:outline-none focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600/40 w-full sm:w-80 shadow-sm transition-all outline-none" />
                         <svg className="w-5 h-5 text-slate-400 absolute left-4 top-3.5 group-focus-within:text-indigo-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     </div>
-                    <button onClick={() => handleOpenModal()} className="px-6 py-3.5 bg-indigo-600 text-white font-bold rounded-2xl hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-600/20 text-sm flex items-center gap-2 group">
+                    <button onClick={() => handleOpenModal()} className="px-6 py-3.5 bg-indigo-600 text-white font-bold rounded-2xl hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-600/20 text-sm flex items-center gap-2 group w-full sm:w-auto">
                         <div className="w-5 h-5 bg-white/20 rounded-lg flex items-center justify-center group-hover:rotate-90 transition-transform duration-300">
                             <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="4" d="M12 4v16m8-8H4"></path></svg>
                         </div>
@@ -223,20 +271,68 @@ export default function AdminTenants() {
                                     <input required type="password" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} className="w-full bg-slate-50 border border-slate-200 text-slate-900 px-5 py-3 rounded-xl text-sm font-bold focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600/40 outline-none" placeholder="••••••••" />
                                 </div>
                             )}
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Assigned Unit</label>
-                                <select 
-                                    value={formData.room_id?.toString() || ''} 
-                                    onChange={e => setFormData({...formData, room_id: e.target.value})} 
-                                    className="w-full bg-slate-50 border border-slate-200 text-slate-900 px-5 py-3 rounded-xl text-sm font-bold focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600/40 outline-none appearance-none"
-                                >
-                                    <option value="">Unassigned / Pending</option>
-                                    {rooms.map(room => (
-                                        <option key={room.id} value={room.id.toString()}>Room {room.room_number} ({room.status})</option>
-                                    ))}
-                                </select>
+                            <div className="grid grid-cols-2 gap-6 mt-4">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Gender</label>
+                                    <select value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} className="w-full bg-slate-50 border border-slate-200 text-slate-900 px-5 py-3 rounded-xl text-sm font-bold focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600/40 outline-none appearance-none">
+                                        <option value="">Not Specified</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Tenant Status</label>
+                                    <select value={formData.status} onChange={e => setFormData({...formData, status: e.target.value})} className="w-full bg-slate-50 border border-slate-200 text-slate-900 px-5 py-3 rounded-xl text-sm font-bold focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600/40 outline-none appearance-none">
+                                        <option value="Pending">Pending</option>
+                                        <option value="Active">Active</option>
+                                        <option value="Declined">Declined</option>
+                                        <option value="Moved Out">Moved Out</option>
+                                    </select>
+                                </div>
                             </div>
-                            <button type="submit" disabled={isSubmitting} className="w-full py-4 bg-indigo-600 text-white font-black text-xs uppercase tracking-widest rounded-xl hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2 mt-4">
+
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Home Address</label>
+                                <input type="text" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} className="w-full bg-slate-50 border border-slate-200 text-slate-900 px-5 py-3 rounded-xl text-sm font-bold focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600/40 outline-none" placeholder="123 Main St..." />
+                            </div>
+
+                            <div className="pt-4 pb-2 border-t border-slate-100 flex items-center justify-between">
+                                <h3 className="text-xs font-black text-slate-800 uppercase tracking-widest">Rental Details</h3>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Assigned Unit</label>
+                                    <select 
+                                        value={formData.room_id?.toString() || ''} 
+                                        onChange={e => setFormData({...formData, room_id: e.target.value})} 
+                                        className="w-full bg-slate-50 border border-slate-200 text-slate-900 px-5 py-3 rounded-xl text-sm font-bold focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600/40 outline-none appearance-none"
+                                    >
+                                        <option value="">Unassigned / Pending</option>
+                                        {rooms.map(room => (
+                                            <option key={room.id} value={room.id.toString()}>Room {room.room_number} ({room.status})</option>
+                                        ))}
+                                    </select>
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Monthly Rent (₱)</label>
+                                    <input type="number" min="0" step="0.01" value={formData.monthly_rent} onChange={e => setFormData({...formData, monthly_rent: e.target.value})} className="w-full bg-slate-50 border border-slate-200 text-slate-900 px-5 py-3 rounded-xl text-sm font-bold focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600/40 outline-none" placeholder="e.g. 5000" />
+                                </div>
+                            </div>
+                            
+                            <div className="grid grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Move-in Date</label>
+                                    <input type="date" value={formData.date_moved_in} onChange={e => setFormData({...formData, date_moved_in: e.target.value})} className="w-full bg-slate-50 border border-slate-200 text-slate-900 px-5 py-3 rounded-xl text-sm font-bold focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600/40 outline-none" />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest pl-1">Contract End Date</label>
+                                    <input type="date" value={formData.contract_end_date} onChange={e => setFormData({...formData, contract_end_date: e.target.value})} className="w-full bg-slate-50 border border-slate-200 text-slate-900 px-5 py-3 rounded-xl text-sm font-bold focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600/40 outline-none" />
+                                </div>
+                            </div>
+                            
+                            <button type="submit" disabled={isSubmitting} className="w-full py-4 bg-indigo-600 text-white font-black text-xs uppercase tracking-widest rounded-xl hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2 mt-6">
                                 {isSubmitting ? (
                                     <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
                                 ) : (
@@ -299,8 +395,11 @@ export default function AdminTenants() {
                                                     {tenant.room_number ? `Room ${tenant.room_number}` : 'Unassigned'} 
                                                     {tenant.bed_space !== 'N/A' && ` • Bed ${tenant.bed_space}`}
                                                 </p>
-                                                <p className="text-[11px] text-slate-500 font-medium mt-0.5">Rent: ₱{tenant.monthly_rent?.toLocaleString()}</p>
-                                                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">In: {tenant.date_moved_in} • Out: {tenant.contract_end_date}</p>
+                                                <p className="text-[11px] text-slate-500 font-medium mt-0.5">Rent: ₱{tenant.monthly_rent ? Number(tenant.monthly_rent).toLocaleString() : '0'}</p>
+                                                <p className="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-1">
+                                                    In: {tenant.date_moved_in ? new Date(tenant.date_moved_in).toLocaleDateString() : 'N/A'} • 
+                                                    Out: {tenant.contract_end_date ? new Date(tenant.contract_end_date).toLocaleDateString() : 'N/A'}
+                                                </p>
                                             </div>
                                         </td>
 
@@ -325,6 +424,7 @@ export default function AdminTenants() {
                                             <span className={`inline-flex px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-xl border ${
                                                 tenant.status === 'Active' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 
                                                 tenant.status === 'Moved Out' ? 'bg-slate-100 text-slate-600 border-slate-200' :
+                                                tenant.status === 'Declined' ? 'bg-rose-50 text-rose-600 border-rose-100' :
                                                 'bg-amber-50 text-amber-600 border-amber-100'
                                             }`}>
                                                 {tenant.status}
@@ -334,15 +434,26 @@ export default function AdminTenants() {
                                         {/* 5. Actions */}
                                         <td className="px-6 py-6 text-right">
                                             <div className="flex items-center justify-end gap-2">
-                                                <button onClick={() => handleOpenModal(tenant)} className="px-4 py-2 text-indigo-600 font-black text-[10px] uppercase tracking-widest hover:bg-indigo-50 rounded-lg transition-colors">
-                                                    Edit
-                                                </button>
+                                                {tenant.status === 'Pending' ? (
+                                                    <>
+                                                        <button onClick={() => handleOpenModal(tenant, 'approve')} className="px-4 py-2 text-emerald-600 font-black text-[10px] uppercase tracking-widest hover:bg-emerald-50 rounded-lg transition-colors">
+                                                            Approve
+                                                        </button>
+                                                        <button onClick={() => handleUpdateStatus(tenant.id, 'Declined')} disabled={isStatusUpdating === tenant.id} className="px-4 py-2 text-amber-600 font-black text-[10px] uppercase tracking-widest hover:bg-amber-50 rounded-lg transition-colors disabled:opacity-50">
+                                                            {isStatusUpdating === tenant.id ? '...' : 'Decline'}
+                                                        </button>
+                                                    </>
+                                                ) : (
+                                                    <button onClick={() => handleOpenModal(tenant, 'edit')} className="px-4 py-2 text-indigo-600 font-black text-[10px] uppercase tracking-widest hover:bg-indigo-50 rounded-lg transition-colors">
+                                                        Edit
+                                                    </button>
+                                                )}
                                                 <button 
                                                     onClick={() => handleDeleteTenant(tenant.id)} 
                                                     disabled={isDeleting === tenant.id}
                                                     className="px-4 py-2 text-rose-600 font-black text-[10px] uppercase tracking-widest hover:bg-rose-50 rounded-lg transition-colors disabled:opacity-50"
                                                 >
-                                                    {isDeleting === tenant.id ? '...' : 'Delete'}
+                                                    {isDeleting === tenant.id ? '...' : 'Del'}
                                                 </button>
                                             </div>
                                         </td>

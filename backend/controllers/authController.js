@@ -6,7 +6,7 @@ const { JWT_SECRET } = require('../middleware/authMiddleware');
 // @desc    Register a new user (Tenant or Admin)
 // @route   POST /api/auth/register
 const registerUser = async (req, res) => {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role, phone, gender, address } = req.body;
 
     try {
         // 1. Check if user already exists
@@ -20,9 +20,12 @@ const registerUser = async (req, res) => {
         const hashedPassword = await bcrypt.hash(password, salt);
 
         // 3. Insert user into database
+        const roleToSet = role || 'tenant';
+        const statusToSet = roleToSet === 'tenant' ? 'Pending' : 'Active';
+
         const newUser = await db.query(
-            'INSERT INTO users (name, email, password, role) VALUES ($1, $2, $3, $4) RETURNING id, name, email, role',
-            [name, email, hashedPassword, role || 'tenant']
+            'INSERT INTO users (name, email, password, role, phone, gender, address, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING id, name, email, role, status',
+            [name, email, hashedPassword, roleToSet, phone || null, gender || 'Not Specified', address || null, statusToSet]
         );
 
         res.status(201).json({

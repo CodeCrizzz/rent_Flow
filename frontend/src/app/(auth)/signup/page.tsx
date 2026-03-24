@@ -7,6 +7,9 @@ import Link from 'next/link';
 export default function SignupPage() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
+    const [gender, setGender] = useState('');
+    const [address, setAddress] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +33,7 @@ export default function SignupPage() {
 
         setIsLoading(true);
         try {
-            await api.post('/auth/register', { name, email, password, role: 'tenant' });
+            await api.post('/auth/register', { name, email, phone, gender, address, password, role: 'tenant' });
             router.push('/login?registered=true');
         } catch (err: any) {
             setErrorMsg(err.response?.data?.message || err.message || "Registration Failed. Please try again.");
@@ -92,9 +95,32 @@ export default function SignupPage() {
                             </div>
 
                             {/* Email Input */}
-                            <div className="sm:col-span-2">
+                            <div className="sm:col-span-1">
                                 <label className="block text-sm font-bold text-zinc-300 mb-2">Email Address</label>
                                 <input type="email" placeholder="name@example.com" className="w-full bg-zinc-900/50 border border-white/5 text-white placeholder-zinc-600 px-5 py-4 rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setEmail(e.target.value)} required />
+                            </div>
+
+                            {/* Phone Input */}
+                            <div className="sm:col-span-1">
+                                <label className="block text-sm font-bold text-zinc-300 mb-2">Contact Number</label>
+                                <input type="tel" placeholder="+1 (555) 000-0000" className="w-full bg-zinc-900/50 border border-white/5 text-white placeholder-zinc-600 px-5 py-4 rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setPhone(e.target.value)} required />
+                            </div>
+
+                            {/* Gender Input */}
+                            <div className="sm:col-span-1">
+                                <label className="block text-sm font-bold text-zinc-300 mb-2">Gender</label>
+                                <select className="w-full bg-zinc-900/50 border border-white/5 text-white placeholder-zinc-600 px-5 py-4 rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-zinc-900 outline-none transition-all text-sm font-medium appearance-none" onChange={(e) => setGender(e.target.value)} required>
+                                    <option value="" disabled selected>Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            {/* Address Input */}
+                            <div className="sm:col-span-1">
+                                <label className="block text-sm font-bold text-zinc-300 mb-2">Home Address <span className="text-zinc-500 font-normal text-xs">(Optional)</span></label>
+                                <input type="text" placeholder="123 Main St, City" className="w-full bg-zinc-900/50 border border-white/5 text-white placeholder-zinc-600 px-5 py-4 rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setAddress(e.target.value)} />
                             </div>
 
                             {/* Password Input */}

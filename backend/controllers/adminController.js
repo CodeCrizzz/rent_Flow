@@ -196,20 +196,36 @@ const createTenant = async (req, res) => {
     }
 };
 
-// @desc    Update Tenant details
-// @route   PUT /api/admin/tenants/:id
 const updateTenant = async (req, res) => {
     const { id } = req.params;
-    const { name, email, phone, room_id } = req.body;
+    const allowedFields = ['name', 'email', 'phone', 'room_id', 'address', 'gender', 'date_moved_in', 'contract_end_date', 'monthly_rent', 'status'];
+    const values = [];
+    const setClause = [];
+
+    allowedFields.forEach((field) => {
+        if (req.body[field] !== undefined) {
+            if (req.body[field] === '') {
+                 values.push(null); // Convert empty strings to null for DB consistency (e.g. room_id)
+            } else {
+                 values.push(req.body[field]);
+            }
+            setClause.push(`${field} = $${values.length}`);
+        }
+    });
+
+    if (setClause.length === 0) {
+        return res.status(400).json({ message: 'No fields provided for update' });
+    }
 
     try {
+        values.push(id);
         const query = `
             UPDATE users 
-            SET name = $1, email = $2, phone = $3, room_id = $4 
-            WHERE id = $5 AND role = 'tenant'
-            RETURNING id, name, email, phone, room_id
+            SET ${setClause.join(', ')}
+            WHERE id = $${values.length} AND role = 'tenant'
+            RETURNING *
         `;
-        const result = await db.query(query, [name, email, phone, room_id || null, id]);
+        const result = await db.query(query, values);
 
         if (result.rows.length === 0) {
             return res.status(404).json({ message: 'Tenant not found' });
