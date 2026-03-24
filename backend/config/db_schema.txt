@@ -13,9 +13,12 @@ DROP TABLE IF EXISTS rooms CASCADE;
 CREATE TABLE rooms (
     id SERIAL PRIMARY KEY,
     room_number VARCHAR(50) UNIQUE NOT NULL,
+    type VARCHAR(50) NOT NULL DEFAULT 'Single',
     capacity INT NOT NULL,
     price DECIMAL(10, 2) NOT NULL,
     status VARCHAR(20) DEFAULT 'available', -- 'available', 'occupied', 'maintenance'
+    floor VARCHAR(50),
+    description TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

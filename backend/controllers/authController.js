@@ -9,17 +9,17 @@ const registerUser = async (req, res) => {
     const { name, email, password, role, phone, gender, address } = req.body;
 
     try {
-        // 1. Check if user already exists
+        //Check if user already exists
         const userExists = await db.query('SELECT * FROM users WHERE email = $1', [email]);
         if (userExists.rows.length > 0) {
             return res.status(400).json({ message: 'User with this email already exists' });
         }
 
-        // 2. Hash the password
+        // Hash the password
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        // 3. Insert user into database
+        // Insert user into database
         const roleToSet = role || 'tenant';
         const statusToSet = roleToSet === 'tenant' ? 'Pending' : 'Active';
 

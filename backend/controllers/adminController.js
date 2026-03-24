@@ -18,18 +18,52 @@ const getDashboardStats = async (req, res) => {
     }
 };
 
-// @desc    Get all Rooms with their current tenant
+// @desc    Get all Rooms with their current occupants
 // @route   GET /api/admin/rooms
 const getAllRooms = async (req, res) => {
     try {
         const query = `
-            SELECT r.*, u.name as tenant_name 
-            FROM rooms r 
-            LEFT JOIN users u ON r.id = u.room_id
+            SELECT 
+                r.*,
+                (
+                    SELECT COALESCE(json_agg(
+                        json_build_object(
+                            'id', u.id,
+                            'name', u.name,
+                            'phone', u.phone,
+                            'date_moved_in', u.date_moved_in,
+                            'balance', (SELECT COALESCE(SUM(amount), 0) FROM payments p WHERE p.tenant_id = u.id AND p.status = 'pending')
+                        )
+                    ), '[]')
+                    FROM users u 
+                    WHERE u.room_id = r.id AND u.role = 'tenant' AND u.status != 'Moved Out'
+                ) as occupants,
+                (SELECT COUNT(*) FROM users u WHERE u.room_id = r.id AND u.role = 'tenant' AND u.status != 'Moved Out') as current_occupants
+            FROM rooms r
             ORDER BY r.room_number ASC
         `;
         const rooms = await db.query(query);
-        res.status(200).json(rooms.rows);
+        
+        // Auto-calculate available slots and status
+        const enrichedRooms = rooms.rows.map(room => {
+            const current = parseInt(room.current_occupants);
+            let calculatedStatus = room.status;
+            
+            // Only auto-update if not manually set to Maintenance
+            if (calculatedStatus !== 'Maintenance') {
+                if (current === 0) calculatedStatus = 'Available';
+                else if (current < room.capacity) calculatedStatus = 'Partial';
+                else calculatedStatus = 'Occupied';
+            }
+            
+            return {
+                ...room,
+                status: calculatedStatus,
+                available_slots: room.capacity - current
+            };
+        });
+        
+        res.status(200).json(enrichedRooms);
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error fetching rooms' });
@@ -39,7 +73,7 @@ const getAllRooms = async (req, res) => {
 // @desc    Create a new Room
 // @route   POST /api/admin/rooms
 const createRoom = async (req, res) => {
-    const { room_number, capacity, price, status } = req.body;
+    const { room_number, type, capacity, price, floor, description, status } = req.body;
     try {
         // 1. Check if room number already exists to prevent duplicates
         const roomExists = await db.query('SELECT * FROM rooms WHERE room_number = $1', [room_number]);
@@ -49,11 +83,19 @@ const createRoom = async (req, res) => {
 
         // 2. Insert the new room
         const query = `
-            INSERT INTO rooms (room_number, capacity, price, status) 
-            VALUES ($1, $2, $3, $4) 
+            INSERT INTO rooms (room_number, type, capacity, price, floor, description, status) 
+            VALUES ($1, $2, $3, $4, $5, $6, $7) 
             RETURNING *
         `;
-        const newRoom = await db.query(query, [room_number, capacity, price, status || 'available']);
+        const newRoom = await db.query(query, [
+            room_number, 
+            type || 'Single', 
+            capacity, 
+            price, 
+            floor || null, 
+            description || null, 
+            status || 'Available'
+        ]);
         
         res.status(201).json({ message: 'Room created successfully', room: newRoom.rows[0] });
     } catch (error) {
@@ -66,16 +108,25 @@ const createRoom = async (req, res) => {
 // @route   PUT /api/admin/rooms/:id
 const updateRoom = async (req, res) => {
     const { id } = req.params;
-    const { room_number, capacity, price, status } = req.body;
+    const { room_number, type, capacity, price, floor, description, status } = req.body;
     
     try {
         const query = `
             UPDATE rooms 
-            SET room_number = $1, capacity = $2, price = $3, status = $4 
-            WHERE id = $5 
+            SET room_number = $1, type = $2, capacity = $3, price = $4, floor = $5, description = $6, status = $7 
+            WHERE id = $8 
             RETURNING *
         `;
-        const updatedRoom = await db.query(query, [room_number, capacity, price, status, id]);
+        const updatedRoom = await db.query(query, [
+            room_number, 
+            type || 'Single', 
+            capacity, 
+            price, 
+            floor || null, 
+            description || null, 
+            status, 
+            id
+        ]);
         
         if (updatedRoom.rows.length === 0) {
             return res.status(404).json({ message: 'Room not found' });
@@ -94,10 +145,10 @@ const deleteRoom = async (req, res) => {
     const { id } = req.params;
     
     try {
-        // 1. Safety Check: Don't delete if a tenant is still assigned to this room
-        const tenantCheck = await db.query("SELECT * FROM users WHERE room_id = $1 AND role = 'tenant'", [id]);
+        // 1. Safety Check: Don't delete if an active tenant is still assigned to this room
+        const tenantCheck = await db.query("SELECT * FROM users WHERE room_id = $1 AND role = 'tenant' AND status != 'Moved Out'", [id]);
         if (tenantCheck.rows.length > 0) {
-            return res.status(400).json({ message: 'Cannot delete this room because a tenant is currently assigned to it.' });
+            return res.status(400).json({ message: 'Cannot delete this room because an active tenant is currently assigned to it.' });
         }
 
         // 2. Delete the room
