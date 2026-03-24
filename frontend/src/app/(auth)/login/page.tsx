@@ -22,12 +22,26 @@ export default function LoginPage() {
         setIsMounted(true);
     }, []);
 
+    // --- THE FIX: Clear errors and inputs when you switch portals ---
+    useEffect(() => {
+        setErrorMsg('');
+        setEmail('');
+        setPassword('');
+    }, [selectedRole]);
+
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
         setErrorMsg('');
         try {
             const { data } = await api.post('/auth/login', { email, password });
+
+            if (data.user.role !== selectedRole) {
+                setErrorMsg(`Invalid account. Please use the ${data.user.role.toUpperCase()} portal.`);
+                setIsLoading(false);
+                return; 
+            }
+
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user));
 
@@ -37,7 +51,11 @@ export default function LoginPage() {
                 router.push('/tenant/dashboard');
             }
         } catch (err: any) {
-            setErrorMsg(err.response?.data?.message || err.message || "Login Failed.");
+            if (err.response?.status === 401 || err.response?.status === 404) {
+                setErrorMsg("Invalid account. Incorrect email or password.");
+            } else {
+                setErrorMsg(err.response?.data?.message || "Login Failed. Please try again.");
+            }
         } finally {
             setIsLoading(false);
         }
@@ -56,7 +74,7 @@ export default function LoginPage() {
             {/* --- MAIN LOGIN CARD --- */}
             <div className={`w-full max-w-5xl bg-zinc-950 rounded-[2.5rem] shadow-2xl shadow-black/50 overflow-hidden flex flex-col md:flex-row relative z-10 border border-white/5 transition-all duration-1000 transform ${isMounted ? 'opacity-100 translate-y-0 scale-100 blur-0' : 'opacity-0 translate-y-12 scale-95 blur-md'}`}>
                 
-                {/* LEFT SIDE: Branding (Slides in from left) */}
+                {/* LEFT SIDE: Branding */}
                 <div className={`md:w-5/12 bg-[#0a0a0a] p-10 lg:p-14 flex flex-col justify-between relative overflow-hidden border-r border-white/5 transition-all duration-1000 delay-300 ${isMounted ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}`}>
                     <div className={`absolute top-[-20%] left-[-20%] w-64 h-64 rounded-full mix-blend-screen filter blur-[80px] opacity-30 animate-pulse-slow transition-colors duration-1000 ${primaryGlow}`}></div>
                     <div className={`absolute bottom-[-20%] right-[-20%] w-64 h-64 rounded-full mix-blend-screen filter blur-[80px] opacity-30 transition-colors duration-1000 ${secondaryGlow}`}></div>
@@ -70,17 +88,29 @@ export default function LoginPage() {
                         </Link>
                     </div>
 
+                    {/* --- Clear errors and inputs when you switch portals --- */}
+                    {isNewlyRegistered && (
+                        <div className="mt-8 text-center">
+                            <h2 className="text-4xl font-bold text-white mb-4 leading-tight">
+                                {selectedRole === 'tenant' ? "Manage your stay" : "Manage your property"}<br />with ease.
+                            </h2>
+                            <p className="text-zinc-500 text-sm leading-relaxed max-w-xs">
+                                Secure access to the RentFlow. 
+                            </p>
+                        </div>
+                    )}
+
                     <div className="relative z-10 mt-auto">
                         <h2 className="text-4xl font-bold text-white mb-4 leading-tight">
                             {selectedRole === 'tenant' ? "Manage your stay" : "Manage your property"}<br />with ease.
                         </h2>
                         <p className="text-zinc-500 text-sm leading-relaxed max-w-xs">
-                            Secure access to the RentFlow ecosystem.
+                            Secure access to the RentFlow.
                         </p>
                     </div>
                 </div>
 
-                {/* RIGHT SIDE: Form Area (Slides up with stagger) */}
+                {/* RIGHT SIDE: Form Area */}
                 <div className={`md:w-7/12 p-10 lg:p-14 bg-zinc-950 flex flex-col justify-center transition-all duration-1000 delay-500 ${isMounted ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
                     
                     {/* Role Selector */}
@@ -92,16 +122,27 @@ export default function LoginPage() {
                     <div key={selectedRole} className="animate-in fade-in slide-in-from-bottom-4 duration-500">
                         <div className="mb-8">
                             <h2 className="text-3xl font-bold text-white tracking-tight mb-2">
-                                {selectedRole === 'tenant' ? 'Welcome back' : 'Admin Access'}
+                                {selectedRole === 'tenant' ? 'Welcome' : 'Admin Access'}
                             </h2>
-                            <p className="text-zinc-500 text-sm">Please authenticate to continue.</p>
+                            <p className="text-zinc-500 text-sm">Enter Account Credentials.</p>
                         </div>
+
+                        {errorMsg && (
+                            <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-sm font-semibold flex items-start animate-pulse">
+                                <svg className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                </svg>
+                                <span>{errorMsg}</span>
+                            </div>
+                        )}
 
                         <form onSubmit={handleLogin} className="space-y-5">
                             <div>
                                 <label className="block text-xs font-bold text-zinc-500 uppercase tracking-widest mb-2">Email Address</label>
                                 <input
-                                    type="email" placeholder={selectedRole === 'tenant' ? "name@example.com" : "admin@rentflow.com"}
+                                    type="email" 
+                                    value={email}
+                                    placeholder={selectedRole === 'tenant' ? "name@example.com" : "admin@rentflow.com"}
                                     className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 px-5 py-4 rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium"
                                     onChange={(e) => setEmail(e.target.value)} required
                                 />
@@ -115,6 +156,7 @@ export default function LoginPage() {
                                 <div className="relative">
                                     <input
                                         type={showPassword ? "text" : "password"}
+                                        value={password}
                                         placeholder="••••••••"
                                         className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 pl-5 pr-12 py-4 rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium"
                                         onChange={(e) => setPassword(e.target.value)} required
