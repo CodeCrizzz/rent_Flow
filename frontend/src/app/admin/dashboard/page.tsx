@@ -79,7 +79,7 @@ export default function AdminDashboard() {
 
             {/* Empty State Banner (Modern CTA Style) */}
             {stats.totalRooms === 0 && (
-                <div className="mt-8 bg-gradient-to-r from-[#0B1121] to-[#1e293b] rounded-3xl p-10 flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl shadow-slate-900/10 relative overflow-hidden">
+                <div className="mt-8 bg-linear-to-r from-[#0B1121] to-[#1e293b] rounded-3xl p-10 flex flex-col md:flex-row items-center justify-between gap-8 shadow-xl shadow-slate-900/10 relative overflow-hidden">
                     <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500 rounded-full blur-[100px] opacity-20 -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
                     <div className="relative z-10 text-center md:text-left">
                         <h2 className="text-2xl font-black text-white mb-2 tracking-tight">Set up your first property</h2>

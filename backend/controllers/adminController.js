@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const bcrypt = require('bcryptjs');
 
 // @desc    Get Admin Dashboard Statistics
 const getDashboardStats = async (req, res) => {
@@ -21,7 +22,6 @@ const getDashboardStats = async (req, res) => {
 // @route   GET /api/admin/rooms
 const getAllRooms = async (req, res) => {
     try {
-        // This query gets the room and tries to find a user assigned to it
         const query = `
             SELECT r.*, u.name as tenant_name 
             FROM rooms r 
@@ -40,7 +40,6 @@ const getAllRooms = async (req, res) => {
 // @route   GET /api/admin/tenants
 const getAllTenants = async (req, res) => {
     try {
-        // Fetch tenants and join with the rooms table to see their room number
         const query = `
             SELECT u.id, u.name, u.email, u.phone, u.created_at, r.room_number 
             FROM users u 
@@ -90,4 +89,87 @@ const getAllRequests = async (req, res) => {
     }
 };
 
-module.exports = { getDashboardStats, getAllRooms, getAllTenants, getAllPayments, getAllRequests };
+// @desc    Create a new Tenant (Admin Only)
+// @route   POST /api/admin/tenants
+const createTenant = async (req, res) => {
+    const { name, email, phone, password, room_id } = req.body;
+
+    try {
+        const userExists = await db.query('SELECT * FROM users WHERE email = $1', [email]);
+        if (userExists.rows.length > 0) {
+            return res.status(400).json({ message: 'User with this email already exists' });
+        }
+
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password || 'password123', salt);
+
+        const newUser = await db.query(
+            'INSERT INTO users (name, email, phone, password, role, room_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, name, email, phone, room_id',
+            [name, email, phone, hashedPassword, 'tenant', room_id || null]
+        );
+
+        res.status(201).json({
+            message: 'Tenant created successfully',
+            tenant: newUser.rows[0]
+        });
+    } catch (error) {
+        console.error('Create Tenant Error:', error);
+        res.status(500).json({ message: 'Server error during tenant creation' });
+    }
+};
+
+// @desc    Update Tenant details
+// @route   PUT /api/admin/tenants/:id
+const updateTenant = async (req, res) => {
+    const { id } = req.params;
+    const { name, email, phone, room_id } = req.body;
+
+    try {
+        const query = `
+            UPDATE users 
+            SET name = $1, email = $2, phone = $3, room_id = $4 
+            WHERE id = $5 AND role = 'tenant'
+            RETURNING id, name, email, phone, room_id
+        `;
+        const result = await db.query(query, [name, email, phone, room_id || null, id]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Tenant not found' });
+        }
+
+        res.status(200).json({ message: 'Tenant updated successfully', tenant: result.rows[0] });
+    } catch (error) {
+        console.error('Update Tenant Error:', error);
+        res.status(500).json({ message: 'Server error updating tenant' });
+    }
+};
+
+// @desc    Delete a Tenant
+// @route   DELETE /api/admin/tenants/:id
+const deleteTenant = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const result = await db.query("DELETE FROM users WHERE id = $1 AND role = 'tenant' RETURNING id", [id]);
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Tenant not found' });
+        }
+
+        res.status(200).json({ message: 'Tenant deleted successfully' });
+    } catch (error) {
+        console.error('Delete Tenant Error:', error);
+        res.status(500).json({ message: 'Server error deleting tenant. Check for existing dependencies (payments, etc.).' });
+    }
+};
+
+module.exports = { 
+    getDashboardStats, 
+    getAllRooms, 
+    getAllTenants, 
+    getAllPayments, 
+    getAllRequests, 
+    updateTenant, 
+    deleteTenant,
+    createTenant
+};

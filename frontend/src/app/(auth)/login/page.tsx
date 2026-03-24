@@ -27,13 +27,10 @@ export default function LoginPage() {
         setErrorMsg('');
         try {
             const { data } = await api.post('/auth/login', { email, password });
-            if (data.user.role !== selectedRole) {
-                setErrorMsg(`Invalid account. Please use the ${data.user.role.toUpperCase()} portal.`);
-                setIsLoading(false);
-                return; 
-            }
+            
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user));
+            
             if (data.user.role === 'admin') router.push('/admin/dashboard');
             else router.push('/tenant/dashboard');
         } catch (err: any) {
@@ -90,7 +87,7 @@ export default function LoginPage() {
 
                         {errorMsg && (
                             <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-sm font-semibold flex items-start animate-pulse">
-                                <svg className="w-5 h-5 mr-2 flex-shrink-0 mt-0.5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                <svg className="w-5 h-5 mr-2 shrink-0 mt-0.5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                                 <span>{errorMsg}</span>
                             </div>
                         )}
@@ -118,6 +115,17 @@ export default function LoginPage() {
                                 <button type="submit" disabled={isLoading} className={`w-full flex justify-center items-center py-4 px-4 rounded-2xl shadow-xl text-xs font-black uppercase tracking-widest text-white transition-all duration-300 hover:scale-[1.02] active:scale-95 disabled:opacity-50 ${buttonColor}`}>
                                     {isLoading ? "Authenticating..." : "Sign In"}
                                 </button>
+                                
+                                {selectedRole === 'tenant' && (
+                                    <div className="mt-6 text-center animate-in fade-in slide-in-from-bottom-2 duration-700 delay-300">
+                                        <p className="text-zinc-500 text-sm font-medium">
+                                            Don't have an account?{' '}
+                                            <Link href="/signup" className="text-blue-500 hover:text-blue-400 font-bold transition-colors underline-offset-4 hover:underline">
+                                                Sign up
+                                            </Link>
+                                        </p>
+                                    </div>
+                                )}
                             </div>
                         </form>
                     </div>

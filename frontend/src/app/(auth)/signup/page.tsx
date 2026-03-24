@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import api from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -11,11 +11,14 @@ export default function SignupPage() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
+    const [isMounted, setIsMounted] = useState(false);
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const router = useRouter();
+
+    useEffect(() => { setIsMounted(true); }, []);
 
     const handleSignup = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -39,12 +42,12 @@ export default function SignupPage() {
     return (
         <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-[#0a0a0a] relative overflow-hidden">
             {/* Ambient Background Glow */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[500px] bg-gradient-to-b from-blue-600/10 to-transparent blur-3xl rounded-full pointer-events-none"></div>
+            <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[500px] bg-gradient-to-b from-blue-600/10 to-transparent blur-3xl rounded-full pointer-events-none transition-all duration-1000 ${isMounted ? 'opacity-100' : 'opacity-0 scale-50'}`}></div>
 
-            <div className="w-full max-w-5xl bg-zinc-950 rounded-[2.5rem] shadow-2xl shadow-black/50 overflow-hidden flex flex-col md:flex-row relative z-10 border border-white/5">
+            <div className={`w-full max-w-5xl bg-zinc-950 rounded-[2.5rem] shadow-2xl shadow-black/50 overflow-hidden flex flex-col md:flex-row relative z-10 border border-white/5 transition-all duration-1000 transform ${isMounted ? 'opacity-100 translate-y-0 scale-100 blur-0' : 'opacity-0 translate-y-12 scale-95 blur-md'}`}>
                 
                 {/* LEFT SIDE OF CARD: Branding */}
-                <div className="md:w-5/12 bg-[#0a0a0a] p-10 lg:p-14 flex flex-col justify-between relative overflow-hidden border-r border-white/5">
+                <div className={`md:w-5/12 bg-[#0a0a0a] p-10 lg:p-14 flex flex-col justify-between relative overflow-hidden border-r border-white/5 transition-all duration-1000 delay-300 ${isMounted ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}`}>
                     <div className="absolute top-[-20%] left-[-20%] w-64 h-64 bg-blue-600 rounded-full mix-blend-screen filter blur-[80px] opacity-30 animate-pulse-slow"></div>
                     <div className="absolute bottom-[-20%] right-[-20%] w-64 h-64 bg-indigo-600 rounded-full mix-blend-screen filter blur-[80px] opacity-30"></div>
 
@@ -55,10 +58,7 @@ export default function SignupPage() {
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                 </svg>
                             </div>
-                            <span className="text-3xl font-black tracking-tight flex items-center text-white">
-                                <span className="bg-white text-zinc-950 px-2.5 py-0.5 rounded-lg mr-1">Rent</span>
-                                <span className="text-blue-500">Flow</span>
-                            </span>
+                            <span className="text-3xl font-black tracking-tight text-white">Rent<span className="text-blue-500">Flow</span></span>
                         </Link>
                     </div>
 
@@ -69,7 +69,7 @@ export default function SignupPage() {
                 </div>
 
                 {/* RIGHT SIDE OF CARD: Signup Form (Dark Mode) */}
-                <div className="md:w-7/12 p-10 lg:p-14 bg-zinc-950 flex flex-col justify-center">
+                <div className={`md:w-7/12 p-10 lg:p-14 bg-zinc-950 flex flex-col justify-center transition-all duration-1000 delay-500 ${isMounted ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
                     <div className="mb-8">
                         <h2 className="text-3xl font-bold text-white tracking-tight mb-2">Create an account</h2>
                         <p className="text-zinc-400">Please enter your details to apply for residency.</p>
