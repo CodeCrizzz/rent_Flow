@@ -25,57 +25,58 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         { name: 'Tenants', path: '/admin/tenants', icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z' },
         { name: 'Billing', path: '/admin/billing', icon: 'M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16l3.5-2 3.5 2 3.5-2 3.5 2zM10 8.5a.5.5 0 11-1 0 .5.5 0 011 0zm5 5a.5.5 0 11-1 0 .5.5 0 011 0z' },
         { name: 'Requests', path: '/admin/requests', icon: 'M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z' },
+        { name: 'Communications', path: '/admin/chat', icon: 'M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z' },
     ];
 
     return (
-        <div className="flex h-screen bg-[#F8F9FA] overflow-hidden selection:bg-indigo-100 selection:text-indigo-900 font-sans">
-            {/* Obsidian Sidebar */}
-            <aside className="w-[280px] bg-[#09090b] text-white flex-col hidden md:flex border-r border-[#1f1f22] shadow-[4px_0_24px_rgba(0,0,0,0.02)] z-20">
-                <div className="p-8">
+        <div className="flex h-screen bg-[#050505] text-white overflow-hidden selection:bg-indigo-500/30">
+            <aside className="w-[280px] bg-[#0a0a0c]/90 backdrop-blur-3xl flex-col hidden md:flex border-r border-white/5 shadow-2xl z-20 relative">
+                <div className="absolute top-0 left-0 w-full h-64 bg-indigo-600/5 blur-[80px] pointer-events-none"></div>
+
+                <div className="p-8 relative z-10">
                     <Link href="/" className="inline-flex items-center gap-3 hover:opacity-80 transition-opacity group">
-                        <div className="w-9 h-9 bg-indigo-600 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(79,70,229,0.3)] group-hover:scale-110 transition-transform duration-300">
-                            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                        <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(79,70,229,0.3)] group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                         </div>
-                        <span className="text-2xl font-black tracking-tight text-white">Rent<span className="text-indigo-500">Flow</span></span>
+                        <span className="text-2xl font-black tracking-tight text-white">Rent<span className="text-indigo-400">Flow</span></span>
                     </Link>
                 </div>
 
-                <nav className="flex-1 px-5 space-y-1.5 mt-2">
-                    <div className="px-3 mb-5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Navigation</div>
+                <nav className="flex-1 px-5 space-y-2 mt-2 relative z-10">
+                    <div className="px-3 mb-6 text-[10px] font-black text-zinc-600 uppercase tracking-[0.2em]">Navigation</div>
                     {navItems.map((item) => {
                         const isActive = pathname === item.path;
                         return (
-                            <Link key={item.name} href={item.path} className={`flex items-center gap-3.5 px-4 py-3 rounded-2xl text-sm font-bold transition-all duration-300 group ${isActive ? 'bg-indigo-600/10 text-indigo-400' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}>
-                                <div className={`flex items-center justify-center w-8 h-8 rounded-xl transition-colors ${isActive ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20' : 'bg-transparent text-slate-500 group-hover:text-white'}`}>
-                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={item.icon}></path></svg>
-                                </div>
+                            <Link key={item.name} href={item.path} className={`flex items-center gap-3.5 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all duration-300 ${isActive ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-[0_0_20px_rgba(79,70,229,0.3)]' : 'text-zinc-500 hover:bg-zinc-900/50 hover:text-zinc-300'}`}>
+                                <svg className={`w-5 h-5 ${isActive ? 'text-white' : 'text-zinc-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={item.icon}></path></svg>
                                 {item.name}
                             </Link>
                         );
                     })}
                 </nav>
 
-                <div className="p-6 border-t border-[#1f1f22] bg-[#09090b]">
-                    <div className="flex items-center gap-4 mb-4">
-                        <div className="w-10 h-10 rounded-full bg-[#18181b] flex items-center justify-center text-sm font-bold text-slate-300 border border-[#27272a] shadow-inner">
+                <div className="p-5 border-t border-white/5 bg-black/20 relative z-10">
+                    <div className="flex items-center gap-3 px-3 py-2 mb-4">
+                        <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-sm font-black text-indigo-400 border border-indigo-500/20 shadow-inner">
                             {adminName.charAt(0).toUpperCase()}
                         </div>
                         <div className="flex-1 min-w-0">
                             <p className="text-sm font-bold text-white truncate">{adminName}</p>
-                            <p className="text-[10px] uppercase tracking-wider text-slate-500 font-bold truncate">Master Admin</p>
+                            <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest truncate flex items-center gap-1.5 mt-0.5">
+                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                Master Admin
+                            </p>
                         </div>
                     </div>
-                    <button onClick={handleLogout} className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 bg-[#18181b] hover:bg-rose-500/10 hover:text-rose-500 border border-[#27272a] hover:border-rose-500/20 transition-all duration-300">
+                    <button onClick={handleLogout} className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-xs font-black uppercase tracking-widest text-zinc-500 bg-zinc-900/50 hover:bg-red-500/10 hover:text-red-400 hover:border-red-500/20 border border-transparent transition-all duration-300 group">
                         Sign Out
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                        <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                     </button>
                 </div>
             </aside>
 
-            {/* Main Content Area without Topbar */}
             <main className="flex-1 flex flex-col relative h-screen overflow-hidden">
-                {/* Page Content */}
-                <div className="flex-1 overflow-y-auto p-10 md:p-12 relative z-0">
+                <div className="flex-1 overflow-y-auto p-6 md:p-10 lg:p-14 relative z-0 scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent">
                     {children}
                 </div>
             </main>

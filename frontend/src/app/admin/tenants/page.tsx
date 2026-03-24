@@ -14,6 +14,7 @@ interface Tenant {
 export default function AdminTenants() {
     const [tenants, setTenants] = useState<Tenant[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
     const [error, setError] = useState('');
 
     useEffect(() => {
@@ -23,7 +24,7 @@ export default function AdminTenants() {
                 setTenants(data);
             } catch (err: any) {
                 console.error("Failed to fetch tenants:", err);
-                setError("Failed to load tenants.");
+                setError("Failed to load residents list.");
             } finally {
                 setIsLoading(false);
             }
@@ -31,6 +32,12 @@ export default function AdminTenants() {
 
         fetchTenants();
     }, []);
+
+    const filteredTenants = tenants.filter(t => 
+        t.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        t.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (t.room_number && t.room_number.toString().includes(searchQuery))
+    );
 
     return (
         <div className="max-w-7xl mx-auto space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
@@ -40,7 +47,7 @@ export default function AdminTenants() {
                     <p className="text-slate-500 font-medium mt-2">Manage all active residents and pending applications.</p>
                 </div>
                 <div className="relative group">
-                    <input type="text" placeholder="Search tenants..." className="pl-12 pr-6 py-3.5 bg-white border border-slate-200 rounded-2xl text-sm font-medium focus:outline-none focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600/40 w-full sm:w-80 shadow-sm transition-all" />
+                    <input type="text" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} placeholder="Search residents..." className="pl-12 pr-6 py-3.5 bg-white border border-slate-200 rounded-2xl text-sm font-medium focus:outline-none focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600/40 w-full sm:w-80 shadow-sm transition-all" />
                     <svg className="w-5 h-5 text-slate-400 absolute left-4 top-3.5 group-focus-within:text-indigo-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>
             </div>
@@ -72,14 +79,14 @@ export default function AdminTenants() {
                                         <p className="mt-3 font-bold text-slate-400 text-xs">Fetching residents...</p>
                                     </td>
                                 </tr>
-                            ) : tenants.length === 0 ? (
+                            ) : filteredTenants.length === 0 ? (
                                 <tr>
                                     <td colSpan={5} className="px-8 py-16 text-center text-slate-400 font-bold text-sm">
-                                        No residents found.
+                                        {searchQuery ? "No residents match your search." : "No residents found."}
                                     </td>
                                 </tr>
                             ) : (
-                                tenants.map((tenant) => (
+                                filteredTenants.map((tenant) => (
                                     <tr key={tenant.id} className="hover:bg-slate-50/50 transition-colors group">
                                         <td className="px-8 py-6">
                                             <div className="flex items-center gap-3">
@@ -91,7 +98,7 @@ export default function AdminTenants() {
                                         </td>
                                         <td className="px-8 py-6">
                                             <div className="text-sm">
-                                                <p className="font-bold text-slate-700">{tenant.email}</p>
+                                                <p className="font-bold text-slate-700 uppercase tracking-tight">{tenant.email}</p>
                                                 <p className="text-[11px] text-slate-400 mt-0.5 font-medium">{tenant.phone}</p>
                                             </div>
                                         </td>
