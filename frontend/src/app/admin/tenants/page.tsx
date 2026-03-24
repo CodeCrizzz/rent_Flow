@@ -33,64 +33,78 @@ export default function AdminTenants() {
     }, []);
 
     return (
-        <div className="max-w-7xl mx-auto space-y-8">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="max-w-7xl mx-auto space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                 <div>
-                    <h1 className="text-3xl font-black text-slate-900 tracking-tight">Tenants Directory</h1>
-                    <p className="text-slate-500 font-medium mt-1">View and manage all active and pending tenants.</p>
+                    <h1 className="text-4xl font-black text-slate-900 tracking-tight">Tenants Directory</h1>
+                    <p className="text-slate-500 font-medium mt-2">Manage all active residents and pending applications.</p>
                 </div>
-                <div className="relative">
-                    <input type="text" placeholder="Search tenants..." className="pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 w-full sm:w-64" />
-                    <svg className="w-4 h-4 text-slate-400 absolute left-4 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                <div className="relative group">
+                    <input type="text" placeholder="Search tenants..." className="pl-12 pr-6 py-3.5 bg-white border border-slate-200 rounded-2xl text-sm font-medium focus:outline-none focus:ring-4 focus:ring-indigo-600/5 focus:border-indigo-600/40 w-full sm:w-80 shadow-sm transition-all" />
+                    <svg className="w-5 h-5 text-slate-400 absolute left-4 top-3.5 group-focus-within:text-indigo-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>
             </div>
 
             {error && (
-                <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-600 font-medium">
+                <div className="p-4 bg-rose-50 border border-rose-100 rounded-2xl text-rose-600 font-bold text-sm flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-rose-600 animate-pulse"></div>
                     {error}
                 </div>
             )}
 
-            <div className="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden">
+            <div className="bg-white rounded-4xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-200/50 overflow-hidden">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="bg-slate-50/50 border-b border-slate-100">
-                                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Name</th>
-                                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Contact</th>
-                                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Room</th>
-                                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Status</th>
-                                <th className="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Action</th>
+                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Resident Information</th>
+                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Contact Details</th>
+                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Assigned Unit</th>
+                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</th>
+                                <th className="px-8 py-5 text-[10px] font-black text-slate-400 uppercase tracking-widest text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-slate-50">
                             {isLoading ? (
                                 <tr>
-                                    <td colSpan={5} className="px-6 py-8 text-center text-slate-500 font-medium">
-                                        Loading tenants...
+                                    <td colSpan={5} className="px-8 py-16 text-center">
+                                        <div className="inline-block w-6 h-6 border-3 border-indigo-600/20 border-t-indigo-600 rounded-full animate-spin"></div>
+                                        <p className="mt-3 font-bold text-slate-400 text-xs">Fetching residents...</p>
                                     </td>
                                 </tr>
                             ) : tenants.length === 0 ? (
                                 <tr>
-                                    <td colSpan={5} className="px-6 py-8 text-center text-slate-500 font-medium">
-                                        No tenants found.
+                                    <td colSpan={5} className="px-8 py-16 text-center text-slate-400 font-bold text-sm">
+                                        No residents found.
                                     </td>
                                 </tr>
                             ) : (
                                 tenants.map((tenant) => (
-                                    <tr key={tenant.id} className="hover:bg-slate-50/50 transition-colors">
-                                        <td className="px-6 py-4 font-bold text-slate-900">{tenant.name}</td>
-                                        <td className="px-6 py-4 text-slate-500 text-sm font-medium">{tenant.email}<br/><span className="text-xs text-slate-400">{tenant.phone}</span></td>
-                                        <td className="px-6 py-4 font-bold text-slate-700">{tenant.room_number || 'N/A'}</td>
-                                        <td className="px-6 py-4">
+                                    <tr key={tenant.id} className="hover:bg-slate-50/50 transition-colors group">
+                                        <td className="px-8 py-6">
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-9 h-9 rounded-xl bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-sm group-hover:bg-indigo-600 group-hover:text-white transition-all duration-300">
+                                                    {tenant.name.charAt(0)}
+                                                </div>
+                                                <span className="font-bold text-slate-900">{tenant.name}</span>
+                                            </div>
+                                        </td>
+                                        <td className="px-8 py-6">
+                                            <div className="text-sm">
+                                                <p className="font-bold text-slate-700">{tenant.email}</p>
+                                                <p className="text-[11px] text-slate-400 mt-0.5 font-medium">{tenant.phone}</p>
+                                            </div>
+                                        </td>
+                                        <td className="px-8 py-6 font-black text-slate-900">{tenant.room_number ? `Room ${tenant.room_number}` : 'Unassigned'}</td>
+                                        <td className="px-8 py-6">
                                             {tenant.room_number ? (
-                                                <span className="px-3 py-1 bg-green-100 text-green-700 text-xs font-bold rounded-full">Active</span>
+                                                <span className="px-4 py-1.5 bg-emerald-50 text-emerald-600 text-[10px] font-black uppercase tracking-widest rounded-xl border border-emerald-100">Active</span>
                                             ) : (
-                                                <span className="px-3 py-1 bg-yellow-100 text-yellow-700 text-xs font-bold rounded-full">Pending</span>
+                                                <span className="px-4 py-1.5 bg-amber-50 text-amber-600 text-[10px] font-black uppercase tracking-widest rounded-xl border border-amber-100">Pending</span>
                                             )}
                                         </td>
-                                        <td className="px-6 py-4 text-right">
-                                            <button className="text-blue-600 font-bold text-sm hover:underline">View</button>
+                                        <td className="px-8 py-6 text-right">
+                                            <button className="px-4 py-2 text-indigo-600 font-black text-xs uppercase tracking-widest hover:bg-indigo-50 rounded-lg transition-colors">View Profile</button>
                                         </td>
                                     </tr>
                                 ))

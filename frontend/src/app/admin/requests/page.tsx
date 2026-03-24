@@ -21,25 +21,41 @@ export default function AdminRequests() {
     }, []);
 
     return (
-        <div className="max-w-7xl mx-auto space-y-8">
-            <h1 className="text-3xl font-black text-slate-900 tracking-tight">Maintenance Requests</h1>
+        <div className="max-w-7xl mx-auto space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+            <div>
+                <h1 className="text-4xl font-black text-slate-900 tracking-tight">Maintenance Requests</h1>
+                <p className="text-slate-500 font-medium mt-2">Manage and resolve reported resident issues.</p>
+            </div>
+
             {isLoading ? (
-                <div className="font-bold text-slate-500 animate-pulse">Loading requests...</div>
+                <div className="p-12 text-center">
+                    <div className="inline-block w-8 h-8 border-4 border-indigo-600/20 border-t-indigo-600 rounded-full animate-spin"></div>
+                    <p className="mt-4 font-bold text-slate-400 text-sm">Loading tickets...</p>
+                </div>
             ) : requests.length === 0 ? (
-                <div className="p-12 text-center bg-white rounded-2xl border border-slate-200/60 font-bold text-slate-500">No maintenance requests found.</div>
+                <div className="p-20 text-center bg-white rounded-4xl border border-slate-200/50 shadow-sm font-bold text-slate-400">No maintenance requests found.</div>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {requests.map(req => (
-                        <div key={req.id} className="bg-white p-6 rounded-2xl shadow-sm border border-slate-200/60 flex flex-col">
-                            <div className="flex justify-between items-start mb-4">
-                                <span className={`px-3 py-1 text-xs font-bold rounded-full ${req.status === 'Resolved' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}`}>{req.status}</span>
-                                <span className="text-sm font-medium text-slate-400">{new Date(req.created_at).toLocaleDateString()}</span>
+                        <div key={req.id} className="bg-white p-8 rounded-4xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-200/50 flex flex-col hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(79,70,229,0.08)] transition-all duration-300 group">
+                            <div className="flex justify-between items-start mb-6">
+                                <span className={`px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-xl border ${req.status === 'Resolved' ? 'bg-emerald-50 text-emerald-600 border-emerald-100' : 'bg-amber-50 text-amber-600 border-amber-100'}`}>
+                                    {req.status}
+                                </span>
+                                <span className="text-[11px] font-bold text-slate-400 bg-slate-50 px-3 py-1 rounded-lg">{new Date(req.created_at).toLocaleDateString()}</span>
                             </div>
-                            <h3 className="text-xl font-bold text-slate-900 mb-2">{req.title}</h3>
-                            <p className="text-slate-500 text-sm mb-4 line-clamp-2">{req.description}</p>
-                            <div className="mt-auto pt-4 border-t border-slate-100 text-sm">
-                                <p className="font-bold text-slate-900">Room {req.room_number || 'N/A'}</p>
-                                <p className="text-slate-500">{req.tenant_name}</p>
+                            <h3 className="text-xl font-black text-slate-900 mb-2 truncate group-hover:text-indigo-600 transition-colors">{req.title}</h3>
+                            <p className="text-slate-500 text-sm mb-8 line-clamp-2 leading-relaxed font-medium">{req.description}</p>
+                            
+                            <div className="mt-auto pt-6 border-t border-slate-100 flex items-center justify-between">
+                                <div>
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Assigned To</p>
+                                    <p className="font-bold text-slate-900">Room {req.room_number || 'N/A'}</p>
+                                </div>
+                                <div className="text-right">
+                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-0.5">Tenant</p>
+                                    <p className="font-bold text-slate-700 text-sm">{req.tenant_name}</p>
+                                </div>
                             </div>
                         </div>
                     ))}

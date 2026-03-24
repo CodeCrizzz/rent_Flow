@@ -28,42 +28,44 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     ];
 
     return (
-        <div className="flex h-screen bg-slate-50 overflow-hidden selection:bg-indigo-100 selection:text-indigo-900">
-            {/* Deep Navy Sidebar */}
-            <aside className="w-[280px] bg-[#0B1121] text-white flex-col hidden md:flex border-r border-slate-800/60 shadow-2xl z-20">
+        <div className="flex h-screen bg-[#F8F9FA] overflow-hidden selection:bg-indigo-100 selection:text-indigo-900 font-sans">
+            {/* Obsidian Sidebar */}
+            <aside className="w-[280px] bg-[#09090b] text-white flex-col hidden md:flex border-r border-[#1f1f22] shadow-[4px_0_24px_rgba(0,0,0,0.02)] z-20">
                 <div className="p-8">
-                    <Link href="/" className="inline-flex items-center gap-3 hover:opacity-80 transition-opacity">
-                        <div className="w-9 h-9 bg-gradient-to-br from-indigo-500 to-blue-600 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(79,70,229,0.4)]">
+                    <Link href="/" className="inline-flex items-center gap-3 hover:opacity-80 transition-opacity group">
+                        <div className="w-9 h-9 bg-indigo-600 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(79,70,229,0.3)] group-hover:scale-110 transition-transform duration-300">
                             <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                         </div>
-                        <span className="text-2xl font-black tracking-tight text-white">Rent<span className="text-indigo-400">Flow</span></span>
+                        <span className="text-2xl font-black tracking-tight text-white">Rent<span className="text-indigo-500">Flow</span></span>
                     </Link>
                 </div>
 
-                <nav className="flex-1 px-5 space-y-2 mt-4">
-                    <div className="px-3 mb-4 text-xs font-bold text-slate-500 uppercase tracking-widest">Navigation</div>
+                <nav className="flex-1 px-5 space-y-1.5 mt-2">
+                    <div className="px-3 mb-5 text-[10px] font-black text-slate-500 uppercase tracking-widest">Navigation</div>
                     {navItems.map((item) => {
                         const isActive = pathname === item.path;
                         return (
-                            <Link key={item.name} href={item.path} className={`flex items-center gap-3.5 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300 ${isActive ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/25' : 'text-slate-400 hover:bg-slate-800/50 hover:text-white'}`}>
-                                <svg className={`w-5 h-5 ${isActive ? 'text-white' : 'text-slate-500'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={item.icon}></path></svg>
+                            <Link key={item.name} href={item.path} className={`flex items-center gap-3.5 px-4 py-3 rounded-2xl text-sm font-bold transition-all duration-300 group ${isActive ? 'bg-indigo-600/10 text-indigo-400' : 'text-slate-400 hover:bg-white/5 hover:text-white'}`}>
+                                <div className={`flex items-center justify-center w-8 h-8 rounded-xl transition-colors ${isActive ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/20' : 'bg-transparent text-slate-500 group-hover:text-white'}`}>
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={item.icon}></path></svg>
+                                </div>
                                 {item.name}
                             </Link>
                         );
                     })}
                 </nav>
 
-                <div className="p-5 border-t border-slate-800/60 bg-[#070b14]">
-                    <div className="flex items-center gap-3 px-3 py-2 mb-3">
-                        <div className="w-10 h-10 rounded-full bg-indigo-900/50 flex items-center justify-center text-sm font-bold text-indigo-300 border border-indigo-500/30">
+                <div className="p-6 border-t border-[#1f1f22] bg-[#09090b]">
+                    <div className="flex items-center gap-4 mb-4">
+                        <div className="w-10 h-10 rounded-full bg-[#18181b] flex items-center justify-center text-sm font-bold text-slate-300 border border-[#27272a] shadow-inner">
                             {adminName.charAt(0).toUpperCase()}
                         </div>
                         <div className="flex-1 min-w-0">
                             <p className="text-sm font-bold text-white truncate">{adminName}</p>
-                            <p className="text-xs text-slate-400 font-medium truncate">Master Admin</p>
+                            <p className="text-[10px] uppercase tracking-wider text-slate-500 font-bold truncate">Master Admin</p>
                         </div>
                     </div>
-                    <button onClick={handleLogout} className="flex items-center justify-center gap-2 w-full px-4 py-2.5 rounded-lg text-sm font-bold text-slate-400 bg-slate-800/40 hover:bg-slate-800 hover:text-white transition-colors">
+                    <button onClick={handleLogout} className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-xs font-bold uppercase tracking-wider text-slate-400 bg-[#18181b] hover:bg-rose-500/10 hover:text-rose-500 border border-[#27272a] hover:border-rose-500/20 transition-all duration-300">
                         Sign Out
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                     </button>

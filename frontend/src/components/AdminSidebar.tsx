@@ -15,6 +15,7 @@ export default function AdminSidebar() {
         <Link href="/admin/tenants" className="block px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-white transition-colors">Tenants</Link>
         <Link href="/admin/billing" className="block px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-white transition-colors">Billing & Payments</Link>
         <Link href="/admin/requests" className="block px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-white transition-colors">Maintenance</Link>
+        <Link href="/admin/chat" className="block px-4 py-3 rounded-xl hover:bg-slate-800 hover:text-white transition-colors">Messages</Link>
       </nav>
       <div className="p-4 border-t border-slate-800">
         <button className="w-full text-left px-4 py-3 rounded-xl text-red-400 hover:bg-red-500/10 transition-colors">Log Out</button>
