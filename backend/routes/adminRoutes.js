@@ -4,7 +4,7 @@ const { protect } = require('../middleware/authMiddleware');
 const { 
     getDashboardStats, getAllTenants, getAllRooms, getAllPayments, 
     getAllRequests, updateTenant, deleteTenant, createTenant,
-    getMessages, sendMessage,
+    getConversations, getMessages, sendMessage,
     createRoom, updateRoom, deleteRoom
 } = require('../controllers/adminController');
 
@@ -34,6 +34,7 @@ router.delete('/rooms/:id', deleteRoom);
 router.get('/payments', getAllPayments);
 router.get('/requests', getAllRequests);
 
+router.get('/chat/conversations', getConversations);
 router.get('/chat', getMessages);
 router.post('/chat', sendMessage);
 

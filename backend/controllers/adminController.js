@@ -308,6 +308,40 @@ const deleteTenant = async (req, res) => {
     }
 };
 
+// @desc    Get all Conversations (Chat List for Admin)
+// @route   GET /api/admin/chat/conversations
+const getConversations = async (req, res) => {
+    try {
+        const query = `
+            SELECT 
+                u.id, u.name, r.room_number,
+                (
+                    SELECT message FROM messages 
+                    WHERE (sender_id = u.id AND receiver_id = 1) OR (sender_id = 1 AND receiver_id = u.id)
+                    ORDER BY created_at DESC LIMIT 1
+                ) as last_message,
+                (
+                    SELECT created_at FROM messages 
+                    WHERE (sender_id = u.id AND receiver_id = 1) OR (sender_id = 1 AND receiver_id = u.id)
+                    ORDER BY created_at DESC LIMIT 1
+                ) as last_message_time,
+                (
+                    SELECT COUNT(*) FROM messages 
+                    WHERE sender_id = u.id AND receiver_id = 1 AND status != 'read'
+                ) as unread_count
+            FROM users u
+            LEFT JOIN rooms r ON u.room_id = r.id
+            WHERE u.role = 'tenant'
+            ORDER BY last_message_time DESC NULLS LAST
+        `;
+        const result = await db.query(query);
+        res.status(200).json(result.rows);
+    } catch (error) {
+        console.error('Get Conversations Error:', error);
+        res.status(500).json({ message: 'Server error fetching conversations' });
+    }
+};
+
 // @desc    Get all Messages (Admin Chat)
 // @route   GET /api/admin/chat
 const getMessages = async (req, res) => {
@@ -325,6 +359,13 @@ const getMessages = async (req, res) => {
             ORDER BY created_at ASC
         `;
         const result = await db.query(query, [tenant_id]);
+        
+        // Mark unread messages from this tenant as read
+        await db.query(`
+            UPDATE messages 
+            SET status = 'read' 
+            WHERE sender_id = $1 AND receiver_id = 1 AND status != 'read'
+        `, [tenant_id]);
         
         res.status(200).json(result.rows);
     } catch (error) {
@@ -372,6 +413,7 @@ module.exports = {
     updateTenant, 
     deleteTenant,
     createTenant,
+    getConversations,
     getMessages,  
     sendMessage    
 };

@@ -102,6 +102,14 @@ const getTenantMessages = async (req, res) => {
             ORDER BY created_at ASC
         `;
         const result = await db.query(query, [tenantId]);
+        
+        // Mark unread messages from Admin as read
+        await db.query(`
+            UPDATE messages 
+            SET status = 'read' 
+            WHERE sender_id = 1 AND receiver_id = $1 AND status != 'read'
+        `, [tenantId]);
+        
         res.status(200).json(result.rows);
     } catch (error) {
         console.error('Get Messages Error:', error);
