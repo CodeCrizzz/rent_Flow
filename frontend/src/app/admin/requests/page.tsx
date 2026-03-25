@@ -40,7 +40,7 @@ export default function AdminRequests() {
     const fetchRequests = async () => {
         try {
             setIsLoading(true);
-            const { data } = await api.get('/admin/requests');
+            const { data } = await api.get('/requests');
             setRequests(data);
         } catch (error) {
             console.error("Failed to fetch requests:", error);
@@ -81,7 +81,7 @@ export default function AdminRequests() {
         
         try {
             setIsUpdating(true);
-            await api.put(`/admin/requests/${updateModalReq.id}`, {
+            await api.put(`/requests/${updateModalReq.id}`, {
                 status: updateStatus,
                 priority: updatePriority,
                 assigned_to: updateAssigned,
