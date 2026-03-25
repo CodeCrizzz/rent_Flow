@@ -4,15 +4,129 @@ const bcrypt = require('bcryptjs');
 // @desc    Get Admin Dashboard Statistics
 const getDashboardStats = async (req, res) => {
     try {
-        const roomsResult = await db.query('SELECT COUNT(*) FROM rooms');
-        const tenantsResult = await db.query("SELECT COUNT(*) FROM users WHERE role = 'tenant'");
-        const billsResult = await db.query("SELECT SUM(balance) FROM bills WHERE status IN ('Unpaid', 'Partial', 'Overdue')");
+        // Run all queries concurrently for performance
+        const [
+            roomsResult, roomStatusResult, 
+            tenantsResult, tenantStatusResult, recentTenantsResult,
+            incomeResult, duesResult,
+            requestsResult, recentPaymentsResult, recentRequestsResult
+        ] = await Promise.all([
+            // 1. Rooms Overview
+            db.query('SELECT COUNT(*) FROM rooms'),
+            db.query('SELECT status, COUNT(*) FROM rooms GROUP BY status'),
+            
+            // 2. Tenants Overview (Total & Status)
+            db.query("SELECT COUNT(*) FROM users WHERE role = 'tenant'"),
+            db.query("SELECT status, COUNT(*) FROM users WHERE role = 'tenant' GROUP BY status"),
+            db.query("SELECT id, name, created_at FROM users WHERE role = 'tenant' ORDER BY created_at DESC LIMIT 5"),
+            
+            // 3. Billing Overview
+            db.query("SELECT SUM(amount_paid) FROM payments WHERE EXTRACT(MONTH FROM payment_date) = EXTRACT(MONTH FROM CURRENT_DATE) AND EXTRACT(YEAR FROM payment_date) = EXTRACT(YEAR FROM CURRENT_DATE)"),
+            db.query("SELECT status, SUM(balance) FROM bills WHERE status IN ('Unpaid', 'Partial', 'Overdue') GROUP BY status"),
+            
+            // 4. Maintenance Summary
+            db.query("SELECT status, COUNT(*) FROM requests GROUP BY status"),
+            
+            // 5. Recent Payments & Requests for Activity Feed
+            db.query(`
+                SELECT p.id, u.name as tenant_name, p.amount_paid, p.payment_date 
+                FROM payments p 
+                JOIN bills b ON p.bill_id = b.id 
+                JOIN users u ON b.tenant_id = u.id 
+                ORDER BY p.payment_date DESC LIMIT 5
+            `),
+            db.query(`
+                SELECT r.id, u.name as tenant_name, r.title, r.created_at 
+                FROM requests r 
+                JOIN users u ON r.tenant_id = u.id 
+                ORDER BY r.created_at DESC LIMIT 5
+            `),
+        ]);
 
-        res.status(200).json({
-            totalRooms: parseInt(roomsResult.rows[0].count),
-            activeTenants: parseInt(tenantsResult.rows[0].count),
-            pendingDues: billsResult.rows[0].sum || 0
+        // --- Process Room Stats ---
+        const totalRooms = parseInt(roomsResult.rows[0].count);
+        let occupiedRooms = 0, availableRooms = 0, maintenanceRooms = 0;
+        roomStatusResult.rows.forEach(r => {
+            if (r.status.toLowerCase() === 'occupied' || r.status.toLowerCase() === 'partial') occupiedRooms += parseInt(r.count);
+            else if (r.status.toLowerCase() === 'available') availableRooms += parseInt(r.count);
+            else if (r.status.toLowerCase() === 'maintenance') maintenanceRooms += parseInt(r.count);
         });
+
+        // --- Process Tenant Stats ---
+        const totalTenants = parseInt(tenantsResult.rows[0].count);
+        let activeTenants = 0, pendingTenants = 0;
+        tenantStatusResult.rows.forEach(r => {
+            if (r.status.toLowerCase() === 'active') activeTenants += parseInt(r.count);
+            else if (r.status.toLowerCase() === 'pending') pendingTenants += parseInt(r.count);
+        });
+
+        // --- Process Billing Stats ---
+        const monthlyIncome = incomeResult.rows[0].sum || 0;
+        let pendingDues = 0, overduePayments = 0;
+        duesResult.rows.forEach(r => {
+            if (r.status.toLowerCase() === 'overdue') overduePayments += parseFloat(r.sum);
+            pendingDues += parseFloat(r.sum); // Pending is the sum of Unpaid, Partial, Overdue
+        });
+
+        // --- Process Maintenance Stats ---
+        let totalRequests = 0, pendingRequests = 0, inProgressRequests = 0, resolvedRequests = 0;
+        requestsResult.rows.forEach(r => {
+            const count = parseInt(r.count);
+            totalRequests += count;
+            if (r.status.toLowerCase() === 'pending') pendingRequests += count;
+            else if (r.status.toLowerCase() === 'in progress') inProgressRequests += count;
+            else if (r.status.toLowerCase() === 'resolved') resolvedRequests += count;
+        });
+
+        // --- Synthesize Recent Activities ---
+        let activities = [];
+        
+        // Add recent tenants
+        recentTenantsResult.rows.forEach(t => {
+            activities.push({
+                id: `t_${t.id}`,
+                type: 'tenant',
+                title: 'New tenant registered',
+                description: `${t.name} joined the system`,
+                date: t.created_at
+            });
+        });
+
+        // Add recent payments
+        recentPaymentsResult.rows.forEach(p => {
+            activities.push({
+                id: `p_${p.id}`,
+                type: 'payment',
+                title: 'Payment received',
+                description: `₱${parseFloat(p.amount_paid).toLocaleString()} from ${p.tenant_name}`,
+                date: p.payment_date
+            });
+        });
+
+        // Add recent requests
+        recentRequestsResult.rows.forEach(req => {
+            activities.push({
+                id: `r_${req.id}`,
+                type: 'maintenance',
+                title: 'Maintenance request',
+                description: `"${req.title}" by ${req.tenant_name}`,
+                date: req.created_at
+            });
+        });
+
+        // Sort activities by date DESC and keep top 10
+        activities.sort((a, b) => new Date(b.date) - new Date(a.date));
+        activities = activities.slice(0, 10);
+
+        // --- Final Response Object ---
+        res.status(200).json({
+            rooms: { totalRooms, occupiedRooms, availableRooms, maintenanceRooms },
+            tenants: { totalTenants, activeTenants, pendingTenants },
+            billing: { monthlyIncome, pendingDues, overduePayments },
+            maintenance: { totalRequests, pendingRequests, inProgressRequests, resolvedRequests },
+            recentActivities: activities
+        });
+
     } catch (error) {
         console.error("Dashboard Stats Error:", error);
         res.status(500).json({ message: 'Server error fetching admin stats' });

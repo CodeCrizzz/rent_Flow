@@ -8,13 +8,13 @@ const getTenantDashboard = async (req, res) => {
     try {
         // 1. Get total pending balance for THIS specific tenant
         const balanceResult = await db.query(
-            "SELECT SUM(amount) FROM payments WHERE tenant_id = $1 AND status = 'pending'", 
+            "SELECT SUM(balance) FROM bills WHERE tenant_id = $1 AND status != 'Paid'", 
             [tenantId]
         );
 
         // 2. Get recent payment history
         const historyResult = await db.query(
-            "SELECT * FROM payments WHERE tenant_id = $1 ORDER BY payment_date DESC LIMIT 5",
+            "SELECT p.*, b.billing_month FROM payments p JOIN bills b ON p.bill_id = b.id WHERE b.tenant_id = $1 ORDER BY p.payment_date DESC LIMIT 5",
             [tenantId]
         );
 
@@ -82,11 +82,12 @@ const getTenantPayments = async (req, res) => {
     const tenantId = req.user.id;
     try {
         const result = await db.query(
-            'SELECT * FROM payments WHERE tenant_id = $1 ORDER BY due_date DESC',
+            "SELECT id, due_date, billing_month || ' Bill' AS description, total_amount AS amount, LOWER(status) AS status FROM bills WHERE tenant_id = $1 ORDER BY due_date DESC",
             [tenantId]
         );
         res.status(200).json(result.rows);
     } catch (error) {
+        console.error('Tenant Payments Error:', error);
         res.status(500).json({ message: 'Server error fetching payments' });
     }
 };
