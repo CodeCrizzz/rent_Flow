@@ -6,66 +6,53 @@ const getDashboardStats = async (req, res) => {
     try {
         const roomsResult = await db.query('SELECT COUNT(*) FROM rooms');
         const tenantsResult = await db.query("SELECT COUNT(*) FROM users WHERE role = 'tenant'");
-        const paymentsResult = await db.query("SELECT SUM(amount) FROM payments WHERE status = 'pending'");
+        const billsResult = await db.query("SELECT SUM(balance) FROM bills WHERE status IN ('Unpaid', 'Partial', 'Overdue')");
 
         res.status(200).json({
             totalRooms: parseInt(roomsResult.rows[0].count),
             activeTenants: parseInt(tenantsResult.rows[0].count),
-            pendingDues: paymentsResult.rows[0].sum || 0
+            pendingDues: billsResult.rows[0].sum || 0
         });
     } catch (error) {
+        console.error("Dashboard Stats Error:", error);
         res.status(500).json({ message: 'Server error fetching admin stats' });
     }
 };
 
-// @desc    Get all Rooms with their current occupants
+// @desc    Get all Rooms with detailed occupancy & financials
 // @route   GET /api/admin/rooms
 const getAllRooms = async (req, res) => {
     try {
         const query = `
             SELECT 
-                r.*,
-                (
-                    SELECT COALESCE(json_agg(
+                r.id, r.room_number, r.capacity, r.price, r.status,
+                r.type, r.floor, r.description,
+                CAST(COUNT(u.id) AS INTEGER) as current_occupants,
+                CAST((r.capacity - COUNT(u.id)) AS INTEGER) as available_slots,
+                COALESCE(
+                    json_agg(
                         json_build_object(
                             'id', u.id,
                             'name', u.name,
                             'phone', u.phone,
                             'date_moved_in', u.date_moved_in,
-                            'balance', (SELECT COALESCE(SUM(amount), 0) FROM payments p WHERE p.tenant_id = u.id AND p.status = 'pending')
+                            'balance', COALESCE((
+                                SELECT SUM(balance) FROM bills b 
+                                WHERE b.tenant_id = u.id AND b.status IN ('Unpaid', 'Partial', 'Overdue')
+                            ), 0)
                         )
-                    ), '[]')
-                    FROM users u 
-                    WHERE u.room_id = r.id AND u.role = 'tenant' AND u.status != 'Moved Out'
-                ) as occupants,
-                (SELECT COUNT(*) FROM users u WHERE u.room_id = r.id AND u.role = 'tenant' AND u.status != 'Moved Out') as current_occupants
+                    ) FILTER (WHERE u.id IS NOT NULL), '[]'::json -- <--- CRITICAL FIX: Added ::json here
+                ) as occupants
             FROM rooms r
+            LEFT JOIN users u ON r.id = u.room_id AND u.role = 'tenant'
+            GROUP BY r.id
             ORDER BY r.room_number ASC
         `;
         const rooms = await db.query(query);
-        
-        // Auto-calculate available slots and status
-        const enrichedRooms = rooms.rows.map(room => {
-            const current = parseInt(room.current_occupants);
-            let calculatedStatus = room.status;
-            
-            // Only auto-update if not manually set to Maintenance
-            if (calculatedStatus !== 'Maintenance') {
-                if (current === 0) calculatedStatus = 'Available';
-                else if (current < room.capacity) calculatedStatus = 'Partial';
-                else calculatedStatus = 'Occupied';
-            }
-            
-            return {
-                ...room,
-                status: calculatedStatus,
-                available_slots: room.capacity - current
-            };
-        });
-        
-        res.status(200).json(enrichedRooms);
+        res.status(200).json(rooms.rows);
     } catch (error) {
-        console.error(error);
+        // This will print the exact SQL error to your backend terminal if it ever fails again
+        console.error("Get All Rooms Error Details:", error.message); 
         res.status(500).json({ message: 'Server error fetching rooms' });
     }
 };

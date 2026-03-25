@@ -11,9 +11,11 @@ app.use(express.json());
 const authRoutes = require('./routes/authRoutes');
 const adminRoutes = require('./routes/adminRoutes');     // ADDED THIS
 const tenantRoutes = require('./routes/tenantRoutes');   // ADDED THIS
+const billingRoutes = require('./routes/billingRoutes'); // Billing endpoints
 
 // Mount Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/admin/bills', billingRoutes);              // Admin Billing
 app.use('/api/admin', adminRoutes);                      // ADDED THIS
 app.use('/api/tenant', tenantRoutes);                    // ADDED THIS
 
