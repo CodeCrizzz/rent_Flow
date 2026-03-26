@@ -42,27 +42,11 @@ export default function AdminDashboard() {
 
     return (
         <div className="max-w-7xl mx-auto space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-10">
-            {/* Header & Quick Actions */}
+            {/* Header */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
                 <div>
                     <h1 className="text-4xl font-black text-slate-900 tracking-tight">System Overview</h1>
                     <p className="text-slate-500 font-medium mt-2">Monitor your property's performance at a glance.</p>
-                </div>
-                
-                {/* Quick Actions */}
-                <div className="flex flex-wrap gap-3">
-                    <Link href="/admin/tenants" className="px-4 py-2.5 bg-white border border-slate-200 text-slate-700 font-bold text-sm rounded-xl hover:bg-slate-50 transition-colors shadow-sm flex items-center gap-2">
-                        <span className="text-indigo-600 text-lg leading-none">+</span> Add Tenant
-                    </Link>
-                    <Link href="/admin/rooms" className="px-4 py-2.5 bg-white border border-slate-200 text-slate-700 font-bold text-sm rounded-xl hover:bg-slate-50 transition-colors shadow-sm flex items-center gap-2">
-                        <span className="text-emerald-600 text-lg leading-none">+</span> Add Room
-                    </Link>
-                    <Link href="/admin/billing" className="px-4 py-2.5 bg-white border border-slate-200 text-slate-700 font-bold text-sm rounded-xl hover:bg-slate-50 transition-colors shadow-sm flex items-center gap-2">
-                        <span className="text-amber-600 text-lg leading-none">💰</span> Create Bill
-                    </Link>
-                    <Link href="/admin/requests" className="px-4 py-2.5 bg-indigo-600 text-white font-bold text-sm rounded-xl hover:bg-indigo-500 transition-colors shadow-md shadow-indigo-600/20 flex items-center gap-2">
-                        <span>🛠️</span> View Requests
-                    </Link>
                 </div>
             </div>
 
@@ -81,29 +65,11 @@ export default function AdminDashboard() {
                 </div>
             )}
 
-            {/* Topic 1: Summary Cards (Grid of 6) */}
-            <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6">
-                {[
-                    { label: "Total Tenants", value: stats.tenants.totalTenants, color: "text-indigo-600", bg: "bg-indigo-50", border: "group-hover:border-indigo-200" },
-                    { label: "Occupied Rooms", value: stats.rooms.occupiedRooms, color: "text-emerald-600", bg: "bg-emerald-50", border: "group-hover:border-emerald-200" },
-                    { label: "Available Rooms", value: stats.rooms.availableRooms, color: "text-blue-600", bg: "bg-blue-50", border: "group-hover:border-blue-200" },
-                    { label: "Monthly Income", value: `₱${Number(stats.billing.monthlyIncome).toLocaleString()}`, color: "text-emerald-600", bg: "bg-emerald-50", border: "group-hover:border-emerald-200" },
-                    { label: "Pending Payments", value: `₱${Number(stats.billing.pendingDues).toLocaleString()}`, color: "text-amber-600", bg: "bg-amber-50", border: "group-hover:border-amber-200" },
-                    { label: "Pending Requests", value: stats.maintenance.pendingRequests, color: "text-rose-600", bg: "bg-rose-50", border: "group-hover:border-rose-200" }
-                ].map((item, i) => (
-                    <div key={i} className="bg-white p-6 rounded-3xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] transition-all hover:shadow-lg group">
-                        <p className="text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2">{item.label}</p>
-                        <p className={`text-2xl lg:text-3xl font-black tracking-tight ${item.color}`}>{item.value}</p>
-                    </div>
-                ))}
-            </div>
-
-            {/* Layout Grid: 2 Columns */}
+            {/* Main Content */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                
                 {/* Left Column: Overviews */}
                 <div className="lg:col-span-2 space-y-8">
-                    
+
                     {/* Billing & Room Overview Row */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         {/* Billing Overview */}
