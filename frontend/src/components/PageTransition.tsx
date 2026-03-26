@@ -9,52 +9,58 @@ interface PageTransitionProps {
 }
 
 export default function PageTransition({ children }: PageTransitionProps) {
-  // We use the pathname as a unique key so AnimatePresence knows when a new page enters
   const pathname = usePathname();
 
   return (
-    // AnimatePresence is required to allow exit animations to finish before unmounting
     <AnimatePresence mode="wait">
       <motion.div
         key={pathname}
         
-        // 1. Initial State: Slightly scaled down, moved down, and blurred
+        // 1. Initial: Deep down, tilted back, dark, and blurry
         initial={{ 
             opacity: 0, 
-            y: 20, 
-            scale: 0.98,
-            filter: "blur(12px)" 
+            y: 50, 
+            scale: 0.92, 
+            rotateX: 15, // 3D tilt back
+            transformOrigin: "bottom center",
+            filter: "blur(20px) brightness(0.7)" 
         }}
         
-        // 2. Animate State: Settle into normal position, scale, and clear focus
+        // 2. Animate: Snaps into perfectly flat focus
         animate={{ 
             opacity: 1, 
             y: 0, 
-            scale: 1,
-            filter: "blur(0px)" 
+            scale: 1, 
+            rotateX: 0,
+            filter: "blur(0px) brightness(1)" 
         }}
         
-        // 3. Exit State: Fade out fast, move slightly up, and blur again
+        // 3. Exit: Flies up, towards the camera, and blows out the brightness
         exit={{ 
             opacity: 0, 
-            y: -15, 
-            scale: 0.99,
-            filter: "blur(8px)",
+            y: -40, 
+            scale: 1.05, 
+            rotateX: -10, // 3D tilt forward
+            transformOrigin: "top center",
+            filter: "blur(15px) brightness(1.2)",
             transition: { 
-                duration: 0.2, // Make exit faster than entry
-                ease: "easeInOut" 
+                duration: 0.3, 
+                ease: [0.22, 1, 0.36, 1] // Apple-style custom cubic easing
             }
         }}
         
-        // 4. The Magic: A highly tuned spring transition for entry
+        // 4. Custom Spring: Highly dynamic but smooth settling
         transition={{ 
             type: "spring",
-            stiffness: 260, // How "tight" the spring is
-            damping: 25,    // How quickly it settles (prevents bouncing)
-            mass: 0.8       // How "heavy" the element feels
+            stiffness: 180, 
+            damping: 18, 
+            mass: 0.9,
+            bounce: 0.2
         }}
         
+        // The perspective wrapper is REQUIRED for the 3D rotateX effect to work
         className="w-full h-full"
+        style={{ perspective: "1200px" }} 
       >
         {children}
       </motion.div>
