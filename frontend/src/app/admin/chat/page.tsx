@@ -118,7 +118,7 @@ export default function AdminChat() {
     );
 
     return (
-        <div className="max-w-7xl mx-auto h-[calc(100vh-10rem)] flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="max-w-7xl mx-auto h-[calc(100vh-10rem)] flex flex-col">
             <div className="mb-8 flex items-center justify-between">
                 <div>
                     <h1 className="text-4xl font-black text-slate-900 tracking-tight">Messages</h1>

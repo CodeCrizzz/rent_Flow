@@ -118,7 +118,7 @@ const getTenantMessages = async (req, res) => {
     }
 };
 
-// @desc    Send Message to Admin
+// @desc Send Message to Admin
 const sendTenantMessage = async (req, res) => {
     const tenantId = req.user.id;
     const { message } = req.body;

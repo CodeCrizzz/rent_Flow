@@ -187,7 +187,7 @@ export default function AdminBilling() {
     };
 
     return (
-        <div className="max-w-7xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-20">
+        <div className="max-w-7xl mx-auto space-y-8 pb-20">
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>

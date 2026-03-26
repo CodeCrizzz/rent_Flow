@@ -2,6 +2,8 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import PageTransition from '@/components/PageTransition';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
@@ -77,7 +79,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
             <main className="flex-1 flex flex-col relative h-screen overflow-hidden">
                 <div className="flex-1 overflow-y-auto p-6 md:p-10 lg:p-14 relative z-0 scrollbar-thin scrollbar-thumb-zinc-800 scrollbar-track-transparent">
-                    {children}
+                    <AnimatePresence mode="wait">
+                        <PageTransition key={pathname}>
+                            {children}
+                        </PageTransition>
+                    </AnimatePresence>
                 </div>
             </main>
         </div>

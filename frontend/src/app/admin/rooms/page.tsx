@@ -149,7 +149,7 @@ export default function AdminRooms() {
     );
 
     return (
-        <div className="max-w-7xl mx-auto space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="max-w-7xl mx-auto space-y-10">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                 <div>
                     <h1 className="text-4xl font-black text-slate-900 tracking-tight">Room Management</h1>
