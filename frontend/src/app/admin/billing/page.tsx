@@ -1,7 +1,44 @@
 "use client";
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useState, useMemo, JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal } from 'react';
 import api from '@/lib/api';
-import { Bill, BillFormData, PaymentFormData } from '@/types/billing';
+export interface Bill {
+    id: number;
+    tenant_id: number;
+    tenant_name: string;
+    room_id: number | null;
+    room_number: string | null;
+    billing_month: string;
+    due_date: string;
+    rent_amount: number;
+    water_charges: number;
+    electricity_charges: number;
+    other_fees: number;
+    total_amount: number;
+    amount_paid: number;
+    balance: number;
+    status: string;
+    notes: string | null;
+    payments?: any[];
+}
+
+export interface BillFormData {
+    tenant_id: number | '';
+    room_id: number | '';
+    billing_month: string;
+    due_date: string;
+    rent_amount: number;
+    water_charges: number;
+    electricity_charges: number;
+    other_fees: number;
+    notes: string;
+}
+
+export interface PaymentFormData {
+    amount_paid: number | '';
+    payment_date: string;
+    payment_method: string;
+    notes: string;
+}
 
 interface Tenant { id: number; name: string; room_id: number; }
 interface Room { id: number; room_number: string; price: number; }
@@ -160,7 +197,7 @@ export default function AdminBilling() {
         setSelectedBill(bill);
         setPaymentForm({
             ...initialPaymentForm,
-            amount_paid: Number(bill.balance)
+            amount_paid: Number(bill.balance) || ''
         });
         setIsPayOpen(true);
     };
@@ -389,7 +426,7 @@ export default function AdminBilling() {
                             </div>
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Amount Paid (₱)</label>
-                                <input required type="number" step="0.01" max={Number(selectedBill.balance)} value={paymentForm.amount_paid} onChange={e => setPaymentForm({...paymentForm, amount_paid: e.target.value})} className="w-full px-4 py-3.5 rounded-xl bg-zinc-900 border border-zinc-800 text-emerald-400 focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent font-black text-lg outline-none" />
+                                <input required type="number" step="0.01" max={Number(selectedBill.balance)} value={paymentForm.amount_paid} onChange={e => setPaymentForm({...paymentForm, amount_paid: e.target.value === '' ? '' : parseFloat(e.target.value)})} className="w-full px-4 py-3.5 rounded-xl bg-zinc-900 border border-zinc-800 text-emerald-400 focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent font-black text-lg outline-none" />
                             </div>
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest">Payment Method</label>
@@ -471,7 +508,7 @@ export default function AdminBilling() {
                                         </h3>
                                         {billDetails.payments && billDetails.payments.length > 0 ? (
                                             <div className="border border-zinc-800 rounded-2xl overflow-hidden divide-y divide-zinc-800">
-                                                {billDetails.payments.map(p => (
+                                                {billDetails.payments.map((p: { id: Key | null | undefined; payment_date: string | number | Date; payment_method: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; amount_paid: any; }) => (
                                                     <div key={p.id} className="p-5 flex justify-between items-center bg-zinc-900/30 hover:bg-zinc-800/50 transition-colors">
                                                         <div>
                                                             <p className="font-bold text-white">{new Date(p.payment_date).toLocaleDateString()}</p>
