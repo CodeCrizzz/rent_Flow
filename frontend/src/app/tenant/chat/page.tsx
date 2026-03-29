@@ -21,7 +21,7 @@ export default function TenantChat() {
 
     useEffect(() => {
         fetchMessages();
-        const interval = setInterval(fetchMessages, 5000); // Polling for "real-time"
+        const interval = setInterval(fetchMessages, 5000); 
         return () => clearInterval(interval);
     }, []);
 

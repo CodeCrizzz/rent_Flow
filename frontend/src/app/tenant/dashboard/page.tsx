@@ -32,7 +32,6 @@ export default function TenantDashboard() {
         setIsPaying(true);
         setPayStatus(null);
         try {
-            // Simulated payment delay
             await new Promise(resolve => setTimeout(resolve, 2000));
             setPayStatus('Success! Payment processed.');
             setTenantData(prev => ({ ...prev, balanceDue: 0 }));
@@ -57,7 +56,7 @@ export default function TenantDashboard() {
             {/* Vibrant Modern Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
-                {/* Card 1: Balance (Emerald) */}
+                {/* Card 1*/}
                 <div className="bg-white p-8 border border-slate-200/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-4xl hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(16,185,129,0.08)] transition-all duration-300 flex flex-col justify-between group md:col-span-2 lg:col-span-1 relative overflow-hidden">
                     <div className="flex justify-between items-start mb-8">
                         <div className="w-14 h-14 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 group-hover:bg-emerald-600 group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-sm border border-emerald-100 group-hover:border-transparent group-hover:shadow-emerald-500/30">
@@ -90,7 +89,7 @@ export default function TenantDashboard() {
                     </div>
                 </div>
 
-                {/* Card 2: Accommodation (Violet) */}
+                {/* Card 2 */}
                 <div className="bg-white p-8 border border-slate-200/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-4xl hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(139,92,246,0.08)] transition-all duration-300 flex flex-col justify-between group">
                     <div className="flex justify-between items-start mb-8">
                         <div className="w-14 h-14 rounded-2xl bg-violet-50 flex items-center justify-center text-violet-600 group-hover:bg-violet-600 group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-sm border border-violet-100 group-hover:border-transparent group-hover:shadow-violet-500/30">
@@ -105,7 +104,7 @@ export default function TenantDashboard() {
                     </div>
                 </div>
 
-                {/* Card 3: Notifications / Action (Cyan) */}
+                {/* Card 3 */}
                 <div className="bg-white p-8 border border-slate-200/50 shadow-[0_8px_30px_rgb(0,0,0,0.04)] rounded-4xl hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(6,182,212,0.08)] transition-all duration-300 flex flex-col justify-between group">
                     <div className="flex justify-between items-start mb-8">
                         <div className="w-14 h-14 rounded-2xl bg-cyan-50 flex items-center justify-center text-cyan-600 group-hover:bg-cyan-500 group-hover:text-white group-hover:scale-110 transition-all duration-300 shadow-sm border border-cyan-100 group-hover:border-transparent group-hover:shadow-cyan-500/30">

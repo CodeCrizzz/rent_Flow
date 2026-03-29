@@ -48,7 +48,6 @@ export default function AdminBilling() {
     const [tenants, setTenants] = useState<Tenant[]>([]);
     const [rooms, setRooms] = useState<Room[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-    
     const [searchQuery, setSearchQuery] = useState("");
     const [statusFilter, setStatusFilter] = useState("All");
 

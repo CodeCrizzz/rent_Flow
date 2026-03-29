@@ -16,8 +16,6 @@ interface Request {
 export default function TenantRequests() {
     const [requests, setRequests] = useState<Request[]>([]);
     const [isLoading, setIsLoading] = useState(true);
-
-    // Form State
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [category, setCategory] = useState('Plumbing');
@@ -53,13 +51,11 @@ export default function TenantRequests() {
                 priority
             });
             
-            // Reset form
             setTitle('');
             setDescription('');
             setCategory('Plumbing');
             setPriority('Medium');
             
-            // Refresh list
             await fetchMyRequests();
         } catch (error) {
             console.error("Failed to submit request:", error);

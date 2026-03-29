@@ -34,9 +34,7 @@ export default function AdminChat() {
             const { data } = await api.get('/admin/chat/conversations');
             setConversations(data);
             
-            // Auto-select the first conversation if none is selected
             if (data.length > 0 && !selectedTenant) {
-                // Find first with unread, or just the very first
                 const firstUnread = data.find((c: Conversation) => Number(c.unread_count) > 0);
                 setSelectedTenant(firstUnread || data[0]);
             }
@@ -52,7 +50,6 @@ export default function AdminChat() {
             const { data } = await api.get(`/admin/chat?tenant_id=${tenantId}`);
             setMessages(data);
             
-            // Clear unread count locally for this tenant since we just fetched (and backend marked as read)
             setConversations(prev => prev.map(c => 
                 c.id === tenantId ? { ...c, unread_count: 0 } : c
             ));
@@ -61,7 +58,6 @@ export default function AdminChat() {
         }
     };
 
-    // Initial load
     useEffect(() => {
         fetchConversations();
     }, []);
@@ -72,7 +68,7 @@ export default function AdminChat() {
             fetchMessages(selectedTenant.id);
             const interval = setInterval(() => {
                 fetchMessages(selectedTenant.id);
-                fetchConversations(); // Also refresh conversations list to update unread counts for others
+                fetchConversations(); 
             }, 5000);
             return () => clearInterval(interval);
         }
@@ -94,7 +90,7 @@ export default function AdminChat() {
             });
             setMessages([...messages, res.data]);
             setNewMessage('');
-            fetchConversations(); // Update left panel to show our sent message as last message
+            fetchConversations();
         } catch (error) {
             console.error("Failed to send message:", error);
         }
