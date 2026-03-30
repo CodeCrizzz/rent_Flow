@@ -152,7 +152,6 @@ export default function LandingPage() {
                     50% { transform: scale(1.05); opacity: 1; box-shadow: 0 0 80px rgba(6,182,212,0.5); } 
                 }
 
-                /* FIX 1: Removed the blur() to fix the Chrome/Safari invisible gradient text bug */
                 @keyframes text-reveal {
                     0% { transform: translateY(120%); opacity: 0; }
                     100% { transform: translateY(0); opacity: 1; }
@@ -165,7 +164,6 @@ export default function LandingPage() {
                 .animate-progress-smooth { animation: progress-smooth 2.8s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
                 .animate-breathe { animation: breathe 5s ease-in-out infinite; }
                 
-                /* FIX 2: Added base opacity: 0 here so we don't need the conflicting Tailwind classes */
                 .animate-text-reveal-1 {
                     opacity: 0;
                     animation: text-reveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
@@ -195,22 +193,6 @@ export default function LandingPage() {
                     backgroundPosition: '-1px -1px, -1px -1px, -1px -1px, -1px -1px',
                     WebkitMaskImage: `radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), black 10%, transparent 90%)`,
                     maskImage: `radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), black 10%, transparent 90%)`
-                }} />
-                
-                {/* 3. Laser-Sharp Crosshairs */}
-                <div className="absolute inset-0 opacity-100" style={{
-                    background: `
-                        linear-gradient(to right, transparent calc(var(--mouse-x) - 1px), rgba(6, 182, 212, 0.8) var(--mouse-x), transparent calc(var(--mouse-x) + 1px)), 
-                        linear-gradient(to bottom, transparent calc(var(--mouse-y) - 1px), rgba(6, 182, 212, 0.8) var(--mouse-y), transparent calc(var(--mouse-y) + 1px))`,
-                    WebkitMaskImage: `radial-gradient(1200px circle at var(--mouse-x) var(--mouse-y), black 0%, transparent 100%)`,
-                    maskImage: `radial-gradient(1200px circle at var(--mouse-x) var(--mouse-y), black 0%, transparent 100%)`
-                }} />
-
-                {/* 4. Core Glowing Cursor Dot */}
-                <div className="absolute inset-0" style={{
-                    background: `
-                        radial-gradient(6px circle at var(--mouse-x) var(--mouse-y), rgba(255, 255, 255, 0.9), transparent 100%),
-                        radial-gradient(30px circle at var(--mouse-x) var(--mouse-y), rgba(6, 182, 212, 0.8), transparent 100%)`
                 }} />
             </div>
 
