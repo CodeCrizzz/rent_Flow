@@ -51,30 +51,18 @@ const TiltCard = ({ title, desc, icon }: { title: string, desc: string, icon: st
     );
 };
 
-// --- Magnetic Interaction Button Component ---
-const MagneticButton = ({ onClick, isEntering }: { onClick: () => void, isEntering: boolean }) => {
-    const buttonRef = useRef<HTMLButtonElement>(null);
-    const [position, setPosition] = useState({ x: 0, y: 0 });
-
-    const handleMouseMove = (e: React.MouseEvent) => {
-        if (!buttonRef.current) return;
-        const { left, top, width, height } = buttonRef.current.getBoundingClientRect();
-        const x = (e.clientX - (left + width / 2)) * 0.3; 
-        const y = (e.clientY - (top + height / 2)) * 0.3;
-        setPosition({ x, y });
-    };
-
+// --- Standard Hover Button Component ---
+const PrimaryButton = ({ onClick, isEntering }: { onClick: () => void, isEntering: boolean }) => {
     return (
         <button 
-            ref={buttonRef}
             onClick={onClick}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={() => setPosition({ x: 0, y: 0 })}
-            style={{ transform: `translate(${position.x}px, ${position.y}px)` }}
-            className={`relative group inline-flex items-center justify-center px-10 py-5 bg-white text-slate-900 font-black text-xs uppercase tracking-[0.2em] rounded-full overflow-hidden transition-all duration-300 ease-out hover:shadow-[0_0_50px_rgba(6,182,212,0.6)] ${isEntering ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}
+            className={`relative group inline-flex items-center justify-center px-10 py-5 bg-white text-slate-900 font-black text-xs uppercase tracking-[0.2em] rounded-full overflow-hidden transition-all duration-300 ease-out hover:scale-105 active:scale-95 hover:shadow-[0_0_40px_rgba(6,182,212,0.5)] ${isEntering ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}
         >
+            {/* Shimmer Effect */}
             <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-cyan-100/50 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></span>
-            <span className="relative z-10 flex items-center gap-3 pointer-events-none">
+            
+            {/* Content */}
+            <span className="relative z-10 flex items-center gap-3">
                 Access Matrix
                 <div className="w-6 h-6 rounded-full bg-slate-900 text-cyan-400 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1.5 shadow-[0_0_10px_rgba(6,182,212,0.5)]">
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 5l7 7-7 7"></path></svg>
@@ -152,9 +140,9 @@ export default function LandingPage() {
                     50% { transform: scale(1.05); opacity: 1; box-shadow: 0 0 80px rgba(6,182,212,0.5); } 
                 }
 
-                @keyframes text-reveal {
-                    0% { transform: translateY(120%); opacity: 0; }
-                    100% { transform: translateY(0); opacity: 1; }
+                @keyframes slideUpFade {
+                    from { transform: translateY(100%); opacity: 0; }
+                    to { transform: translateY(0); opacity: 1; }
                 }
                 @keyframes shimmer-text {
                     0% { background-position: -200% center; }
@@ -163,17 +151,6 @@ export default function LandingPage() {
 
                 .animate-progress-smooth { animation: progress-smooth 2.8s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
                 .animate-breathe { animation: breathe 5s ease-in-out infinite; }
-                
-                .animate-text-reveal-1 {
-                    opacity: 0;
-                    animation: text-reveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
-                }
-                .animate-text-reveal-2 {
-                    opacity: 0;
-                    animation: 
-                        text-reveal 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards,
-                        shimmer-text 6s linear infinite;
-                }
             `}</style>
 
             {/* --- MAXIMUM VISIBILITY TRACKING ENGINE --- */}
@@ -217,13 +194,19 @@ export default function LandingPage() {
 
                 {/* Staggered Glyph Reveal Heading */}
                 <h1 className="flex flex-col items-center text-6xl sm:text-7xl lg:text-9xl font-black tracking-tighter mb-6 leading-[0.9]">
-                    <span className="block overflow-hidden pb-2">
-                        <span className="inline-block animate-text-reveal-1">
+                    <span className="block overflow-hidden pb-2 pt-4">
+                        <span 
+                            className="inline-block"
+                            style={{ opacity: 0, animation: 'slideUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards' }}
+                        >
                             Manage
                         </span>
                     </span>
-                    <span className="block overflow-hidden pb-4">
-                        <span className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-indigo-400 bg-[length:200%_auto] drop-shadow-[0_0_40px_rgba(6,182,212,0.3)] animate-text-reveal-2">
+                    <span className="block overflow-hidden pb-4 pt-2">
+                        <span 
+                            className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-white to-indigo-400 bg-[length:200%_auto] drop-shadow-[0_0_40px_rgba(6,182,212,0.3)]"
+                            style={{ opacity: 0, animation: 'slideUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards, shimmer-text 6s linear infinite' }}
+                        >
                             Every Unit.
                         </span>
                     </span>
@@ -233,9 +216,9 @@ export default function LandingPage() {
                     The intelligent operating system for modern boarding houses. Track tenants, monitor rooms, and automate billing.
                 </p>
 
-                {/* Magnetic Button */}
+                {/* Primary Button */}
                 <div className="mb-16 animate-in fade-in zoom-in-95 duration-1000 delay-700 fill-mode-both">
-                    <MagneticButton onClick={handleEnterPortal} isEntering={isEntering} />
+                    <PrimaryButton onClick={handleEnterPortal} isEntering={isEntering} />
                 </div>
 
                 {/* 3D Tilt Feature Cards */}
@@ -273,8 +256,8 @@ export default function LandingPage() {
 
             {/* --- FOOTER --- */}
             <footer className={`relative z-10 w-full h-24 flex flex-col items-center justify-center gap-2 transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${isEntering ? 'opacity-0 translate-y-12' : 'opacity-100 translate-y-0'}`}>
-                <p className="text-[9px] font-black text-slate-600 tracking-[0.5em] uppercase">Property Management Evolved</p>
-                <p className="text-[10px] text-slate-700 font-bold tracking-widest">&copy; {new Date().getFullYear()} RentFlow Systems.</p>
+                <p className="text-[9px] font-black text-slate-400 tracking-[0.5em] uppercase">Property Management Evolved</p>
+                <p className="text-[10px] text-slate-300 font-bold tracking-widest">&copy; {new Date().getFullYear()} RentFlow Systems.</p>
             </footer>
         </div>
     );
