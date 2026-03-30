@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from 'next/navigation';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState } from 'react';
 
 export default function LandingPage() {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -62,13 +62,27 @@ export default function LandingPage() {
                 }
             `}</style>
 
-            {/* Ambient Mouse Tracking Glow */}
-            <div 
-                className="pointer-events-none absolute inset-0 z-0 opacity-0 group-hover/container:opacity-100 transition-opacity duration-1000"
-                style={{
-                    background: `radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(79, 70, 229, 0.12), transparent 80%)`
-                }}
-            />
+            {/* NEW: Multi-Layered Interactive Mouse Tracking */}
+            <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+                {/* Layer 1: Focused colored spotlight */}
+                <div 
+                    className="absolute inset-0 opacity-0 group-hover/container:opacity-100 transition-opacity duration-1000 ease-out"
+                    style={{
+                        background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(79, 70, 229, 0.15), transparent 40%)`
+                    }}
+                />
+                
+                {/* Layer 2: X-Ray Dot Grid Reveal */}
+                <div 
+                    className="absolute inset-0 opacity-0 group-hover/container:opacity-100 transition-opacity duration-700 ease-out"
+                    style={{
+                        backgroundImage: `radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px)`,
+                        backgroundSize: '32px 32px',
+                        WebkitMaskImage: `radial-gradient(350px circle at var(--mouse-x) var(--mouse-y), black 0%, transparent 100%)`,
+                        maskImage: `radial-gradient(350px circle at var(--mouse-x) var(--mouse-y), black 0%, transparent 100%)`
+                    }}
+                />
+            </div>
 
             <header className={`relative z-50 w-full px-10 h-24 flex items-center justify-start transition-all duration-1000 ease-out ${isEntering ? 'opacity-0 -translate-y-8' : 'opacity-100 translate-y-0'}`}>
                 <div className="flex items-center gap-3 group cursor-default">
@@ -84,7 +98,7 @@ export default function LandingPage() {
             </header>
 
             <main className={`relative z-10 flex-1 flex flex-col items-center justify-center px-6 text-center transition-all duration-1000 ease-[cubic-bezier(0.22,1,0.36,1)] -mt-24 ${isEntering ? 'opacity-0 scale-95 blur-2xl' : 'opacity-100 scale-100 blur-0'}`}>
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-zinc-400 text-[10px] uppercase font-bold tracking-[0.3em] mb-10">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-zinc-400 text-[10px] uppercase font-bold tracking-[0.3em] mb-10 shadow-[0_0_20px_rgba(0,0,0,0.5)] backdrop-blur-md">
                     <span className="h-1.5 w-1.5 rounded-full bg-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.8)]"></span>
                     In Development
                 </div>
