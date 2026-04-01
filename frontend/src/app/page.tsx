@@ -86,11 +86,9 @@ export default function LandingPage() {
     const statuses = ["Loading Property Matrix...", "Connecting to RentFlow Database...", "Opening Admin Portal..."];
 
     useEffect(() => {
-        // Center mouse tracking on initial load
         mouseTarget.current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
         mouseCurrent.current = { ...mouseTarget.current };
 
-        // Linear Interpolation (Lerp) for buttery smooth physics
         const lerp = (start: number, end: number, factor: number) => start + (end - start) * factor;
 
         const animate = () => {
@@ -153,13 +151,9 @@ export default function LandingPage() {
                 .animate-breathe { animation: breathe 5s ease-in-out infinite; }
             `}</style>
 
-            {/* --- MAXIMUM VISIBILITY TRACKING ENGINE --- */}
             <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden transition-opacity duration-[2000ms] ease-out opacity-0 group-hover/container:opacity-100">
                 
-                {/* 1. Intense Amber Spotlight */}
                 <div className="absolute inset-0" style={{ background: `radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(245, 158, 11, 0.15), transparent 70%)` }} />
-                
-                {/* 2. Bold Blueprint Grid Reveal */}
                 <div className="absolute inset-0" style={{
                     backgroundImage: `
                         linear-gradient(rgba(6, 182, 212, 0.4) 1px, transparent 1px), 
