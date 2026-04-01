@@ -52,8 +52,6 @@ export default function TenantDashboard() {
                 <h1 className="text-3xl font-black text-slate-900 tracking-tight">Dashboard</h1>
                 <p className="text-slate-500 font-medium mt-1">Hello, {userName.split(' ')[0]}! Real-time overview of your stay.</p>
             </div>
-
-            {/* Vibrant Modern Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
                 {/* Card 1*/}

@@ -116,7 +116,6 @@ export default function AdminChat() {
     return (
         <div className="max-w-7xl mx-auto h-[calc(100vh-10rem)] flex flex-col relative">
             
-            {/* Ambient Background Glows */}
             <div className="absolute top-0 right-20 w-96 h-96 bg-[#5b21b6]/10 rounded-full blur-[100px] pointer-events-none -z-10"></div>
             <div className="absolute bottom-40 left-20 w-96 h-96 bg-blue-600/5 rounded-full blur-[100px] pointer-events-none -z-10"></div>
 

@@ -42,8 +42,6 @@ export default function AdminDashboard() {
 
     return (
         <div className="max-w-7xl mx-auto space-y-10 pb-10 relative">
-            
-            {/* Ambient Background Glows */}
             <div className="absolute top-0 left-10 w-96 h-96 bg-[#5b21b6]/10 rounded-full blur-[100px] pointer-events-none -z-10"></div>
             <div className="absolute top-40 right-10 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px] pointer-events-none -z-10"></div>
 
@@ -234,7 +232,6 @@ export default function AdminDashboard() {
                                 
                                 return (
                                     <div key={activity.id} className="relative pl-8 group/item">
-                                        {/* Glowing Timeline Dot */}
                                         <div className={`absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full ring-4 ring-[#0a0a0a] transition-all duration-300 group-hover/item:scale-150 ${
                                             isPayment ? 'bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]' : 
                                             isTenant ? 'bg-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.8)]' : 
