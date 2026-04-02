@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-// Hardcoding the secret since we skipped the .env file
+// Hardcoding the secret key
 const JWT_SECRET = 'rentflow_super_secret_key_2026';
 
 const protect = (req, res, next) => {
