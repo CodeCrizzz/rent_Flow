@@ -10,7 +10,7 @@ export default function TenantChat() {
 
     const fetchMessages = async () => {
         try {
-            const { data } = await api.get('/chat');
+            const { data } = await api.get('/tenant/chat');
             setMessages(data);
         } catch (error) {
             console.error("Failed to fetch messages:", error);
@@ -35,7 +35,7 @@ export default function TenantChat() {
         e.preventDefault();
         if (!newMessage.trim()) return;
         try {
-            const res = await api.post('/chat', { message: newMessage });
+            const res = await api.post('/tenant/chat', { message: newMessage });
             setMessages([...messages, res.data]);
             setNewMessage('');
         } catch (error) {
