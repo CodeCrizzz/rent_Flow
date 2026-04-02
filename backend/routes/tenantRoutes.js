@@ -9,14 +9,10 @@ const {
 router.use(protect);
 
 router.get('/dashboard', getTenantDashboard);
-
 router.get('/payments', getTenantPayments);
-
 router.get('/requests', getMyRequests);
 router.post('/requests', submitRequest);
-
 router.get('/profile', getTenantProfile);
-
 router.get('/chat', getTenantMessages);
 router.post('/chat', sendTenantMessage);
 

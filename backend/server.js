@@ -9,17 +9,17 @@ app.use(express.json());
 
 // Import Routes
 const authRoutes = require('./routes/authRoutes');
-const adminRoutes = require('./routes/adminRoutes');     // ADDED THIS
-const tenantRoutes = require('./routes/tenantRoutes');   // ADDED THIS
-const billingRoutes = require('./routes/billingRoutes'); // Billing endpoints
-const requestRoutes = require('./routes/requestRoutes'); // Maintenance Requests
+const adminRoutes = require('./routes/adminRoutes');     
+const tenantRoutes = require('./routes/tenantRoutes');   
+const billingRoutes = require('./routes/billingRoutes'); 
+const requestRoutes = require('./routes/requestRoutes'); 
 
 // Mount Routes
 app.use('/api/auth', authRoutes);
-app.use('/api/admin/bills', billingRoutes);              // Admin Billing
-app.use('/api/admin', adminRoutes);                      // ADDED THIS
-app.use('/api/tenant', tenantRoutes);                    // ADDED THIS
-app.use('/api/requests', requestRoutes);                 // Maintenance Requests
+app.use('/api/admin/bills', billingRoutes);              
+app.use('/api/admin', adminRoutes);                     
+app.use('/api/tenant', tenantRoutes);                   
+app.use('/api/requests', requestRoutes);                 
 
 app.get('/', (req, res) => {
     res.send('Welcome to the RentFlow API');

@@ -4,30 +4,29 @@ const bcrypt = require('bcryptjs');
 // @desc    Get Admin Dashboard Statistics
 const getDashboardStats = async (req, res) => {
     try {
-        // Run all queries concurrently for performance
         const [
             roomsResult, roomStatusResult, 
             tenantsResult, tenantStatusResult, recentTenantsResult,
             incomeResult, duesResult,
             requestsResult, recentPaymentsResult, recentRequestsResult
         ] = await Promise.all([
-            // 1. Rooms Overview
+            // Rooms Overview
             db.query('SELECT COUNT(*) FROM rooms'),
             db.query('SELECT status, COUNT(*) FROM rooms GROUP BY status'),
             
-            // 2. Tenants Overview (Total & Status)
+            // Tenants Overview (Total & Status)
             db.query("SELECT COUNT(*) FROM users WHERE role = 'tenant'"),
             db.query("SELECT status, COUNT(*) FROM users WHERE role = 'tenant' GROUP BY status"),
             db.query("SELECT id, name, created_at FROM users WHERE role = 'tenant' ORDER BY created_at DESC LIMIT 5"),
             
-            // 3. Billing Overview
+            // Billing Overview
             db.query("SELECT SUM(amount_paid) FROM payments WHERE EXTRACT(MONTH FROM payment_date) = EXTRACT(MONTH FROM CURRENT_DATE) AND EXTRACT(YEAR FROM payment_date) = EXTRACT(YEAR FROM CURRENT_DATE)"),
             db.query("SELECT status, SUM(balance) FROM bills WHERE status IN ('Unpaid', 'Partial', 'Overdue') GROUP BY status"),
             
-            // 4. Maintenance Summary
+            // Maintenance Summary
             db.query("SELECT status, COUNT(*) FROM requests GROUP BY status"),
             
-            // 5. Recent Payments & Requests for Activity Feed
+            // Recent Payments & Requests for Activity Feed
             db.query(`
                 SELECT p.id, u.name as tenant_name, p.amount_paid, p.payment_date 
                 FROM payments p 
@@ -165,7 +164,7 @@ const getAllRooms = async (req, res) => {
         const rooms = await db.query(query);
         res.status(200).json(rooms.rows);
     } catch (error) {
-        // This will print the exact SQL error to your backend terminal if it ever fails again
+        // print the exact SQL error to the backend terminal
         console.error("Get All Rooms Error Details:", error.message); 
         res.status(500).json({ message: 'Server error fetching rooms' });
     }
@@ -176,13 +175,13 @@ const getAllRooms = async (req, res) => {
 const createRoom = async (req, res) => {
     const { room_number, type, capacity, price, floor, description, status } = req.body;
     try {
-        // 1. Check if room number already exists to prevent duplicates
+        // Check if room number already exists to prevent duplicates
         const roomExists = await db.query('SELECT * FROM rooms WHERE room_number = $1', [room_number]);
         if (roomExists.rows.length > 0) {
             return res.status(400).json({ message: 'Room number already exists' });
         }
 
-        // 2. Insert the new room
+        // Insert the new room
         const query = `
             INSERT INTO rooms (room_number, type, capacity, price, floor, description, status) 
             VALUES ($1, $2, $3, $4, $5, $6, $7) 
@@ -246,13 +245,13 @@ const deleteRoom = async (req, res) => {
     const { id } = req.params;
     
     try {
-        // 1. Safety Check: Don't delete if an active tenant is still assigned to this room
+        // Safety Check: Don't delete if an active tenant is still assigned to this room
         const tenantCheck = await db.query("SELECT * FROM users WHERE room_id = $1 AND role = 'tenant' AND status != 'Moved Out'", [id]);
         if (tenantCheck.rows.length > 0) {
             return res.status(400).json({ message: 'Cannot delete this room because an active tenant is currently assigned to it.' });
         }
 
-        // 2. Delete the room
+        //Delete the room
         const result = await db.query('DELETE FROM rooms WHERE id = $1 RETURNING id', [id]);
         
         if (result.rows.length === 0) {
@@ -498,7 +497,7 @@ const sendMessage = async (req, res) => {
             return res.status(400).json({ message: 'Message and Tenant ID are required' });
         }
 
-        // Assuming admin user ID is 1 (based on your frontend logic)
+        // Assuming admin user ID is 1
         const adminId = 1;
 
         const query = `
