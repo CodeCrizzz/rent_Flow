@@ -124,7 +124,7 @@ export default function LandingPage() {
     };
 
     return (
-        <div ref={containerRef} onMouseMove={handleMouseMove} className="min-h-screen w-full bg-[#020617] text-white selection:bg-cyan-500/30 overflow-hidden relative font-sans flex flex-col group/container">
+        <div ref={containerRef} onMouseMove={handleMouseMove} className="h-screen max-h-screen w-full bg-[#020617] text-white selection:bg-cyan-500/30 overflow-hidden relative font-sans flex flex-col group/container">
             
             {/* Custom Keyframe Animations */}
             <style>{`
