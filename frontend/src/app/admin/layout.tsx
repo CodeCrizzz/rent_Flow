@@ -9,11 +9,32 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const pathname = usePathname();
     const router = useRouter();
     const [adminName, setAdminName] = useState('Admin');
+    const [unreadCount, setUnreadCount] = useState(0);
+
+    const fetchUnreadCount = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+            const res = await fetch('http://localhost:5000/api/admin/chat/unread', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (res.ok) {
+                const data = await res.json();
+                setUnreadCount(data.unreadCount);
+            }
+        } catch (error) {
+            console.error('Failed to fetch unread count', error);
+        }
+    };
 
     useEffect(() => {
         const userStr = localStorage.getItem('user');
         if (userStr) setAdminName(JSON.parse(userStr).name);
-    }, []);
+        
+        fetchUnreadCount();
+        const interval = setInterval(fetchUnreadCount, 15000);
+        return () => clearInterval(interval);
+    }, [pathname]);
 
     const handleLogout = () => {
         localStorage.removeItem('token');
@@ -49,9 +70,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     {navItems.map((item) => {
                         const isActive = pathname === item.path;
                         return (
-                            <Link key={item.name} href={item.path} className={`flex items-center gap-3.5 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all duration-300 ${isActive ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-[0_0_20px_rgba(79,70,229,0.3)]' : 'text-zinc-500 hover:bg-zinc-900/50 hover:text-zinc-300'}`}>
+                            <Link key={item.name} href={item.path} className={`flex items-center gap-3.5 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all duration-300 relative ${isActive ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-[0_0_20px_rgba(79,70,229,0.3)]' : 'text-zinc-500 hover:bg-zinc-900/50 hover:text-zinc-300'}`}>
                                 <svg className={`w-5 h-5 ${isActive ? 'text-white' : 'text-zinc-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={item.icon}></path></svg>
-                                {item.name}
+                                <span className="flex-1">{item.name}</span>
+                                {item.name === 'Communications' && unreadCount > 0 && (
+                                    <span className="flex h-5 items-center justify-center rounded-full bg-red-500 px-2 text-[10px] font-black text-white shadow-[0_0_10px_rgba(239,68,68,0.5)]">
+                                        {unreadCount}
+                                    </span>
+                                )}
                             </Link>
                         );
                     })}

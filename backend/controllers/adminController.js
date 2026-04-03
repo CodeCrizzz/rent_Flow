@@ -514,6 +514,20 @@ const sendMessage = async (req, res) => {
     }
 };
 
+// @desc    Get Unread Messages Count
+// @route   GET /api/admin/chat/unread
+const getUnreadCount = async (req, res) => {
+    try {
+        const result = await db.query(
+            "SELECT COUNT(*) FROM messages WHERE receiver_id = 1 AND status != 'read'"
+        );
+        res.status(200).json({ unreadCount: parseInt(result.rows[0].count) });
+    } catch (error) {
+        console.error('Unread Count Error:', error);
+        res.status(500).json({ message: 'Server error fetching unread count' });
+    }
+};
+
 module.exports = { 
     getDashboardStats, 
     getAllRooms, 
@@ -528,5 +542,6 @@ module.exports = {
     createTenant,
     getConversations,
     getMessages,  
-    sendMessage    
+    sendMessage,
+    getUnreadCount
 };

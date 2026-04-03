@@ -140,7 +140,22 @@ const sendTenantMessage = async (req, res) => {
     }
 };
 
+// @desc    Get Unread Messages Count
+const getUnreadCount = async (req, res) => {
+    const tenantId = req.user.id;
+    try {
+        const result = await db.query(
+            "SELECT COUNT(*) FROM messages WHERE receiver_id = $1 AND status != 'read'",
+            [tenantId]
+        );
+        res.status(200).json({ unreadCount: parseInt(result.rows[0].count) });
+    } catch (error) {
+        console.error('Unread Count Error:', error);
+        res.status(500).json({ message: 'Server error fetching unread count' });
+    }
+};
+
 module.exports = { 
     getTenantDashboard, getTenantProfile, submitRequest, 
-    getMyRequests, getTenantPayments, getTenantMessages, sendTenantMessage 
+    getMyRequests, getTenantPayments, getTenantMessages, sendTenantMessage, getUnreadCount 
 };
