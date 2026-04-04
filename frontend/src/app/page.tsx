@@ -90,7 +90,6 @@ export default function LandingPage() {
         mouseCurrent.current = { ...mouseTarget.current };
 
         const lerp = (start: number, end: number, factor: number) => start + (end - start) * factor;
-
         const animate = () => {
             mouseCurrent.current.x = lerp(mouseCurrent.current.x, mouseTarget.current.x, 0.08);
             mouseCurrent.current.y = lerp(mouseCurrent.current.y, mouseTarget.current.y, 0.08);
