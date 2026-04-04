@@ -225,25 +225,59 @@ export default function LandingPage() {
 
             {/* --- LOADING OVERLAY --- */}
             {isEntering && (
-                <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#020617]/95 backdrop-blur-3xl animate-in fade-in duration-[1500ms] ease-out">
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-to-br from-cyan-600/10 to-blue-600/10 rounded-full blur-[140px] pointer-events-none"></div>
+                <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#020617] backdrop-blur-3xl animate-in fade-in duration-[1500ms] ease-out">
+                    {/* Background Glow */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-600/20 rounded-full blur-[100px] pointer-events-none animate-pulse"></div>
+
+                    {/* Outer Rotating Rings */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 border border-cyan-500/20 rounded-full animate-[spin_4s_linear_infinite]"></div>
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 border border-dashed border-blue-500/30 rounded-full animate-[spin_8s_linear_infinite_reverse]"></div>
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 border-2 border-dotted border-cyan-400/10 rounded-full animate-[spin_12s_linear_infinite]"></div>
                     
-                    <div className="relative mb-16 animate-breathe flex flex-col items-center">
-                        <div className="w-20 h-20 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-3xl flex items-center justify-center shadow-[0_0_60px_rgba(6,182,212,0.4)] border border-white/20">
-                            <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                    {/* Data Particles/Nodes on rings */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 animate-[spin_4s_linear_infinite]">
+                        <div className="absolute -top-1 left-1/2 w-2 h-2 bg-cyan-400 rounded-full shadow-[0_0_10px_rgba(34,211,238,1)]"></div>
+                        <div className="absolute -bottom-1 left-1/2 w-2 h-2 bg-blue-500 rounded-full shadow-[0_0_10px_rgba(59,130,246,1)]"></div>
+                    </div>
+
+                    {/* Central Icon Container */}
+                    <div className="relative mb-20 flex flex-col items-center z-10">
+                        {/* Multiple glowing layers */}
+                        <div className="absolute inset-0 bg-cyan-500 blur-2xl opacity-20 animate-breathe"></div>
+                        
+                        <div className="relative w-24 h-24 bg-slate-900/80 backdrop-blur-md rounded-2xl flex items-center justify-center border border-cyan-500/40 overflow-hidden shadow-[0_0_50px_rgba(6,182,212,0.4)] animate-breathe">
+                            {/* Scanning line inside the box */}
+                            <div className="absolute inset-0 bg-linear-to-b from-transparent via-cyan-400/20 to-transparent -translate-y-[150%] animate-[slideUpFade_2.5s_ease-in-out_infinite_alternate]"></div>
+                            
+                            <svg className="w-10 h-10 text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.8)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                         </div>
                     </div>
                     
-                    <div className="relative w-72 h-[2px] bg-white/5 rounded-full overflow-hidden mb-10">
+                    {/* Futuristic Progress Bar */}
+                    <div className="relative w-80 h-[2px] bg-white/5 rounded-full overflow-hidden mb-10 z-10">
                         <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-transparent via-cyan-400 to-blue-500 shadow-[0_0_20px_rgba(6,182,212,1)] rounded-full animate-progress-smooth"></div>
                     </div>
                     
-                    <div className="h-6 relative flex items-center justify-center overflow-hidden w-full">
+                    {/* Status Text */}
+                    <div className="h-8 relative flex items-center justify-center w-full z-10">
                         {statuses.map((status, index) => (
-                            <p key={status} className={`absolute text-[10px] font-black uppercase tracking-[0.4em] transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${loadingStep === index ? 'opacity-100 translate-y-0 text-cyan-50 drop-shadow-[0_0_12px_rgba(6,182,212,0.6)]' : loadingStep > index ? 'opacity-0 -translate-y-8 text-slate-600 blur-[4px]' : 'opacity-0 translate-y-8 text-slate-600 blur-[4px]'}`}>
-                                {status}
-                            </p>
+                            <div key={status} className={`absolute flex items-center gap-3 transition-all duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${loadingStep === index ? 'opacity-100 translate-y-0' : loadingStep > index ? 'opacity-0 -translate-y-4 blur-[4px]' : 'opacity-0 translate-y-4 blur-[4px]'}`}>
+                                <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse shadow-[0_0_8px_rgba(34,211,238,0.8)]"></span>
+                                <p className="text-[10px] font-black uppercase tracking-[0.4em] text-cyan-50 drop-shadow-[0_0_10px_rgba(6,182,212,0.6)]">
+                                    {status}
+                                </p>
+                            </div>
                         ))}
+                    </div>
+
+                    {/* Fake Percentage/Status counter */}
+                    <div className="absolute bottom-12 text-[9px] font-mono text-cyan-500/50 tracking-[0.5em] z-10 flex items-center gap-2">
+                        SYS. INIT 
+                        <span className="flex items-center gap-1">
+                            <span className="w-1 h-1 bg-cyan-500/50 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                            <span className="w-1 h-1 bg-cyan-500/50 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                            <span className="w-1 h-1 bg-cyan-500/50 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+                        </span>
                     </div>
                 </div>
             )}
