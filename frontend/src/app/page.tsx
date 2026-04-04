@@ -145,9 +145,14 @@ export default function LandingPage() {
                     0% { background-position: -200% center; }
                     100% { background-position: 200% center; }
                 }
+                @keyframes float-icon {
+                    0%, 100% { transform: translateY(0); filter: drop-shadow(0 0 2px rgba(34,211,238,0.2)); }
+                    50% { transform: translateY(-4px); filter: drop-shadow(0 0 12px rgba(34,211,238,0.8)); }
+                }
 
                 .animate-progress-smooth { animation: progress-smooth 2.8s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
                 .animate-breathe { animation: breathe 5s ease-in-out infinite; }
+                .animate-float-icon { animation: float-icon 2.5s ease-in-out infinite; }
             `}</style>
 
             <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden transition-opacity duration-[2000ms] ease-out opacity-0 group-hover/container:opacity-100">
@@ -230,7 +235,7 @@ export default function LandingPage() {
                     <div className="relative mb-12 flex flex-col items-center opacity-90 animate-breathe">
                         <div className="w-16 h-16 bg-slate-900/50 rounded-2xl flex items-center justify-center border border-slate-800 shadow-lg relative overflow-hidden">
                             <div className="absolute inset-0 bg-cyan-500/10 animate-pulse"></div>
-                            <svg className="w-8 h-8 text-cyan-400 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                            <svg className="w-8 h-8 text-cyan-400 relative z-10 animate-float-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                         </div>
                     </div>
                     
