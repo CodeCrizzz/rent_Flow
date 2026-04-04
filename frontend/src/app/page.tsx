@@ -233,15 +233,13 @@ export default function LandingPage() {
 
             {/* --- LOADING OVERLAY --- */}
             {isEntering && (
-                <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#020617] animate-in fade-in duration-700 ease-out backdrop-blur-sm">
+                <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#020617] animate-in fade-in duration-700 ease-out">
                     {/* Background glow for overlay */}
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                        <div className="w-96 h-96 bg-cyan-600/10 rounded-full blur-[100px]"></div>
-                    </div>
+                    <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at center, rgba(6, 182, 212, 0.15) 0%, transparent 40%)' }}></div>
                     
                     {/* Official Logo Container */}
-                    <div className="relative mb-16 flex items-center gap-4 animate-breathe">
-                        <div className="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.6)] border border-cyan-300/40 relative">
+                    <div className="relative mb-16 flex items-center gap-5 animate-breathe bg-slate-900/40 backdrop-blur-md px-8 py-6 rounded-3xl border border-cyan-500/20 shadow-[0_10px_40px_-10px_rgba(6,182,212,0.3)]">
+                        <div className="w-14 h-14 bg-linear-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.6)] border border-cyan-300/40 relative">
                             <div className="absolute inset-0 bg-white/20 rounded-2xl animate-pulse"></div>
                             <svg className="w-8 h-8 text-white relative z-10 animate-float-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                         </div>
@@ -254,7 +252,7 @@ export default function LandingPage() {
                     {/* Progress Bar Container */}
                     <div className="relative w-[320px] h-2 bg-slate-800/80 rounded-full overflow-visible mb-8 border border-slate-700/50">
                         {/* Progress Fill */}
-                        <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-300 rounded-full animate-progress-smooth flex justify-end items-center shadow-[0_0_20px_rgba(34,211,238,0.7)]">
+                        <div className="absolute top-0 left-0 h-full bg-linear-to-r from-blue-500 via-cyan-400 to-teal-300 rounded-full animate-progress-smooth flex justify-end items-center shadow-[0_0_20px_rgba(34,211,238,0.7)]">
                             {/* Icon tracing the progress bar */}
                             <div className="absolute right-0 translate-x-1/2 w-10 h-10 bg-[#020617] border-2 border-cyan-400 rounded-full flex items-center justify-center shadow-[0_0_20px_rgba(34,211,238,0.9)] z-20 overflow-hidden group">
                                 <div className="absolute inset-0 bg-cyan-400/20 animate-[spin_3s_linear_infinite]"></div>
