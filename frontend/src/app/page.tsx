@@ -233,15 +233,21 @@ export default function LandingPage() {
                     
                     {/* Clean Icon Container */}
                     <div className="relative mb-12 flex flex-col items-center opacity-90 animate-breathe">
-                        <div className="w-16 h-16 bg-slate-900/50 rounded-2xl flex items-center justify-center border border-slate-800 shadow-lg relative overflow-hidden">
-                            <div className="absolute inset-0 bg-cyan-500/10 animate-pulse"></div>
-                            <svg className="w-8 h-8 text-cyan-400 relative z-10 animate-float-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                        <div className="w-24 h-24 bg-[#020617]/90 rounded-full flex items-center justify-center border border-cyan-500/20 shadow-[0_0_30px_rgba(34,211,238,0.15)] relative">
+                            <div className="absolute inset-0 bg-cyan-500/10 rounded-full animate-pulse"></div>
+                            <svg className="w-12 h-12 text-cyan-400 relative z-10 animate-float-icon antialiased" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                         </div>
                     </div>
                     
-                    {/* Clean Minimal Progress Bar */}
-                    <div className="relative w-64 h-[2px] bg-slate-800/50 overflow-hidden mb-8 rounded-full">
-                        <div className="absolute top-0 left-0 h-full bg-cyan-500 rounded-full animate-progress-smooth"></div>
+                    {/* Awesome Progress Bar with Leading Icon */}
+                    <div className="relative w-72 h-[2px] bg-slate-800/80 mb-10 rounded-full">
+                        <div className="absolute top-0 left-0 h-full bg-linear-to-r from-blue-600/50 via-cyan-400 to-cyan-200 rounded-full animate-progress-smooth shadow-[0_0_20px_rgba(34,211,238,0.8)] flex justify-end items-center">
+                            {/* Leading Edge Icon */}
+                            <div className="absolute right-0 translate-x-1/2 w-6 h-6 bg-[#020617] border border-cyan-400 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(34,211,238,1)] transform-gpu z-20">
+                                <div className="absolute inset-0 bg-cyan-400 rounded-full animate-ping opacity-30"></div>
+                                <svg className="w-3 h-3 text-cyan-300 relative z-10 animate-breathe" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                            </div>
+                        </div>
                     </div>
                     
                     {/* Status Text */}
