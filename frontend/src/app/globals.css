@@ -1,20 +1,17 @@
 @import "tailwindcss";
 
-/* 1. Tell Tailwind v4 to use the manual .dark class for dark mode */
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #f8fafc; /* Light mode background (slate-50) */
-  --foreground: #0f172a; /* Light mode text (slate-900) */
+  --background: #f8fafc;
+  --foreground: #0f172a;
 }
 
-/* 2. Replace the @media query with the .dark class */
 .dark {
-  --background: #050505; /* Dark mode background */
-  --foreground: #f8fafc; /* Dark mode text */
+  --background: #050505;
+  --foreground: #f8fafc;
 }
 
-/* 3. Your theme variables */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -28,7 +25,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Hide scrollbar for clean UI but keep functionality */
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
   height: 6px;

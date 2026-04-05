@@ -2,7 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useRef, useState, useEffect } from 'react';
 
-// --- 3D Tilt Feature Card Component ---
+// --- 3D Tilt Card Component ---
 const TiltCard = ({ title, desc, icon }: { title: string, desc: string, icon: string }) => {
     const cardRef = useRef<HTMLDivElement>(null);
     const [tilt, setTilt] = useState({ rotateX: 0, rotateY: 0, glareX: 50, glareY: 50 });
@@ -51,7 +51,7 @@ const TiltCard = ({ title, desc, icon }: { title: string, desc: string, icon: st
     );
 };
 
-// --- Standard Hover Button Component ---
+// --- Hover Button Component ---
 const PrimaryButton = ({ onClick, isEntering }: { onClick: () => void, isEntering: boolean }) => {
     return (
         <button 
@@ -223,7 +223,7 @@ export default function LandingPage() {
                     <PrimaryButton onClick={handleEnterPortal} isEntering={isEntering} />
                 </div>
 
-                {/* 3D Tilt Feature Cards */}
+                {/* 3D Tilt Cards */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto w-full animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-1000 fill-mode-both">
                     <TiltCard icon="🏢" title="Smart Allocation" desc="Drag and drop residents into optimized room layouts instantly." />
                     <TiltCard icon="⚡" title="Automated Billing" desc="Generate invoices and track overdue balances with zero manual effort." />
@@ -237,7 +237,7 @@ export default function LandingPage() {
                     {/* Background glow for overlay */}
                     <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at center, rgba(6, 182, 212, 0.15) 0%, transparent 40%)' }}></div>
                     
-                    {/* Official Logo Container */}
+                    {/* Logo Container */}
                     <div className="relative mb-16 flex items-center gap-5 animate-breathe bg-slate-900/40 backdrop-blur-md px-8 py-6 rounded-3xl border border-cyan-500/20 shadow-[0_10px_40px_-10px_rgba(6,182,212,0.3)]">
                         <div className="w-14 h-14 bg-linear-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-[0_0_30px_rgba(6,182,212,0.6)] border border-cyan-300/40 relative">
                             <div className="absolute inset-0 bg-white/20 rounded-2xl animate-pulse"></div>
