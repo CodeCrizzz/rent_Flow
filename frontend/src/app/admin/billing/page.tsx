@@ -253,13 +253,13 @@ export default function AdminBilling() {
                     <input 
                         type="text" 
                         placeholder="Search by Tenant Name..." 
-                        className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all"
+                        className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </div>
                 <select 
-                    className="px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none sm:w-48"
+                    className="px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none sm:w-48"
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
                 >
@@ -272,7 +272,7 @@ export default function AdminBilling() {
             </div>
 
             {/* Table */}
-            <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
+            <div className="bg-white dark:bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
                 <div className="overflow-x-auto custom-scrollbar">
                     <table className="w-full text-left border-collapse whitespace-nowrap">
                         <thead className="bg-slate-50 dark:bg-zinc-900/50">
@@ -295,13 +295,13 @@ export default function AdminBilling() {
                                     </td>
                                 </tr>
                             ) : filteredBills.length === 0 ? (
-                                <tr><td colSpan={7} className="px-8 py-16 text-center text-slate-500 dark:text-slate-500 dark:text-zinc-500 font-bold text-sm">No billing records found.</td></tr>
+                                <tr><td colSpan={7} className="px-8 py-16 text-center text-slate-500 dark:text-zinc-500 font-bold text-sm">No billing records found.</td></tr>
                             ) : (
                                 filteredBills.map((b) => (
-                                    <tr key={b.id} className="hover:bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900/40 transition-colors group">
+                                    <tr key={b.id} className="hover:bg-slate-50 dark:bg-zinc-900/40 transition-colors group">
                                         <td className="px-8 py-5">
                                             <div className="flex items-center gap-3">
-                                                <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-400 font-bold text-xs">
+                                                <div className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-400 font-bold text-xs">
                                                     {b.tenant_name.charAt(0)}
                                                 </div>
                                                 <div>
@@ -352,10 +352,10 @@ export default function AdminBilling() {
             {/* Create/Edit Bill Modal */}
             {(isCreateOpen || isEditOpen) && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4 animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
+                    <div className="bg-white dark:bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
                         <div className="px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
                             <h2 className="text-2xl font-black text-slate-900 dark:text-white">{isEditOpen ? 'Edit Bill' : 'Create New Bill'}</h2>
-                            <button onClick={() => { setIsCreateOpen(false); setIsEditOpen(false); }} className="w-10 h-10 rounded-xl hover:bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
+                            <button onClick={() => { setIsCreateOpen(false); setIsEditOpen(false); }} className="w-10 h-10 rounded-xl hover:bg-slate-100 dark:bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
                         </div>
@@ -363,34 +363,34 @@ export default function AdminBilling() {
                             <div className="grid grid-cols-2 gap-6">
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Tenant</label>
-                                    <select required disabled={isEditOpen} value={billForm.tenant_id} onChange={(e) => handleTenantChange(e.target.value)} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent disabled:opacity-50 appearance-none outline-none">
+                                    <select required disabled={isEditOpen} value={billForm.tenant_id} onChange={(e) => handleTenantChange(e.target.value)} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent disabled:opacity-50 appearance-none outline-none">
                                         <option value="" disabled>Select Tenant</option>
                                         {tenants.map(t => <option key={t.id} value={t.id}>{t.name} (Rm {rooms.find(r=>r.id===t.room_id)?.room_number})</option>)}
                                     </select>
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Billing Month</label>
-                                    <input required type="text" placeholder="e.g. March 2026" value={billForm.billing_month} onChange={e => setBillForm({...billForm, billing_month: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
+                                    <input required type="text" placeholder="e.g. March 2026" value={billForm.billing_month} onChange={e => setBillForm({...billForm, billing_month: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Due Date</label>
-                                    <input required type="date" value={billForm.due_date} onChange={e => setBillForm({...billForm, due_date: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
+                                    <input required type="date" value={billForm.due_date} onChange={e => setBillForm({...billForm, due_date: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Rent Amount (₱)</label>
-                                    <input required type="number" step="0.01" value={billForm.rent_amount} onChange={e => setBillForm({...billForm, rent_amount: parseFloat(e.target.value) || 0})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
+                                    <input required type="number" step="0.01" value={billForm.rent_amount} onChange={e => setBillForm({...billForm, rent_amount: parseFloat(e.target.value) || 0})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Water Charges (₱)</label>
-                                    <input required type="number" step="0.01" value={billForm.water_charges} onChange={e => setBillForm({...billForm, water_charges: parseFloat(e.target.value) || 0})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
+                                    <input required type="number" step="0.01" value={billForm.water_charges} onChange={e => setBillForm({...billForm, water_charges: parseFloat(e.target.value) || 0})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Electricity Charges (₱)</label>
-                                    <input required type="number" step="0.01" value={billForm.electricity_charges} onChange={e => setBillForm({...billForm, electricity_charges: parseFloat(e.target.value) || 0})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
+                                    <input required type="number" step="0.01" value={billForm.electricity_charges} onChange={e => setBillForm({...billForm, electricity_charges: parseFloat(e.target.value) || 0})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Other Fees (₱)</label>
-                                    <input required type="number" step="0.01" value={billForm.other_fees} onChange={e => setBillForm({...billForm, other_fees: parseFloat(e.target.value) || 0})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
+                                    <input required type="number" step="0.01" value={billForm.other_fees} onChange={e => setBillForm({...billForm, other_fees: parseFloat(e.target.value) || 0})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
                                 </div>
                                 <div className="space-y-2 col-span-2">
                                     <div className="bg-[#5b21b6]/10 p-5 rounded-2xl border border-[#5b21b6]/20 flex justify-between items-center">
@@ -411,10 +411,10 @@ export default function AdminBilling() {
             {/* Pay Bill Modal */}
             {isPayOpen && selectedBill && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4 animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-md overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
+                    <div className="bg-white dark:bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-md overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
                         <div className="px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
                             <h2 className="text-2xl font-black text-slate-900 dark:text-white">Record Payment</h2>
-                            <button onClick={() => setIsPayOpen(false)} className="w-10 h-10 rounded-xl hover:bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
+                            <button onClick={() => setIsPayOpen(false)} className="w-10 h-10 rounded-xl hover:bg-slate-100 dark:bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
                         </div>
@@ -425,11 +425,11 @@ export default function AdminBilling() {
                             </div>
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Amount Paid (₱)</label>
-                                <input required type="number" step="0.01" max={Number(selectedBill.balance)} value={paymentForm.amount_paid} onChange={e => setPaymentForm({...paymentForm, amount_paid: e.target.value === '' ? '' : parseFloat(e.target.value)})} className="w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-emerald-400 focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent font-black text-lg outline-none" />
+                                <input required type="number" step="0.01" max={Number(selectedBill.balance)} value={paymentForm.amount_paid} onChange={e => setPaymentForm({...paymentForm, amount_paid: e.target.value === '' ? '' : parseFloat(e.target.value)})} className="w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-emerald-400 focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent font-black text-lg outline-none" />
                             </div>
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Payment Method</label>
-                                <select required value={paymentForm.payment_method} onChange={e => setPaymentForm({...paymentForm, payment_method: e.target.value})} className="w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent font-medium appearance-none outline-none">
+                                <select required value={paymentForm.payment_method} onChange={e => setPaymentForm({...paymentForm, payment_method: e.target.value})} className="w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent font-medium appearance-none outline-none">
                                     <option value="Cash">Cash</option>
                                     <option value="GCash">GCash</option>
                                     <option value="Bank Transfer">Bank Transfer</option>
@@ -438,7 +438,7 @@ export default function AdminBilling() {
                             </div>
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Payment Date</label>
-                                <input required type="date" value={paymentForm.payment_date} onChange={e => setPaymentForm({...paymentForm, payment_date: e.target.value})} className="w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent font-medium outline-none" />
+                                <input required type="date" value={paymentForm.payment_date} onChange={e => setPaymentForm({...paymentForm, payment_date: e.target.value})} className="w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent font-medium outline-none" />
                             </div>
                             <div className="flex justify-end gap-3 pt-6 border-t border-slate-200 dark:border-zinc-800">
                                 <button type="button" onClick={() => setIsPayOpen(false)} className="px-6 py-3.5 font-bold text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:text-white rounded-xl transition-colors">Cancel</button>
@@ -452,13 +452,13 @@ export default function AdminBilling() {
             {/* View Details Modal */}
             {isViewOpen && selectedBill && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4 animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
+                    <div className="bg-white dark:bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
                         <div className="px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
                             <div>
                                 <h2 className="text-2xl font-black text-slate-900 dark:text-white">Billing Details</h2>
                                 <p className="text-slate-500 dark:text-zinc-500 font-medium mt-1">Invoice for {selectedBill.billing_month}</p>
                             </div>
-                            <button onClick={() => setIsViewOpen(false)} className="w-10 h-10 rounded-xl hover:bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
+                            <button onClick={() => setIsViewOpen(false)} className="w-10 h-10 rounded-xl hover:bg-slate-100 dark:bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
                         </div>
@@ -508,7 +508,7 @@ export default function AdminBilling() {
                                         {billDetails.payments && billDetails.payments.length > 0 ? (
                                             <div className="border border-slate-200 dark:border-zinc-800 rounded-2xl overflow-hidden divide-y divide-bg-slate-100 dark:bg-zinc-800">
                                                 {billDetails.payments.map((p: { id: Key | null | undefined; payment_date: string | number | Date; payment_method: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; amount_paid: any; }) => (
-                                                    <div key={p.id} className="p-5 flex justify-between items-center bg-slate-50 dark:bg-slate-50 dark:bg-zinc-900/30 hover:bg-slate-200 dark:hover:bg-zinc-800/50 transition-colors">
+                                                    <div key={p.id} className="p-5 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/30 hover:bg-slate-200 dark:hover:bg-slate-200 dark:hover:bg-zinc-800/50 transition-colors">
                                                         <div>
                                                             <p className="font-bold text-slate-900 dark:text-white">{new Date(p.payment_date).toLocaleDateString()}</p>
                                                             <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-zinc-500 mt-1">{p.payment_method}</p>
@@ -526,7 +526,7 @@ export default function AdminBilling() {
                                                 </div>
                                             </div>
                                         ) : (
-                                            <div className="bg-slate-50 dark:bg-slate-50 dark:bg-zinc-900/30 rounded-2xl p-6 text-center border border-slate-200 dark:border-zinc-800 border-dashed text-slate-500 dark:text-zinc-500 font-medium">
+                                            <div className="bg-slate-50 dark:bg-zinc-900/30 rounded-2xl p-6 text-center border border-slate-200 dark:border-zinc-800 border-dashed text-slate-500 dark:text-zinc-500 font-medium">
                                                 No payments have been made for this bill yet.
                                             </div>
                                         )}
@@ -534,8 +534,8 @@ export default function AdminBilling() {
                                 </div>
                             )}
                         </div>
-                        <div className="p-6 border-t border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-slate-50 dark:bg-zinc-900/50 flex justify-end">
-                            <button onClick={() => setIsViewOpen(false)} className="px-6 py-3.5 font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 rounded-xl transition-colors shadow-sm">Close Panel</button>
+                        <div className="p-6 border-t border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50 flex justify-end">
+                            <button onClick={() => setIsViewOpen(false)} className="px-6 py-3.5 font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-slate-300 dark:hover:bg-zinc-700 rounded-xl transition-colors shadow-sm">Close Panel</button>
                         </div>
                     </div>
                 </div>

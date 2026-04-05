@@ -142,14 +142,14 @@ export default function AdminRequests() {
                     <input 
                         type="text" 
                         placeholder="Search tenant or issue..." 
-                        className="w-full pl-12 pr-6 py-3.5 bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-medium text-slate-900 dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all outline-none"
+                        className="w-full pl-12 pr-6 py-3.5 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-medium text-slate-900 dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all outline-none"
                         value={searchTerm}
                         onChange={e => setSearchTerm(e.target.value)}
                     />
                 </div>
                 
                 <select 
-                    className="py-3.5 px-4 bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none outline-none sm:w-40"
+                    className="py-3.5 px-4 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none outline-none sm:w-40"
                     value={statusFilter}
                     onChange={e => setStatusFilter(e.target.value)}
                 >
@@ -161,7 +161,7 @@ export default function AdminRequests() {
                 </select>
 
                 <select 
-                    className="py-3.5 px-4 bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none outline-none sm:w-40"
+                    className="py-3.5 px-4 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none outline-none sm:w-40"
                     value={priorityFilter}
                     onChange={e => setPriorityFilter(e.target.value)}
                 >
@@ -174,7 +174,7 @@ export default function AdminRequests() {
                 </select>
 
                 <select 
-                    className="py-3.5 px-4 bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none outline-none sm:w-40"
+                    className="py-3.5 px-4 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none outline-none sm:w-40"
                     value={categoryFilter}
                     onChange={e => setCategoryFilter(e.target.value)}
                 >
@@ -187,7 +187,7 @@ export default function AdminRequests() {
             </div>
 
             {/* Main Table */}
-            <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10 min-h-[400px]">
+            <div className="bg-white dark:bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10 min-h-[400px]">
                 {isLoading ? (
                     <div className="flex flex-col items-center justify-center p-20 gap-4">
                         <div className="w-8 h-8 border-4 border-[#5b21b6]/20 border-t-[#5b21b6] rounded-full animate-spin"></div>
@@ -210,7 +210,7 @@ export default function AdminRequests() {
                             </thead>
                             <tbody className="divide-y divide-zinc-800/50 text-sm">
                                 {filteredRequests.map((req) => (
-                                    <tr key={req.id} className="hover:bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900/40 transition-colors group">
+                                    <tr key={req.id} className="hover:bg-slate-50 dark:bg-zinc-900/40 transition-colors group">
                                         <td className="px-8 py-5 font-bold text-slate-500 dark:text-zinc-500">#{req.id}</td>
                                         <td className="px-8 py-5">
                                             <div className="font-bold text-slate-900 dark:text-white group-hover:text-indigo-400 transition-colors">{req.tenant_name}</div>
@@ -268,7 +268,7 @@ export default function AdminRequests() {
             {/* View Modal */}
             {viewModalReq && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
+                    <div className="bg-white dark:bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
                         <div className="p-8 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
                             <div>
                                 <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-4">
@@ -278,7 +278,7 @@ export default function AdminRequests() {
                                     </span>
                                 </h3>
                             </div>
-                            <button onClick={() => setViewModalReq(null)} className="w-10 h-10 rounded-xl hover:bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
+                            <button onClick={() => setViewModalReq(null)} className="w-10 h-10 rounded-xl hover:bg-slate-100 dark:bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
                         </div>
@@ -303,11 +303,11 @@ export default function AdminRequests() {
                             <div className="grid grid-cols-3 text-sm gap-6">
                                 <div className="bg-slate-50 dark:bg-zinc-900/50 p-5 rounded-2xl border border-slate-200 dark:border-zinc-800">
                                     <div className="text-slate-500 dark:text-zinc-500 font-black uppercase tracking-widest text-[10px] mb-2">Date Reported</div>
-                                    <div className="font-bold text-slate-900 dark:text-slate-900 dark:text-white text-sm">{new Date(viewModalReq.created_at).toLocaleDateString()}</div>
+                                    <div className="font-bold text-slate-900 dark:text-white text-sm">{new Date(viewModalReq.created_at).toLocaleDateString()}</div>
                                 </div>
                                 <div className="bg-slate-50 dark:bg-zinc-900/50 p-5 rounded-2xl border border-slate-200 dark:border-zinc-800">
                                     <div className="text-slate-500 dark:text-zinc-500 font-black uppercase tracking-widest text-[10px] mb-2">Category</div>
-                                    <div className="font-bold text-slate-900 dark:text-slate-900 dark:text-white text-sm">{viewModalReq.category}</div>
+                                    <div className="font-bold text-slate-900 dark:text-white text-sm">{viewModalReq.category}</div>
                                 </div>
                                 <div className="bg-slate-50 dark:bg-zinc-900/50 p-5 rounded-2xl border border-slate-200 dark:border-zinc-800">
                                     <div className="text-slate-500 dark:text-zinc-500 font-black uppercase tracking-widest text-[10px] mb-2">Priority</div>
@@ -319,7 +319,7 @@ export default function AdminRequests() {
                             
                             <div>
                                 <h4 className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-3">Issue Description</h4>
-                                <div className="bg-slate-50 dark:bg-slate-50 dark:bg-zinc-900/30 p-6 rounded-3xl text-zinc-300 text-sm whitespace-pre-wrap leading-relaxed border border-slate-200 dark:border-zinc-800 border-dashed">
+                                <div className="bg-slate-50 dark:bg-zinc-900/30 p-6 rounded-3xl text-zinc-300 text-sm whitespace-pre-wrap leading-relaxed border border-slate-200 dark:border-zinc-800 border-dashed">
                                     <strong className="text-slate-900 dark:text-white block mb-3 text-lg font-black">{viewModalReq.title}</strong>
                                     {viewModalReq.description}
                                 </div>
@@ -328,7 +328,7 @@ export default function AdminRequests() {
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
                                     <h4 className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-3">Assigned Staff</h4>
-                                    <div className="bg-slate-50 dark:bg-zinc-900/50 p-5 rounded-2xl text-slate-900 dark:text-slate-900 dark:text-white text-sm border border-slate-200 dark:border-zinc-800 font-bold">
+                                    <div className="bg-slate-50 dark:bg-zinc-900/50 p-5 rounded-2xl text-slate-900 dark:text-white text-sm border border-slate-200 dark:border-zinc-800 font-bold">
                                         {viewModalReq.assigned_to || <span className="text-zinc-600 font-medium italic">Not assigned yet</span>}
                                     </div>
                                 </div>
@@ -340,8 +340,8 @@ export default function AdminRequests() {
                                 </div>
                             </div>
                         </div>
-                        <div className="p-6 border-t border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-slate-50 dark:bg-zinc-900/50 flex justify-end gap-3">
-                            <button onClick={() => setViewModalReq(null)} className="px-6 py-3.5 font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 rounded-xl transition-colors shadow-sm">
+                        <div className="p-6 border-t border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50 flex justify-end gap-3">
+                            <button onClick={() => setViewModalReq(null)} className="px-6 py-3.5 font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-slate-300 dark:hover:bg-zinc-700 rounded-xl transition-colors shadow-sm">
                                 Close
                             </button>
                             <button 
@@ -363,10 +363,10 @@ export default function AdminRequests() {
             {/* Update Modal */}
             {updateModalReq && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
+                    <div className="bg-white dark:bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
                         <div className="p-8 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
                             <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Update Request</h3>
-                            <button onClick={() => setUpdateModalReq(null)} className="w-10 h-10 rounded-xl hover:bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
+                            <button onClick={() => setUpdateModalReq(null)} className="w-10 h-10 rounded-xl hover:bg-slate-100 dark:bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
                         </div>
@@ -376,7 +376,7 @@ export default function AdminRequests() {
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Status</label>
                                     <select 
-                                        className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl outline-none focus:border-indigo-500 text-slate-900 dark:text-white font-bold transition-colors appearance-none"
+                                        className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl outline-none focus:border-indigo-500 text-slate-900 dark:text-white font-bold transition-colors appearance-none"
                                         value={updateStatus}
                                         onChange={(e) => setUpdateStatus(e.target.value)}
                                     >
@@ -390,7 +390,7 @@ export default function AdminRequests() {
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Priority</label>
                                     <select 
-                                        className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl outline-none focus:border-indigo-500 text-slate-900 dark:text-white font-bold transition-colors appearance-none"
+                                        className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl outline-none focus:border-indigo-500 text-slate-900 dark:text-white font-bold transition-colors appearance-none"
                                         value={updatePriority}
                                         onChange={(e) => setUpdatePriority(e.target.value)}
                                     >
@@ -408,7 +408,7 @@ export default function AdminRequests() {
                                 <input 
                                     type="text" 
                                     placeholder="e.g. John Doe (Plumber)"
-                                    className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl outline-none focus:border-indigo-500 text-slate-900 dark:text-white font-bold transition-colors placeholder:text-zinc-600 placeholder:font-medium"
+                                    className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl outline-none focus:border-indigo-500 text-slate-900 dark:text-white font-bold transition-colors placeholder:text-zinc-600 placeholder:font-medium"
                                     value={updateAssigned}
                                     onChange={(e) => setUpdateAssigned(e.target.value)}
                                 />
@@ -419,7 +419,7 @@ export default function AdminRequests() {
                                 <textarea 
                                     rows={4}
                                     placeholder="Add any internal notes, spare parts used, or resolution details here..."
-                                    className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl outline-none focus:border-indigo-500 text-slate-900 dark:text-white font-medium transition-colors resize-none placeholder:text-zinc-600 custom-scrollbar"
+                                    className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl outline-none focus:border-indigo-500 text-slate-900 dark:text-white font-medium transition-colors resize-none placeholder:text-zinc-600 custom-scrollbar"
                                     value={updateNotes}
                                     onChange={(e) => setUpdateNotes(e.target.value)}
                                 />

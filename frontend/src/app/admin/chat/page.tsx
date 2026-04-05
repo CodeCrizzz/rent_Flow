@@ -126,10 +126,10 @@ export default function AdminChat() {
                 </div>
             </div>
 
-            <div className="flex-1 bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden flex relative z-10">
+            <div className="flex-1 bg-white dark:bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden flex relative z-10">
                 
                 {/* Sidebar Contacts */}
-                <div className="w-[340px] border-r border-slate-200 dark:border-zinc-800 flex flex-col bg-slate-50 dark:bg-slate-50 dark:bg-zinc-900/30">
+                <div className="w-[340px] border-r border-slate-200 dark:border-zinc-800 flex flex-col bg-slate-50 dark:bg-zinc-900/30">
                     <div className="p-6 border-b border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50">
                         <div className="relative group">
                             <input 
@@ -137,7 +137,7 @@ export default function AdminChat() {
                                 placeholder="Search tenant or room..." 
                                 value={searchFilter}
                                 onChange={(e) => setSearchFilter(e.target.value)}
-                                className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-xs font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none transition-all placeholder:text-slate-500 dark:text-zinc-500 text-slate-900 dark:text-white shadow-inner" 
+                                className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-xs font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none transition-all placeholder:text-slate-500 dark:text-zinc-500 text-slate-900 dark:text-white shadow-inner" 
                             />
                             <svg className="w-4 h-4 text-slate-500 dark:text-zinc-500 absolute left-3.5 top-3.5 group-focus-within:text-[#5b21b6] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </div>
@@ -158,7 +158,7 @@ export default function AdminChat() {
                                 <div 
                                     key={conv.id} 
                                     onClick={() => setSelectedTenant(conv)}
-                                    className={`p-5 border-b border-slate-200 dark:border-zinc-800/50 cursor-pointer relative group transition-all hover:bg-slate-200 dark:hover:bg-zinc-800/40 ${isSelected ? 'bg-zinc-800/60' : ''}`}
+                                    className={`p-5 border-b border-slate-200 dark:border-zinc-800/50 cursor-pointer relative group transition-all hover:bg-slate-200 dark:hover:bg-slate-200 dark:hover:bg-zinc-800/40 ${isSelected ? 'bg-zinc-800/60' : ''}`}
                                 >
                                     {isSelected && <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#5b21b6] rounded-r-full shadow-[0_0_10px_rgba(91,33,182,0.8)]"></div>}
                                     <div className="flex justify-between items-start mb-1.5">
@@ -210,7 +210,7 @@ export default function AdminChat() {
                             <div ref={scrollRef} className="flex-1 p-8 overflow-y-auto space-y-6 custom-scrollbar scroll-smooth relative z-0">
                                 {messages.length === 0 ? (
                                     <div className="h-full flex items-center justify-center flex-col gap-3 opacity-50">
-                                        <div className="w-16 h-16 bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl flex items-center justify-center text-3xl shadow-inner">
+                                        <div className="w-16 h-16 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl flex items-center justify-center text-3xl shadow-inner">
                                             💬
                                         </div>
                                         <div className="text-slate-500 dark:text-zinc-400 font-bold text-sm">No message history with {selectedTenant.name}</div>
@@ -228,7 +228,7 @@ export default function AdminChat() {
                                         return (
                                             <div key={index} className={`flex ${isFromAdmin ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-${isFromAdmin ? 'right' : 'left'}-4 duration-500`}>
                                                 <div className="relative max-w-[70%]">
-                                                    <div className={`${isFromAdmin ? 'bg-[#5b21b6] text-slate-900 dark:text-white rounded-tr-xl rounded-tl-3xl rounded-b-3xl shadow-[0_0_15px_rgba(91,33,182,0.15)]' : 'bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-zinc-300 rounded-tl-xl rounded-tr-3xl rounded-b-3xl'} px-6 py-4 text-sm font-medium leading-relaxed`}>
+                                                    <div className={`${isFromAdmin ? 'bg-[#5b21b6] text-slate-900 dark:text-white rounded-tr-xl rounded-tl-3xl rounded-b-3xl shadow-[0_0_15px_rgba(91,33,182,0.15)]' : 'bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-zinc-300 rounded-tl-xl rounded-tr-3xl rounded-b-3xl'} px-6 py-4 text-sm font-medium leading-relaxed`}>
                                                         {msg.message}
                                                     </div>
                                                     <div className={`flex items-center gap-2 mt-2 ${isFromAdmin ? 'justify-end mr-2' : 'ml-2'}`}>
@@ -278,7 +278,7 @@ export default function AdminChat() {
                         </>
                     ) : (
                         <div className="flex-1 flex flex-col items-center justify-center text-slate-500 dark:text-zinc-500 font-bold gap-4 opacity-70 relative z-10">
-                            <div className="w-24 h-24 bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-3xl flex items-center justify-center text-4xl shadow-inner">
+                            <div className="w-24 h-24 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-3xl flex items-center justify-center text-4xl shadow-inner">
                                 📬
                             </div>
                             <h2 className="text-xl text-slate-900 dark:text-white tracking-tight">Select a conversation</h2>

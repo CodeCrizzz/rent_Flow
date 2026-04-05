@@ -196,11 +196,11 @@ export default function AdminRooms() {
                         value={searchQuery} 
                         onChange={(e) => setSearchQuery(e.target.value)} 
                         placeholder="Search by Room Number..." 
-                        className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all" 
+                        className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all" 
                     />
                 </div>
                 
-                <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="py-3.5 px-4 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none outline-none sm:w-40">
+                <select value={statusFilter} onChange={(e) => setStatusFilter(e.target.value)} className="py-3.5 px-4 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none outline-none sm:w-40">
                     <option value="All">All Statuses</option>
                     <option value="Available">Available</option>
                     <option value="Partial">Partial</option>
@@ -208,7 +208,7 @@ export default function AdminRooms() {
                     <option value="Maintenance">Maintenance</option>
                 </select>
 
-                <select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)} className="py-3.5 px-4 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none outline-none sm:w-40">
+                <select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)} className="py-3.5 px-4 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none outline-none sm:w-40">
                     <option value="All">All Types</option>
                     <option value="Single">Single</option>
                     <option value="Double">Double</option>
@@ -216,7 +216,7 @@ export default function AdminRooms() {
                 </select>
                 
                 {distinctFloors.length > 0 && (
-                <select value={floorFilter} onChange={(e) => setFloorFilter(e.target.value)} className="py-3.5 px-4 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none outline-none sm:w-40">
+                <select value={floorFilter} onChange={(e) => setFloorFilter(e.target.value)} className="py-3.5 px-4 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none outline-none sm:w-40">
                     <option value="All">All Floors</option>
                     {distinctFloors.map((f, i) => <option key={i} value={f as string}>{f}</option>)}
                 </select>
@@ -224,7 +224,7 @@ export default function AdminRooms() {
             </div>
 
             {/* Data Table */}
-            <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
+            <div className="bg-white dark:bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
                 <div className="overflow-x-auto custom-scrollbar">
                     <table className="w-full text-left border-collapse whitespace-nowrap">
                         <thead className="bg-slate-50 dark:bg-zinc-900/50">
@@ -245,10 +245,10 @@ export default function AdminRooms() {
                                     </td>
                                 </tr>
                             ) : filteredRooms.length === 0 ? (
-                                <tr><td colSpan={5} className="px-8 py-16 text-center text-slate-500 dark:text-slate-500 dark:text-zinc-500 font-bold text-sm">No rooms found.</td></tr>
+                                <tr><td colSpan={5} className="px-8 py-16 text-center text-slate-500 dark:text-zinc-500 font-bold text-sm">No rooms found.</td></tr>
                             ) : (
                                 filteredRooms.map((room) => (
-                                    <tr key={room.id} className="hover:bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900/40 transition-colors group">
+                                    <tr key={room.id} className="hover:bg-slate-50 dark:bg-zinc-900/40 transition-colors group">
                                         <td className="px-8 py-5">
                                             <div className="flex items-center gap-4">
                                                 <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-zinc-800 border border-slate-300 dark:border-zinc-700 text-slate-500 dark:text-zinc-400 flex items-center justify-center font-black text-sm group-hover:bg-[#5b21b6] group-hover:text-slate-900 dark:text-white group-hover:border-[#5b21b6] transition-all duration-300 shrink-0">
@@ -261,7 +261,7 @@ export default function AdminRooms() {
                                             </div>
                                         </td>
                                         <td className="px-8 py-5">
-                                            <p className="font-bold text-slate-900 dark:text-slate-900 dark:text-white text-sm">{room.current_occupants} / {room.capacity} Residents</p>
+                                            <p className="font-bold text-slate-900 dark:text-white text-sm">{room.current_occupants} / {room.capacity} Residents</p>
                                             <p className="text-[10px] text-indigo-400 font-bold mt-1 uppercase tracking-widest">{room.available_slots} Slots Available</p>
                                         </td>
                                         <td className="px-8 py-5">
@@ -297,10 +297,10 @@ export default function AdminRooms() {
             {/* Add/Edit Room Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4 animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
+                    <div className="bg-white dark:bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
                         <div className="px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
                             <h2 className="text-2xl font-black text-slate-900 dark:text-white">{editingRoom ? 'Edit Room' : 'Add New Room'}</h2>
-                            <button onClick={() => setIsModalOpen(false)} className="w-10 h-10 rounded-xl hover:bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
+                            <button onClick={() => setIsModalOpen(false)} className="w-10 h-10 rounded-xl hover:bg-slate-100 dark:bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
                         </div>
@@ -308,11 +308,11 @@ export default function AdminRooms() {
                             <div className="grid grid-cols-2 gap-6">
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Room Number</label>
-                                    <input required type="text" value={formData.room_number} onChange={e => setFormData({...formData, room_number: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="e.g. 101" />
+                                    <input required type="text" value={formData.room_number} onChange={e => setFormData({...formData, room_number: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="e.g. 101" />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Type</label>
-                                    <select value={formData.type} onChange={e => setFormData({...formData, type: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none appearance-none">
+                                    <select value={formData.type} onChange={e => setFormData({...formData, type: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none appearance-none">
                                         <option value="Single">Single</option>
                                         <option value="Double">Double</option>
                                         <option value="Bedspace">Bedspace</option>
@@ -322,21 +322,21 @@ export default function AdminRooms() {
                             <div className="grid grid-cols-2 gap-6">
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Capacity</label>
-                                    <input required type="number" min="1" value={formData.capacity} onChange={e => setFormData({...formData, capacity: parseInt(e.target.value) || 1})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
+                                    <input required type="number" min="1" value={formData.capacity} onChange={e => setFormData({...formData, capacity: parseInt(e.target.value) || 1})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Monthly Price (₱)</label>
-                                    <input required type="number" value={formData.price} onChange={e => setFormData({...formData, price: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="0.00" />
+                                    <input required type="number" value={formData.price} onChange={e => setFormData({...formData, price: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="0.00" />
                                 </div>
                             </div>
                             <div className="grid grid-cols-2 gap-6">
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Floor (Optional)</label>
-                                    <input type="text" value={formData.floor} onChange={e => setFormData({...formData, floor: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="e.g. 1st Floor" />
+                                    <input type="text" value={formData.floor} onChange={e => setFormData({...formData, floor: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="e.g. 1st Floor" />
                                 </div>
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Status Override</label>
-                                    <select value={formData.status} onChange={e => setFormData({...formData, status: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none appearance-none">
+                                    <select value={formData.status} onChange={e => setFormData({...formData, status: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none appearance-none">
                                         <option value="Available">Available</option>
                                         <option value="Partial">Partial</option>
                                         <option value="Occupied">Occupied</option>
@@ -346,7 +346,7 @@ export default function AdminRooms() {
                             </div>
                             <div className="space-y-2">
                                 <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Description (Optional)</label>
-                                <textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none resize-none h-24 custom-scrollbar" placeholder="Room details, amenities, etc."></textarea>
+                                <textarea value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none resize-none h-24 custom-scrollbar" placeholder="Room details, amenities, etc."></textarea>
                             </div>
                             <div className="flex justify-end gap-3 pt-6 border-t border-slate-200 dark:border-zinc-800">
                                 <button type="button" onClick={() => setIsModalOpen(false)} className="px-6 py-3.5 font-bold text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:text-white rounded-xl transition-colors">Cancel</button>
@@ -362,8 +362,8 @@ export default function AdminRooms() {
             {/* View Details Modal */}
             {isViewModalOpen && viewingRoom && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4 animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 w-full max-w-3xl overflow-hidden animate-in zoom-in-95 duration-300 flex flex-col max-h-[90vh]">
-                        <div className="p-8 border-b border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-slate-50 dark:bg-zinc-900/50 flex justify-between items-start">
+                    <div className="bg-white dark:bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 w-full max-w-3xl overflow-hidden animate-in zoom-in-95 duration-300 flex flex-col max-h-[90vh]">
+                        <div className="p-8 border-b border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50 flex justify-between items-start">
                             <div>
                                 <h2 className="text-3xl font-black text-slate-900 dark:text-white">Room {viewingRoom.room_number}</h2>
                                 <p className="text-slate-500 dark:text-zinc-500 font-medium text-sm mt-1">{viewingRoom.type} • Floor {viewingRoom.floor || 'N/A'}</p>
@@ -395,7 +395,7 @@ export default function AdminRooms() {
                                         <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                         Room Description
                                     </h3>
-                                    <p className="text-sm text-slate-500 dark:text-zinc-400 leading-relaxed bg-slate-50 dark:bg-slate-50 dark:bg-zinc-900/30 border border-slate-200 dark:border-zinc-800 border-dashed p-5 rounded-2xl">{viewingRoom.description}</p>
+                                    <p className="text-sm text-slate-500 dark:text-zinc-400 leading-relaxed bg-slate-50 dark:bg-zinc-900/30 border border-slate-200 dark:border-zinc-800 border-dashed p-5 rounded-2xl">{viewingRoom.description}</p>
                                 </div>
                             )}
 
@@ -408,19 +408,19 @@ export default function AdminRooms() {
                                 </h3>
                                 
                                 {viewingRoom.occupants.length === 0 ? (
-                                    <div className="text-center py-8 bg-slate-50 dark:bg-slate-50 dark:bg-zinc-900/30 rounded-2xl border border-slate-200 dark:border-zinc-800 border-dashed">
+                                    <div className="text-center py-8 bg-slate-50 dark:bg-zinc-900/30 rounded-2xl border border-slate-200 dark:border-zinc-800 border-dashed">
                                         <p className="text-sm font-bold text-slate-500 dark:text-zinc-500">No active residents in this room.</p>
                                     </div>
                                 ) : (
                                     <div className="space-y-3">
                                         {viewingRoom.occupants.map(tenant => (
-                                            <div key={tenant.id} className="flex items-center justify-between p-4 border border-slate-200 dark:border-zinc-800 rounded-2xl bg-slate-50 dark:bg-zinc-900/50 hover:bg-slate-200 dark:hover:bg-zinc-800/80 transition-colors">
+                                            <div key={tenant.id} className="flex items-center justify-between p-4 border border-slate-200 dark:border-zinc-800 rounded-2xl bg-slate-50 dark:bg-zinc-900/50 hover:bg-slate-200 dark:hover:bg-slate-200 dark:hover:bg-zinc-800/80 transition-colors">
                                                 <div className="flex items-center gap-4">
-                                                    <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-400 font-bold text-xs border border-slate-300 dark:border-zinc-700">
+                                                    <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-400 font-bold text-xs border border-slate-300 dark:border-zinc-700">
                                                         {tenant.name.charAt(0)}
                                                     </div>
                                                     <div>
-                                                        <p className="font-bold text-slate-900 dark:text-slate-900 dark:text-white text-sm">{tenant.name}</p>
+                                                        <p className="font-bold text-slate-900 dark:text-white text-sm">{tenant.name}</p>
                                                         <p className="text-[11px] text-slate-500 dark:text-zinc-500 mt-0.5">{tenant.phone} • {tenant.date_moved_in ? new Date(tenant.date_moved_in).toLocaleDateString() : 'N/A'}</p>
                                                     </div>
                                                 </div>
@@ -437,8 +437,8 @@ export default function AdminRooms() {
                                 )}
                             </div>
                         </div>
-                        <div className="p-6 border-t border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-slate-50 dark:bg-zinc-900/50 flex justify-end">
-                            <button onClick={() => setIsViewModalOpen(false)} className="px-6 py-3.5 font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 rounded-xl transition-colors shadow-sm">
+                        <div className="p-6 border-t border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50 flex justify-end">
+                            <button onClick={() => setIsViewModalOpen(false)} className="px-6 py-3.5 font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-slate-300 dark:hover:bg-zinc-700 rounded-xl transition-colors shadow-sm">
                                 Close Panel
                             </button>
                         </div>
