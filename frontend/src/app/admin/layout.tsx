@@ -104,7 +104,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             </aside>
 
             <main className="flex-1 flex flex-col relative h-screen overflow-hidden">
-                <div className="flex-1 overflow-y-auto p-6 md:p-10 lg:p-14 relative z-0 scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-bg-slate-100 dark:bg-zinc-800 scrollbar-track-transparent">
+                <div className="flex-1 overflow-y-auto p-6 md:p-10 lg:p-14 relative z-0 scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-bg-slate-100 dark:bg-[#050505] scrollbar-track-transparent">
                     <AnimatePresence mode="wait">
                         <PageTransition key={pathname}>
                             {children}

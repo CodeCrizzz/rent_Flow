@@ -227,7 +227,7 @@ export default function AdminRooms() {
             <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-xl dark:shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
                 <div className="overflow-x-auto custom-scrollbar">
                     <table className="w-full text-left border-collapse whitespace-nowrap">
-                        <thead className="bg-slate-50 dark:bg-zinc-900/50">
+                        <thead className="bg-slate-50 dark:bg-[#0d0d0d]/60">
                             <tr className="border-b border-slate-200 dark:border-zinc-800">
                                 <th className="px-8 py-5 text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Room Info</th>
                                 <th className="px-8 py-5 text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Occupancy</th>

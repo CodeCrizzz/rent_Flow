@@ -121,15 +121,15 @@ export default function AdminDashboard() {
                                     <div style={{width: `${(stats.rooms.maintenanceRooms / Math.max(stats.rooms.totalRooms, 1)) * 100}%`}} className="bg-rose-500 h-full rounded-full -ml-1"></div>
                                 </div>
                                 <div className="grid grid-cols-3 gap-3 text-center">
-                                    <div className="bg-slate-50 dark:bg-zinc-900/80 border border-slate-200 dark:border-zinc-800 p-3 rounded-2xl transition-colors duration-500">
+                                    <div className="bg-slate-50 dark:bg-[#0d0d0d]/40 border border-slate-200 dark:border-zinc-800 p-3 rounded-2xl transition-colors duration-500">
                                         <p className="text-blue-600 dark:text-blue-400 font-black text-xl">{stats.rooms.occupiedRooms}</p>
                                         <p className="text-[9px] font-bold uppercase tracking-widest text-slate-500 dark:text-zinc-500 mt-1 transition-colors duration-500">Occupied</p>
                                     </div>
-                                    <div className="bg-slate-50 dark:bg-zinc-900/80 border border-slate-200 dark:border-zinc-800 p-3 rounded-2xl transition-colors duration-500">
+                                    <div className="bg-slate-50 dark:bg-[#0d0d0d]/40 border border-slate-200 dark:border-zinc-800 p-3 rounded-2xl transition-colors duration-500">
                                         <p className="text-emerald-600 dark:text-emerald-400 font-black text-xl">{stats.rooms.availableRooms}</p>
                                         <p className="text-[9px] font-bold uppercase tracking-widest text-slate-500 dark:text-zinc-500 mt-1 transition-colors duration-500">Available</p>
                                     </div>
-                                    <div className="bg-slate-50 dark:bg-zinc-900/80 border border-slate-200 dark:border-zinc-800 p-3 rounded-2xl transition-colors duration-500">
+                                    <div className="bg-slate-50 dark:bg-[#0d0d0d]/40 border border-slate-200 dark:border-zinc-800 p-3 rounded-2xl transition-colors duration-500">
                                         <p className="text-rose-600 dark:text-rose-400 font-black text-xl">{stats.rooms.maintenanceRooms}</p>
                                         <p className="text-[9px] font-bold uppercase tracking-widest text-slate-500 dark:text-zinc-500 mt-1 transition-colors duration-500">Repair</p>
                                     </div>
@@ -158,7 +158,7 @@ export default function AdminDashboard() {
                                     <span className="text-4xl font-black text-slate-900 dark:text-white transition-colors duration-500">{stats.tenants.activeTenants}</span>
                                 </div>
                                 <div className="space-y-3 flex-1 w-full">
-                                    <div className="flex justify-between items-center bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 px-5 py-3.5 rounded-2xl transition-colors duration-500">
+                                    <div className="flex justify-between items-center bg-slate-50 dark:bg-[#0d0d0d]/40 border border-slate-200 dark:border-zinc-800 px-5 py-3.5 rounded-2xl transition-colors duration-500">
                                         <span className="text-xs font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-widest transition-colors duration-500">Active Residents</span>
                                         <span className="font-black text-slate-900 dark:text-white text-lg transition-colors duration-500">{stats.tenants.activeTenants}</span>
                                     </div>
@@ -179,25 +179,25 @@ export default function AdminDashboard() {
                                 Maintenance Summary
                             </h3>
                             <div className="space-y-3 relative z-10">
-                                <div className="flex justify-between items-center bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 p-4 rounded-2xl mb-4 transition-colors duration-500">
+                                <div className="flex justify-between items-center bg-slate-50 dark:bg-[#0d0d0d]/40 border border-slate-200 dark:border-zinc-800 p-4 rounded-2xl mb-4 transition-colors duration-500">
                                     <span className="text-xs font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-widest transition-colors duration-500">Total Requests</span>
                                     <span className="font-black text-slate-900 dark:text-white text-lg transition-colors duration-500">{stats.maintenance.totalRequests}</span>
                                 </div>
-                                <div className="flex justify-between items-center text-sm px-4 py-2 hover:bg-slate-50 dark:hover:bg-zinc-900/50 rounded-xl transition-colors duration-500">
+                                <div className="flex justify-between items-center text-sm px-4 py-2 hover:bg-slate-50 dark:hover:bg-[#0d0d0d]/40 rounded-xl transition-colors duration-500">
                                     <span className="font-bold text-slate-500 dark:text-zinc-400 flex items-center gap-3 transition-colors duration-500">
                                         <div className="w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.4)] dark:shadow-[0_0_8px_rgba(244,63,94,0.8)]"></div>
                                         Pending
                                     </span>
                                     <span className="font-black text-slate-900 dark:text-white transition-colors duration-500">{stats.maintenance.pendingRequests}</span>
                                 </div>
-                                <div className="flex justify-between items-center text-sm px-4 py-2 hover:bg-slate-50 dark:hover:bg-zinc-900/50 rounded-xl transition-colors duration-500">
+                                <div className="flex justify-between items-center text-sm px-4 py-2 hover:bg-slate-50 dark:hover:bg-[#0d0d0d]/40 rounded-xl transition-colors duration-500">
                                     <span className="font-bold text-slate-500 dark:text-zinc-400 flex items-center gap-3 transition-colors duration-500">
                                         <div className="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.4)] dark:shadow-[0_0_8px_rgba(245,158,11,0.8)]"></div>
                                         In Progress
                                     </span>
                                     <span className="font-black text-slate-900 dark:text-white transition-colors duration-500">{stats.maintenance.inProgressRequests}</span>
                                 </div>
-                                <div className="flex justify-between items-center text-sm px-4 py-2 hover:bg-slate-50 dark:hover:bg-zinc-900/50 rounded-xl transition-colors duration-500">
+                                <div className="flex justify-between items-center text-sm px-4 py-2 hover:bg-slate-50 dark:hover:bg-[#0d0d0d]/40 rounded-xl transition-colors duration-500">
                                     <span className="font-bold text-slate-500 dark:text-zinc-400 flex items-center gap-3 transition-colors duration-500">
                                         <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)] dark:shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
                                         Resolved
