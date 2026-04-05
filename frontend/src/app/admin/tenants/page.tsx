@@ -204,8 +204,8 @@ export default function AdminTenants() {
             case 'Active': return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
             case 'Pending': return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
             case 'Declined': return 'bg-rose-500/10 text-rose-400 border-rose-500/20';
-            case 'Moved Out': return 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20';
-            default: return 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20';
+            case 'Moved Out': return 'bg-zinc-500/10 text-slate-500 dark:text-zinc-400 border-zinc-500/20';
+            default: return 'bg-zinc-500/10 text-slate-500 dark:text-zinc-400 border-zinc-500/20';
         }
     };
 
@@ -218,14 +218,14 @@ export default function AdminTenants() {
 
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 relative z-10">
                 <div>
-                    <h1 className="text-4xl font-black text-white tracking-tight">Tenants Directory</h1>
-                    <p className="text-zinc-400 font-medium mt-2">Manage all active residents and pending applications.</p>
+                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Tenants Directory</h1>
+                    <p className="text-slate-500 dark:text-zinc-400 font-medium mt-2">Manage all active residents and pending applications.</p>
                 </div>
                 <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
                     <select 
                         value={statusFilter} 
                         onChange={(e) => setStatusFilter(e.target.value)} 
-                        className="py-3.5 px-4 bg-zinc-900 border border-zinc-800 rounded-xl text-sm font-bold text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent shadow-sm appearance-none outline-none w-full sm:w-40"
+                        className="py-3.5 px-4 bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent shadow-sm appearance-none outline-none w-full sm:w-40"
                     >
                         <option value="All">All Statuses</option>
                         <option value="Pending">Pending</option>
@@ -239,11 +239,11 @@ export default function AdminTenants() {
                             value={searchQuery} 
                             onChange={(e) => setSearchQuery(e.target.value)} 
                             placeholder="Search residents..." 
-                            className="pl-12 pr-6 py-3.5 bg-zinc-900 border border-zinc-800 rounded-xl text-sm font-medium text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent w-full shadow-sm transition-all outline-none" 
+                            className="pl-12 pr-6 py-3.5 bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-medium text-slate-900 dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent w-full shadow-sm transition-all outline-none" 
                         />
-                        <svg className="w-5 h-5 text-zinc-500 absolute left-4 top-3.5 group-focus-within:text-[#5b21b6] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        <svg className="w-5 h-5 text-slate-500 dark:text-zinc-500 absolute left-4 top-3.5 group-focus-within:text-[#5b21b6] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     </div>
-                    <button onClick={() => handleOpenModal()} className="px-6 py-3.5 bg-[#5b21b6] text-white font-bold rounded-xl hover:bg-[#4c1d95] transition-all shadow-[0_0_20px_rgba(91,33,182,0.4)] text-sm flex items-center justify-center gap-2 group w-full sm:w-auto">
+                    <button onClick={() => handleOpenModal()} className="px-6 py-3.5 bg-[#5b21b6] text-slate-900 dark:text-white font-bold rounded-xl hover:bg-[#4c1d95] transition-all shadow-[0_0_20px_rgba(91,33,182,0.4)] text-sm flex items-center justify-center gap-2 group w-full sm:w-auto">
                         <svg className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 4v16m8-8H4"></path></svg>
                         Add Resident
                     </button>
@@ -260,38 +260,38 @@ export default function AdminTenants() {
             {/* Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4 animate-in fade-in duration-300">
-                    <div className="bg-[#0a0a0a] rounded-3xl shadow-2xl border border-zinc-800 w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-300">
-                        <div className="p-8 border-b border-zinc-800 bg-zinc-900/50 flex justify-between items-center">
-                            <h2 className="text-2xl font-black text-white">{editingTenant ? 'Edit Resident' : 'Add New Resident'}</h2>
-                            <button onClick={() => setIsModalOpen(false)} className="w-10 h-10 rounded-xl hover:bg-zinc-800 flex items-center justify-center text-zinc-500 hover:text-white transition-colors">
+                    <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-300">
+                        <div className="p-8 border-b border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-slate-50 dark:bg-zinc-900/50 flex justify-between items-center">
+                            <h2 className="text-2xl font-black text-slate-900 dark:text-white">{editingTenant ? 'Edit Resident' : 'Add New Resident'}</h2>
+                            <button onClick={() => setIsModalOpen(false)} className="w-10 h-10 rounded-xl hover:bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
                         </div>
                         <form onSubmit={handleSubmit} className="p-8 space-y-6 overflow-y-auto max-h-[70vh] custom-scrollbar">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest pl-1">Full Name</label>
-                                <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full bg-zinc-900 border border-zinc-800 text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="e.g. John Doe" />
+                                <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Full Name</label>
+                                <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="e.g. John Doe" />
                             </div>
                             <div className="grid grid-cols-2 gap-6">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest pl-1">Email Address</label>
-                                    <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full bg-zinc-900 border border-zinc-800 text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="john@example.com" />
+                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Email Address</label>
+                                    <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="john@example.com" />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest pl-1">Phone Number</label>
-                                    <input type="text" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="w-full bg-zinc-900 border border-zinc-800 text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="+63 000 000 0000" />
+                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Phone Number</label>
+                                    <input type="text" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="+63 000 000 0000" />
                                 </div>
                             </div>
                             {!editingTenant && (
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest pl-1">Account Password</label>
-                                    <input required type="password" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} className="w-full bg-zinc-900 border border-zinc-800 text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="••••••••" />
+                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Account Password</label>
+                                    <input required type="password" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="••••••••" />
                                 </div>
                             )}
                             <div className="grid grid-cols-2 gap-6 mt-4">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest pl-1">Gender</label>
-                                    <select value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} className="w-full bg-zinc-900 border border-zinc-800 text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none appearance-none">
+                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Gender</label>
+                                    <select value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none appearance-none">
                                         <option value="">Not Specified</option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
@@ -299,8 +299,8 @@ export default function AdminTenants() {
                                     </select>
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest pl-1">Tenant Status</label>
-                                    <select value={formData.status} onChange={e => setFormData({...formData, status: e.target.value})} className="w-full bg-zinc-900 border border-zinc-800 text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none appearance-none">
+                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Tenant Status</label>
+                                    <select value={formData.status} onChange={e => setFormData({...formData, status: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none appearance-none">
                                         <option value="Pending">Pending</option>
                                         <option value="Active">Active</option>
                                         <option value="Declined">Declined</option>
@@ -310,21 +310,21 @@ export default function AdminTenants() {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest pl-1">Home Address</label>
-                                <input type="text" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} className="w-full bg-zinc-900 border border-zinc-800 text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="123 Main St..." />
+                                <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Home Address</label>
+                                <input type="text" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="123 Main St..." />
                             </div>
 
-                            <div className="pt-4 pb-2 border-t border-zinc-800 flex items-center justify-between">
-                                <h3 className="text-xs font-black text-zinc-400 uppercase tracking-widest">Rental Details</h3>
+                            <div className="pt-4 pb-2 border-t border-slate-200 dark:border-zinc-800 flex items-center justify-between">
+                                <h3 className="text-xs font-black text-slate-500 dark:text-zinc-400 uppercase tracking-widest">Rental Details</h3>
                             </div>
 
                             <div className="grid grid-cols-2 gap-6">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest pl-1">Assigned Unit</label>
+                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Assigned Unit</label>
                                     <select 
                                         value={formData.room_id?.toString() || ''} 
                                         onChange={e => setFormData({...formData, room_id: e.target.value})} 
-                                        className="w-full bg-zinc-900 border border-zinc-800 text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none appearance-none"
+                                        className="w-full bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none appearance-none"
                                     >
                                         <option value="">Unassigned / Pending</option>
                                         {rooms.map(room => (
@@ -333,25 +333,25 @@ export default function AdminTenants() {
                                     </select>
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest pl-1">Monthly Rent (₱)</label>
-                                    <input type="number" min="0" step="0.01" value={formData.monthly_rent} onChange={e => setFormData({...formData, monthly_rent: e.target.value})} className="w-full bg-zinc-900 border border-zinc-800 text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="e.g. 5000" />
+                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Monthly Rent (₱)</label>
+                                    <input type="number" min="0" step="0.01" value={formData.monthly_rent} onChange={e => setFormData({...formData, monthly_rent: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="e.g. 5000" />
                                 </div>
                             </div>
                             
                             <div className="grid grid-cols-2 gap-6">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest pl-1">Move-in Date</label>
-                                    <input type="date" value={formData.date_moved_in} onChange={e => setFormData({...formData, date_moved_in: e.target.value})} className="w-full bg-zinc-900 border border-zinc-800 text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
+                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Move-in Date</label>
+                                    <input type="date" value={formData.date_moved_in} onChange={e => setFormData({...formData, date_moved_in: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-zinc-500 uppercase tracking-widest pl-1">Contract End Date</label>
-                                    <input type="date" value={formData.contract_end_date} onChange={e => setFormData({...formData, contract_end_date: e.target.value})} className="w-full bg-zinc-900 border border-zinc-800 text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
+                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Contract End Date</label>
+                                    <input type="date" value={formData.contract_end_date} onChange={e => setFormData({...formData, contract_end_date: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
                                 </div>
                             </div>
                             
-                            <div className="flex justify-end gap-3 pt-6 border-t border-zinc-800">
-                                <button type="button" onClick={() => setIsModalOpen(false)} className="px-6 py-3.5 font-bold text-zinc-400 hover:text-white rounded-xl transition-colors">Cancel</button>
-                                <button type="submit" disabled={isSubmitting} className="px-6 py-3.5 font-bold bg-[#5b21b6] text-white rounded-xl hover:bg-[#4c1d95] transition-colors shadow-lg flex items-center justify-center gap-2">
+                            <div className="flex justify-end gap-3 pt-6 border-t border-slate-200 dark:border-zinc-800">
+                                <button type="button" onClick={() => setIsModalOpen(false)} className="px-6 py-3.5 font-bold text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:text-white rounded-xl transition-colors">Cancel</button>
+                                <button type="submit" disabled={isSubmitting} className="px-6 py-3.5 font-bold bg-[#5b21b6] text-slate-900 dark:text-white rounded-xl hover:bg-[#4c1d95] transition-colors shadow-lg flex items-center justify-center gap-2">
                                     {isSubmitting ? (
                                         <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
                                     ) : (
@@ -364,16 +364,16 @@ export default function AdminTenants() {
                 </div>
             )}
 
-            <div className="bg-[#0a0a0a] rounded-3xl shadow-2xl border border-zinc-800 overflow-hidden relative z-10">
+            <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
                 <div className="overflow-x-auto custom-scrollbar">
                     <table className="w-full text-left border-collapse whitespace-nowrap">
-                        <thead className="bg-zinc-900/50">
-                            <tr className="border-b border-zinc-800">
-                                <th className="px-8 py-5 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Resident Profile</th>
-                                <th className="px-8 py-5 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Rental Info</th>
-                                <th className="px-8 py-5 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Financials</th>
-                                <th className="px-8 py-5 text-[10px] font-black text-zinc-500 uppercase tracking-widest">Status</th>
-                                <th className="px-8 py-5 text-[10px] font-black text-zinc-500 uppercase tracking-widest text-right">Actions</th>
+                        <thead className="bg-slate-50 dark:bg-zinc-900/50">
+                            <tr className="border-b border-slate-200 dark:border-zinc-800">
+                                <th className="px-8 py-5 text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Resident Profile</th>
+                                <th className="px-8 py-5 text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Rental Info</th>
+                                <th className="px-8 py-5 text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Financials</th>
+                                <th className="px-8 py-5 text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Status</th>
+                                <th className="px-8 py-5 text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-zinc-800/50">
@@ -381,29 +381,29 @@ export default function AdminTenants() {
                                 <tr>
                                     <td colSpan={5} className="px-8 py-20 text-center">
                                         <div className="w-6 h-6 border-2 border-[#5b21b6]/20 border-t-[#5b21b6] rounded-full animate-spin mx-auto mb-4"></div>
-                                        <p className="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">Fetching residents...</p>
+                                        <p className="text-[10px] font-bold text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Fetching residents...</p>
                                     </td>
                                 </tr>
                             ) : filteredTenants.length === 0 ? (
                                 <tr>
-                                    <td colSpan={5} className="px-8 py-16 text-center text-zinc-500 font-bold text-sm">
+                                    <td colSpan={5} className="px-8 py-16 text-center text-slate-500 dark:text-slate-500 dark:text-zinc-500 font-bold text-sm">
                                         {searchQuery ? "No residents match your search." : "No residents found."}
                                     </td>
                                 </tr>
                             ) : (
                                 filteredTenants.map((tenant) => (
-                                    <tr key={tenant.id} className="hover:bg-zinc-900/40 transition-colors group">
+                                    <tr key={tenant.id} className="hover:bg-slate-50 dark:bg-zinc-900 dark:bg-zinc-900/40 transition-colors group">
                                         
                                         {/* 1. Basic Information */}
                                         <td className="px-8 py-5">
                                             <div className="flex items-center gap-4">
-                                                <div className="w-10 h-10 rounded-xl bg-zinc-800 border border-zinc-700 flex items-center justify-center text-zinc-400 font-bold text-sm group-hover:bg-[#5b21b6] group-hover:text-white group-hover:border-[#5b21b6] transition-all duration-300 shrink-0">
+                                                <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-zinc-800 border border-slate-300 dark:border-zinc-700 flex items-center justify-center text-slate-500 dark:text-zinc-400 font-bold text-sm group-hover:bg-[#5b21b6] group-hover:text-slate-900 dark:text-white group-hover:border-[#5b21b6] transition-all duration-300 shrink-0">
                                                     {tenant.name.charAt(0)}
                                                 </div>
                                                 <div>
-                                                    <p className="font-bold text-white">{tenant.name}</p>
-                                                    <p className="text-[11px] text-zinc-400 font-medium mt-0.5">{tenant.email} • {tenant.phone}</p>
-                                                    <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mt-1">Gender: {tenant.gender} • ID: {tenant.id_document}</p>
+                                                    <p className="font-bold text-slate-900 dark:text-white">{tenant.name}</p>
+                                                    <p className="text-[11px] text-slate-500 dark:text-zinc-400 font-medium mt-0.5">{tenant.email} • {tenant.phone}</p>
+                                                    <p className="text-[10px] text-slate-500 dark:text-zinc-500 font-bold uppercase tracking-widest mt-1">Gender: {tenant.gender} • ID: {tenant.id_document}</p>
                                                 </div>
                                             </div>
                                         </td>
@@ -411,12 +411,12 @@ export default function AdminTenants() {
                                         {/* 2. Room & Rental Info */}
                                         <td className="px-8 py-5">
                                             <div>
-                                                <p className="font-bold text-white text-sm">
+                                                <p className="font-bold text-slate-900 dark:text-slate-900 dark:text-white text-sm">
                                                     {tenant.room_number ? `Room ${tenant.room_number}` : 'Unassigned'} 
                                                     {tenant.bed_space !== 'N/A' && ` • Bed ${tenant.bed_space}`}
                                                 </p>
-                                                <p className="text-[11px] text-zinc-400 font-medium mt-0.5">Rent: ₱{tenant.monthly_rent ? Number(tenant.monthly_rent).toLocaleString() : '0'}</p>
-                                                <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-widest mt-1">
+                                                <p className="text-[11px] text-slate-500 dark:text-zinc-400 font-medium mt-0.5">Rent: ₱{tenant.monthly_rent ? Number(tenant.monthly_rent).toLocaleString() : '0'}</p>
+                                                <p className="text-[10px] text-slate-500 dark:text-zinc-500 font-bold uppercase tracking-widest mt-1">
                                                     In: {tenant.date_moved_in ? new Date(tenant.date_moved_in).toLocaleDateString() : 'N/A'} • 
                                                     Out: {tenant.contract_end_date ? new Date(tenant.contract_end_date).toLocaleDateString() : 'N/A'}
                                                 </p>
@@ -426,13 +426,13 @@ export default function AdminTenants() {
                                         {/* 3. Payment Info */}
                                         <td className="px-8 py-5">
                                             <div>
-                                                <p className="font-bold text-white text-sm">
+                                                <p className="font-bold text-slate-900 dark:text-slate-900 dark:text-white text-sm">
                                                     Balance: <span className={tenant.balance! > 0 ? 'text-rose-400' : 'text-emerald-400'}>₱{tenant.balance?.toLocaleString()}</span>
                                                 </p>
-                                                <p className="text-[11px] text-zinc-400 font-medium mt-0.5">Last Paid: {tenant.last_payment_date}</p>
+                                                <p className="text-[11px] text-slate-500 dark:text-zinc-400 font-medium mt-0.5">Last Paid: {tenant.last_payment_date}</p>
                                                 <span className={`mt-1.5 inline-block px-2 py-0.5 text-[9px] font-black uppercase tracking-widest rounded-md border ${
                                                     tenant.payment_status === 'Paid' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 
-                                                    tenant.payment_status === 'Overdue' ? 'bg-rose-500/10 text-rose-400 border-rose-500/20' : 'bg-zinc-500/10 text-zinc-400 border-zinc-500/20'
+                                                    tenant.payment_status === 'Overdue' ? 'bg-rose-500/10 text-rose-400 border-rose-500/20' : 'bg-zinc-500/10 text-slate-500 dark:text-zinc-400 border-zinc-500/20'
                                                 }`}>
                                                     {tenant.payment_status}
                                                 </span>

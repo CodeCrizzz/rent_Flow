@@ -157,18 +157,35 @@ export default function LandingPage() {
 
             <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden transition-opacity duration-[2000ms] ease-out opacity-0 group-hover/container:opacity-100">
                 
-                <div className="absolute inset-0 dark:opacity-100 opacity-60" style={{ background: `radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(245, 158, 11, 0.12), transparent 70%)` }} />
-                <div className="absolute inset-0 dark:opacity-100 opacity-20" style={{
-                    backgroundImage: `
-                        linear-gradient(rgba(6, 182, 212, 0.4) 1px, transparent 1px), 
-                        linear-gradient(90deg, rgba(6, 182, 212, 0.4) 1px, transparent 1px), 
-                        linear-gradient(rgba(6, 182, 212, 0.15) 1px, transparent 1px), 
-                        linear-gradient(90deg, rgba(6, 182, 212, 0.15) 1px, transparent 1px)`,
-                    backgroundSize: '100px 100px, 100px 100px, 20px 20px, 20px 20px',
-                    backgroundPosition: '-1px -1px, -1px -1px, -1px -1px, -1px -1px',
-                    WebkitMaskImage: `radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), black 10%, transparent 90%)`,
-                    maskImage: `radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), black 10%, transparent 90%)`
-                }} />
+                {/* Light Mode Effect */}
+                <div className="absolute inset-0 block dark:hidden">
+                    <div className="absolute inset-0" style={{ background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(6, 182, 212, 0.15), transparent 70%)` }} />
+                    <div className="absolute inset-0 opacity-40" style={{
+                        backgroundImage: `
+                            linear-gradient(rgba(6, 182, 212, 0.8) 1px, transparent 1px), 
+                            linear-gradient(90deg, rgba(6, 182, 212, 0.8) 1px, transparent 1px)`,
+                        backgroundSize: '80px 80px, 80px 80px',
+                        backgroundPosition: '-1px -1px, -1px -1px',
+                        WebkitMaskImage: `radial-gradient(500px circle at var(--mouse-x) var(--mouse-y), black 20%, transparent 70%)`,
+                        maskImage: `radial-gradient(500px circle at var(--mouse-x) var(--mouse-y), black 20%, transparent 70%)`
+                    }} />
+                </div>
+
+                {/* Dark Mode Effect */}
+                <div className="absolute inset-0 hidden dark:block">
+                    <div className="absolute inset-0 opacity-100" style={{ background: `radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), rgba(245, 158, 11, 0.12), transparent 70%)` }} />
+                    <div className="absolute inset-0 opacity-100" style={{
+                        backgroundImage: `
+                            linear-gradient(rgba(6, 182, 212, 0.4) 1px, transparent 1px), 
+                            linear-gradient(90deg, rgba(6, 182, 212, 0.4) 1px, transparent 1px), 
+                            linear-gradient(rgba(6, 182, 212, 0.15) 1px, transparent 1px), 
+                            linear-gradient(90deg, rgba(6, 182, 212, 0.15) 1px, transparent 1px)`,
+                        backgroundSize: '100px 100px, 100px 100px, 20px 20px, 20px 20px',
+                        backgroundPosition: '-1px -1px, -1px -1px, -1px -1px, -1px -1px',
+                        WebkitMaskImage: `radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), black 10%, transparent 90%)`,
+                        maskImage: `radial-gradient(800px circle at var(--mouse-x) var(--mouse-y), black 10%, transparent 90%)`
+                    }} />
+                </div>
             </div>
 
             {/* --- HEADER --- */}
