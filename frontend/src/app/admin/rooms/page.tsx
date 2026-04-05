@@ -149,11 +149,11 @@ export default function AdminRooms() {
 
     const getRoomStatusStyles = (status: string) => {
         switch (status) {
-            case 'Available': return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
-            case 'Partial': return 'bg-indigo-500/10 text-indigo-400 border-indigo-500/20';
-            case 'Occupied': return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
-            case 'Maintenance': return 'bg-rose-500/10 text-rose-400 border-rose-500/20';
-            default: return 'bg-zinc-500/10 text-slate-500 dark:text-zinc-400 border-zinc-500/20';
+            case 'Available': return 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/20';
+            case 'Partial': return 'bg-indigo-50 dark:bg-indigo-500/10 text-indigo-700 dark:text-indigo-400 border-indigo-200 dark:border-indigo-500/20';
+            case 'Occupied': return 'bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-500/20';
+            case 'Maintenance': return 'bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-500/20';
+            default: return 'bg-slate-50 dark:bg-zinc-500/10 text-slate-600 dark:text-zinc-400 border-slate-200 dark:border-zinc-500/20';
         }
     };
 
@@ -224,7 +224,7 @@ export default function AdminRooms() {
             </div>
 
             {/* Data Table */}
-            <div className="bg-white dark:bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
+            <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-xl dark:shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
                 <div className="overflow-x-auto custom-scrollbar">
                     <table className="w-full text-left border-collapse whitespace-nowrap">
                         <thead className="bg-slate-50 dark:bg-zinc-900/50">
@@ -248,10 +248,10 @@ export default function AdminRooms() {
                                 <tr><td colSpan={5} className="px-8 py-16 text-center text-slate-500 dark:text-zinc-500 font-bold text-sm">No rooms found.</td></tr>
                             ) : (
                                 filteredRooms.map((room) => (
-                                    <tr key={room.id} className="hover:bg-slate-50 dark:bg-zinc-900/40 transition-colors group">
+                                    <tr key={room.id} className="hover:bg-indigo-50/50 dark:hover:bg-zinc-900/40 transition-colors group">
                                         <td className="px-8 py-5">
                                             <div className="flex items-center gap-4">
-                                                <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-zinc-800 border border-slate-300 dark:border-zinc-700 text-slate-500 dark:text-zinc-400 flex items-center justify-center font-black text-sm group-hover:bg-[#5b21b6] group-hover:text-slate-900 dark:text-white group-hover:border-[#5b21b6] transition-all duration-300 shrink-0">
+                                                <div className="w-12 h-12 rounded-xl bg-slate-100 dark:bg-zinc-800 border border-slate-300 dark:border-zinc-700 text-slate-500 dark:text-zinc-400 flex items-center justify-center font-black text-sm group-hover:bg-[#5b21b6] group-hover:text-white group-hover:border-[#5b21b6] transition-all duration-300 shrink-0">
                                                     {room.room_number}
                                                 </div>
                                                 <div>
@@ -300,7 +300,7 @@ export default function AdminRooms() {
                     <div className="bg-white dark:bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
                         <div className="px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
                             <h2 className="text-2xl font-black text-slate-900 dark:text-white">{editingRoom ? 'Edit Room' : 'Add New Room'}</h2>
-                            <button onClick={() => setIsModalOpen(false)} className="w-10 h-10 rounded-xl hover:bg-slate-100 dark:bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
+                            <button onClick={() => setIsModalOpen(false)} className="w-10 h-10 rounded-xl hover:bg-slate-200 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
                         </div>
@@ -350,7 +350,7 @@ export default function AdminRooms() {
                             </div>
                             <div className="flex justify-end gap-3 pt-6 border-t border-slate-200 dark:border-zinc-800">
                                 <button type="button" onClick={() => setIsModalOpen(false)} className="px-6 py-3.5 font-bold text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:text-white rounded-xl transition-colors">Cancel</button>
-                                <button type="submit" disabled={isSubmitting} className="px-6 py-3.5 font-bold bg-[#5b21b6] text-slate-900 dark:text-white rounded-xl hover:bg-[#4c1d95] transition-colors shadow-lg flex items-center justify-center gap-2">
+                                <button type="submit" disabled={isSubmitting} className="px-6 py-3.5 font-bold bg-[#5b21b6] text-white rounded-xl hover:bg-[#4c1d95] transition-colors shadow-lg flex items-center justify-center gap-2">
                                     {isSubmitting ? <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div> : (editingRoom ? 'Update Room' : 'Register Room')}
                                 </button>
                             </div>
@@ -438,7 +438,7 @@ export default function AdminRooms() {
                             </div>
                         </div>
                         <div className="p-6 border-t border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50 flex justify-end">
-                            <button onClick={() => setIsViewModalOpen(false)} className="px-6 py-3.5 font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-slate-300 dark:hover:bg-zinc-700 rounded-xl transition-colors shadow-sm">
+                            <button onClick={() => setIsViewModalOpen(false)} className="px-6 py-3.5 font-bold text-slate-900 dark:text-white bg-slate-200 dark:bg-zinc-800 hover:bg-slate-300 dark:hover:bg-zinc-700 rounded-xl transition-colors shadow-sm">
                                 Close Panel
                             </button>
                         </div>

@@ -100,21 +100,21 @@ export default function AdminRequests() {
     // Dark Mode Badges
     const getStatusStyle = (status: string) => {
         switch (status) {
-            case 'Pending': return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
-            case 'In Progress': return 'bg-blue-500/10 text-blue-400 border-blue-500/20 shadow-[0_0_10px_rgba(59,130,246,0.2)]';
-            case 'Resolved': return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
-            case 'Cancelled': return 'bg-zinc-500/10 text-slate-500 dark:text-zinc-400 border-zinc-500/20';
-            default: return 'bg-zinc-500/10 text-slate-500 dark:text-zinc-400 border-zinc-500/20';
+            case 'Pending': return 'bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-500/20';
+            case 'In Progress': return 'bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-500/20 shadow-[0_0_10px_rgba(59,130,246,0.1)]';
+            case 'Resolved': return 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/20';
+            case 'Cancelled': return 'bg-slate-50 dark:bg-zinc-500/10 text-slate-600 dark:text-zinc-400 border-slate-200 dark:border-zinc-500/20';
+            default: return 'bg-slate-50 dark:bg-zinc-500/10 text-slate-600 dark:text-zinc-400 border-slate-200 dark:border-zinc-500/20';
         }
     };
 
     const getPriorityStyle = (priority: string) => {
         switch (priority) {
-            case 'Urgent': return 'bg-rose-500/10 text-rose-400 border-rose-500/20 shadow-[0_0_10px_rgba(244,63,94,0.3)] animate-pulse';
-            case 'High': return 'bg-orange-500/10 text-orange-400 border-orange-500/20';
-            case 'Medium': return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
-            case 'Low': return 'bg-blue-500/10 text-blue-400 border-blue-500/20';
-            default: return 'bg-zinc-500/10 text-slate-500 dark:text-zinc-400 border-zinc-500/20';
+            case 'Urgent': return 'bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-500/20 shadow-[0_0_10px_rgba(244,63,94,0.15)] animate-pulse';
+            case 'High': return 'bg-orange-50 dark:bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-200 dark:border-orange-500/20';
+            case 'Medium': return 'bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-500/20';
+            case 'Low': return 'bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-500/20';
+            default: return 'bg-slate-50 dark:bg-zinc-500/10 text-slate-600 dark:text-zinc-400 border-slate-200 dark:border-zinc-500/20';
         }
     };
 
@@ -187,7 +187,7 @@ export default function AdminRequests() {
             </div>
 
             {/* Main Table */}
-            <div className="bg-white dark:bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10 min-h-[400px]">
+            <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-xl dark:shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10 min-h-[400px]">
                 {isLoading ? (
                     <div className="flex flex-col items-center justify-center p-20 gap-4">
                         <div className="w-8 h-8 border-4 border-[#5b21b6]/20 border-t-[#5b21b6] rounded-full animate-spin"></div>
@@ -210,14 +210,14 @@ export default function AdminRequests() {
                             </thead>
                             <tbody className="divide-y divide-zinc-800/50 text-sm">
                                 {filteredRequests.map((req) => (
-                                    <tr key={req.id} className="hover:bg-slate-50 dark:bg-zinc-900/40 transition-colors group">
+                                    <tr key={req.id} className="hover:bg-indigo-50/50 dark:hover:bg-zinc-900/40 transition-colors group">
                                         <td className="px-8 py-5 font-bold text-slate-500 dark:text-zinc-500">#{req.id}</td>
                                         <td className="px-8 py-5">
                                             <div className="font-bold text-slate-900 dark:text-white group-hover:text-indigo-400 transition-colors">{req.tenant_name}</div>
                                             <div className="text-[10px] text-slate-500 dark:text-zinc-500 font-black uppercase tracking-wider mt-0.5">Rm {req.room_number || 'N/A'}</div>
                                         </td>
                                         <td className="px-8 py-5">
-                                            <div className="font-bold text-zinc-300 max-w-[200px] truncate">{req.title}</div>
+                                            <div className="font-bold text-slate-700 dark:text-zinc-300 max-w-[200px] truncate">{req.title}</div>
                                         </td>
                                         <td className="px-8 py-5 font-bold text-slate-500 dark:text-zinc-500 text-[10px] uppercase tracking-wider">{req.category}</td>
                                         <td className="px-8 py-5">
@@ -243,7 +243,7 @@ export default function AdminRequests() {
                                                 </button>
                                                 <button 
                                                     onClick={() => openUpdateModal(req)}
-                                                    className="p-2 text-indigo-400 hover:text-indigo-300 hover:bg-indigo-400/10 rounded-lg transition-colors" title="Update Request"
+                                                    className="p-2 text-indigo-500 dark:text-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-300 hover:bg-indigo-400/10 rounded-lg transition-colors" title="Update Request"
                                                 >
                                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                                                 </button>
@@ -268,7 +268,7 @@ export default function AdminRequests() {
             {/* View Modal */}
             {viewModalReq && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
+                    <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
                         <div className="p-8 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
                             <div>
                                 <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-4">
@@ -278,7 +278,7 @@ export default function AdminRequests() {
                                     </span>
                                 </h3>
                             </div>
-                            <button onClick={() => setViewModalReq(null)} className="w-10 h-10 rounded-xl hover:bg-slate-100 dark:bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
+                            <button onClick={() => setViewModalReq(null)} className="w-10 h-10 rounded-xl hover:bg-slate-200 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
                         </div>
@@ -319,7 +319,7 @@ export default function AdminRequests() {
                             
                             <div>
                                 <h4 className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-3">Issue Description</h4>
-                                <div className="bg-slate-50 dark:bg-zinc-900/30 p-6 rounded-3xl text-zinc-300 text-sm whitespace-pre-wrap leading-relaxed border border-slate-200 dark:border-zinc-800 border-dashed">
+                                <div className="bg-slate-50 dark:bg-zinc-900/30 p-6 rounded-3xl text-slate-700 dark:text-zinc-300 text-sm whitespace-pre-wrap leading-relaxed border border-slate-200 dark:border-zinc-800 border-dashed">
                                     <strong className="text-slate-900 dark:text-white block mb-3 text-lg font-black">{viewModalReq.title}</strong>
                                     {viewModalReq.description}
                                 </div>
@@ -329,13 +329,13 @@ export default function AdminRequests() {
                                 <div>
                                     <h4 className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-3">Assigned Staff</h4>
                                     <div className="bg-slate-50 dark:bg-zinc-900/50 p-5 rounded-2xl text-slate-900 dark:text-white text-sm border border-slate-200 dark:border-zinc-800 font-bold">
-                                        {viewModalReq.assigned_to || <span className="text-zinc-600 font-medium italic">Not assigned yet</span>}
+                                        {viewModalReq.assigned_to || <span className="text-slate-400 dark:text-zinc-600 font-medium italic">Not assigned yet</span>}
                                     </div>
                                 </div>
                                 <div>
                                     <h4 className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-3">Admin Notes</h4>
-                                    <div className="bg-slate-50 dark:bg-zinc-900/50 p-5 rounded-2xl text-zinc-300 text-sm border border-slate-200 dark:border-zinc-800 font-medium leading-relaxed">
-                                        {viewModalReq.admin_notes || <span className="text-zinc-600 italic">No notes</span>}
+                                    <div className="bg-slate-50 dark:bg-zinc-900/50 p-5 rounded-2xl text-slate-700 dark:text-zinc-300 text-sm border border-slate-200 dark:border-zinc-800 font-medium leading-relaxed">
+                                        {viewModalReq.admin_notes || <span className="text-slate-400 dark:text-zinc-600 italic">No notes</span>}
                                     </div>
                                 </div>
                             </div>
@@ -350,10 +350,10 @@ export default function AdminRequests() {
                                     setViewModalReq(null);
                                     openUpdateModal(req);
                                 }} 
-                                className="px-6 py-3.5 bg-[#5b21b6] text-slate-900 dark:text-white font-bold rounded-xl hover:bg-[#4c1d95] shadow-[0_0_20px_rgba(91,33,182,0.4)] transition-all tracking-wide flex items-center gap-2"
+                                className="px-6 py-3.5 bg-[#5b21b6] text-white font-bold rounded-xl hover:bg-[#4c1d95] shadow-[0_0_20px_rgba(91,33,182,0.4)] transition-all tracking-wide flex items-center gap-2"
                             >
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                                Edit Details
+                                Update Status
                             </button>
                         </div>
                     </div>
@@ -363,10 +363,10 @@ export default function AdminRequests() {
             {/* Update Modal */}
             {updateModalReq && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
+                    <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
                         <div className="p-8 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
                             <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Update Request</h3>
-                            <button onClick={() => setUpdateModalReq(null)} className="w-10 h-10 rounded-xl hover:bg-slate-100 dark:bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
+                            <button onClick={() => setUpdateModalReq(null)} className="w-10 h-10 rounded-xl hover:bg-slate-200 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
                         </div>
@@ -436,7 +436,7 @@ export default function AdminRequests() {
                                 <button 
                                     type="submit" 
                                     disabled={isUpdating}
-                                    className="px-6 py-3.5 bg-[#5b21b6] text-slate-900 dark:text-white font-bold rounded-xl hover:bg-[#4c1d95] shadow-[0_0_20px_rgba(91,33,182,0.4)] transition-all disabled:opacity-50 flex items-center gap-2"
+                                    className="px-6 py-3.5 bg-[#5b21b6] text-white font-bold rounded-xl hover:bg-[#4c1d95] shadow-[0_0_20px_rgba(91,33,182,0.4)] transition-all disabled:opacity-50 flex items-center gap-2"
                                 >
                                     {isUpdating ? (
                                         <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>

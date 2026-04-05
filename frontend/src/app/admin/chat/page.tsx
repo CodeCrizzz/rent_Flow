@@ -127,7 +127,7 @@ export default function AdminChat() {
             </div>
 
             <div className="flex-1 bg-white dark:bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden flex relative z-10">
-                
+
                 {/* Sidebar Contacts */}
                 <div className="w-[340px] border-r border-slate-200 dark:border-zinc-800 flex flex-col bg-slate-50 dark:bg-zinc-900/30">
                     <div className="p-6 border-b border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50">
@@ -175,9 +175,7 @@ export default function AdminChat() {
                                         </span>
                                     </div>
                                     <div className="flex justify-between items-center gap-2">
-                                        <p className={`text-xs truncate ${unreadCount > 0 ? 'text-slate-900 dark:text-zinc-300 font-bold' : 'text-slate-500 dark:text-zinc-500 font-medium'}`}>
-                                            {conv.last_message ? conv.last_message : <span className="italic text-slate-400 dark:text-zinc-600">No messages yet</span>}
-                                        </p>
+                                        <p className={`text-xs truncate ${unreadCount > 0 ? 'text-slate-900 dark:text-zinc-300 font-bold' : 'text-slate-500 dark:text-zinc-500 font-medium'}`}></p>
                                         <span className="text-[9px] font-black text-slate-500 dark:text-zinc-600 uppercase shrink-0 bg-white dark:bg-zinc-900 px-2 py-0.5 rounded border border-slate-200 dark:border-zinc-800">
                                             {conv.room_number ? `Rm ${conv.room_number}` : 'N/A'}
                                         </span>
@@ -207,7 +205,11 @@ export default function AdminChat() {
                                 </div>
                             </div>
                             
-                            <div ref={scrollRef} className="flex-1 p-8 overflow-y-auto space-y-6 custom-scrollbar scroll-smooth relative z-0">
+                            <div 
+                                ref={scrollRef} 
+                                className="flex-1 overflow-y-auto custom-scrollbar scroll-smooth relative z-0"
+                            >
+                                <div className="min-h-full flex flex-col justify-end p-8 space-y-6">
                                 {messages.length === 0 ? (
                                     <div className="h-full flex items-center justify-center flex-col gap-3 opacity-50">
                                         <div className="w-16 h-16 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl flex items-center justify-center text-3xl shadow-inner">
@@ -249,6 +251,7 @@ export default function AdminChat() {
                                         );
                                     })
                                 )}
+                                </div>
                             </div>
 
                             <form onSubmit={handleSend} className="p-6 bg-white dark:bg-[#0a0a0a]/90 backdrop-blur-xl border-t border-slate-200 dark:border-zinc-800 relative z-10">

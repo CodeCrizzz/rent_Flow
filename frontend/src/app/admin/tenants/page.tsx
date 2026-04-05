@@ -201,11 +201,11 @@ export default function AdminTenants() {
 
     const getTenantStatusStyles = (status: string) => {
         switch (status) {
-            case 'Active': return 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20';
-            case 'Pending': return 'bg-amber-500/10 text-amber-400 border-amber-500/20';
-            case 'Declined': return 'bg-rose-500/10 text-rose-400 border-rose-500/20';
-            case 'Moved Out': return 'bg-zinc-500/10 text-slate-500 dark:text-zinc-400 border-zinc-500/20';
-            default: return 'bg-zinc-500/10 text-slate-500 dark:text-zinc-400 border-zinc-500/20';
+            case 'Active': return 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/20';
+            case 'Pending': return 'bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-500/20';
+            case 'Declined': return 'bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-500/20';
+            case 'Moved Out': return 'bg-slate-50 dark:bg-zinc-500/10 text-slate-600 dark:text-zinc-400 border-slate-200 dark:border-zinc-500/20';
+            default: return 'bg-slate-50 dark:bg-zinc-500/10 text-slate-600 dark:text-zinc-400 border-slate-200 dark:border-zinc-500/20';
         }
     };
 
@@ -243,7 +243,7 @@ export default function AdminTenants() {
                         />
                         <svg className="w-5 h-5 text-slate-500 dark:text-zinc-500 absolute left-4 top-3.5 group-focus-within:text-[#5b21b6] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     </div>
-                    <button onClick={() => handleOpenModal()} className="px-6 py-3.5 bg-[#5b21b6] text-slate-900 dark:text-white font-bold rounded-xl hover:bg-[#4c1d95] transition-all shadow-[0_0_20px_rgba(91,33,182,0.4)] text-sm flex items-center justify-center gap-2 group w-full sm:w-auto">
+                    <button onClick={() => handleOpenModal()} className="px-6 py-3.5 bg-[#5b21b6] text-white font-bold rounded-xl hover:bg-[#4c1d95] transition-all shadow-[0_0_20px_rgba(91,33,182,0.4)] text-sm flex items-center justify-center gap-2 group w-full sm:w-auto">
                         <svg className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 4v16m8-8H4"></path></svg>
                         Add Resident
                     </button>
@@ -260,10 +260,10 @@ export default function AdminTenants() {
             {/* Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4 animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-300">
+                    <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-300">
                         <div className="p-8 border-b border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50 flex justify-between items-center">
                             <h2 className="text-2xl font-black text-slate-900 dark:text-white">{editingTenant ? 'Edit Resident' : 'Add New Resident'}</h2>
-                            <button onClick={() => setIsModalOpen(false)} className="w-10 h-10 rounded-xl hover:bg-slate-100 dark:bg-slate-100 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
+                            <button onClick={() => setIsModalOpen(false)} className="w-10 h-10 rounded-xl hover:bg-slate-200 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
                         </div>
@@ -351,7 +351,7 @@ export default function AdminTenants() {
                             
                             <div className="flex justify-end gap-3 pt-6 border-t border-slate-200 dark:border-zinc-800">
                                 <button type="button" onClick={() => setIsModalOpen(false)} className="px-6 py-3.5 font-bold text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:text-white rounded-xl transition-colors">Cancel</button>
-                                <button type="submit" disabled={isSubmitting} className="px-6 py-3.5 font-bold bg-[#5b21b6] text-slate-900 dark:text-white rounded-xl hover:bg-[#4c1d95] transition-colors shadow-lg flex items-center justify-center gap-2">
+                                <button type="submit" disabled={isSubmitting} className="px-6 py-3.5 font-bold bg-[#5b21b6] text-white rounded-xl hover:bg-[#4c1d95] transition-colors shadow-lg flex items-center justify-center gap-2">
                                     {isSubmitting ? (
                                         <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
                                     ) : (
@@ -364,7 +364,7 @@ export default function AdminTenants() {
                 </div>
             )}
 
-            <div className="bg-white dark:bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
+            <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
                 <div className="overflow-x-auto custom-scrollbar">
                     <table className="w-full text-left border-collapse whitespace-nowrap">
                         <thead className="bg-slate-50 dark:bg-zinc-900/50">
@@ -392,12 +392,12 @@ export default function AdminTenants() {
                                 </tr>
                             ) : (
                                 filteredTenants.map((tenant) => (
-                                    <tr key={tenant.id} className="hover:bg-slate-50 dark:bg-zinc-900/40 transition-colors group">
+                                    <tr key={tenant.id} className="hover:bg-indigo-50/50 dark:hover:bg-zinc-900/40 transition-colors group">
                                         
                                         {/* 1. Basic Information */}
                                         <td className="px-8 py-5">
                                             <div className="flex items-center gap-4">
-                                                <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-zinc-800 border border-slate-300 dark:border-zinc-700 flex items-center justify-center text-slate-500 dark:text-zinc-400 font-bold text-sm group-hover:bg-[#5b21b6] group-hover:text-slate-900 dark:text-white group-hover:border-[#5b21b6] transition-all duration-300 shrink-0">
+                                                <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-zinc-800 border border-slate-300 dark:border-zinc-700 flex items-center justify-center text-slate-500 dark:text-zinc-400 font-bold text-sm group-hover:bg-[#5b21b6] group-hover:text-white group-hover:border-[#5b21b6] transition-all duration-300 shrink-0">
                                                     {tenant.name.charAt(0)}
                                                 </div>
                                                 <div>
@@ -431,8 +431,8 @@ export default function AdminTenants() {
                                                 </p>
                                                 <p className="text-[11px] text-slate-500 dark:text-zinc-400 font-medium mt-0.5">Last Paid: {tenant.last_payment_date}</p>
                                                 <span className={`mt-1.5 inline-block px-2 py-0.5 text-[9px] font-black uppercase tracking-widest rounded-md border ${
-                                                    tenant.payment_status === 'Paid' ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20' : 
-                                                    tenant.payment_status === 'Overdue' ? 'bg-rose-500/10 text-rose-400 border-rose-500/20' : 'bg-zinc-500/10 text-slate-500 dark:text-zinc-400 border-zinc-500/20'
+                                                    tenant.payment_status === 'Paid' ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/20' : 
+                                                    tenant.payment_status === 'Overdue' ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-500/20' : 'bg-slate-50 dark:bg-zinc-500/10 text-slate-600 dark:text-zinc-400 border-slate-200 dark:border-zinc-500/20'
                                                 }`}>
                                                     {tenant.payment_status}
                                                 </span>
