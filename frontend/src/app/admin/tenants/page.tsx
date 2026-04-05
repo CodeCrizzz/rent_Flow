@@ -259,7 +259,7 @@ export default function AdminTenants() {
 
             {/* Modal */}
             {isModalOpen && (
-                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] flex items-center justify-center p-4 animate-in fade-in duration-300">
+                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-60 flex items-center justify-center p-4 animate-in fade-in duration-300">
                     <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-300">
                         <div className="p-8 border-b border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50 flex justify-between items-center">
                             <h2 className="text-2xl font-black text-slate-900 dark:text-white">{editingTenant ? 'Edit Resident' : 'Add New Resident'}</h2>

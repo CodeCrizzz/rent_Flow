@@ -126,11 +126,11 @@ export default function AdminChat() {
                 </div>
             </div>
 
-            <div className="flex-1 bg-white dark:bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden flex relative z-10">
+            <div className="flex-1 bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden flex relative z-10">
 
                 {/* Sidebar Contacts */}
-                <div className="w-[340px] border-r border-slate-200 dark:border-zinc-800 flex flex-col bg-slate-50 dark:bg-zinc-900/30">
-                    <div className="p-6 border-b border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50">
+                <div className="w-[340px] border-r border-slate-200 dark:border-zinc-800 flex flex-col bg-slate-50 dark:bg-zinc-950/40">
+                    <div className="p-6 border-b border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-950/60">
                         <div className="relative group">
                             <input 
                                 type="text" 
@@ -175,7 +175,9 @@ export default function AdminChat() {
                                         </span>
                                     </div>
                                     <div className="flex justify-between items-center gap-2">
-                                        <p className={`text-xs truncate ${unreadCount > 0 ? 'text-slate-900 dark:text-zinc-300 font-bold' : 'text-slate-500 dark:text-zinc-500 font-medium'}`}></p>
+                                        <p className={`text-xs truncate ${unreadCount > 0 ? 'text-slate-900 dark:text-zinc-300 font-bold' : 'text-slate-500 dark:text-zinc-500 font-medium'}`}>
+                                            {conv.last_message ? conv.last_message : <span className="italic text-slate-400 dark:text-zinc-600">No messages yet</span>}
+                                        </p>
                                         <span className="text-[9px] font-black text-slate-500 dark:text-zinc-600 uppercase shrink-0 bg-white dark:bg-zinc-900 px-2 py-0.5 rounded border border-slate-200 dark:border-zinc-800">
                                             {conv.room_number ? `Rm ${conv.room_number}` : 'N/A'}
                                         </span>
@@ -254,8 +256,8 @@ export default function AdminChat() {
                                 </div>
                             </div>
 
-                            <form onSubmit={handleSend} className="p-6 bg-white dark:bg-[#0a0a0a]/90 backdrop-blur-xl border-t border-slate-200 dark:border-zinc-800 relative z-10">
-                                <div className="flex gap-3 items-center bg-slate-50 dark:bg-zinc-900/50 p-2 rounded-2xl border border-slate-200 dark:border-zinc-800 focus-within:border-[#5b21b6]/40 focus-within:bg-white dark:bg-zinc-900 focus-within:shadow-xl transition-all duration-300">
+                            <form onSubmit={handleSend} className="p-6 bg-white dark:bg-[#0a0a0a] backdrop-blur-xl border-t border-slate-200 dark:border-zinc-800 relative z-10">
+                                <div className="flex gap-3 items-center bg-slate-50 dark:bg-zinc-900/50 p-2 rounded-2xl border border-slate-200 dark:border-zinc-800 focus-within:border-[#5b21b6]/40 focus-within:bg-white dark:focus-within:bg-zinc-900/80 focus-within:shadow-xl transition-all duration-300">
                                     <input 
                                         type="text" 
                                         value={newMessage}
