@@ -158,27 +158,27 @@ export default function AdminChat() {
                                 <div 
                                     key={conv.id} 
                                     onClick={() => setSelectedTenant(conv)}
-                                    className={`p-5 border-b border-slate-200 dark:border-zinc-800/50 cursor-pointer relative group transition-all hover:bg-slate-200 dark:hover:bg-slate-200 dark:hover:bg-zinc-800/40 ${isSelected ? 'bg-zinc-800/60' : ''}`}
+                                    className={`p-5 border-b border-slate-200 dark:border-zinc-800/50 cursor-pointer relative group transition-all hover:bg-slate-100 dark:hover:bg-zinc-800/40 ${isSelected ? 'bg-indigo-50 dark:bg-zinc-800/60' : 'bg-transparent'}`}
                                 >
                                     {isSelected && <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#5b21b6] rounded-r-full shadow-[0_0_10px_rgba(91,33,182,0.8)]"></div>}
                                     <div className="flex justify-between items-start mb-1.5">
                                         <div className="flex items-center gap-2">
-                                            <h4 className={`font-black text-sm ${isSelected ? 'text-[#a78bfa]' : 'text-slate-900 dark:text-white'}`}>{conv.name}</h4>
+                                            <h4 className={`font-black text-sm ${isSelected ? 'text-[#5b21b6] dark:text-[#a78bfa]' : 'text-slate-900 dark:text-white'}`}>{conv.name}</h4>
                                             {unreadCount > 0 && (
-                                                <span className="bg-rose-500 text-slate-900 dark:text-white text-[9px] font-black px-1.5 py-0.5 rounded-full min-w-[18px] text-center shadow-[0_0_10px_rgba(244,63,94,0.6)] animate-pulse">
+                                                <span className="bg-rose-500 text-white text-[9px] font-black px-1.5 py-0.5 rounded-full min-w-[18px] text-center shadow-[0_0_10px_rgba(244,63,94,0.6)] animate-pulse">
                                                     {unreadCount}
                                                 </span>
                                             )}
                                         </div>
-                                        <span className={`text-[9px] uppercase tracking-wider font-bold ${unreadCount > 0 ? 'text-indigo-400' : 'text-slate-500 dark:text-zinc-500'}`}>
+                                        <span className={`text-[9px] uppercase tracking-wider font-bold ${unreadCount > 0 ? 'text-[#5b21b6] dark:text-indigo-400' : 'text-slate-500 dark:text-zinc-500'}`}>
                                             {formatTime(conv.last_message_time)}
                                         </span>
                                     </div>
                                     <div className="flex justify-between items-center gap-2">
-                                        <p className={`text-xs truncate ${unreadCount > 0 ? 'text-zinc-300 font-bold' : 'text-slate-500 dark:text-zinc-500 font-medium'}`}>
-                                            {conv.last_message ? conv.last_message : <span className="italic text-zinc-600">No messages yet</span>}
+                                        <p className={`text-xs truncate ${unreadCount > 0 ? 'text-slate-900 dark:text-zinc-300 font-bold' : 'text-slate-500 dark:text-zinc-500 font-medium'}`}>
+                                            {conv.last_message ? conv.last_message : <span className="italic text-slate-400 dark:text-zinc-600">No messages yet</span>}
                                         </p>
-                                        <span className="text-[9px] font-black text-zinc-600 uppercase shrink-0 bg-slate-50 dark:bg-zinc-900 px-2 py-0.5 rounded border border-slate-200 dark:border-zinc-800">
+                                        <span className="text-[9px] font-black text-slate-500 dark:text-zinc-600 uppercase shrink-0 bg-white dark:bg-zinc-900 px-2 py-0.5 rounded border border-slate-200 dark:border-zinc-800">
                                             {conv.room_number ? `Rm ${conv.room_number}` : 'N/A'}
                                         </span>
                                     </div>
@@ -192,15 +192,15 @@ export default function AdminChat() {
                 <div className="flex-1 flex flex-col bg-transparent relative">
                     {selectedTenant ? (
                         <>
-                            <div className="px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-white dark:bg-[#0a0a0a]/80 backdrop-blur-xl sticky top-0 z-10 shadow-sm">
+                            <div className="px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-xl sticky top-0 z-10 shadow-sm">
                                 <div className="flex items-center gap-4">
-                                    <div className="w-11 h-11 rounded-2xl bg-[#5b21b6]/20 border border-[#5b21b6]/40 text-[#a78bfa] flex items-center justify-center font-black shadow-[0_0_15px_rgba(91,33,182,0.2)]">
+                                    <div className="w-11 h-11 rounded-2xl bg-[#5b21b6] text-white flex items-center justify-center font-black shadow-[0_0_15px_rgba(91,33,182,0.3)]">
                                         {selectedTenant.name.charAt(0)}
                                     </div>
                                     <div>
                                         <h3 className="font-black text-slate-900 dark:text-white leading-tight text-lg">{selectedTenant.name}</h3>
-                                        <p className="text-[10px] font-black text-emerald-400 uppercase tracking-widest flex items-center gap-1.5 mt-0.5">
-                                            <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
+                                        <p className="text-[10px] font-black text-emerald-600 dark:text-emerald-400 uppercase tracking-widest flex items-center gap-1.5 mt-0.5">
+                                            <span className="w-1.5 h-1.5 bg-emerald-500 dark:bg-emerald-400 rounded-full animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
                                             Room {selectedTenant.room_number || 'N/A'}
                                         </p>
                                     </div>
@@ -227,24 +227,20 @@ export default function AdminChat() {
 
                                         return (
                                             <div key={index} className={`flex ${isFromAdmin ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-${isFromAdmin ? 'right' : 'left'}-4 duration-500`}>
-                                                <div className="relative max-w-[70%]">
-                                                    <div className={`${isFromAdmin ? 'bg-[#5b21b6] text-slate-900 dark:text-white rounded-tr-xl rounded-tl-3xl rounded-b-3xl shadow-[0_0_15px_rgba(91,33,182,0.15)]' : 'bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-zinc-300 rounded-tl-xl rounded-tr-3xl rounded-b-3xl'} px-6 py-4 text-sm font-medium leading-relaxed`}>
+                                                <div className="relative max-w-[75%]">
+                                                    <div className={`${isFromAdmin ? 'bg-[#5b21b6] text-white rounded-2xl rounded-tr-none shadow-lg' : 'bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-zinc-100 rounded-2xl rounded-tl-none shadow-sm'} px-5 py-3 text-sm font-medium leading-relaxed`}>
                                                         {msg.message}
                                                     </div>
-                                                    <div className={`flex items-center gap-2 mt-2 ${isFromAdmin ? 'justify-end mr-2' : 'ml-2'}`}>
-                                                        <p className={`text-[9px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-[0.2em]`}>
+                                                    <div className={`flex items-center gap-2 mt-1.5 ${isFromAdmin ? 'justify-end mr-1' : 'ml-1'}`}>
+                                                        <p className={`text-[9px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-wider`}>
                                                             {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                                                         </p>
                                                         {isFromAdmin && (
                                                             <div className="flex items-center gap-1 text-[9px] font-black uppercase tracking-widest">
-                                                                <span className={statusText === 'SEEN' ? 'text-[#a78bfa]' : 'text-zinc-600'}>
-                                                                    {statusText === 'SEEN' ? (
-                                                                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
-                                                                    ) : (
-                                                                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>
-                                                                    )}
+                                                                <span className={statusText === 'SEEN' ? 'text-[#5b21b6] dark:text-[#a78bfa]' : 'text-slate-400 dark:text-zinc-600'}>
+                                                                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path></svg>
                                                                 </span>
-                                                                <span className={statusText === 'SEEN' ? 'text-[#a78bfa] font-black' : 'text-zinc-600'}>{statusText}</span>
+                                                                <span className={statusText === 'SEEN' ? 'text-[#5b21b6] dark:text-[#a78bfa]' : 'text-slate-400 dark:text-zinc-600'}>{statusText}</span>
                                                             </div>
                                                         )}
                                                     </div>
@@ -256,19 +252,19 @@ export default function AdminChat() {
                             </div>
 
                             <form onSubmit={handleSend} className="p-6 bg-white dark:bg-[#0a0a0a]/90 backdrop-blur-xl border-t border-slate-200 dark:border-zinc-800 relative z-10">
-                                <div className="flex gap-4 items-center bg-slate-50 dark:bg-zinc-900/50 p-2 rounded-2xl border border-slate-200 dark:border-zinc-800 focus-within:border-[#5b21b6]/40 focus-within:bg-slate-50 dark:bg-zinc-900 focus-within:shadow-[0_0_20px_rgba(91,33,182,0.1)] transition-all duration-300">
+                                <div className="flex gap-3 items-center bg-slate-50 dark:bg-zinc-900/50 p-2 rounded-2xl border border-slate-200 dark:border-zinc-800 focus-within:border-[#5b21b6]/40 focus-within:bg-white dark:bg-zinc-900 focus-within:shadow-xl transition-all duration-300">
                                     <input 
                                         type="text" 
                                         value={newMessage}
                                         onChange={(e) => setNewMessage(e.target.value)}
                                         placeholder={`Message ${selectedTenant.name}...`} 
-                                        className="flex-1 bg-transparent border-none text-sm font-bold text-slate-900 dark:text-white px-4 py-2 outline-none placeholder:text-zinc-600" 
+                                        className="flex-1 bg-transparent border-none text-sm font-bold text-slate-900 dark:text-white px-4 py-2 outline-none placeholder:text-slate-400 dark:placeholder:text-zinc-600" 
                                         autoFocus
                                     />
                                     <button 
                                         type="submit" 
                                         disabled={!newMessage.trim()}
-                                        className="px-8 py-3 bg-[#5b21b6] text-slate-900 dark:text-white font-black text-xs uppercase tracking-widest rounded-xl hover:bg-[#4c1d95] transition-all shadow-[0_0_20px_rgba(91,33,182,0.4)] active:scale-95 disabled:opacity-50 disabled:active:scale-100 disabled:shadow-none flex items-center gap-2"
+                                        className="px-6 py-3 bg-[#5b21b6] text-white font-black text-xs uppercase tracking-widest rounded-xl hover:bg-[#4c1d95] transition-all shadow-lg active:scale-95 disabled:opacity-50 disabled:active:scale-100 disabled:shadow-none flex items-center gap-2"
                                     >
                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                                         Send
