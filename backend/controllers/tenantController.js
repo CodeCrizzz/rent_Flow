@@ -6,13 +6,13 @@ const getTenantDashboard = async (req, res) => {
     const tenantId = req.user.id; // Extracted from the JWT token!
 
     try {
-        // 1. Get total pending balance for THIS specific tenant
+        // Get total pending balance for THIS specific tenant
         const balanceResult = await db.query(
             "SELECT SUM(balance) FROM bills WHERE tenant_id = $1 AND status != 'Paid'", 
             [tenantId]
         );
 
-        // 2. Get recent payment history
+        // Get recent payment history
         const historyResult = await db.query(
             "SELECT p.*, b.billing_month FROM payments p JOIN bills b ON p.bill_id = b.id WHERE b.tenant_id = $1 ORDER BY p.payment_date DESC LIMIT 5",
             [tenantId]
@@ -28,7 +28,7 @@ const getTenantDashboard = async (req, res) => {
     }
 };
 
-// @desc    Get Tenant Profile & Room In    fo
+// @desc    Get Tenant Profile & Room Info
 const getTenantProfile = async (req, res) => {
     const tenantId = req.user.id;
     try {
