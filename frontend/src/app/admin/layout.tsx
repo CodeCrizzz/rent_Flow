@@ -65,12 +65,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     </Link>
                 </div>
 
-                <nav className="flex-1 px-5 space-y-2 mt-2 relative z-10">
-                    <div className="px-3 mb-6 text-[10px] font-black text-slate-500 dark:text-zinc-600 uppercase tracking-[0.2em]">Navigation</div>
+                <nav className="flex-1 px-4 space-y-3 mt-6 relative z-10">
+                    <div className="px-4 mb-6 text-[10px] font-black text-slate-500 dark:text-zinc-600 uppercase tracking-[0.2em]">Navigation</div>
                     {navItems.map((item) => {
                         const isActive = pathname === item.path;
                         return (
-                            <Link key={item.name} href={item.path} className={`flex items-center gap-3.5 px-4 py-3.5 rounded-2xl text-sm font-bold transition-all duration-300 relative ${isActive ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-slate-900 dark:text-white shadow-[0_0_15px_rgba(79,70,229,0.2)] dark:shadow-[0_0_20px_rgba(79,70,229,0.3)]' : 'text-slate-600 dark:text-zinc-500 hover:bg-slate-100 dark:hover:bg-slate-50 dark:bg-zinc-900/50 hover:text-slate-900 dark:hover:text-zinc-300'}`}>
+                            <Link key={item.name} href={item.path} className={`flex items-center gap-3 px-4 py-4 rounded-2xl text-sm font-bold transition-all duration-300 relative ${isActive ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-slate-900 dark:text-white shadow-[0_0_15px_rgba(79,70,229,0.2)] dark:shadow-[0_0_20px_rgba(79,70,229,0.3)]' : 'text-slate-600 dark:text-zinc-500 hover:bg-slate-100 dark:hover:bg-slate-50 dark:bg-zinc-900/50 hover:text-slate-900 dark:hover:text-zinc-300'}`}>
                                 <svg className={`w-5 h-5 ${isActive ? 'text-slate-900 dark:text-white' : 'text-slate-400 dark:text-zinc-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={item.icon}></path></svg>
                                 <span className="flex-1">{item.name}</span>
                                 {item.name === 'Communications' && unreadCount > 0 && (
@@ -96,7 +96,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                             </p>
                         </div>
                     </div>
-                    <button onClick={handleLogout} className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl text-xs font-black uppercase tracking-widest text-slate-600 dark:text-zinc-500 bg-slate-200/50 dark:bg-zinc-900/50 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 hover:border-red-200 dark:hover:border-red-500/20 border border-transparent transition-all duration-300 group">
+                    <button onClick={handleLogout} className="flex items-center justify-center gap-2 w-full px-4 py-4 rounded-xl text-xs font-black uppercase tracking-widest text-slate-600 dark:text-zinc-500 bg-slate-200/50 dark:bg-zinc-900/50 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 hover:border-red-200 dark:hover:border-red-500/20 border border-transparent transition-all duration-300 group">
                         Sign Out
                         <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                     </button>
