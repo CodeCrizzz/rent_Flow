@@ -31,21 +31,33 @@ const TiltCard = ({ title, desc, icon }: { title: string, desc: string, icon: st
         >
             <div 
                 ref={cardRef}
-                className="relative p-6 rounded-2xl bg-white/60 dark:bg-cyan-950/20 border border-slate-200/80 dark:border-cyan-500/30 backdrop-blur-sm text-left transition-all duration-200 ease-out overflow-hidden group cursor-pointer"
+                className="relative p-6 text-left transition-transform duration-200 ease-out group cursor-pointer"
                 style={{
                     transform: isHovered ? `rotateX(${tilt.rotateX}deg) rotateY(${tilt.rotateY}deg) scale3d(1.05, 1.05, 1.05)` : 'rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)',
                     transformStyle: 'preserve-3d',
-                    boxShadow: isHovered ? '0 20px 40px rgba(6,182,212,0.2)' : '0 4px 10px rgba(0,0,0,0.05)'
                 }}
             >
+                {/* FIX: Hardware-Accelerated Blur Layer */}
                 <div 
-                    className="absolute inset-0 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                    style={{ background: `radial-gradient(circle at ${tilt.glareX}% ${tilt.glareY}%, rgba(255,255,255,0.2) 0%, transparent 60%)` }}
+                    className="absolute inset-0 rounded-2xl bg-white/60 dark:bg-cyan-950/20 border border-slate-200/80 dark:border-cyan-500/30 backdrop-blur-md transition-shadow duration-300"
+                    style={{
+                        boxShadow: isHovered ? '0 20px 40px rgba(6,182,212,0.2)' : '0 4px 10px rgba(0,0,0,0.05)',
+                        transform: 'translate3d(0, 0, -1px)', // Forces 3D hardware acceleration
+                        WebkitBackfaceVisibility: 'hidden',   // Prevents WebKit blur dropping
+                        willChange: 'transform, opacity'      // Tells browser to prioritize this layer
+                    }}
+                />
+
+                <div 
+                    className="absolute inset-0 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none rounded-2xl overflow-hidden"
+                    style={{ background: `radial-gradient(circle at ${tilt.glareX}% ${tilt.glareY}%, rgba(255,255,255,0.2) 0%, transparent 60%)`, transform: 'translateZ(0)' }}
                 />
                 
-                <div className="text-3xl mb-4 transform translate-z-12">{icon}</div>
-                <h3 className="text-slate-800 dark:text-white font-black text-lg mb-2 transform translate-z-10">{title}</h3>
-                <p className="text-slate-500 dark:text-cyan-100/60 text-xs font-medium transform translate-z-8 leading-relaxed">{desc}</p>
+                <div className="relative z-20" style={{ transform: 'translateZ(20px)' }}>
+                    <div className="text-3xl mb-4">{icon}</div>
+                    <h3 className="text-slate-800 dark:text-white font-black text-lg mb-2">{title}</h3>
+                    <p className="text-slate-500 dark:text-cyan-100/60 text-xs font-medium leading-relaxed">{desc}</p>
+                </div>
             </div>
         </div>
     );
@@ -76,6 +88,10 @@ const PrimaryButton = ({ onClick, isEntering }: { onClick: () => void, isEnterin
 export default function LandingPage() {
     const containerRef = useRef<HTMLDivElement>(null);
     const router = useRouter();
+    
+    // --- NEW: Mount State for Cinematic Entrance ---
+    const [isMounted, setIsMounted] = useState(false);
+    
     const [isEntering, setIsEntering] = useState(false);
     const [loadingStep, setLoadingStep] = useState(0);
 
@@ -86,6 +102,9 @@ export default function LandingPage() {
     const statuses = ["Loading...", "Connecting to RentFlow Database..."];
 
     useEffect(() => {
+        // Trigger the cinematic entrance 100ms after the component renders
+        const mountTimer = setTimeout(() => setIsMounted(true), 100);
+
         mouseTarget.current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
         mouseCurrent.current = { ...mouseTarget.current };
 
@@ -102,7 +121,10 @@ export default function LandingPage() {
         };
 
         rafId.current = requestAnimationFrame(animate);
-        return () => { if (rafId.current) cancelAnimationFrame(rafId.current); };
+        return () => { 
+            clearTimeout(mountTimer);
+            if (rafId.current) cancelAnimationFrame(rafId.current); 
+        };
     }, []);
 
     const handleMouseMove = (e: React.MouseEvent) => {
@@ -136,7 +158,6 @@ export default function LandingPage() {
                     0%, 100% { transform: scale(1); opacity: 0.8; box-shadow: 0 0 30px rgba(6,182,212,0.15); } 
                     50% { transform: scale(1.05); opacity: 1; box-shadow: 0 0 80px rgba(6,182,212,0.5); } 
                 }
-
                 @keyframes slideUpFade {
                     from { transform: translateY(100%); opacity: 0; }
                     to { transform: translateY(0); opacity: 1; }
@@ -155,7 +176,10 @@ export default function LandingPage() {
                 .animate-float-icon { animation: float-icon 2.5s ease-in-out infinite; }
             `}</style>
 
-            <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden transition-opacity duration-[2000ms] ease-out opacity-0 group-hover/container:opacity-100">
+            {/* --- INITIAL BOOT OVERLAY (Fades out smoothly on load) --- */}
+            <div className={`fixed inset-0 z-[200] bg-slate-50 dark:bg-[#020617] pointer-events-none transition-opacity duration-[1500ms] ease-out ${isMounted ? 'opacity-0' : 'opacity-100'}`} />
+
+            <div className={`pointer-events-none absolute inset-0 z-0 overflow-hidden transition-opacity duration-[2000ms] ease-out ${isMounted ? 'opacity-100' : 'opacity-0'} group-hover/container:opacity-100`}>
                 
                 {/* Light Mode Effect */}
                 <div className="absolute inset-0 block dark:hidden">
@@ -189,7 +213,7 @@ export default function LandingPage() {
             </div>
 
             {/* --- HEADER --- */}
-            <header className={`relative z-50 w-full px-10 h-24 flex items-center justify-start transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${isEntering ? 'opacity-0 -translate-y-12' : 'opacity-100 translate-y-0'}`}>
+            <header className={`relative z-50 w-full px-10 h-24 flex items-center justify-start transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${!isMounted || isEntering ? 'opacity-0 -translate-y-12' : 'opacity-100 translate-y-0'}`}>
                 <div className="flex items-center gap-3 group cursor-default">
                     <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.3)] dark:shadow-[0_0_20px_rgba(6,182,212,0.5)] group-hover:scale-110 group-hover:rotate-3 transition-all duration-700 ease-out border border-transparent dark:border-cyan-300/30">
                         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
@@ -199,10 +223,10 @@ export default function LandingPage() {
             </header>
 
             {/* --- MAIN CONTENT --- */}
-            <main className={`relative z-10 flex-1 flex flex-col items-center justify-center px-6 text-center transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${isEntering ? 'opacity-0 scale-90 blur-3xl' : 'opacity-100 scale-100 blur-0'}`}>
+            <main className={`relative z-10 flex-1 flex flex-col items-center justify-center px-6 text-center transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${!isMounted || isEntering ? 'opacity-0 scale-95 blur-xl' : 'opacity-100 scale-100 blur-0'}`}>
                 
                 {/* Top Badge */}
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-100/60 dark:bg-cyan-950/40 border border-cyan-200/80 dark:border-cyan-400/20 text-cyan-800 dark:text-cyan-300 text-[10px] uppercase font-black tracking-[0.3em] mb-8 shadow-sm dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-colors">
+                <div className={`inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-100/60 dark:bg-cyan-950/40 border border-cyan-200/80 dark:border-cyan-400/20 text-cyan-800 dark:text-cyan-300 text-[10px] uppercase font-black tracking-[0.3em] mb-8 shadow-sm dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-all duration-1000 ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                     <span className="h-1.5 w-1.5 rounded-full bg-amber-500 dark:bg-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.6)] dark:shadow-[0_0_12px_rgba(245,158,11,1)] animate-pulse"></span>
                     Property Matrix Online
                 </div>
@@ -211,33 +235,39 @@ export default function LandingPage() {
                 <h1 className="flex flex-col items-center text-6xl sm:text-7xl lg:text-9xl font-black tracking-tighter mb-6 leading-[0.9]">
                     <span className="block overflow-hidden pb-2 pt-4">
                         <span 
-                            className="inline-block"
-                            style={{ opacity: 0, animation: 'slideUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards' }}
+                            className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-slate-700 to-indigo-600 dark:from-cyan-300 dark:via-white dark:to-indigo-400 bg-[length:200%_auto]"
+                            style={{ 
+                                opacity: 0, 
+                                animation: isMounted ? 'slideUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards, shimmer-text 6s linear infinite' : 'none' 
+                            }}
                         >
                             Manage
                         </span>
                     </span>
                     <span className="block overflow-hidden pb-4 pt-2">
                         <span 
-                            className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-slate-700 to-indigo-600 dark:from-cyan-300 dark:via-white dark:to-indigo-400 bg-[length:200%_auto] drop-shadow-sm dark:drop-shadow-[0_0_40px_rgba(6,182,212,0.3)]"
-                            style={{ opacity: 0, animation: 'slideUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards, shimmer-text 6s linear infinite' }}
+                            className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-slate-700 to-indigo-600 dark:from-cyan-300 dark:via-white dark:to-indigo-400 bg-[length:200%_auto]"
+                            style={{ 
+                                opacity: 0, 
+                                animation: isMounted ? 'slideUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards, shimmer-text 6s linear infinite' : 'none' 
+                            }}
                         >
                             Every Unit.
                         </span>
                     </span>
                 </h1>
 
-                <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base max-w-md mb-10 leading-relaxed font-bold animate-in fade-in duration-1000 delay-500 fill-mode-both">
-                    The intelligent operating system for modern boarding houses. Track tenants, monitor rooms, and automate billing.
+                <p className={`text-slate-600 dark:text-slate-300 text-sm md:text-base max-w-md mb-10 leading-relaxed font-bold transition-all duration-1000 delay-[600ms] ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                    "Everything your boarding house needs, in one smart system."                
                 </p>
 
                 {/* Primary Button */}
-                <div className="mb-16 animate-in fade-in zoom-in-95 duration-1000 delay-700 fill-mode-both">
+                <div className={`mb-16 transition-all duration-1000 delay-[800ms] ${isMounted ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
                     <PrimaryButton onClick={handleEnterPortal} isEntering={isEntering} />
                 </div>
 
                 {/* 3D Tilt Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto w-full animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-1000 fill-mode-both">
+                <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto w-full transition-all duration-1000 delay-[1000ms] ${isMounted ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
                     <TiltCard icon="🏢" title="Smart Allocation" desc="Drag and drop residents into optimized room layouts instantly." />
                     <TiltCard icon="⚡" title="Automated Billing" desc="Generate invoices and track overdue balances with zero manual effort." />
                     <TiltCard icon="🛠️" title="Live Maintenance" desc="Track, assign, and resolve property repair requests in real-time." />
@@ -247,10 +277,8 @@ export default function LandingPage() {
             {/* --- LOADING OVERLAY --- */}
             {isEntering && (
                 <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-50 dark:bg-[#020617] animate-in fade-in duration-700 ease-out transition-colors">
-                    {/* Background glow for overlay */}
                     <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at center, rgba(6, 182, 212, 0.08) 0%, transparent 40%)' }}></div>
                     
-                    {/* Logo Container */}
                     <div className="relative mb-16 flex items-center gap-5 animate-breathe bg-white/70 dark:bg-slate-900/40 backdrop-blur-md px-8 py-6 rounded-3xl border border-cyan-100 dark:border-cyan-500/20 shadow-[0_10px_30px_-10px_rgba(6,182,212,0.15)] dark:shadow-[0_10px_40px_-10px_rgba(6,182,212,0.3)]">
                         <div className="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.3)] dark:shadow-[0_0_30px_rgba(6,182,212,0.6)] border border-transparent dark:border-cyan-300/40 relative">
                             <div className="absolute inset-0 bg-white/20 rounded-2xl animate-pulse"></div>
@@ -262,11 +290,8 @@ export default function LandingPage() {
                         </div>
                     </div>
                     
-                    {/* Progress Bar Container */}
                     <div className="relative w-[320px] h-2 bg-slate-200 dark:bg-slate-800/80 rounded-full overflow-visible mb-8 border border-slate-300 dark:border-slate-700/50">
-                        {/* Progress Fill */}
                         <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-300 rounded-full animate-progress-smooth flex justify-end items-center shadow-[0_0_10px_rgba(34,211,238,0.4)] dark:shadow-[0_0_20px_rgba(34,211,238,0.7)]">
-                            {/* Icon tracing the progress bar */}
                             <div className="absolute right-0 translate-x-1/2 w-10 h-10 bg-white dark:bg-[#020617] border-2 border-cyan-500 dark:border-cyan-400 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(34,211,238,0.3)] dark:shadow-[0_0_20px_rgba(34,211,238,0.9)] z-20 overflow-hidden group">
                                 <div className="absolute inset-0 bg-cyan-400/20 animate-[spin_3s_linear_infinite]"></div>
                                 <svg className="w-5 h-5 text-cyan-600 dark:text-cyan-300 animate-pulse relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -276,7 +301,6 @@ export default function LandingPage() {
                         </div>
                     </div>
                     
-                    {/* Status Text */}
                     <div className="h-6 relative flex items-center justify-center w-full">
                         {statuses.map((status, index) => (
                             <p key={status} className={`absolute text-xs font-bold tracking-[0.2em] uppercase transition-all duration-500 ease-out ${loadingStep === index ? 'opacity-100 translate-y-0 text-cyan-700 dark:text-cyan-100 drop-shadow-sm dark:drop-shadow-[0_0_10px_rgba(34,211,238,0.6)]' : loadingStep > index ? 'opacity-0 -translate-y-4 text-slate-400 dark:text-slate-500' : 'opacity-0 translate-y-4 text-slate-400 dark:text-slate-500'}`}>
@@ -288,7 +312,7 @@ export default function LandingPage() {
             )}
 
             {/* --- FOOTER --- */}
-            <footer className={`relative z-10 w-full h-24 flex flex-col items-center justify-center gap-2 transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${isEntering ? 'opacity-0 translate-y-12' : 'opacity-100 translate-y-0'}`}>
+            <footer className={`relative z-10 w-full h-24 flex flex-col items-center justify-center gap-2 transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] delay-[1200ms] ${!isMounted || isEntering ? 'opacity-0 translate-y-12' : 'opacity-100 translate-y-0'}`}>
                 <p className="text-[9px] font-black text-slate-500 dark:text-slate-400 tracking-[0.5em] uppercase">Property Management Evolved</p>
                 <p className="text-[10px] text-slate-400 dark:text-slate-300 font-bold tracking-widest">&copy; {new Date().getFullYear()} RentFlow Systems.</p>
             </footer>
