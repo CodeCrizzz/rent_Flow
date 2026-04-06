@@ -9,8 +9,8 @@ const FeatureCard = ({ title, desc, icon }: { title: string, desc: string, icon:
             {/* Outer Ambient Glow (Fades in on hover) */}
             <div className="absolute inset-0 bg-cyan-500/10 dark:bg-cyan-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></div>
             
-            {/* Main Card Body */}
-            <div className="relative h-full p-6 rounded-2xl bg-white/60 dark:bg-cyan-950/20 border border-slate-200/80 dark:border-cyan-500/30 backdrop-blur-md text-left transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-2 group-hover:scale-[1.02] overflow-hidden shadow-sm hover:shadow-[0_20px_40px_rgba(6,182,212,0.15)] dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.2)]">
+            {/* Main Card Body (High contrast solid white in light mode) */}
+            <div className="relative h-full p-6 rounded-2xl bg-white dark:bg-cyan-950/20 border border-slate-200 dark:border-cyan-500/30 backdrop-blur-md text-left transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-2 group-hover:scale-[1.02] overflow-hidden shadow-lg shadow-slate-200/50 hover:shadow-2xl hover:shadow-cyan-500/20 dark:shadow-sm dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.2)]">
                 
                 {/* Inner Glass Glare (Fades in on hover) */}
                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out bg-gradient-to-br from-white/40 dark:from-white/10 to-transparent pointer-events-none"></div>
@@ -20,8 +20,8 @@ const FeatureCard = ({ title, desc, icon }: { title: string, desc: string, icon:
                     {icon}
                 </div>
                 
-                <h3 className="text-slate-800 dark:text-white font-black text-lg mb-2 relative z-10">{title}</h3>
-                <p className="text-slate-500 dark:text-cyan-100/60 text-xs font-medium leading-relaxed relative z-10">{desc}</p>
+                <h3 className="text-slate-900 dark:text-white font-black text-lg mb-2 relative z-10">{title}</h3>
+                <p className="text-slate-600 dark:text-cyan-100/60 text-xs font-medium leading-relaxed relative z-10">{desc}</p>
             </div>
         </div>
     );
@@ -32,7 +32,7 @@ const PrimaryButton = ({ onClick, isEntering }: { onClick: () => void, isEnterin
     return (
         <button 
             onClick={onClick}
-            className={`relative group inline-flex items-center justify-center px-10 py-5 bg-cyan-600 dark:bg-white text-white dark:text-slate-900 font-black text-xs uppercase tracking-[0.2em] rounded-full overflow-hidden transition-all duration-300 ease-out hover:scale-105 active:scale-95 hover:shadow-[0_0_30px_rgba(6,182,212,0.4)] dark:hover:shadow-[0_0_40px_rgba(6,182,212,0.5)] ${isEntering ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}
+            className={`relative group inline-flex items-center justify-center px-10 py-5 bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black text-xs uppercase tracking-[0.2em] rounded-full overflow-hidden transition-all duration-300 ease-out hover:scale-105 active:scale-95 shadow-xl shadow-slate-900/20 hover:shadow-2xl hover:shadow-cyan-500/30 dark:shadow-none dark:hover:shadow-[0_0_40px_rgba(6,182,212,0.5)] ${isEntering ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}
         >
             {/* Shimmer Effect */}
             <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 dark:via-cyan-100/50 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></span>
@@ -40,7 +40,7 @@ const PrimaryButton = ({ onClick, isEntering }: { onClick: () => void, isEnterin
             {/* Content */}
             <span className="relative z-10 flex items-center gap-3">
                 Access Matrix
-                <div className="w-6 h-6 rounded-full bg-white dark:bg-slate-900 text-cyan-600 dark:text-cyan-400 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1.5 shadow-[0_0_8px_rgba(6,182,212,0.2)] dark:shadow-[0_0_10px_rgba(6,182,212,0.5)]">
+                <div className="w-6 h-6 rounded-full bg-white dark:bg-slate-900 text-slate-900 dark:text-cyan-400 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1.5 shadow-md dark:shadow-[0_0_10px_rgba(6,182,212,0.5)]">
                     <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 5l7 7-7 7"></path></svg>
                 </div>
             </span>
@@ -133,10 +133,10 @@ export default function LandingPage() {
 
             <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden transition-opacity duration-[2000ms] ease-out opacity-0 group-hover/container:opacity-100">
                 
-                {/* Light Mode Effect */}
+                {/* Light Mode Effect - Reduced opacity so it doesn't fight the text */}
                 <div className="absolute inset-0 block dark:hidden">
-                    <div className="absolute inset-0" style={{ background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(6, 182, 212, 0.15), transparent 70%)` }} />
-                    <div className="absolute inset-0 opacity-40" style={{
+                    <div className="absolute inset-0" style={{ background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(6, 182, 212, 0.10), transparent 70%)` }} />
+                    <div className="absolute inset-0 opacity-20" style={{
                         backgroundImage: `
                             linear-gradient(rgba(6, 182, 212, 0.8) 1px, transparent 1px), 
                             linear-gradient(90deg, rgba(6, 182, 212, 0.8) 1px, transparent 1px)`,
@@ -178,24 +178,24 @@ export default function LandingPage() {
             <main className={`relative z-10 flex-1 flex flex-col items-center justify-center px-6 text-center transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${isEntering ? 'opacity-0 scale-90 blur-3xl' : 'opacity-100 scale-100 blur-0'}`}>
                 
                 {/* Top Badge */}
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-100/60 dark:bg-cyan-950/40 border border-cyan-200/80 dark:border-cyan-400/20 text-cyan-800 dark:text-cyan-300 text-[10px] uppercase font-black tracking-[0.3em] mb-8 shadow-sm dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-colors">
+                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-cyan-950/40 border border-slate-200 dark:border-cyan-400/20 text-slate-800 dark:text-cyan-300 text-[10px] uppercase font-black tracking-[0.3em] mb-8 shadow-md dark:shadow-[0_8px_32px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-colors">
                     <span className="h-1.5 w-1.5 rounded-full bg-amber-500 dark:bg-amber-400 shadow-[0_0_10px_rgba(245,158,11,0.6)] dark:shadow-[0_0_12px_rgba(245,158,11,1)] animate-pulse"></span>
                     Property Matrix Online
                 </div>
 
-                {/* Staggered Glyph Reveal Heading */}
-                <h1 className="flex flex-col items-center text-6xl sm:text-7xl lg:text-9xl font-black tracking-tighter mb-6 leading-[0.9]">
-                    <span className="block overflow-hidden pb-2 pt-4">
+                {/* Staggered Glyph Reveal Heading - Deep Slate to Indigo gradient for Light Mode */}
+                <h1 className="flex flex-col items-center text-6xl sm:text-7xl lg:text-9xl font-black tracking-tighter mb-8 leading-none">
+                    <span className="block overflow-hidden relative z-10">
                         <span 
-                            className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-slate-700 to-indigo-600 dark:from-cyan-300 dark:via-white dark:to-indigo-400 bg-[length:200%_auto]"
+                            className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-cyan-800 to-indigo-900 dark:from-cyan-300 dark:via-white dark:to-indigo-400 bg-[length:200%_auto] pb-2"
                             style={{ opacity: 0, animation: 'slideUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards, shimmer-text 6s linear infinite' }}
                         >
                             Manage
                         </span>
                     </span>
-                    <span className="block overflow-hidden pb-4 pt-2">
+                    <span className="block overflow-hidden -mt-2 sm:-mt-4 lg:-mt-3">
                         <span 
-                            className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-slate-700 to-indigo-600 dark:from-cyan-300 dark:via-white dark:to-indigo-400 bg-[length:200%_auto]"
+                            className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-slate-900 via-cyan-800 to-indigo-900 dark:from-cyan-300 dark:via-white dark:to-indigo-400 bg-[length:200%_auto] pb-2"
                             style={{ opacity: 0, animation: 'slideUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s forwards, shimmer-text 6s linear infinite' }}
                         >
                             Every Unit.
@@ -203,7 +203,7 @@ export default function LandingPage() {
                     </span>
                 </h1>
 
-                <p className="text-slate-600 dark:text-slate-300 text-sm md:text-base max-w-md mb-10 leading-relaxed font-bold animate-in fade-in duration-1000 delay-500 fill-mode-both">
+                <p className="text-slate-700 dark:text-slate-300 text-sm md:text-base max-w-xl mb-10 leading-relaxed font-bold animate-in fade-in duration-1000 delay-500 fill-mode-both">
                     "Everything your boarding house needs, in one smart system."                
                 </p>
 
@@ -222,12 +222,12 @@ export default function LandingPage() {
 
             {/* --- LOADING OVERLAY --- */}
             {isEntering && (
-                <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-50 dark:bg-[#020617] animate-in fade-in duration-700 ease-out transition-colors">
+                <div className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-slate-100/95 dark:bg-[#020617]/95 animate-in fade-in duration-700 ease-out transition-colors">
                     {/* Background glow for overlay */}
                     <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at center, rgba(6, 182, 212, 0.08) 0%, transparent 40%)' }}></div>
                     
                     {/* Logo Container */}
-                    <div className="relative mb-16 flex items-center gap-5 animate-breathe bg-white/70 dark:bg-slate-900/40 backdrop-blur-md px-8 py-6 rounded-3xl border border-cyan-100 dark:border-cyan-500/20 shadow-[0_10px_30px_-10px_rgba(6,182,212,0.15)] dark:shadow-[0_10px_40px_-10px_rgba(6,182,212,0.3)]">
+                    <div className="relative mb-16 flex items-center gap-5 animate-breathe bg-white dark:bg-slate-900/40 backdrop-blur-md px-8 py-6 rounded-3xl border border-slate-200 dark:border-cyan-500/20 shadow-[0_10px_30px_-10px_rgba(6,182,212,0.15)] dark:shadow-[0_10px_40px_-10px_rgba(6,182,212,0.3)]">
                         <div className="w-14 h-14 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.3)] dark:shadow-[0_0_30px_rgba(6,182,212,0.6)] border border-transparent dark:border-cyan-300/40 relative">
                             <div className="absolute inset-0 bg-white/20 rounded-2xl animate-pulse"></div>
                             <svg className="w-8 h-8 text-white relative z-10 animate-float-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
@@ -266,7 +266,7 @@ export default function LandingPage() {
             {/* --- FOOTER --- */}
             <footer className={`relative z-10 w-full h-24 flex flex-col items-center justify-center gap-2 transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${isEntering ? 'opacity-0 translate-y-12' : 'opacity-100 translate-y-0'}`}>
                 <p className="text-[9px] font-black text-slate-500 dark:text-slate-400 tracking-[0.5em] uppercase">Property Management Evolved</p>
-                <p className="text-[10px] text-slate-400 dark:text-slate-300 font-bold tracking-widest">&copy; {new Date().getFullYear()} RentFlow Systems.</p>
+                <p className="text-[10px] text-slate-600 dark:text-slate-300 font-bold tracking-widest">&copy; {new Date().getFullYear()} RentFlow Systems.</p>
             </footer>
         </div>
     );
