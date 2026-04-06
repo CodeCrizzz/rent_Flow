@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
+import { motion, AnimatePresence } from 'framer-motion';
+
 export default function TenantLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
     const router = useRouter();
@@ -50,7 +52,7 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
 
     return (
         <div className="flex h-screen bg-slate-50 dark:bg-[#050505] text-slate-900 dark:text-white overflow-hidden selection:bg-indigo-500/30 transition-colors duration-500">
-            <aside className="w-[280px] bg-white/80 dark:bg-[#0a0a0c]/90 backdrop-blur-3xl flex-col hidden md:flex border-r border-slate-200 dark:border-white/5 shadow-2xl z-20 relative transition-colors duration-500">
+            <aside className="w-[280px] bg-white/80 dark:bg-[#0a0a0c]/90 backdrop-blur-3xl flex-col hidden md:flex border-r border-slate-200 dark:border-white/5 shadow-2xl z-20 relative transition-colors duration-500 text-left">
                 <div className="absolute top-0 left-0 w-full h-64 bg-indigo-600/10 dark:bg-indigo-600/5 blur-[80px] pointer-events-none"></div>
 
                 <div className="p-8 relative z-10">
@@ -67,14 +69,20 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
                     {navItems.map((item) => {
                         const isActive = pathname === item.path;
                         return (
-                            <Link key={item.name} href={item.path} className={`flex items-center gap-3 px-4 py-4 rounded-2xl text-sm font-bold transition-all duration-300 relative ${isActive ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-slate-900 dark:text-white shadow-[0_0_15px_rgba(79,70,229,0.2)] dark:shadow-[0_0_20px_rgba(79,70,229,0.3)]' : 'text-slate-600 dark:text-zinc-500 hover:bg-slate-100 dark:hover:bg-slate-50 dark:bg-zinc-900/50 hover:text-slate-900 dark:hover:text-zinc-300'}`}>
-                                <svg className={`w-5 h-5 ${isActive ? 'text-slate-900 dark:text-white' : 'text-slate-400 dark:text-zinc-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={item.icon}></path></svg>
-                                <span className="flex-1">{item.name}</span>
-                                {item.name === 'Messages' && unreadCount > 0 && (
-                                    <span className="flex h-5 items-center justify-center rounded-full bg-red-500 px-2 text-[10px] font-black text-slate-900 dark:text-white shadow-[0_0_10px_rgba(239,68,68,0.5)]">
-                                        {unreadCount}
-                                    </span>
-                                )}
+                            <Link key={item.name} href={item.path} className="block">
+                                <motion.div 
+                                    whileHover={{ x: 5, scale: 1.02 }}
+                                    whileTap={{ scale: 0.98 }}
+                                    className={`flex items-center gap-3 px-4 py-4 rounded-2xl text-sm font-bold transition-all duration-300 relative ${isActive ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-slate-900 dark:text-white shadow-[0_0_15px_rgba(79,70,229,0.2)] dark:shadow-[0_0_20px_rgba(79,70,229,0.3)]' : 'text-slate-600 dark:text-zinc-500 hover:bg-slate-100 dark:hover:bg-slate-50 dark:bg-zinc-900/50 hover:text-slate-900 dark:hover:text-zinc-300'}`}
+                                >
+                                    <svg className={`w-5 h-5 ${isActive ? 'text-slate-900 dark:text-white' : 'text-slate-400 dark:text-zinc-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={item.icon}></path></svg>
+                                    <span className="flex-1">{item.name}</span>
+                                    {item.name === 'Messages' && unreadCount > 0 && (
+                                        <span className="flex h-5 items-center justify-center rounded-full bg-red-500 px-2 text-[10px] font-black text-slate-900 dark:text-white shadow-[0_0_10px_rgba(239,68,68,0.5)]">
+                                            {unreadCount}
+                                        </span>
+                                    )}
+                                </motion.div>
                             </Link>
                         );
                     })}
@@ -102,7 +110,17 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
 
             <main className="flex-1 flex flex-col relative h-screen overflow-hidden">
                 <div className="flex-1 overflow-y-auto p-6 md:p-10 lg:p-14 relative z-0 scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-bg-slate-100 dark:bg-[#050505] scrollbar-track-transparent">
-                    {children}
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            key={pathname}
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            exit={{ opacity: 0, x: -20 }}
+                            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                        >
+                            {children}
+                        </motion.div>
+                    </AnimatePresence>
                 </div>
             </main>
         </div>
