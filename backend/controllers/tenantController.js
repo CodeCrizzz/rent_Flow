@@ -1,7 +1,6 @@
 const db = require('../config/db');
 
-// @desc    Get Tenant Dashboard Data
-// @route   GET /api/tenant/dashboard
+// Get Tenant Dashboard Data
 const getTenantDashboard = async (req, res) => {
     const tenantId = req.user.id; // Extracted from the JWT token!
 
@@ -28,7 +27,7 @@ const getTenantDashboard = async (req, res) => {
     }
 };
 
-// @desc    Get Tenant Profile & Room Info
+// Get Tenant Profile & Room Info
 const getTenantProfile = async (req, res) => {
     const tenantId = req.user.id;
     try {
@@ -48,7 +47,7 @@ const getTenantProfile = async (req, res) => {
     }
 };
 
-// @desc    Submit Maintenance Request
+// Submit Maintenance Request
 const submitRequest = async (req, res) => {
     const { title, description } = req.body;
     const tenantId = req.user.id;
@@ -63,7 +62,7 @@ const submitRequest = async (req, res) => {
     }
 };
 
-// @desc    Get Tenant's Own Requests
+// @Get Tenant's Own Requests
 const getMyRequests = async (req, res) => {
     const tenantId = req.user.id;
     try {
@@ -77,7 +76,7 @@ const getMyRequests = async (req, res) => {
     }
 };
 
-// @desc    Get Tenant Payments
+//Get Tenant Payments
 const getTenantPayments = async (req, res) => {
     const tenantId = req.user.id;
     try {
@@ -92,7 +91,7 @@ const getTenantPayments = async (req, res) => {
     }
 };
 
-// @desc    Get Tenant Messages
+//Get Tenant Messages
 const getTenantMessages = async (req, res) => {
     const tenantId = req.user.id;
     try {
@@ -118,7 +117,7 @@ const getTenantMessages = async (req, res) => {
     }
 };
 
-// @desc Send Message to Admin
+//Send Message to Admin
 const sendTenantMessage = async (req, res) => {
     const tenantId = req.user.id;
     const { message } = req.body;
@@ -140,7 +139,7 @@ const sendTenantMessage = async (req, res) => {
     }
 };
 
-// @desc    Get Unread Messages Count
+//Get Unread Messages Count
 const getUnreadCount = async (req, res) => {
     const tenantId = req.user.id;
     try {

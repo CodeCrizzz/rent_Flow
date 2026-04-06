@@ -76,41 +76,45 @@ export default function TenantRequests() {
     };
 
     return (
-        <div className="max-w-6xl mx-auto space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+        <div className="max-w-7xl mx-auto space-y-10 pb-10 relative animate-in fade-in slide-in-from-bottom-4 transition-colors duration-500">
+            <div className="absolute top-0 left-10 w-96 h-96 bg-orange-500/5 dark:bg-orange-500/10 rounded-full blur-[100px] pointer-events-none -z-10"></div>
+            
             {/* Header */}
             <div>
-                <h1 className="text-3xl font-black text-slate-900 tracking-tight">Maintenance Requests</h1>
-                <p className="text-slate-500 font-medium mt-1">Report issues in your room or facility and track their resolution progress.</p>
+                <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight transition-colors duration-500">Maintenance Hub</h1>
+                <p className="text-slate-500 dark:text-zinc-400 font-medium mt-2 transition-colors duration-500">Report issues in your room or facility and track their resolution progress.</p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
                 
                 {/* Left Column: Submission Form */}
                 <div className="lg:col-span-1">
-                    <div className="bg-white p-6 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-200/60 sticky top-8">
-                        <div className="mb-6">
-                            <h2 className="text-xl font-black text-slate-900 tracking-tight">Submit New Request</h2>
-                            <p className="text-xs text-slate-500 font-medium mt-1">Please provide clear details so our team can assist you efficiently.</p>
+                    <div className="bg-white dark:bg-[#0a0a0a] p-8 rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 shadow-xl dark:shadow-2xl sticky top-8 transition-colors duration-500 overflow-hidden group">
+                        <div className="absolute inset-0 bg-linear-to-br from-orange-500/10 dark:from-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        
+                        <div className="mb-8 relative z-10">
+                            <h2 className="text-xl font-black text-slate-900 dark:text-white tracking-tight">Submit New Request</h2>
+                            <p className="text-xs text-slate-500 dark:text-zinc-500 font-bold uppercase tracking-widest mt-2">{priority} Priority • {category}</p>
                         </div>
 
-                        <form onSubmit={handleSubmit} className="space-y-4">
-                            <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Issue Title</label>
+                        <form onSubmit={handleSubmit} className="space-y-6 relative z-10">
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-slate-400 dark:text-zinc-600 uppercase tracking-widest ml-1">Issue Title</label>
                                 <input 
                                     type="text" 
                                     required
                                     placeholder="e.g. Leaking sink in bathroom"
-                                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-blue-500 focus:bg-white font-bold text-slate-700 transition-colors shadow-sm placeholder:font-medium placeholder:text-slate-400"
+                                    className="w-full px-5 py-4 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl outline-none focus:border-orange-500 dark:focus:border-orange-500 focus:bg-white dark:focus:bg-zinc-900 font-bold text-slate-900 dark:text-white transition-all shadow-sm placeholder:font-medium placeholder:text-slate-400 dark:placeholder:text-zinc-600"
                                     value={title}
                                     onChange={(e) => setTitle(e.target.value)}
                                 />
                             </div>
 
-                            <div className="grid grid-cols-2 gap-3">
-                                <div className="space-y-1.5">
-                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Category</label>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-400 dark:text-zinc-600 uppercase tracking-widest ml-1">Category</label>
                                     <select 
-                                        className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-blue-500 focus:bg-white font-bold text-slate-700 transition-colors shadow-sm"
+                                        className="w-full px-5 py-4 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl outline-none focus:border-orange-500 dark:focus:border-orange-500 focus:bg-white dark:focus:bg-zinc-900 font-bold text-slate-900 dark:text-white transition-all shadow-sm appearance-none cursor-pointer"
                                         value={category}
                                         onChange={(e) => setCategory(e.target.value)}
                                     >
@@ -120,10 +124,10 @@ export default function TenantRequests() {
                                         <option value="Other">Other</option>
                                     </select>
                                 </div>
-                                <div className="space-y-1.5">
-                                    <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Priority</label>
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-400 dark:text-zinc-600 uppercase tracking-widest ml-1">Priority</label>
                                     <select 
-                                        className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-blue-500 focus:bg-white font-bold text-slate-700 transition-colors shadow-sm"
+                                        className="w-full px-5 py-4 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl outline-none focus:border-orange-500 dark:focus:border-orange-500 focus:bg-white dark:focus:bg-zinc-900 font-bold text-slate-900 dark:text-white transition-all shadow-sm appearance-none cursor-pointer"
                                         value={priority}
                                         onChange={(e) => setPriority(e.target.value)}
                                     >
@@ -135,13 +139,13 @@ export default function TenantRequests() {
                                 </div>
                             </div>
 
-                            <div className="space-y-1.5">
-                                <label className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Detailed Description</label>
+                            <div className="space-y-2">
+                                <label className="text-[10px] font-black text-slate-400 dark:text-zinc-600 uppercase tracking-widest ml-1">Detailed Description</label>
                                 <textarea 
                                     required
                                     rows={4}
                                     placeholder="Describe the problem, when it started, and any other relevant details..."
-                                    className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-blue-500 focus:bg-white font-medium text-slate-700 transition-colors shadow-sm resize-none placeholder:text-slate-400"
+                                    className="w-full px-5 py-4 bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl outline-none focus:border-orange-500 dark:focus:border-orange-500 focus:bg-white dark:focus:bg-zinc-900 font-medium text-slate-900 dark:text-white transition-all shadow-sm resize-none placeholder:text-slate-400 dark:placeholder:text-zinc-600"
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
                                 />
@@ -150,7 +154,7 @@ export default function TenantRequests() {
                             <button 
                                 type="submit" 
                                 disabled={isSubmitting}
-                                className="w-full py-3.5 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-500 hover:shadow-lg hover:shadow-blue-500/30 transition-all disabled:opacity-50 mt-2"
+                                className="w-full py-4.5 bg-orange-600 text-white font-black rounded-2xl hover:bg-orange-500 hover:shadow-lg hover:shadow-orange-500/30 transition-all disabled:opacity-50 mt-2 uppercase text-xs tracking-[0.2em] shadow-xl shadow-orange-500/20 active:scale-95"
                             >
                                 {isSubmitting ? 'Submitting...' : 'Submit Request'}
                             </button>
@@ -159,65 +163,67 @@ export default function TenantRequests() {
                 </div>
 
                 {/* Right Column: Request History */}
-                <div className="lg:col-span-2 space-y-4">
-                    <h2 className="text-xl font-black text-slate-900 tracking-tight mb-6">Your Previous Requests</h2>
+                <div className="lg:col-span-2 space-y-6">
+                    <h2 className="text-xl font-black text-slate-900 dark:text-white tracking-tight mb-8 ml-2">Previous Requests</h2>
                     
                     {isLoading ? (
-                        <div className="p-12 text-center bg-white rounded-3xl border border-slate-200/50">
-                            <div className="inline-block w-8 h-8 border-4 border-blue-600/20 border-t-blue-600 rounded-full animate-spin"></div>
-                            <p className="mt-4 font-bold text-slate-400 text-sm">Loading your requests...</p>
+                        <div className="p-20 text-center bg-white dark:bg-[#0a0a0a] rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 shadow-xl transition-colors duration-500">
+                            <div className="inline-block w-8 h-8 border-4 border-orange-600/20 border-t-orange-600 rounded-full animate-spin"></div>
+                            <p className="mt-4 font-black text-slate-400 dark:text-zinc-500 text-xs uppercase tracking-widest">Loading records...</p>
                         </div>
                     ) : requests.length === 0 ? (
-                        <div className="p-16 text-center bg-white rounded-3xl border border-slate-200/60 shadow-sm flex flex-col items-center">
-                            <div className="w-16 h-16 bg-slate-50 pt-2 rounded-full flex items-center justify-center mb-4 border border-slate-100">
-                                <span className="text-3xl">🛠️</span>
+                        <div className="p-20 text-center bg-white dark:bg-[#0a0a0a] rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 shadow-xl flex flex-col items-center transition-colors duration-500">
+                            <div className="w-20 h-20 bg-slate-50 dark:bg-zinc-900/50 rounded-3xl flex items-center justify-center mb-6 border border-slate-100 dark:border-zinc-800">
+                                <span className="text-4xl">🛠️</span>
                             </div>
-                            <h3 className="text-lg font-black text-slate-800">No requests yet</h3>
-                            <p className="text-slate-500 font-medium text-sm mt-1 max-w-sm">You haven't submitted any maintenance requests yet. Use the form on the left if you encounter any issues.</p>
+                            <h3 className="text-xl font-black text-slate-900 dark:text-white tracking-tight transition-colors duration-500">No requests yet</h3>
+                            <p className="text-slate-500 dark:text-zinc-400 font-medium text-sm mt-3 max-w-sm transition-colors duration-500">You haven't submitted any maintenance requests yet. Use the form on the left if you encounter any issues.</p>
                         </div>
                     ) : (
-                        <div className="space-y-4">
+                        <div className="space-y-6">
                             {requests.map(req => (
-                                <div key={req.id} className="bg-white p-6 rounded-3xl border border-slate-200/60 shadow-[0_4px_20px_rgb(0,0,0,0.03)] hover:-translate-y-1 hover:shadow-[0_8px_30px_rgb(37,99,235,0.08)] transition-all duration-300 group">
-                                    <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3 mb-4 border-b border-slate-50 pb-4">
-                                        <div className="flex gap-2 items-center">
-                                            <span className="text-xs font-black text-slate-400 bg-slate-100 px-2 py-1 rounded-lg">#{req.id}</span>
-                                            <span className={`px-3 py-1 rounded-xl text-[10px] font-black tracking-widest uppercase border ${getStatusBadge(req.status)}`}>
+                                <div key={req.id} className="bg-white dark:bg-[#0a0a0a] p-8 rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 shadow-xl dark:shadow-2xl hover:border-slate-300 dark:hover:border-zinc-700 transition-all duration-300 group relative overflow-hidden">
+                                    <div className="absolute inset-0 bg-linear-to-br from-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                    
+                                    <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4 mb-6 border-b border-slate-50 dark:border-zinc-900/50 pb-6 relative z-10">
+                                        <div className="flex gap-3 items-center">
+                                            <span className="text-[10px] font-black text-slate-500 dark:text-zinc-500 bg-slate-100 dark:bg-zinc-900 pt-1.5 pb-1 px-3 rounded-lg border border-slate-200 dark:border-zinc-800 uppercase tracking-widest">#{req.id}</span>
+                                            <span className={`px-4 py-1.5 rounded-xl text-[10px] font-black tracking-widest uppercase border transition-all duration-300 ${getStatusBadge(req.status)}`}>
                                                 {req.status}
                                             </span>
                                         </div>
-                                        <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider bg-slate-50 px-3 py-1.5 rounded-xl self-start sm:self-auto border border-slate-100">
-                                            {new Date(req.created_at).toLocaleString(undefined, {
-                                                month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit'
-                                            })}
+                                        <span className="text-[11px] font-bold text-slate-500 dark:text-zinc-500 uppercase tracking-wider bg-slate-50 dark:bg-zinc-900/50 px-4 py-2 rounded-xl self-start sm:self-auto border border-slate-100 dark:border-zinc-800 transition-colors duration-500">
+                                            {new Date(req.created_at).toLocaleString([], {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'})}
                                         </span>
                                     </div>
                                     
-                                    <div className="flex flex-col md:flex-row gap-6">
-                                        <div className="flex-1">
-                                            <h3 className="text-lg font-black text-slate-900 group-hover:text-blue-600 transition-colors leading-tight mb-2">{req.title}</h3>
-                                            <div className="flex items-center gap-3 mb-4">
-                                                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest bg-slate-100 px-2 py-1 rounded-lg">{req.category}</span>
-                                                <span className="text-[10px] font-black text-slate-500 uppercase tracking-widest bg-slate-100 px-2 py-1 rounded-lg">{req.priority} Priority</span>
+                                    <div className="flex flex-col lg:flex-row gap-10 relative z-10">
+                                        <div className="flex-1 min-w-0">
+                                            <h3 className="text-xl font-black text-slate-900 dark:text-white group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors leading-tight mb-3 truncate">{req.title}</h3>
+                                            <div className="flex items-center gap-3 mb-6">
+                                                <span className="text-[10px] font-black text-slate-500 dark:text-zinc-400 uppercase tracking-widest bg-slate-50 dark:bg-zinc-900/30 px-3 py-1.5 rounded-xl border border-slate-100 dark:border-zinc-800 transition-colors duration-500">{req.category}</span>
+                                                <span className="text-[10px] font-black text-slate-500 dark:text-zinc-400 uppercase tracking-widest bg-slate-50 dark:bg-zinc-900/30 px-3 py-1.5 rounded-xl border border-slate-100 dark:border-zinc-800 transition-colors duration-500">{req.priority} Priority</span>
                                             </div>
-                                            <p className="text-slate-600 text-sm leading-relaxed font-medium bg-slate-50 p-4 rounded-2xl border border-slate-100">
-                                                {req.description}
-                                            </p>
+                                            <div className="bg-slate-50 dark:bg-[#0d0d0d]/60 p-6 rounded-3xl border border-slate-100 dark:border-zinc-800 shadow-inner min-h-[80px] transition-colors duration-500">
+                                                <p className="text-slate-600 dark:text-zinc-400 text-sm leading-relaxed font-medium">
+                                                    {req.description}
+                                                </p>
+                                            </div>
                                         </div>
                                         
                                         {(req.admin_notes || req.status !== 'Pending') && (
-                                            <div className="w-full md:w-64 shrink-0 bg-blue-50/50 p-4 rounded-2xl border border-blue-100 relative overflow-hidden">
-                                                <div className="absolute top-0 right-0 w-16 h-16 bg-blue-500 opacity-5 rounded-full blur-[20px]"></div>
+                                            <div className="w-full lg:w-72 shrink-0 bg-orange-50/30 dark:bg-orange-500/5 p-6 rounded-3xl border border-orange-100/50 dark:border-orange-500/10 relative overflow-hidden transition-all duration-500">
+                                                <div className="absolute top-0 right-0 w-24 h-24 bg-orange-500/10 dark:bg-orange-500/10 rounded-full blur-[30px]"></div>
                                                 <div className="relative z-10">
-                                                    <h4 className="text-[10px] font-black text-blue-800 uppercase tracking-widest flex items-center gap-1.5 mb-2">
-                                                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                                        Admin Updates
+                                                    <h4 className="text-[10px] font-black text-orange-800 dark:text-orange-400 uppercase tracking-[0.2em] flex items-center gap-2 mb-4">
+                                                        <div className="w-2 h-2 rounded-full bg-orange-500 animate-pulse shadow-[0_0_8px_rgba(249,115,22,0.5)]"></div>
+                                                        Resolution Feed
                                                     </h4>
-                                                    <p className="text-xs text-blue-900 font-medium leading-relaxed">
+                                                    <p className="text-sm text-orange-900/80 dark:text-orange-300/80 font-medium leading-relaxed">
                                                         {req.admin_notes ? req.admin_notes : 
-                                                            req.status === 'Resolved' ? "Issue has been marked as resolved." :
-                                                            req.status === 'In Progress' ? "Staff are currently working on this request." :
-                                                            "Request is being reviewed."
+                                                            req.status === 'Resolved' ? "This issue has been successfully resolved and closed." :
+                                                            req.status === 'In Progress' ? "Technical staff have been dispatched and are currently resolving the issue." :
+                                                            "Your request has been received and is currently under review by the administration."
                                                         }
                                                     </p>
                                                 </div>
