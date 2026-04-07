@@ -6,16 +6,15 @@ const pool = new Pool({
     database: 'rentFlow_db',          
     password: 'codecrizzz',   
     port: 5432,
-    
     options: '-c search_path="rentFlow_schema"' 
 });
 
 pool.on('connect', () => {
-    console.log('✅ Connected to PostgreSQL Database (Schema: rentFlow_schema)');
+    console.log('Connected to PostgreSQL Database (Schema: rentFlow_schema)');
 });
 
 pool.on('error', (err) => {
-    console.error('❌ Unexpected error on idle client', err);
+    console.error('Unexpected error', err);
     process.exit(-1);
 });
 

@@ -3,9 +3,15 @@
 import * as React from "react";
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import { usePathname } from "next/navigation";
 
 export function ThemeToggle() {
   const { setTheme, theme } = useTheme();
+  const pathname = usePathname();
+
+  const isAuthPage = pathname === "/login" || pathname === "/signup";
+
+  if (isAuthPage) return null;
 
   return (
     <button

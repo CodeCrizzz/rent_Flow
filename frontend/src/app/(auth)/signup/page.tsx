@@ -15,7 +15,6 @@ export default function SignupPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
     const [isMounted, setIsMounted] = useState(false);
-
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -71,7 +70,7 @@ export default function SignupPage() {
                     </div>
                 </div>
 
-                {/* RIGHT SIDE OF CARD: Signup Form (Dark Mode) */}
+                {/* RIGHT SIDE Signup Form */}
                 <div className={`md:w-7/12 p-10 lg:p-14 bg-zinc-950 flex flex-col justify-center transition-all duration-1000 delay-500 ${isMounted ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
                     <div className="mb-8">
                         <h2 className="text-3xl font-bold text-white tracking-tight mb-2">Create an account</h2>
