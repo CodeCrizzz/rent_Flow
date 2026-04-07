@@ -59,40 +59,22 @@ export default function TenantPayments() {
         const fetchPaymentData = async () => {
             try {
                 const [billResponse, paymentsResponse] = await Promise.all([
-                    api.get('/tenant/bill/current'), 
-                    api.get('/tenant/payments')
+                    // If this fails, return an object that matches your expected data structure
+                    api.get('/tenant/bill/current').catch(err => {
+                        console.warn("Current Bill endpoint not found (404)");
+                        return { data: defaultBill }; 
+                    }),
+                    // If this fails, return an empty array
+                    api.get('/tenant/payments').catch(err => {
+                        console.warn("Payments history endpoint not found (404)");
+                        return { data: [] };
+                    })
                 ]);
                 
-                // Calculate Dynamic Due Date based on Account Creation
-                let dynamicDueDate = billResponse.data?.dueDate || new Date().toISOString();
-                let accountCreationDay = 1;
-
-                if (typeof window !== 'undefined') {
-                    const userStr = localStorage.getItem('user');
-                    if (userStr) {
-                        const user = JSON.parse(userStr);
-                        if (user.createdAt) {
-                            dynamicDueDate = calculateNextDueDate(user.createdAt);
-                            accountCreationDay = new Date(user.createdAt).getDate();
-                        }
-                    }
-                }
-                
-                if (billResponse.data) {
-                    setCurrentBill({
-                        ...billResponse.data,
-                        dueDate: dynamicDueDate,
-                        creationDay: accountCreationDay
-                    });
-                    setPayAmount(billResponse.data.remainingBalance?.toString() || "0");
-                }
-
-                if (paymentsResponse.data) {
-                    setPayments(paymentsResponse.data);
-                }
-                
+                setCurrentBill(billResponse.data);
+                setPayments(paymentsResponse.data);
             } catch (error) {
-                console.error("Failed to fetch payment data:", error);
+                console.error("Critical error fetching data:", error);
             } finally {
                 setIsLoading(false);
             }
@@ -135,14 +117,29 @@ export default function TenantPayments() {
         }
     };
 
+    // --- SMOOTH CUSTOM ANIMATIONS ---
     const containerVariants: Variants = {
         hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
+        visible: { 
+            opacity: 1, 
+            transition: { 
+                staggerChildren: 0.12, // Slightly smoother stagger pacing
+                delayChildren: 0.1 
+            } 
+        }
     };
 
     const itemVariants: Variants = {
-        hidden: { opacity: 0, y: 20, filter: "blur(10px)" },
-        visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { type: "spring", stiffness: 300, damping: 24 } }
+        hidden: { opacity: 0, y: 30, filter: "blur(15px)" },
+        visible: { 
+            opacity: 1, 
+            y: 0, 
+            filter: "blur(0px)", 
+            transition: { 
+                duration: 0.8, // Extended duration for an elegant slide
+                ease: [0.16, 1, 0.3, 1] // Custom butter-smooth deceleration curve
+            } 
+        }
     };
 
     return (
@@ -400,15 +397,16 @@ export default function TenantPayments() {
                     <>
                         <motion.div 
                             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} 
+                            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
                             className="fixed inset-0 bg-neutral-900/40 dark:bg-black/60 backdrop-blur-sm z-40"
                             onClick={() => setIsPaymentModalOpen(false)}
                         />
                         <div className="fixed inset-0 flex items-center justify-center p-4 z-50 pointer-events-none">
                             <motion.div 
-                                initial={{ opacity: 0, scale: 0.95, y: 20 }} 
+                                initial={{ opacity: 0, scale: 0.95, y: 30 }} 
                                 animate={{ opacity: 1, scale: 1, y: 0 }} 
                                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
                                 className="w-full max-w-lg bg-white dark:bg-[#18181B] rounded-[2rem] shadow-2xl border border-neutral-200 dark:border-white/10 overflow-hidden pointer-events-auto flex flex-col max-h-[90vh]"
                             >
                                 <div className="p-6 sm:p-8 border-b border-neutral-100 dark:border-white/5 flex justify-between items-center bg-neutral-50/50 dark:bg-white/[0.02]">

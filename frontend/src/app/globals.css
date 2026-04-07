@@ -39,3 +39,11 @@ body {
 .dark .custom-scrollbar::-webkit-scrollbar-thumb {
   background: rgba(82, 82, 91, 0.5);
 }
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

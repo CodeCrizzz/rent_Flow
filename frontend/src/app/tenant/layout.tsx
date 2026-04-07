@@ -73,7 +73,7 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
                                 <motion.div 
                                     whileHover={{ x: 5, scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
-                                    className={`flex items-center gap-3 px-4 py-4 rounded-2xl text-sm font-bold transition-all duration-300 relative ${isActive ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-slate-900 dark:text-white shadow-[0_0_15px_rgba(79,70,229,0.2)] dark:shadow-[0_0_20px_rgba(79,70,229,0.3)]' : 'text-slate-600 dark:text-zinc-500 hover:bg-slate-100 dark:hover:bg-slate-50 dark:bg-zinc-900/50 hover:text-slate-900 dark:hover:text-zinc-300'}`}
+                                    className={`flex items-center gap-3 px-4 py-4 rounded-2xl text-sm font-bold transition-all duration-300 relative ${isActive ? 'bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-[0_0_15px_rgba(79,70,229,0.2)] dark:shadow-[0_0_20px_rgba(79,70,229,0.3)]' : 'text-slate-600 dark:text-zinc-500 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white'}`}
                                 >
                                     <svg className={`w-5 h-5 ${isActive ? 'text-slate-900 dark:text-white' : 'text-slate-400 dark:text-zinc-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={item.icon}></path></svg>
                                     <span className="flex-1">{item.name}</span>
@@ -109,7 +109,7 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
             </aside>
 
             <main className="flex-1 flex flex-col relative h-screen overflow-hidden">
-                <div className="flex-1 overflow-y-auto p-6 md:p-10 lg:p-14 relative z-0 scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-bg-slate-100 dark:bg-[#050505] scrollbar-track-transparent">
+                <div className={`flex-1 overflow-y-auto p-6 md:p-10 lg:p-14 relative z-0 dark:bg-[#050505] scrollbar-track-transparent ${pathname === '/tenant/profile' ? 'no-scrollbar' : 'scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-bg-slate-100'}`}>
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={pathname}
