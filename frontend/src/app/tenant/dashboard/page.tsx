@@ -7,9 +7,13 @@ export default function TenantDashboard() {
     const [tenantData, setTenantData] = useState<{
         balanceDue: number;
         recentTransactions: any[];
+        status: string;
+        roomNumber: string | null;
     }>({
         balanceDue: 0,
-        recentTransactions: []
+        recentTransactions: [],
+        status: 'Pending',
+        roomNumber: null
     });
     
     const [userName, setUserName] = useState('');
@@ -26,6 +30,29 @@ export default function TenantDashboard() {
             const userStr = localStorage.getItem('user');
             if (userStr) setUserName(JSON.parse(userStr).name);
         }
+
+        const fetchDashboardData = async () => {
+            try {
+                const { data } = await api.get('/tenant/dashboard');
+                setTenantData({
+                    balanceDue: parseFloat(data.balanceDue) || 0,
+                    status: data.status || 'Pending',
+                    roomNumber: data.roomNumber,
+                    recentTransactions: data.recentTransactions.map((tx: any) => ({
+                        id: tx.id,
+                        type: tx.amount_paid ? 'payment' : 'charge',
+                        description: tx.billing_month ? `${tx.billing_month} Bill` : 'Payment Received',
+                        date: (tx.payment_date || tx.created_at) ? new Date(tx.payment_date || tx.created_at).toLocaleDateString() : 'N/A',
+                        amount: parseFloat(tx.amount_paid || tx.total_amount),
+                        status: tx.status
+                    }))
+                });
+            } catch (error) {
+                console.error("Failed to fetch dashboard data:", error);
+            }
+        };
+
+        fetchDashboardData();
         
         return () => clearTimeout(timer);
     }, []);
@@ -159,10 +186,12 @@ export default function TenantDashboard() {
                             </div>
                             <div className="relative z-10">
                                 <div className="flex items-center gap-2 mb-1">
-                                    <span className="w-2.5 h-2.5 rounded-full bg-orange-500 shadow-[0_0_12px_rgba(249,115,22,0.8)] animate-pulse"></span>
-                                    <p className="text-2xl font-bold">Pending</p>
+                                    <span className={`w-2.5 h-2.5 rounded-full shadow-[0_0_12px_rgba(249,115,22,0.8)] animate-pulse ${tenantData.status === 'Active' ? 'bg-emerald-500' : 'bg-orange-500'}`}></span>
+                                    <p className="text-2xl font-bold">{tenantData.status || 'Pending'}</p>
                                 </div>
-                                <p className="text-sm font-medium text-neutral-500 dark:text-neutral-400">Awaiting room assignment.</p>
+                                <p className="text-sm font-medium text-neutral-500 dark:text-neutral-400">
+                                    {tenantData.roomNumber ? `Assigned to Room ${tenantData.roomNumber}` : 'Awaiting room assignment.'}
+                                </p>
                             </div>
                         </div>
 

@@ -144,8 +144,8 @@ export default function TenantRequests() {
     return (
         <div className="w-full h-[calc(100vh-2rem)] text-neutral-900 dark:text-neutral-100 font-sans flex flex-col bg-transparent relative overflow-hidden [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             
-            <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-indigo-400/20 dark:bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none -z-10 mix-blend-multiply dark:hidden"></div>
-            <div className="fixed bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-400/20 dark:bg-purple-500/10 rounded-full blur-[100px] pointer-events-none -z-10 mix-blend-multiply dark:hidden"></div>
+            <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-indigo-400/20 dark:bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none -z-10 mix-blend-multiply dark:mix-blend-screen"></div>
+            <div className="fixed bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-400/20 dark:bg-purple-500/10 rounded-full blur-[100px] pointer-events-none -z-10 mix-blend-multiply dark:mix-blend-screen"></div>
 
             <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-6xl mx-auto w-full flex flex-col h-full space-y-6 pt-6 px-4 sm:px-6 lg:px-8 pb-4 relative z-10">
                 

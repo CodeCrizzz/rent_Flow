@@ -105,38 +105,21 @@ export default function AdminTenants() {
         init();
     }, []);
 
-    const handleOpenModal = (tenant?: Tenant, intention: 'approve' | 'edit' = 'edit') => {
-        if (tenant) {
-            setEditingTenant(tenant);
-            setFormData({
-                name: tenant.name,
-                email: tenant.email,
-                phone: tenant.phone || '',
-                password: '', 
-                room_id: tenant.room_id?.toString() ?? '',
-                address: tenant.address || '',
-                gender: tenant.gender || '',
-                monthly_rent: tenant.monthly_rent?.toString() || '',
-                date_moved_in: tenant.date_moved_in || '',
-                contract_end_date: tenant.contract_end_date || '',
-                status: intention === 'approve' ? 'Active' : tenant.status
-            });
-        } else {
-            setEditingTenant(null);
-            setFormData({
-                name: '',
-                email: '',
-                phone: '',
-                password: '',
-                room_id: '',
-                address: '',
-                gender: '',
-                monthly_rent: '',
-                date_moved_in: '',
-                contract_end_date: '',
-                status: 'Pending'
-            });
-        }
+    const handleOpenModal = (tenant: Tenant, intention: 'approve' | 'edit' = 'edit') => {
+        setEditingTenant(tenant);
+        setFormData({
+            name: tenant.name,
+            email: tenant.email,
+            phone: tenant.phone || '',
+            password: '', 
+            room_id: tenant.room_id?.toString() ?? '',
+            address: tenant.address || '',
+            gender: tenant.gender || '',
+            monthly_rent: tenant.monthly_rent?.toString() || '',
+            date_moved_in: tenant.date_moved_in || '',
+            contract_end_date: tenant.contract_end_date || '',
+            status: intention === 'approve' ? 'Active' : tenant.status
+        });
         setIsModalOpen(true);
     };
 
@@ -148,8 +131,6 @@ export default function AdminTenants() {
         try {
             if (editingTenant) {
                 await api.put(`/admin/tenants/${editingTenant.id}`, formData);
-            } else {
-                await api.post('/admin/tenants', formData);
             }
             setIsModalOpen(false);
             fetchTenants(); 
@@ -243,10 +224,6 @@ export default function AdminTenants() {
                         />
                         <svg className="w-5 h-5 text-slate-500 dark:text-zinc-500 absolute left-4 top-3.5 group-focus-within:text-[#5b21b6] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     </div>
-                    <button onClick={() => handleOpenModal()} className="px-6 py-3.5 bg-[#5b21b6] text-white font-bold rounded-xl hover:bg-[#4c1d95] transition-all shadow-[0_0_20px_rgba(91,33,182,0.4)] text-sm flex items-center justify-center gap-2 group w-full sm:w-auto">
-                        <svg className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 4v16m8-8H4"></path></svg>
-                        Add Resident
-                    </button>
                 </div>
             </div>
 
@@ -262,7 +239,7 @@ export default function AdminTenants() {
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-60 flex items-center justify-center p-4 animate-in fade-in duration-300">
                     <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 w-full max-w-lg overflow-hidden animate-in zoom-in-95 duration-300">
                         <div className="p-8 border-b border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50 flex justify-between items-center">
-                            <h2 className="text-2xl font-black text-slate-900 dark:text-white">{editingTenant ? 'Edit Resident' : 'Add New Resident'}</h2>
+                            <h2 className="text-2xl font-black text-slate-900 dark:text-white">Edit Resident</h2>
                             <button onClick={() => setIsModalOpen(false)} className="w-10 h-10 rounded-xl hover:bg-slate-200 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
@@ -282,12 +259,6 @@ export default function AdminTenants() {
                                     <input type="text" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="+63 000 000 0000" />
                                 </div>
                             </div>
-                            {!editingTenant && (
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Account Password</label>
-                                    <input required type="password" value={formData.password} onChange={e => setFormData({...formData, password: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="••••••••" />
-                                </div>
-                            )}
                             <div className="grid grid-cols-2 gap-6 mt-4">
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Gender</label>
@@ -355,7 +326,7 @@ export default function AdminTenants() {
                                     {isSubmitting ? (
                                         <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
                                     ) : (
-                                        editingTenant ? 'Update Records' : 'Register Resident'
+                                        'Update Records'
                                     )}
                                 </button>
                             </div>

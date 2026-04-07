@@ -7,11 +7,12 @@ const createRequest = async (req, res) => {
     try {
         const tenant_id = req.user.id;
         const { title, description, category, priority } = req.body;
+        const attachment_url = req.file ? `/uploads/${req.file.filename}` : null;
 
         const newRequest = await db.query(
-            `INSERT INTO requests (tenant_id, title, description, category, priority) 
-             VALUES ($1, $2, $3, $4, $5) RETURNING *`,
-            [tenant_id, title, description, category || 'Other', priority || 'Normal']
+            `INSERT INTO requests (tenant_id, title, description, category, priority, attachment_url) 
+             VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`,
+            [tenant_id, title, description, category || 'Other', priority || 'Normal', attachment_url]
         );
 
         res.status(201).json({ message: 'Request submitted successfully', request: newRequest.rows[0] });
@@ -89,9 +90,45 @@ const updateRequest = async (req, res) => {
     }
 };
 
+// @desc    Cancel a maintenance request
+// @route   PUT /api/requests/:id/cancel
+// @access  Tenant
+const cancelRequest = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const tenant_id = req.user.id;
+
+        // Check if the request exists and belongs to the tenant
+        const checkResult = await db.query(
+            "SELECT * FROM requests WHERE id = $1 AND tenant_id = $2",
+            [id, tenant_id]
+        );
+
+        if (checkResult.rows.length === 0) {
+            return res.status(404).json({ message: 'Request not found or not authorized' });
+        }
+
+        const request = checkResult.rows[0];
+        if (request.status !== 'Pending') {
+            return res.status(400).json({ message: 'Only pending requests can be cancelled' });
+        }
+
+        const updatedRequest = await db.query(
+            "UPDATE requests SET status = 'Cancelled' WHERE id = $1 RETURNING *",
+            [id]
+        );
+
+        res.status(200).json({ message: 'Request cancelled successfully', request: updatedRequest.rows[0] });
+    } catch (error) {
+        console.error('Error cancelling request:', error);
+        res.status(500).json({ message: 'Server error while cancelling request' });
+    }
+};
+
 module.exports = {
     createRequest,
     getMyRequests,
     getAllRequests,
-    updateRequest
+    updateRequest,
+    cancelRequest
 };

@@ -155,7 +155,7 @@ export default function TenantProfile() {
     return (
         /* --- FIXED VIEWPORT BREAKOUT --- */
         /* This eliminates the layout borders and completely takes over the screen */
-        <div className="fixed inset-0 md:pl-[280px] z-[50] overflow-y-auto overflow-x-hidden bg-slate-50 dark:bg-[#020617] text-neutral-900 dark:text-neutral-100 font-sans transition-colors duration-500">
+        <div className="fixed inset-0 md:pl-[280px] z-[50] overflow-y-auto overflow-x-hidden bg-slate-50 dark:bg-[#050505] text-neutral-900 dark:text-neutral-100 font-sans transition-colors duration-500">
             
             {/* Custom Animations & Texture */}
             <style>{`
@@ -168,11 +168,8 @@ export default function TenantProfile() {
             `}</style>
 
             {/* Ambient Background Glows */}
-            <div className="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 overflow-hidden">
-                <div className="absolute top-[10%] left-[10%] w-[500px] h-[500px] bg-blue-500/10 dark:bg-blue-500/10 rounded-full blur-[120px]"></div>
-                <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-cyan-500/10 dark:bg-cyan-500/10 rounded-full blur-[100px]"></div>
-                <div className="absolute top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-indigo-500/5 dark:bg-indigo-500/5 rounded-full blur-[150px]"></div>
-            </div>
+            <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-indigo-400/20 dark:bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none -z-10 mix-blend-multiply dark:mix-blend-screen"></div>
+            <div className="fixed bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-400/20 dark:bg-purple-500/10 rounded-full blur-[100px] pointer-events-none -z-10 mix-blend-multiply dark:mix-blend-screen"></div>
 
             {/* --- PERFECT CENTERING WRAPPER --- */}
             <div className="flex min-h-screen w-full flex-col items-center justify-center p-4 sm:p-8">

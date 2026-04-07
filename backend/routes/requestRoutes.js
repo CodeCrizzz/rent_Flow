@@ -5,15 +5,20 @@ const {
     createRequest, 
     getMyRequests, 
     getAllRequests, 
-    updateRequest 
+    updateRequest,
+    cancelRequest
 } = require('../controllers/requestController');
+
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 // All request routes require authentication
 router.use(protect);
 
 // Tenant Routes
-router.post('/', createRequest);
+router.post('/', upload.single('attachment'), createRequest);
 router.get('/my-requests', getMyRequests);
+router.put('/:id/cancel', cancelRequest);
 
 // Admin Routes
 router.get('/', getAllRequests);

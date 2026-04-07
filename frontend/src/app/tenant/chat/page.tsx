@@ -97,7 +97,7 @@ export default function TenantChat() {
 
     return (
         /* --- FULL VIEWPORT GLASSMORPHISM CONTAINER --- */
-        <div className="fixed inset-0 md:pl-[280px] z-[50] flex flex-col bg-slate-50 dark:bg-[#020617] text-neutral-900 dark:text-neutral-100 font-sans transition-colors duration-500">
+        <div className="fixed inset-0 md:pl-[280px] z-[50] flex flex-col bg-slate-50 dark:bg-[#050505] text-neutral-900 dark:text-neutral-100 font-sans transition-colors duration-500">
             
             {/* Custom Texture */}
             <style>{`
@@ -112,10 +112,8 @@ export default function TenantChat() {
             `}</style>
 
             {/* Ambient Background Glows */}
-            <div className="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 overflow-hidden">
-                <div className="absolute top-[-10%] left-[-5%] w-[600px] h-[600px] bg-blue-500/10 dark:bg-blue-600/10 rounded-full blur-[120px]"></div>
-                <div className="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] bg-cyan-500/10 dark:bg-cyan-500/10 rounded-full blur-[120px]"></div>
-            </div>
+            <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-indigo-400/20 dark:bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none -z-10 mix-blend-multiply dark:mix-blend-screen"></div>
+            <div className="fixed bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-400/20 dark:bg-purple-500/10 rounded-full blur-[100px] pointer-events-none -z-10 mix-blend-multiply dark:mix-blend-screen"></div>
 
             {/* ---> MAIN CHAT CONTAINER WITH PAGE TRANSITION <--- */}
             <motion.div 

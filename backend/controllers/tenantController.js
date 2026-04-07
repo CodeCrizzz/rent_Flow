@@ -5,6 +5,13 @@ const getTenantDashboard = async (req, res) => {
     const tenantId = req.user.id; // Extracted from the JWT token!
 
     try {
+        // Get tenant's current status and room
+        const userResult = await db.query(
+            "SELECT u.status, r.room_number FROM users u LEFT JOIN rooms r ON u.room_id = r.id WHERE u.id = $1",
+            [tenantId]
+        );
+        const user = userResult.rows[0];
+
         // Get total pending balance for THIS specific tenant
         const balanceResult = await db.query(
             "SELECT SUM(balance) FROM bills WHERE tenant_id = $1 AND status != 'Paid'", 
@@ -12,12 +19,15 @@ const getTenantDashboard = async (req, res) => {
         );
 
         // Get recent payment history
+        // Modified to handle both charges (bills) and payments if needed, but for now focusing on bills/payments joined
         const historyResult = await db.query(
             "SELECT p.*, b.billing_month FROM payments p JOIN bills b ON p.bill_id = b.id WHERE b.tenant_id = $1 ORDER BY p.payment_date DESC LIMIT 5",
             [tenantId]
         );
 
         res.status(200).json({
+            status: user.status,
+            roomNumber: user.room_number,
             balanceDue: balanceResult.rows[0].sum || 0,
             recentTransactions: historyResult.rows
         });
@@ -81,7 +91,7 @@ const getTenantPayments = async (req, res) => {
     const tenantId = req.user.id;
     try {
         const result = await db.query(
-            "SELECT id, due_date, billing_month || ' Bill' AS description, total_amount AS amount, LOWER(status) AS status FROM bills WHERE tenant_id = $1 ORDER BY due_date DESC",
+            "SELECT id, TO_CHAR(due_date, 'YYYY-MM-DD') AS date, billing_month || ' Bill' AS description, total_amount AS amount, LOWER(status) AS status FROM bills WHERE tenant_id = $1 ORDER BY due_date DESC",
             [tenantId]
         );
         res.status(200).json(result.rows);
@@ -154,7 +164,109 @@ const getUnreadCount = async (req, res) => {
     }
 };
 
+// Update Tenant Profile
+const updateTenantProfile = async (req, res) => {
+    const tenantId = req.user.id;
+    const { name, email, phone } = req.body;
+    try {
+        const result = await db.query(
+            "UPDATE users SET name = $1, email = $2, phone = $3 WHERE id = $4 RETURNING id, name, email, phone",
+            [name, email, phone, tenantId]
+        );
+        res.status(200).json({ message: 'Profile updated successfully', user: result.rows[0] });
+    } catch (error) {
+        console.error('Update Profile Error:', error);
+        res.status(500).json({ message: 'Server error updating profile' });
+    }
+};
+
+// Update Tenant Password
+const updateTenantPassword = async (req, res) => {
+    const tenantId = req.user.id;
+    const { currentPassword, newPassword } = req.body;
+    try {
+        const userResult = await db.query("SELECT password FROM users WHERE id = $1", [tenantId]);
+        const user = userResult.rows[0];
+
+        // Direct compare
+        if (currentPassword !== user.password) return res.status(401).json({ message: 'Incorrect current password' });
+
+        const hashedPassword = newPassword; // plain text
+
+        await db.query("UPDATE users SET password = $1 WHERE id = $2", [hashedPassword, tenantId]);
+        res.status(200).json({ message: 'Password updated successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error updating password' });
+    }
+};
+
+// Get Tenant's Current Bill
+const getCurrentBill = async (req, res) => {
+    const tenantId = req.user.id;
+    try {
+        const result = await db.query(
+            "SELECT id, billing_month, total_amount, amount_paid, balance, TO_CHAR(due_date, 'YYYY-MM-DD') AS due_date, status FROM bills WHERE tenant_id = $1 AND status != 'Paid' ORDER BY due_date ASC LIMIT 1",
+            [tenantId]
+        );
+
+        if (result.rows.length === 0) {
+            const now = new Date();
+            const currentMonthName = now.toLocaleString('default', { month: 'long', year: 'numeric' });
+            return res.status(200).json({
+                month: currentMonthName,
+                dueDate: null,
+                totalAmount: 0,
+                amountPaid: 0,
+                remainingBalance: 0,
+                status: "Clear",
+                createdAt: user.created_at,
+                creationDay: new Date(user.created_at).getDate()
+            });
+        }
+
+        const bill = result.rows[0];
+        // Map snake_case from DB to camelCase for the frontend page.tsx
+        res.status(200).json({
+            id: bill.id,
+            month: bill.billing_month,
+            totalAmount: parseFloat(bill.total_amount),
+            amountPaid: parseFloat(bill.amount_paid),
+            remainingBalance: parseFloat(bill.balance),
+            dueDate: bill.due_date,
+            status: bill.status,
+            breakdown: { 
+                rent: parseFloat(bill.total_amount), // Simplified for now
+                water: 0, 
+                electricity: 0, 
+                other: 0 
+            }
+        });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error fetching current bill' });
+    }
+};
+
+// Submit Proof of Payment
+const submitTenantPayment = async (req, res) => {
+    const tenantId = req.user.id;
+    const { bill_id, amount_paid, payment_method, notes } = req.body;
+    const proof_url = req.file ? `/uploads/${req.file.filename}` : null;
+    try {
+        const query = `
+            INSERT INTO payments (bill_id, amount_paid, payment_date, payment_method, notes, proof_url, status) 
+            VALUES ($1, $2, CURRENT_TIMESTAMP, $3, $4, $5, 'Pending Verification') 
+            RETURNING *
+        `;
+        const result = await db.query(query, [bill_id, amount_paid, payment_method, notes, proof_url]);
+        res.status(201).json({ message: 'Payment proof submitted for verification', payment: result.rows[0] });
+    } catch (error) {
+        console.error('Submit Payment Error:', error);
+        res.status(500).json({ message: 'Server error submitting payment proof' });
+    }
+};
+
 module.exports = { 
-    getTenantDashboard, getTenantProfile, submitRequest, 
-    getMyRequests, getTenantPayments, getTenantMessages, sendTenantMessage, getUnreadCount 
+    getTenantDashboard, getTenantProfile, updateTenantProfile, updateTenantPassword, 
+    submitRequest, getMyRequests, getTenantPayments, getCurrentBill, submitTenantPayment,
+    getTenantMessages, sendTenantMessage, getUnreadCount 
 };

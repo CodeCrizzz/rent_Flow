@@ -13,6 +13,14 @@ const getOrdinalSuffix = (i: number) => {
     return "th";
 };
 
+// Safe date formatter to prevent "Invalid Date"
+const formatDate = (dateString: string | null | undefined, options?: Intl.DateTimeFormatOptions) => {
+    if (!dateString) return "N/A";
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return "N/A";
+    return date.toLocaleDateString(undefined, options || { month: 'short', day: 'numeric', year: 'numeric' });
+};
+
 // Helper to calculate the next due date based on the account creation date
 const calculateNextDueDate = (createdAtStr: string) => {
     if (!createdAtStr) return new Date().toISOString();
@@ -38,12 +46,25 @@ const defaultBill = {
     remainingBalance: 0,
     status: "Loading",
     breakdown: { rent: 0, water: 0, electricity: 0, other: 0 },
-    creationDay: 1 // Default fallback
+    creationDay: 1,
+    createdAt: null
 };
+
+interface Bill {
+    month: string;
+    dueDate: string | null;
+    totalAmount: number;
+    amountPaid: number;
+    remainingBalance: number;
+    status: string;
+    breakdown?: { rent: number, water: number, electricity: number, other: number };
+    creationDay: number;
+    createdAt?: string | null;
+}
 
 export default function TenantPayments() {
     const [payments, setPayments] = useState<any[]>([]);
-    const [currentBill, setCurrentBill] = useState(defaultBill);
+    const [currentBill, setCurrentBill] = useState<Bill>(defaultBill);
     const [isLoading, setIsLoading] = useState(true);
 
     // Payment Modal State
@@ -71,7 +92,11 @@ export default function TenantPayments() {
                     })
                 ]);
                 
-                setCurrentBill(billResponse.data);
+                if (billResponse.data) {
+                    setCurrentBill(billResponse.data);
+                } else {
+                    setCurrentBill(defaultBill);
+                }
                 setPayments(paymentsResponse.data);
             } catch (error) {
                 console.error("Critical error fetching data:", error);
@@ -145,8 +170,8 @@ export default function TenantPayments() {
     return (
         <div className="w-full text-neutral-900 dark:text-neutral-100 font-sans flex flex-col pb-20 bg-transparent relative min-h-screen">
             
-            <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-indigo-400/20 rounded-full blur-[120px] pointer-events-none -z-10 mix-blend-multiply dark:hidden"></div>
-            <div className="fixed bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-400/20 rounded-full blur-[100px] pointer-events-none -z-10 mix-blend-multiply dark:hidden"></div>
+            <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-indigo-400/20 dark:bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none -z-10 mix-blend-multiply dark:mix-blend-screen"></div>
+            <div className="fixed bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-400/20 dark:bg-purple-500/10 rounded-full blur-[100px] pointer-events-none -z-10 mix-blend-multiply dark:mix-blend-screen"></div>
 
             <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-6xl mx-auto w-full space-y-8 pt-10 px-4 sm:px-6 lg:px-8 relative z-10">
                 
@@ -200,13 +225,13 @@ export default function TenantPayments() {
                             <div>
                                 <p className="text-xs font-semibold text-neutral-500 dark:text-neutral-400 mb-1">Remaining Balance</p>
                                 <p className="text-4xl sm:text-5xl font-black tracking-tighter text-indigo-600 dark:text-indigo-400 font-mono">
-                                    ₱{currentBill.remainingBalance.toLocaleString()}
+                                    ₱{(currentBill.remainingBalance || 0).toLocaleString()}
                                 </p>
                             </div>
                             <div>
                                 <p className="text-xs font-semibold text-neutral-500 dark:text-neutral-400 mb-1">Amount Paid</p>
                                 <p className="text-2xl sm:text-3xl font-bold tracking-tight text-neutral-900 dark:text-white font-mono mt-1">
-                                    ₱{currentBill.amountPaid.toLocaleString()}
+                                    ₱{(currentBill.amountPaid || 0).toLocaleString()}
                                 </p>
                             </div>
                         </div>
@@ -215,7 +240,7 @@ export default function TenantPayments() {
                             <div>
                                 <p className="text-xs font-medium text-neutral-500 dark:text-neutral-400">Due Date</p>
                                 <p className="text-sm font-bold text-neutral-900 dark:text-white">
-                                    {isLoading ? "..." : new Date(currentBill.dueDate).toLocaleDateString(undefined, { weekday: 'short', month: 'long', day: 'numeric', year: 'numeric' })}
+                                    {isLoading ? "..." : formatDate(currentBill.dueDate || calculateNextDueDate(currentBill.createdAt || ""), { weekday: 'short', month: 'long', day: 'numeric', year: 'numeric' })}
                                 </p>
                                 <p className="text-[10px] font-medium text-neutral-400 mt-1 max-w-[150px] leading-tight hidden sm:block">
                                     Cycle resets on the {currentBill.creationDay}{getOrdinalSuffix(currentBill.creationDay)} of every month.
@@ -334,7 +359,7 @@ export default function TenantPayments() {
 
                                                 <td className="px-8 py-6 align-middle">
                                                     <p className="font-bold text-sm text-neutral-900 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
-                                                        {new Date(p.date).toLocaleDateString(undefined, { month: 'short', day: '2-digit', year: 'numeric' })}
+                                                        {formatDate(p.date)}
                                                     </p>
                                                     <p className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 dark:text-neutral-500 mt-1">ID: #{p.id?.toString().padStart(5, '0')}</p>
                                                 </td>

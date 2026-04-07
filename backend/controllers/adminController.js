@@ -1,5 +1,4 @@
 const db = require('../config/db');
-const bcrypt = require('bcryptjs');
 
 // @desc    Get Admin Dashboard Statistics
 const getDashboardStats = async (req, res) => {
@@ -318,34 +317,6 @@ const getAllTenants = async (req, res) => {
     }
 };
 
-// @desc    Create a new Tenant (Admin Only)
-// @route   POST /api/admin/tenants
-const createTenant = async (req, res) => {
-    const { name, email, phone, password, room_id } = req.body;
-
-    try {
-        const userExists = await db.query('SELECT * FROM users WHERE email = $1', [email]);
-        if (userExists.rows.length > 0) {
-            return res.status(400).json({ message: 'User with this email already exists' });
-        }
-
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password || 'password123', salt);
-
-        const newUser = await db.query(
-            'INSERT INTO users (name, email, phone, password, role, room_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id, name, email, phone, room_id',
-            [name, email, phone, hashedPassword, 'tenant', room_id || null]
-        );
-
-        res.status(201).json({
-            message: 'Tenant created successfully',
-            tenant: newUser.rows[0]
-        });
-    } catch (error) {
-        console.error('Create Tenant Error:', error);
-        res.status(500).json({ message: 'Server error during tenant creation' });
-    }
-};
 
 // @desc    Update Tenant details or Status
 // @route   PUT /api/admin/tenants/:id
@@ -539,7 +510,6 @@ module.exports = {
     getAllRequests, 
     updateTenant, 
     deleteTenant,
-    createTenant,
     getConversations,
     getMessages,  
     sendMessage,

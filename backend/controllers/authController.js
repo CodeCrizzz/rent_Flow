@@ -1,4 +1,3 @@
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const db = require('../config/db');
 const { JWT_SECRET } = require('../middleware/authMiddleware');
@@ -15,9 +14,8 @@ const registerUser = async (req, res) => {
             return res.status(400).json({ message: 'User with this email already exists' });
         }
 
-        // Hash the password
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
+        // No hashing - storing plain text for now as requested
+        const hashedPassword = password; 
 
         // Insert user into database
         const roleToSet = role || 'tenant';
@@ -41,7 +39,7 @@ const registerUser = async (req, res) => {
 // @desc    Authenticate user & get token
 // @route   POST /api/auth/login
 const loginUser = async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, role } = req.body;
 
     try {
         // 1. Find the user by email
@@ -54,14 +52,21 @@ const loginUser = async (req, res) => {
 
         const user = result.rows[0];
 
-        // 2. Check if password matches
-        const isMatch = await bcrypt.compare(password, user.password);
+        // 2. Direct plain text compare
+        const isMatch = (password === user.password);
         if (!isMatch) {
-            // Keep 401 here for actual incorrect passwords
             return res.status(401).json({ message: 'Incorrect password' });
         }
 
-        // 3. New Requirement: Check if tenant is approved an prevent access if not
+        // 3. Role Validation: If the login request specifies a role (e.g., from Admin Login), verify it
+        if (role && user.role !== role) {
+            const errorMessage = role === 'admin' 
+                ? 'Access denied. This account does not have administrator privileges.' 
+                : 'Access denied. Please use the tenant login portal.';
+            return res.status(403).json({ message: errorMessage });
+        }
+
+        // 4. Check if tenant is approved and prevent access if not
         if (user.role === 'tenant') {
             if (user.status === 'Pending') {
                 return res.status(403).json({ message: 'Your account is pending admin approval' });

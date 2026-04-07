@@ -3,7 +3,7 @@ const router = express.Router();
 const { protect } = require('../middleware/authMiddleware');
 const { 
     getDashboardStats, getAllTenants, getAllRooms, getAllPayments, 
-    getAllRequests, updateTenant, deleteTenant, createTenant,
+    getAllRequests, updateTenant, deleteTenant,
     getConversations, getMessages, sendMessage, getUnreadCount,
     createRoom, updateRoom, deleteRoom
 } = require('../controllers/adminController');
@@ -22,7 +22,6 @@ router.use(adminOnly);
 router.get('/dashboard', getDashboardStats);
 
 router.get('/tenants', getAllTenants);
-router.post('/tenants', createTenant);
 router.put('/tenants/:id', updateTenant);
 router.delete('/tenants/:id', deleteTenant);
 
