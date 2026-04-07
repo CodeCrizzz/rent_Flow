@@ -89,20 +89,20 @@ export default function SignupPage() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                             {/* Full Name Input */}
                             <div className="sm:col-span-2">
-                                <label className="block text-sm font-bold text-zinc-300 mb-2">Full Legal Name</label>
-                                <input type="text" placeholder="John Doe" className="w-full bg-zinc-900/50 border border-white/5 text-white placeholder-zinc-600 px-5 py-4 rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setName(e.target.value)} required />
+                                <label className="block text-sm font-bold text-zinc-300 mb-2">Full Name</label>
+                                <input type="text" placeholder="Enter Full name" className="w-full bg-zinc-900/50 border border-white/5 text-white placeholder-zinc-600 px-5 py-4 rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setName(e.target.value)} required />
                             </div>
 
                             {/* Email Input */}
                             <div className="sm:col-span-1">
                                 <label className="block text-sm font-bold text-zinc-300 mb-2">Email Address</label>
-                                <input type="email" placeholder="name@example.com" className="w-full bg-zinc-900/50 border border-white/5 text-white placeholder-zinc-600 px-5 py-4 rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setEmail(e.target.value)} required />
+                                <input type="email" placeholder="ch*****45@gmail.com" className="w-full bg-zinc-900/50 border border-white/5 text-white placeholder-zinc-600 px-5 py-4 rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setEmail(e.target.value)} required />
                             </div>
 
                             {/* Phone Input */}
                             <div className="sm:col-span-1">
                                 <label className="block text-sm font-bold text-zinc-300 mb-2">Contact Number</label>
-                                <input type="tel" placeholder="+1 (555) 000-0000" className="w-full bg-zinc-900/50 border border-white/5 text-white placeholder-zinc-600 px-5 py-4 rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setPhone(e.target.value)} required />
+                                <input type="tel" placeholder="09*******29" className="w-full bg-zinc-900/50 border border-white/5 text-white placeholder-zinc-600 px-5 py-4 rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setPhone(e.target.value)} required />
                             </div>
 
                             {/* Gender Input */}
@@ -119,7 +119,7 @@ export default function SignupPage() {
                             {/* Address Input */}
                             <div className="sm:col-span-1">
                                 <label className="block text-sm font-bold text-zinc-300 mb-2">Home Address <span className="text-zinc-500 font-normal text-xs">(Optional)</span></label>
-                                <input type="text" placeholder="123 Main St, City" className="w-full bg-zinc-900/50 border border-white/5 text-white placeholder-zinc-600 px-5 py-4 rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setAddress(e.target.value)} />
+                                <input type="text" placeholder="Enter Home Address" className="w-full bg-zinc-900/50 border border-white/5 text-white placeholder-zinc-600 px-5 py-4 rounded-2xl focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setAddress(e.target.value)} />
                             </div>
 
                             {/* Password Input */}
