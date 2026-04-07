@@ -158,7 +158,7 @@ export default function TenantRequests() {
 
                 {/* --- COMPACT SUBMISSION FORM --- */}
                 <motion.div variants={itemVariants} className="bg-white/60 dark:bg-[#121212]/60 p-6 rounded-[2rem] border border-white/40 dark:border-white/10 shadow-xl shadow-indigo-500/5 backdrop-blur-2xl relative overflow-hidden shrink-0">
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent dark:hidden pointer-events-none z-0"></div>
+                    <div className="absolute inset-0 glass-noise z-0"></div>
                     <form onSubmit={handleSubmit} className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-5">
                         <div className="md:col-span-6 space-y-1.5">
                             <label className="text-xs font-bold text-neutral-500 uppercase tracking-widest ml-1">Issue Title</label>
@@ -213,7 +213,7 @@ export default function TenantRequests() {
 
                 {/* --- COMPACT REQUESTS TABLE (Internal Scroll Only) --- */}
                 <motion.div variants={itemVariants} className="relative bg-white/60 dark:bg-[#121212]/60 rounded-[2rem] border border-white/40 dark:border-white/10 shadow-xl shadow-indigo-500/5 backdrop-blur-2xl flex-1 flex flex-col overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent dark:hidden pointer-events-none z-0"></div>
+                    <div className="absolute inset-0 glass-noise z-0"></div>
                     <div className="relative z-10 p-5 sm:px-6 border-b border-neutral-200/50 dark:border-white/10 shrink-0">
                         <h2 className="text-lg font-bold">My Requests</h2>
                     </div>

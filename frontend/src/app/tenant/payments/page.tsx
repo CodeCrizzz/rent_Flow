@@ -173,7 +173,7 @@ export default function TenantPayments() {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                     
                     <motion.div variants={itemVariants} className="lg:col-span-7 relative rounded-[2rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col p-8 sm:p-10">
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent dark:hidden pointer-events-none z-0"></div>
+                        <div className="absolute inset-0 glass-noise z-0"></div>
                         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-72 h-72 bg-indigo-50 dark:bg-indigo-500/5 rounded-full blur-3xl pointer-events-none z-0"></div>
 
                         <div className="relative z-10 flex justify-between items-start mb-8">
@@ -247,7 +247,7 @@ export default function TenantPayments() {
                     </motion.div>
 
                     <motion.div variants={itemVariants} className="lg:col-span-5 relative rounded-[2rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col p-8 sm:p-10">
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent dark:hidden pointer-events-none z-0"></div>
+                        <div className="absolute inset-0 glass-noise z-0"></div>
                         
                         <div className="relative z-10 mb-6">
                             <h3 className="text-lg font-bold text-neutral-900 dark:text-white flex items-center gap-2">
@@ -283,7 +283,7 @@ export default function TenantPayments() {
 
                 {/* --- HISTORY TABLE SECTION --- */}
                 <motion.div variants={itemVariants} className="relative bg-white/60 dark:bg-[#121212]/60 rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent dark:hidden pointer-events-none z-0"></div>
+                    <div className="absolute inset-0 glass-noise z-0"></div>
 
                     <div className="relative z-10 p-6 sm:px-8 border-b border-neutral-200/50 dark:border-white/10">
                         <h2 className="text-xl font-bold">Payment History</h2>

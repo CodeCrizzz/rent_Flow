@@ -105,7 +105,7 @@ export default function TenantDashboard() {
                     {/* HERO CARD: Billing & Balance */}
                     <div className="lg:col-span-8 relative rounded-[2rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col justify-between p-8 sm:p-10">
                         {/* Inner gradient border effect */}
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/0 dark:from-white/5 dark:to-transparent pointer-events-none z-0"></div>
+                        <div className="absolute inset-0 glass-noise z-0"></div>
                         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-72 h-72 bg-indigo-50 dark:bg-indigo-500/5 rounded-full blur-3xl pointer-events-none z-0"></div>
 
                         <div className="relative z-10">
@@ -150,7 +150,7 @@ export default function TenantDashboard() {
                         
                         {/* Status Card */}
                         <div className="relative bg-white/60 dark:bg-[#121212]/60 p-6 rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-xl shadow-xl shadow-indigo-500/5 flex-1 flex flex-col justify-center overflow-hidden">
-                            <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/0 dark:from-white/5 dark:to-transparent pointer-events-none z-0"></div>
+                            <div className="absolute inset-0 glass-noise z-0"></div>
                             <div className="relative z-10 flex items-center justify-between mb-4">
                                 <div className="p-2.5 rounded-xl bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20">
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
@@ -168,7 +168,7 @@ export default function TenantDashboard() {
 
                         {/* Messages Card */}
                         <div className="relative bg-white/60 dark:bg-[#121212]/60 p-6 rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-xl shadow-xl shadow-indigo-500/5 flex-1 flex flex-col justify-center hover:bg-white/80 dark:hover:bg-[#181818]/80 hover:border-indigo-200 dark:hover:border-indigo-500/30 cursor-pointer group transition-all duration-300 overflow-hidden">
-                            <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/0 dark:from-white/5 dark:to-transparent pointer-events-none z-0"></div>
+                            <div className="absolute inset-0 glass-noise z-0"></div>
                             <div className="relative z-10 flex items-center justify-between mb-4">
                                 <div className="p-2.5 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
@@ -187,7 +187,7 @@ export default function TenantDashboard() {
 
                 {/* --- TRANSACTIONS SECTION --- */}
                 <div className={`relative bg-white/60 dark:bg-[#121212]/60 rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden transition-all duration-700 ease-out delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-white/0 dark:from-white/5 dark:to-transparent pointer-events-none z-0"></div>
+                    <div className="absolute inset-0 glass-noise z-0"></div>
                     
                     {/* CHANGED TEXT HERE */}
                     <div className="relative z-10 p-6 sm:px-8 border-b border-neutral-200/50 dark:border-white/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
