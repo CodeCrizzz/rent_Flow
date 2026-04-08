@@ -38,7 +38,7 @@ export default function LoginPage() {
         setIsLoading(true);
         setErrorMsg('');
         try {
-            const { data } = await api.post('/auth/login', { email, password });
+            const { data } = await api.post('/auth/login', { email, password, role: selectedRole });
             
             localStorage.setItem('token', data.token);
             localStorage.setItem('user', JSON.stringify(data.user));

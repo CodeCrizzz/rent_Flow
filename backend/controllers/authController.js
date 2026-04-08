@@ -60,10 +60,7 @@ const loginUser = async (req, res) => {
 
         // 3. Role Validation: If the login request specifies a role (e.g., from Admin Login), verify it
         if (role && user.role !== role) {
-            const errorMessage = role === 'admin' 
-                ? 'Access denied. This account does not have administrator privileges.' 
-                : 'Access denied. Please use the tenant login portal.';
-            return res.status(403).json({ message: errorMessage });
+            return res.status(403).json({ message: 'Invalid account' });
         }
 
         // 4. Check if tenant is approved and prevent access if not
