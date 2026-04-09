@@ -184,7 +184,7 @@ export default function TenantPayments() {
                             </span>
                             Billing & Invoices
                         </div>
-                        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white drop-shadow-sm pb-1">
+                        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white drop-shadow-sm pb-1">
                             Payment Center
                         </h1>
                         <p className="text-sm font-medium text-neutral-500 dark:text-neutral-400 mt-2 max-w-lg leading-relaxed">
@@ -196,7 +196,7 @@ export default function TenantPayments() {
                 {/* --- BILL OVERVIEW & BREAKDOWN GRID --- */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
                     
-                    <motion.div variants={itemVariants} className="lg:col-span-7 relative rounded-[2rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col p-8 sm:p-10">
+                    <motion.div variants={itemVariants} className="lg:col-span-7 relative rounded-4xl bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col p-8 sm:p-10">
                         <div className="absolute inset-0 glass-noise z-0"></div>
                         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-72 h-72 bg-indigo-50 dark:bg-indigo-500/5 rounded-full blur-3xl pointer-events-none z-0"></div>
 
@@ -270,7 +270,7 @@ export default function TenantPayments() {
                         </div>
                     </motion.div>
 
-                    <motion.div variants={itemVariants} className="lg:col-span-5 relative rounded-[2rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col p-8 sm:p-10">
+                    <motion.div variants={itemVariants} className="lg:col-span-5 relative rounded-4xl bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col p-8 sm:p-10">
                         <div className="absolute inset-0 glass-noise z-0"></div>
                         
                         <div className="relative z-10 mb-6">
@@ -306,7 +306,7 @@ export default function TenantPayments() {
                 </div>
 
                 {/* --- HISTORY TABLE SECTION --- */}
-                <motion.div variants={itemVariants} className="relative bg-white/60 dark:bg-[#121212]/60 rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden">
+                <motion.div variants={itemVariants} className="relative bg-white/60 dark:bg-[#121212]/60 rounded-4xl border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden">
                     <div className="absolute inset-0 glass-noise z-0"></div>
 
                     <div className="relative z-10 p-6 sm:px-8 border-b border-neutral-200/50 dark:border-white/10">
@@ -340,7 +340,7 @@ export default function TenantPayments() {
                                     ) : payments.length === 0 ? (
                                         <motion.tr key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                                             <td colSpan={5} className="px-8 py-32 text-center">
-                                                <div className="w-20 h-20 bg-white dark:bg-white/5 rounded-[2rem] flex items-center justify-center text-neutral-400 dark:text-neutral-500 mx-auto mb-6 shadow-inner border border-neutral-200/50 dark:border-white/5">
+                                                <div className="w-20 h-20 bg-white dark:bg-white/5 rounded-4xl flex items-center justify-center text-neutral-400 dark:text-neutral-500 mx-auto mb-6 shadow-inner border border-neutral-200/50 dark:border-white/5">
                                                     <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                                                 </div>
                                                 <h3 className="text-lg font-bold text-neutral-900 dark:text-white">No Payments Found</h3>
@@ -352,7 +352,7 @@ export default function TenantPayments() {
                                             <motion.tr 
                                                 key={p.id || idx} 
                                                 variants={itemVariants}
-                                                className="group relative hover:bg-white/40 dark:hover:bg-white/[0.02] transition-all duration-300 cursor-default"
+                                                className="group relative hover:bg-white/40 dark:hover:bg-white/2 transition-all duration-300 cursor-default"
                                             >
                                                 <td className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-0 bg-indigo-500 rounded-r-full transition-all duration-300 group-hover:h-3/4 opacity-0 group-hover:opacity-100"></td>
 
@@ -431,9 +431,9 @@ export default function TenantPayments() {
                                 animate={{ opacity: 1, scale: 1, y: 0 }} 
                                 exit={{ opacity: 0, scale: 0.95, y: 20 }}
                                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                                className="w-full max-w-lg bg-white dark:bg-[#18181B] rounded-[2rem] shadow-2xl border border-neutral-200 dark:border-white/10 overflow-hidden pointer-events-auto flex flex-col max-h-[90vh]"
+                                className="w-full max-w-lg bg-white dark:bg-[#18181B] rounded-4xl shadow-2xl border border-neutral-200 dark:border-white/10 overflow-hidden pointer-events-auto flex flex-col max-h-[90vh]"
                             >
-                                <div className="p-6 sm:p-8 border-b border-neutral-100 dark:border-white/5 flex justify-between items-center bg-neutral-50/50 dark:bg-white/[0.02]">
+                                <div className="p-6 sm:p-8 border-b border-neutral-100 dark:border-white/5 flex justify-between items-center bg-neutral-50/50 dark:bg-white/2">
                                     <div>
                                         <h2 className="text-xl font-extrabold text-neutral-900 dark:text-white">Submit Payment</h2>
                                         <p className="text-sm font-medium text-neutral-500 mt-1">Paying for {currentBill.month} Bill</p>
@@ -480,7 +480,7 @@ export default function TenantPayments() {
                                     <div>
                                         <label className="block text-xs font-bold text-neutral-500 uppercase tracking-widest mb-2">Upload Proof <span className="text-neutral-400 normal-case font-medium">(Optional)</span></label>
                                         <div 
-                                            className="w-full border-2 border-dashed border-neutral-200 dark:border-white/10 hover:border-indigo-400 dark:hover:border-indigo-500/50 rounded-2xl p-6 flex flex-col items-center justify-center text-center cursor-pointer bg-neutral-50/50 dark:bg-white/[0.02] transition-colors group"
+                                            className="w-full border-2 border-dashed border-neutral-200 dark:border-white/10 hover:border-indigo-400 dark:hover:border-indigo-500/50 rounded-2xl p-6 flex flex-col items-center justify-center text-center cursor-pointer bg-neutral-50/50 dark:bg-white/2 transition-colors group"
                                             onClick={() => fileInputRef.current?.click()}
                                         >
                                             {proofFile ? (

@@ -137,7 +137,7 @@ export default function AdminChat() {
                                 placeholder="Search tenant or room..." 
                                 value={searchFilter}
                                 onChange={(e) => setSearchFilter(e.target.value)}
-                                className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-xs font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none transition-all placeholder:text-slate-500 dark:text-zinc-500 text-slate-900 dark:text-white shadow-inner" 
+                                className="w-full pl-10 pr-4 py-3 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-xs font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none transition-all placeholder:text-slate-500 text-slate-900 dark:text-white shadow-inner" 
                             />
                             <svg className="w-4 h-4 text-slate-500 dark:text-zinc-500 absolute left-3.5 top-3.5 group-focus-within:text-[#5b21b6] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                         </div>

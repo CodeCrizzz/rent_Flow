@@ -149,11 +149,11 @@ export default function TenantProfile() {
         visible: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 260, damping: 20 } }
     };
 
-    if (isLoading) return <div className="fixed inset-0 z-[100] flex items-center justify-center bg-slate-50 dark:bg-[#020617]"><div className="w-10 h-10 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin" /></div>;
+    if (isLoading) return <div className="fixed inset-0 z-100 flex items-center justify-center bg-slate-50 dark:bg-[#020617]"><div className="w-10 h-10 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin" /></div>;
     if (!profile) return null;
 
     return (
-        <div className="fixed inset-0 md:pl-[280px] z-[50] overflow-y-auto overflow-x-hidden bg-slate-50 dark:bg-[#050505] text-neutral-900 dark:text-neutral-100 font-sans transition-colors duration-500">
+        <div className="fixed inset-0 md:pl-[280px] z-50 overflow-y-auto overflow-x-hidden bg-slate-50 dark:bg-[#050505] text-neutral-900 dark:text-neutral-100 font-sans transition-colors duration-500">
             
             {/* Custom Animations & Texture */}
             <style>{`
@@ -194,7 +194,7 @@ export default function TenantProfile() {
                             
                             {/* Profile Picture */}
                             <div className="relative shrink-0">
-                                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-600 to-cyan-400 flex items-center justify-center text-white text-5xl font-black shadow-lg overflow-hidden group-hover/card:scale-105 transition-transform duration-500">
+                                <div className="w-32 h-32 rounded-full bg-linear-to-br from-blue-600 to-cyan-400 flex items-center justify-center text-white text-5xl font-black shadow-lg overflow-hidden group-hover/card:scale-105 transition-transform duration-500">
                                     {profile.profile_picture ? <img src={profile.profile_picture} className="w-full h-full object-cover" alt="Profile" /> : profile.name.charAt(0)}
                                 </div>
                                 <div className="absolute bottom-0 right-0 w-8 h-8 bg-emerald-500 border-[3px] border-white dark:border-[#0a0a0a] rounded-full flex items-center justify-center shadow-sm">
@@ -240,7 +240,7 @@ export default function TenantProfile() {
                         <motion.div 
                             variants={itemVariants} 
                             whileHover={{ scale: 1.02, translateY: -5 }}
-                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-[2rem] p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 group/bento"
+                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-4xl p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 group/bento"
                         >
                             <div className="absolute inset-0 glass-noise"></div>
                             <div className="absolute top-4 right-4 text-[8px] font-black uppercase tracking-widest text-rose-500 bg-rose-500/10 px-2 py-1 rounded border border-rose-500/20">Admin Only</div>
@@ -260,7 +260,7 @@ export default function TenantProfile() {
                         <motion.div 
                             variants={itemVariants} 
                             whileHover={{ scale: 1.02, translateY: -5 }}
-                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-[2rem] p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-emerald-500/30 transition-all duration-500 group/bento"
+                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-4xl p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-emerald-500/30 transition-all duration-500 group/bento"
                         >
                             <div className="absolute inset-0 glass-noise"></div>
                             <h3 className="relative z-10 text-xs font-black text-neutral-400 uppercase tracking-widest mb-6 flex items-center gap-2 group-hover/bento:text-emerald-500 transition-colors">
@@ -277,7 +277,7 @@ export default function TenantProfile() {
                         <motion.div 
                             variants={itemVariants} 
                             whileHover={{ scale: 1.02, translateY: -5 }}
-                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-[2rem] p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-rose-500/30 transition-all duration-500 group/bento"
+                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-4xl p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-rose-500/30 transition-all duration-500 group/bento"
                         >
                             <div className="absolute inset-0 glass-noise"></div>
                             <h3 className="relative z-10 text-xs font-black text-neutral-400 uppercase tracking-widest mb-6 flex items-center gap-2 group-hover/bento:text-rose-500 transition-colors">
@@ -294,7 +294,7 @@ export default function TenantProfile() {
                         <motion.div 
                             variants={itemVariants} 
                             whileHover={{ scale: 1.02, translateY: -5 }}
-                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-[2rem] p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-amber-500/30 transition-all duration-500 group/bento"
+                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-4xl p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-amber-500/30 transition-all duration-500 group/bento"
                         >
                             <div className="absolute inset-0 glass-noise"></div>
                             <h3 className="relative z-10 text-xs font-black text-neutral-400 uppercase tracking-widest mb-6 flex items-center gap-2 group-hover/bento:text-amber-500 transition-colors">
@@ -316,8 +316,8 @@ export default function TenantProfile() {
             <AnimatePresence>
                 {isEditModalOpen && (
                     <>
-                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-[#020617]/60 backdrop-blur-xl z-[100]" onClick={() => setIsEditModalOpen(false)} />
-                        <div className="fixed inset-0 flex items-center justify-center p-4 z-[101] pointer-events-none">
+                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-[#020617]/60 backdrop-blur-xl z-100" onClick={() => setIsEditModalOpen(false)} />
+                        <div className="fixed inset-0 flex items-center justify-center p-4 z-101 pointer-events-none">
                             <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="relative w-full max-w-2xl bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-3xl rounded-[2.5rem] shadow-2xl border border-white/20 dark:border-white/10 overflow-hidden pointer-events-auto max-h-[90vh] flex flex-col">
                                 <div className="absolute inset-0 glass-noise pointer-events-none"></div>
                                 <div className="p-6 border-b border-black/5 dark:border-white/5 flex justify-between items-center bg-transparent z-10 shrink-0">
@@ -351,8 +351,8 @@ export default function TenantProfile() {
                 {/* PASSWORD MODAL */}
                 {isPassModalOpen && (
                     <>
-                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-[#020617]/60 backdrop-blur-xl z-[100]" onClick={() => setIsPassModalOpen(false)} />
-                        <div className="fixed inset-0 flex items-center justify-center p-4 z-[101] pointer-events-none">
+                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-[#020617]/60 backdrop-blur-xl z-100" onClick={() => setIsPassModalOpen(false)} />
+                        <div className="fixed inset-0 flex items-center justify-center p-4 z-101 pointer-events-none">
                             <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="relative w-full max-w-sm bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-3xl rounded-[2.5rem] shadow-2xl border border-white/20 dark:border-white/10 overflow-hidden pointer-events-auto">
                                 <div className="absolute inset-0 glass-noise"></div>
                                 <div className="relative z-10 p-6 border-b border-black/5 dark:border-white/5 flex justify-between items-center"><h2 className="text-xl font-black tracking-tight">Change Password</h2><button onClick={() => setIsPassModalOpen(false)} className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-colors"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg></button></div>

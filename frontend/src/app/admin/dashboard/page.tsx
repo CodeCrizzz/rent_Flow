@@ -224,7 +224,7 @@ export default function AdminDashboard() {
                             <p className="font-bold text-slate-500 dark:text-zinc-500 text-sm transition-colors duration-500">No recent activities.</p>
                         </div>
                     ) : (
-                        <div className="relative border-l border-slate-200 dark:border-zinc-800 ml-4 space-y-8 pb-4 relative z-10 transition-colors duration-500">
+                        <div className="relative border-l border-slate-200 dark:border-zinc-800 ml-4 space-y-8 pb-4 z-10 transition-colors duration-500">
                             {stats.recentActivities.map((activity, idx) => {
                                 const isPayment = activity.type === 'payment';
                                 const isTenant = activity.type === 'tenant';
