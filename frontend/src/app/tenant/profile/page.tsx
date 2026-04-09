@@ -153,8 +153,6 @@ export default function TenantProfile() {
     if (!profile) return null;
 
     return (
-        /* --- FIXED VIEWPORT BREAKOUT --- */
-        /* This eliminates the layout borders and completely takes over the screen */
         <div className="fixed inset-0 md:pl-[280px] z-[50] overflow-y-auto overflow-x-hidden bg-slate-50 dark:bg-[#050505] text-neutral-900 dark:text-neutral-100 font-sans transition-colors duration-500">
             
             {/* Custom Animations & Texture */}

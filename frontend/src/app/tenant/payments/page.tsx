@@ -25,7 +25,7 @@ const formatDate = (dateString: string | null | undefined, options?: Intl.DateTi
 const calculateNextDueDate = (createdAtStr: string) => {
     if (!createdAtStr) return new Date().toISOString();
     const creationDate = new Date(createdAtStr);
-    const dueDay = creationDate.getDate(); // e.g., the 14th
+    const dueDay = creationDate.getDate(); 
     
     const today = new Date();
     let nextDue = new Date(today.getFullYear(), today.getMonth(), dueDay);
@@ -80,7 +80,6 @@ export default function TenantPayments() {
         const fetchPaymentData = async () => {
             try {
                 const [billResponse, paymentsResponse] = await Promise.all([
-                    // If this fails, return an object that matches your expected data structure
                     api.get('/tenant/bill/current').catch(err => {
                         console.warn("Current Bill endpoint not found (404)");
                         return { data: defaultBill }; 
@@ -148,7 +147,7 @@ export default function TenantPayments() {
         visible: { 
             opacity: 1, 
             transition: { 
-                staggerChildren: 0.12, // Slightly smoother stagger pacing
+                staggerChildren: 0.12, 
                 delayChildren: 0.1 
             } 
         }
@@ -161,8 +160,8 @@ export default function TenantPayments() {
             y: 0, 
             filter: "blur(0px)", 
             transition: { 
-                duration: 0.8, // Extended duration for an elegant slide
-                ease: [0.16, 1, 0.3, 1] // Custom butter-smooth deceleration curve
+                duration: 0.8, 
+                ease: [0.16, 1, 0.3, 1] 
             } 
         }
     };

@@ -90,7 +90,6 @@ export default function LoginPage() {
                     </div>
 
                     <div className="relative z-10 mt-auto">
-                        {/* Title transitions smoothly */}
                         <div className={`transition-all duration-300 ${isSwitching ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}>
                             <h2 className="text-4xl font-bold text-white mb-4 leading-tight">{selectedRole === 'tenant' ? "Manage your stay" : "Manage your property"}<br />with ease.</h2>
                         </div>
