@@ -157,7 +157,7 @@ export default function TenantRequests() {
                 </motion.header>
 
                 {/* --- COMPACT SUBMISSION FORM --- */}
-                <motion.div variants={itemVariants} className="bg-white/60 dark:bg-[#121212]/60 p-6 rounded-[2rem] border border-white/40 dark:border-white/10 shadow-xl shadow-indigo-500/5 backdrop-blur-2xl relative overflow-hidden shrink-0">
+                <motion.div variants={itemVariants} className="bg-white/60 dark:bg-[#121212]/60 p-6 rounded-4xl border border-white/40 dark:border-white/10 shadow-xl shadow-indigo-500/5 backdrop-blur-2xl relative overflow-hidden shrink-0">
                     <div className="absolute inset-0 glass-noise z-0"></div>
                     <form onSubmit={handleSubmit} className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-5">
                         <div className="md:col-span-6 space-y-1.5">
@@ -195,7 +195,7 @@ export default function TenantRequests() {
                             />
                         </div>
                         <div className="md:col-span-4 flex flex-col gap-3 justify-end">
-                            <div className="w-full border-2 border-dashed border-neutral-200 dark:border-white/10 hover:border-indigo-400 rounded-xl p-2 flex items-center justify-center text-center cursor-pointer bg-neutral-50/50 dark:bg-white/[0.02] transition-colors"
+                            <div className="w-full border-2 border-dashed border-neutral-200 dark:border-white/10 hover:border-indigo-400 rounded-xl p-2 flex items-center justify-center text-center cursor-pointer bg-neutral-50/50 dark:bg-white/2 transition-colors"
                                 onClick={() => fileInputRef.current?.click()}>
                                 {imageFile ? (
                                     <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 truncate px-2">{imageFile.name}</span>
@@ -212,7 +212,7 @@ export default function TenantRequests() {
                 </motion.div>
 
                 {/* --- COMPACT REQUESTS TABLE (Internal Scroll Only) --- */}
-                <motion.div variants={itemVariants} className="relative bg-white/60 dark:bg-[#121212]/60 rounded-[2rem] border border-white/40 dark:border-white/10 shadow-xl shadow-indigo-500/5 backdrop-blur-2xl flex-1 flex flex-col overflow-hidden">
+                <motion.div variants={itemVariants} className="relative bg-white/60 dark:bg-[#121212]/60 rounded-4xl border border-white/40 dark:border-white/10 shadow-xl shadow-indigo-500/5 backdrop-blur-2xl flex-1 flex flex-col overflow-hidden">
                     <div className="absolute inset-0 glass-noise z-0"></div>
                     <div className="relative z-10 p-5 sm:px-6 border-b border-neutral-200/50 dark:border-white/10 shrink-0">
                         <h2 className="text-lg font-bold">My Requests</h2>
@@ -244,7 +244,7 @@ export default function TenantRequests() {
                                         </motion.tr>
                                     ) : (
                                         requests.map((req) => (
-                                            <motion.tr key={req.id} className="hover:bg-white/40 dark:hover:bg-white/[0.02] transition-colors group">
+                                            <motion.tr key={req.id} className="hover:bg-white/40 dark:hover:bg-white/2 transition-colors group">
                                                 <td className="px-6 py-4 align-middle text-xs font-bold text-neutral-500">#{req.id.toString().padStart(4, '0')}</td>
                                                 <td className="px-6 py-4 align-middle">
                                                     <p className="text-sm font-bold text-neutral-900 dark:text-white truncate max-w-[200px]">{req.title}</p>
@@ -282,18 +282,18 @@ export default function TenantRequests() {
                             animate={{ opacity: 1 }} 
                             exit={{ opacity: 0 }} 
                             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                            className="fixed inset-0 bg-neutral-900/40 dark:bg-black/60 backdrop-blur-sm z-[100]" 
+                            className="fixed inset-0 bg-neutral-900/40 dark:bg-black/60 backdrop-blur-sm z-100" 
                             onClick={() => setSelectedRequest(null)} 
                         />
-                        <div className="fixed inset-0 flex items-center justify-center p-4 z-[101] pointer-events-none">
+                        <div className="fixed inset-0 flex items-center justify-center p-4 z-101 pointer-events-none">
                             <motion.div 
                                 initial={{ opacity: 0, scale: 0.95, y: 30 }} 
                                 animate={{ opacity: 1, scale: 1, y: 0 }} 
                                 exit={{ opacity: 0, scale: 0.95, y: 20 }} 
                                 transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                                className="w-full max-w-md bg-white dark:bg-[#18181B] rounded-[2rem] shadow-2xl border border-neutral-200 dark:border-white/10 overflow-hidden pointer-events-auto"
+                                className="w-full max-w-md bg-white dark:bg-[#18181B] rounded-4xl shadow-2xl border border-neutral-200 dark:border-white/10 overflow-hidden pointer-events-auto"
                             >
-                                <div className="p-6 border-b border-neutral-100 dark:border-white/5 flex justify-between items-center bg-neutral-50/50 dark:bg-white/[0.02]">
+                                <div className="p-6 border-b border-neutral-100 dark:border-white/5 flex justify-between items-center bg-neutral-50/50 dark:bg-white/2">
                                     <h2 className="text-lg font-bold">Request Details</h2>
                                     <button onClick={() => setSelectedRequest(null)} className="p-2 rounded-full hover:bg-neutral-200 dark:hover:bg-white/10 text-neutral-500 transition-colors">
                                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>

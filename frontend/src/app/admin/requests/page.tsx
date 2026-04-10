@@ -278,7 +278,7 @@ export default function AdminRequests() {
                                     </span>
                                 </h3>
                             </div>
-                            <button onClick={() => setViewModalReq(null)} className="w-10 h-10 rounded-xl hover:bg-slate-200 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
+                            <button onClick={() => setViewModalReq(null)} className="w-10 h-10 rounded-xl hover:bg-slate-200 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:hover:text-white transition-colors">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
                         </div>
@@ -341,7 +341,7 @@ export default function AdminRequests() {
                             </div>
                         </div>
                         <div className="p-6 border-t border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50 flex justify-end gap-3">
-                            <button onClick={() => setViewModalReq(null)} className="px-6 py-3.5 font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-slate-300 dark:hover:bg-zinc-700 rounded-xl transition-colors shadow-sm">
+                            <button onClick={() => setViewModalReq(null)} className="px-6 py-3.5 font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 rounded-xl transition-colors shadow-sm">
                                 Close
                             </button>
                             <button 
@@ -366,7 +366,7 @@ export default function AdminRequests() {
                     <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
                         <div className="p-8 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
                             <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Update Request</h3>
-                            <button onClick={() => setUpdateModalReq(null)} className="w-10 h-10 rounded-xl hover:bg-slate-200 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:text-white transition-colors">
+                            <button onClick={() => setUpdateModalReq(null)} className="w-10 h-10 rounded-xl hover:bg-slate-200 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:hover:text-white transition-colors">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
                         </div>
@@ -429,7 +429,7 @@ export default function AdminRequests() {
                                 <button 
                                     type="button" 
                                     onClick={() => setUpdateModalReq(null)}
-                                    className="px-6 py-3.5 text-slate-500 dark:text-zinc-400 font-bold hover:text-slate-900 dark:text-white rounded-xl transition-colors"
+                                    className="px-6 py-3.5 text-slate-500 dark:text-zinc-400 font-bold hover:text-slate-900 dark:hover:text-white rounded-xl transition-colors"
                                 >
                                     Cancel
                                 </button>

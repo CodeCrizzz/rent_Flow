@@ -119,7 +119,7 @@ export default function TenantDashboard() {
                                 </span>
                                 Tenant Portal
                             </div>
-                            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white drop-shadow-sm pb-1">
+                            <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white drop-shadow-sm pb-1">
                                 Welcome, {userName.split(' ')[0] || 'Resident'}
                             </h1>
                         </div>
@@ -130,7 +130,7 @@ export default function TenantDashboard() {
                 <div className={`grid grid-cols-1 lg:grid-cols-12 gap-6 transition-all duration-700 ease-out delay-150 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                     
                     {/* HERO CARD: Billing & Balance */}
-                    <div className="lg:col-span-8 relative rounded-[2rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col justify-between p-8 sm:p-10">
+                    <div className="lg:col-span-8 relative rounded-4xl bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col justify-between p-8 sm:p-10">
                         {/* Inner gradient border effect */}
                         <div className="absolute inset-0 glass-noise z-0"></div>
                         <div className="absolute top-0 right-0 -mr-20 -mt-20 w-72 h-72 bg-indigo-50 dark:bg-indigo-500/5 rounded-full blur-3xl pointer-events-none z-0"></div>
@@ -176,7 +176,7 @@ export default function TenantDashboard() {
                     <div className="lg:col-span-4 flex flex-col gap-6">
                         
                         {/* Status Card */}
-                        <div className="relative bg-white/60 dark:bg-[#121212]/60 p-6 rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-xl shadow-xl shadow-indigo-500/5 flex-1 flex flex-col justify-center overflow-hidden">
+                        <div className="relative bg-white/60 dark:bg-[#121212]/60 p-6 rounded-4xl border border-white/40 dark:border-white/10 backdrop-blur-xl shadow-xl shadow-indigo-500/5 flex-1 flex flex-col justify-center overflow-hidden">
                             <div className="absolute inset-0 glass-noise z-0"></div>
                             <div className="relative z-10 flex items-center justify-between mb-4">
                                 <div className="p-2.5 rounded-xl bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20">
@@ -196,7 +196,7 @@ export default function TenantDashboard() {
                         </div>
 
                         {/* Messages Card */}
-                        <div className="relative bg-white/60 dark:bg-[#121212]/60 p-6 rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-xl shadow-xl shadow-indigo-500/5 flex-1 flex flex-col justify-center hover:bg-white/80 dark:hover:bg-[#181818]/80 hover:border-indigo-200 dark:hover:border-indigo-500/30 cursor-pointer group transition-all duration-300 overflow-hidden">
+                        <div className="relative bg-white/60 dark:bg-[#121212]/60 p-6 rounded-4xl border border-white/40 dark:border-white/10 backdrop-blur-xl shadow-xl shadow-indigo-500/5 flex-1 flex flex-col justify-center hover:bg-white/80 dark:hover:bg-[#181818]/80 hover:border-indigo-200 dark:hover:border-indigo-500/30 cursor-pointer group transition-all duration-300 overflow-hidden">
                             <div className="absolute inset-0 glass-noise z-0"></div>
                             <div className="relative z-10 flex items-center justify-between mb-4">
                                 <div className="p-2.5 rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
@@ -215,7 +215,7 @@ export default function TenantDashboard() {
                 </div>
 
                 {/* --- TRANSACTIONS SECTION --- */}
-                <div className={`relative bg-white/60 dark:bg-[#121212]/60 rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden transition-all duration-700 ease-out delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                <div className={`relative bg-white/60 dark:bg-[#121212]/60 rounded-4xl border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden transition-all duration-700 ease-out delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                     <div className="absolute inset-0 glass-noise z-0"></div>
                     
                     {/* CHANGED TEXT HERE */}
@@ -231,7 +231,7 @@ export default function TenantDashboard() {
                         {tenantData.recentTransactions && tenantData.recentTransactions.length > 0 ? (
                             <div className="space-y-1">
                                 {tenantData.recentTransactions.map((tx: any, i) => (
-                                    <div key={i} className="group relative flex items-center justify-between p-4 rounded-2xl hover:bg-white/40 dark:hover:bg-white/[0.02] transition-all duration-300 cursor-default">
+                                    <div key={i} className="group relative flex items-center justify-between p-4 rounded-2xl hover:bg-white/40 dark:hover:bg-white/2 transition-all duration-300 cursor-default">
                                         {/* Hover Highlight Line */}
                                         <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-0 bg-indigo-500 rounded-r-full transition-all duration-300 group-hover:h-3/4 opacity-0 group-hover:opacity-100"></div>
 
@@ -264,7 +264,7 @@ export default function TenantDashboard() {
                             </div>
                         ) : (
                             <div className="flex flex-col items-center justify-center py-16 px-4 text-center">
-                                <div className="w-20 h-20 bg-white/50 dark:bg-white/5 rounded-[2rem] flex items-center justify-center text-neutral-400 dark:text-neutral-500 mx-auto mb-6 shadow-inner border border-neutral-200/50 dark:border-white/5 backdrop-blur-md">
+                                <div className="w-20 h-20 bg-white/50 dark:bg-white/5 rounded-4xl flex items-center justify-center text-neutral-400 dark:text-neutral-500 mx-auto mb-6 shadow-inner border border-neutral-200/50 dark:border-white/5 backdrop-blur-md">
                                     <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                                 </div>
                                 <h3 className="text-lg font-bold text-neutral-900 dark:text-white">No Transactions Yet</h3>
