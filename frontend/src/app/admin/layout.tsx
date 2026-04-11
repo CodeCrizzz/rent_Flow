@@ -82,6 +82,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     <div className="px-4 mb-6 text-[10px] font-black text-slate-500 dark:text-zinc-600 uppercase tracking-[0.2em]">Navigation</div>
                     {navItems.map((item) => {
                         const isActive = pathname === item.path;
+                        
+                        // --- TEMPORARY FIX ---
+                        // Forcing the counter to '3' so you can see the design even if your API is throwing a 404 error.
+                        //change this back to: const displayCount = pendingTenantsCount;
+
+                        const displayCount = pendingTenantsCount; 
+
                         return (
                             <Link 
                                 key={item.name} 
@@ -89,36 +96,32 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                                 className={`flex items-center gap-3 px-4 py-4 rounded-2xl text-sm font-bold transition-all duration-300 relative ${
                                     isActive 
                                     ? 'bg-linear-to-r from-indigo-600 to-blue-600 text-white shadow-[0_0_20px_rgba(79,70,229,0.3)]' 
-                                    : 'text-slate-600 dark:text-zinc-500 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-zinc-300'
+                                    : 'text-slate-600 dark:text-zinc-500 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white'
                                 }`}
                             >
                                 <svg className={`w-5 h-5 ${isActive ? 'text-white' : 'text-slate-400 dark:text-zinc-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={item.icon}></path>
                                 </svg>
                                 
-                                <span className="flex-1">{item.name}</span>
+                                {/* --- UPDATED ALIGNMENT --- */}
+                                {/* By wrapping the text and the badge in a flex container with gap-2, the badge stays immediately beside the text */}
+                                <div className="flex-1 flex items-center gap-2">
+                                    <span>{item.name}</span>
 
-                                {/* --- MANAGE TENANTS COUNTER --- */}
-                                {item.name === 'Manage Tenants' && pendingTenantsCount > 0 && (
-                                    <motion.span 
-                                        initial={{ scale: 0.5, opacity: 0 }}
-                                        animate={{ scale: 1, opacity: 1 }}
-                                        className="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-amber-500 px-1.5 text-[10px] font-black text-slate-900 border border-white/20 shadow-[0_0_10px_rgba(245,158,11,0.5)]"
-                                    >
-                                        {pendingTenantsCount}
-                                    </motion.span>
-                                )}
+                                    {/* Manage Tenants Counter */}
+                                    {item.name === 'Manage Tenants' && displayCount > 0 && (
+                                        <span className="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-amber-500 px-1.5 text-[10px] font-black text-slate-900 border border-white/20 shadow-[0_0_10px_rgba(245,158,11,0.5)]">
+                                            {displayCount}
+                                        </span>
+                                    )}
 
-                                {/* --- COMMUNICATIONS COUNTER --- */}
-                                {item.name === 'Communications' && unreadCount > 0 && (
-                                    <motion.span 
-                                        initial={{ scale: 0.5, opacity: 0 }}
-                                        animate={{ scale: 1, opacity: 1 }}
-                                        className="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-red-500 px-1.5 text-[10px] font-black text-white shadow-[0_0_10px_rgba(239,68,68,0.5)]"
-                                    >
-                                        {unreadCount}
-                                    </motion.span>
-                                )}
+                                    {/* Communications Counter */}
+                                    {item.name === 'Communications' && unreadCount > 0 && (
+                                        <span className="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-rose-500 px-1.5 text-[10px] font-black text-white shadow-[0_0_10px_rgba(244,63,94,0.5)]">
+                                            {unreadCount}
+                                        </span>
+                                    )}
+                                </div>
                             </Link>
                         );
                     })}
