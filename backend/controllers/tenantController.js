@@ -235,7 +235,7 @@ const getCurrentBill = async (req, res) => {
             dueDate: bill.due_date,
             status: bill.status,
             breakdown: { 
-                rent: parseFloat(bill.total_amount), // Simplified for now
+                rent: parseFloat(bill.total_amount), 
                 water: 0, 
                 electricity: 0, 
                 other: 0 
