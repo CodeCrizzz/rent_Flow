@@ -5,6 +5,7 @@ const {
     getDashboardStats, getAllTenants, getAllRooms, getAllPayments, 
     getAllRequests, updateTenant, deleteTenant,
     getConversations, getMessages, sendMessage, getUnreadCount,
+    getPendingTenantsCount,
     createRoom, updateRoom, deleteRoom
 } = require('../controllers/adminController');
 
@@ -22,6 +23,7 @@ router.use(adminOnly);
 router.get('/dashboard', getDashboardStats);
 
 router.get('/tenants', getAllTenants);
+router.get('/tenants/pending-count', getPendingTenantsCount);
 router.put('/tenants/:id', updateTenant);
 router.delete('/tenants/:id', deleteTenant);
 

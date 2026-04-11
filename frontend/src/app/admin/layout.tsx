@@ -10,6 +10,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     const router = useRouter();
     const [adminName, setAdminName] = useState('Admin');
     const [unreadCount, setUnreadCount] = useState(0);
+    const [pendingTenantsCount, setPendingTenantsCount] = useState(0);
 
     const fetchUnreadCount = async () => {
         try {
@@ -27,12 +28,33 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         }
     };
 
+    const fetchPendingTenantCount = async () => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+            const res = await fetch('http://localhost:5000/api/admin/tenants/pending-count', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (res.ok) {
+                const data = await res.json();
+                setPendingTenantsCount(data.pendingCount);
+            }
+        } catch (error) {
+            console.error('Failed to fetch pending tenant count', error);
+        }
+    };
+
     useEffect(() => {
         const userStr = localStorage.getItem('user');
         if (userStr) setAdminName(JSON.parse(userStr).name);
         
-        fetchUnreadCount();
-        const interval = setInterval(fetchUnreadCount, 15000);
+        const fetchData = () => {
+            fetchUnreadCount();
+            fetchPendingTenantCount();
+        };
+
+        fetchData();
+        const interval = setInterval(fetchData, 15000);
         return () => clearInterval(interval);
     }, [pathname]);
 
@@ -73,6 +95,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                             <Link key={item.name} href={item.path} className={`flex items-center gap-3 px-4 py-4 rounded-2xl text-sm font-bold transition-all duration-300 relative ${isActive ? 'bg-linear-to-r from-indigo-600 to-blue-600 text-slate-900 dark:text-white shadow-[0_0_15px_rgba(79,70,229,0.2)] dark:shadow-[0_0_20px_rgba(79,70,229,0.3)]' : 'text-slate-600 dark:text-zinc-500 hover:bg-slate-100 dark:hover:bg-slate-50 dark:bg-zinc-900/50 hover:text-slate-900 dark:hover:text-zinc-300'}`}>
                                 <svg className={`w-5 h-5 ${isActive ? 'text-slate-900 dark:text-white' : 'text-slate-400 dark:text-zinc-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={item.icon}></path></svg>
                                 <span className="flex-1">{item.name}</span>
+                                {item.name === 'Tenants' && pendingTenantsCount > 0 && (
+                                    <span className="flex h-5 items-center justify-center rounded-full bg-amber-500 px-2 text-[10px] font-black text-slate-900 dark:text-white shadow-[0_0_10px_rgba(245,158,11,0.5)]">
+                                        {pendingTenantsCount}
+                                    </span>
+                                )}
                                 {item.name === 'Communications' && unreadCount > 0 && (
                                     <span className="flex h-5 items-center justify-center rounded-full bg-red-500 px-2 text-[10px] font-black text-slate-900 dark:text-white shadow-[0_0_10px_rgba(239,68,68,0.5)]">
                                         {unreadCount}

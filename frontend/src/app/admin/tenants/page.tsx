@@ -199,7 +199,14 @@ export default function AdminTenants() {
 
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 relative z-10">
                 <div>
-                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Tenants Directory</h1>
+                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-4">
+                        Tenants Directory
+                        {tenants.filter(t => t.status === 'Pending').length > 0 && (
+                            <span className="inline-flex items-center px-4 py-1.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-sm font-black animate-pulse">
+                                {tenants.filter(t => t.status === 'Pending').length} Pending
+                            </span>
+                        )}
+                    </h1>
                     <p className="text-slate-500 dark:text-zinc-400 font-medium mt-2">Manage all active residents and pending applications.</p>
                 </div>
                 <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">

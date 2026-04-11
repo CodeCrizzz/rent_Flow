@@ -499,6 +499,20 @@ const getUnreadCount = async (req, res) => {
     }
 };
 
+// @desc    Get Pending Tenants Count (for Sidebar badge)
+// @route   GET /api/admin/tenants/pending-count
+const getPendingTenantsCount = async (req, res) => {
+    try {
+        const result = await db.query(
+            "SELECT COUNT(*) FROM users WHERE role = 'tenant' AND status = 'Pending'"
+        );
+        res.status(200).json({ pendingCount: parseInt(result.rows[0].count) });
+    } catch (error) {
+        console.error('Pending Tenants Count Error:', error);
+        res.status(500).json({ message: 'Server error fetching pending tenants count' });
+    }
+};
+
 module.exports = { 
     getDashboardStats, 
     getAllRooms, 
@@ -513,5 +527,6 @@ module.exports = {
     getConversations,
     getMessages,  
     sendMessage,
-    getUnreadCount
+    getUnreadCount,
+    getPendingTenantsCount
 };
