@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import api from '@/lib/api';
 import { useRouter } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 
 export default function SignupPage() {
@@ -12,11 +13,15 @@ export default function SignupPage() {
     const [address, setAddress] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    
     const [isLoading, setIsLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
     const [isMounted, setIsMounted] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    
+    // State to handle the success modal visibility
+    const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     const router = useRouter();
 
@@ -33,7 +38,8 @@ export default function SignupPage() {
         setIsLoading(true);
         try {
             await api.post('/auth/register', { name, email, phone, gender, address, password, role: 'tenant' });
-            router.push('/login?registered=true');
+            // Show the success modal instead of immediately redirecting
+            setShowSuccessModal(true);
         } catch (err: any) {
             setErrorMsg(err.response?.data?.message || err.message || "Registration Failed. Please try again.");
         } finally {
@@ -183,6 +189,72 @@ export default function SignupPage() {
                     </div>
                 </div>
             </div>
+
+            {/* --- SUCCESS MODAL OVERLAY --- */}
+            <AnimatePresence>
+                {showSuccessModal && (
+                    <motion.div 
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+                    >
+                        <motion.div 
+                            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                            className="bg-zinc-950 border border-white/10 rounded-[2.5rem] p-8 sm:p-10 max-w-sm w-full shadow-2xl relative shadow-black flex flex-col items-center"
+                        >
+                            
+                            {/* Close Button Top Right */}
+                            <button 
+                                onClick={() => {
+                                    setShowSuccessModal(false);
+                                    router.push('/login?registered=true');
+                                }}
+                                className="absolute top-6 right-6 text-zinc-500 hover:text-white transition-colors bg-white/5 hover:bg-white/10 rounded-full p-2"
+                                aria-label="Close"
+                            >
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
+
+                            {/* ANIMATED SUCCESS ICON */}
+                            <div className="w-20 h-20 bg-blue-500/10 border border-blue-500/20 rounded-full flex items-center justify-center mb-6">
+                                <svg className="w-10 h-10 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <motion.path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth="3"
+                                        d="M5 13l4 4L19 7"
+                                        initial={{ pathLength: 0, opacity: 0 }}
+                                        animate={{ pathLength: 1, opacity: 1 }}
+                                        transition={{ 
+                                            duration: 0.6, 
+                                            ease: "easeInOut",
+                                            delay: 0.2 // Starts slightly after the modal opens
+                                        }}
+                                    />
+                                </svg>
+                            </div>
+
+                            <h3 className="text-2xl font-black text-white text-center mb-3">Account Registered!</h3>
+                            <p className="text-zinc-400 text-center mb-8 text-sm leading-relaxed">
+                                Welcome to RentFlow. Your tenant account has been created. You can now log in to manage your residency.
+                            </p>
+
+                            <button 
+                                onClick={() => {
+                                    setShowSuccessModal(false);
+                                    router.push('/login?registered=true');
+                                }}
+                                className="w-full py-4 bg-blue-600 hover:bg-blue-50 text-white rounded-2xl font-bold text-sm transition-all shadow-lg shadow-blue-500/20 hover:-translate-y-0.5"
+                            >
+                                Proceed to Login
+                            </button>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }
