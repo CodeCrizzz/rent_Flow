@@ -4,7 +4,6 @@ import Link from 'next/link';
 import api from '@/lib/api';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 
-// --- EXPANDED DATA STRUCTURE ---
 interface ProfileData {
     name: string;
     email: string;
@@ -66,7 +65,6 @@ export default function TenantProfile() {
             try {
                 const { data } = await api.get('/tenant/profile');
                 
-                // Injecting default mock data for the new sections
                 const enrichedData = {
                     ...data,
                     payment: data.payment || { balance: 1500, status: 'Partial', last_payment: '2026-03-28' },
