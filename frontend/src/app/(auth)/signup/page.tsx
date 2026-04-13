@@ -226,7 +226,7 @@ export default function SignupPage() {
                                         transition={{ 
                                             duration: 0.6, 
                                             ease: "easeInOut",
-                                            delay: 0.2 // Starts slightly after the modal opens
+                                            delay: 0.2 
                                         }}
                                     />
                                 </svg>

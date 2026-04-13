@@ -2,7 +2,7 @@ const db = require('../config/db');
 
 // Get Tenant Dashboard Data
 const getTenantDashboard = async (req, res) => {
-    const tenantId = req.user.id; // Extracted from the JWT token!
+    const tenantId = req.user.id;
 
     try {
         // Get tenant's current status and room
@@ -12,14 +12,12 @@ const getTenantDashboard = async (req, res) => {
         );
         const user = userResult.rows[0];
 
-        // Get total pending balance for THIS specific tenant
         const balanceResult = await db.query(
             "SELECT SUM(balance) FROM bills WHERE tenant_id = $1 AND status != 'Paid'", 
             [tenantId]
         );
 
         // Get recent payment history
-        // Modified to handle both charges (bills) and payments if needed, but for now focusing on bills/payments joined
         const historyResult = await db.query(
             "SELECT p.*, b.billing_month FROM payments p JOIN bills b ON p.bill_id = b.id WHERE b.tenant_id = $1 ORDER BY p.payment_date DESC LIMIT 5",
             [tenantId]
@@ -190,9 +188,7 @@ const updateTenantPassword = async (req, res) => {
 
         // Direct compare
         if (currentPassword !== user.password) return res.status(401).json({ message: 'Incorrect current password' });
-
         const hashedPassword = newPassword; // plain text
-
         await db.query("UPDATE users SET password = $1 WHERE id = $2", [hashedPassword, tenantId]);
         res.status(200).json({ message: 'Password updated successfully' });
     } catch (error) {
@@ -225,7 +221,6 @@ const getCurrentBill = async (req, res) => {
         }
 
         const bill = result.rows[0];
-        // Map snake_case from DB to camelCase for the frontend page.tsx
         res.status(200).json({
             id: bill.id,
             month: bill.billing_month,
