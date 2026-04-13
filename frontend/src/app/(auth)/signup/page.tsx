@@ -13,14 +13,11 @@ export default function SignupPage() {
     const [address, setAddress] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    
     const [isLoading, setIsLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
     const [isMounted, setIsMounted] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    
-    // State to handle the success modal visibility
     const [showSuccessModal, setShowSuccessModal] = useState(false);
 
     const router = useRouter();
@@ -38,7 +35,6 @@ export default function SignupPage() {
         setIsLoading(true);
         try {
             await api.post('/auth/register', { name, email, phone, gender, address, password, role: 'tenant' });
-            // Show the success modal instead of immediately redirecting
             setShowSuccessModal(true);
         } catch (err: any) {
             setErrorMsg(err.response?.data?.message || err.message || "Registration Failed. Please try again.");
@@ -51,7 +47,6 @@ export default function SignupPage() {
         <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-[#0a0a0a] relative overflow-hidden">
             {/* Ambient Background Glow */}
             <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[500px] bg-linear-to-b from-blue-600/10 to-transparent blur-3xl rounded-full pointer-events-none transition-all duration-1000 ${isMounted ? 'opacity-100' : 'opacity-0 scale-50'}`}></div>
-
             <div className={`w-full max-w-5xl bg-zinc-950 rounded-[2.5rem] shadow-2xl shadow-black/50 overflow-hidden flex flex-col md:flex-row relative z-10 border border-white/5 transition-all duration-1000 transform ${isMounted ? 'opacity-100 translate-y-0 scale-100 blur-0' : 'opacity-0 translate-y-12 scale-95 blur-md'}`}>
                 
                 {/* LEFT SIDE OF CARD: Branding */}
