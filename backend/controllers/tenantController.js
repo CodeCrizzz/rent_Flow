@@ -55,34 +55,6 @@ const getTenantProfile = async (req, res) => {
     }
 };
 
-// Submit Maintenance Request
-const submitRequest = async (req, res) => {
-    const { title, description } = req.body;
-    const tenantId = req.user.id;
-    try {
-        await db.query(
-            'INSERT INTO requests (tenant_id, title, description) VALUES ($1, $2, $3)',
-            [tenantId, title, description]
-        );
-        res.status(201).json({ message: 'Request submitted successfully' });
-    } catch (error) {
-        res.status(500).json({ message: 'Server error submitting request' });
-    }
-};
-
-// @Get Tenant's Own Requests
-const getMyRequests = async (req, res) => {
-    const tenantId = req.user.id;
-    try {
-        const result = await db.query(
-            'SELECT * FROM requests WHERE tenant_id = $1 ORDER BY created_at DESC',
-            [tenantId]
-        );
-        res.status(200).json(result.rows);
-    } catch (error) {
-        res.status(500).json({ message: 'Server error fetching requests' });
-    }
-};
 
 //Get Tenant Payments
 const getTenantPayments = async (req, res) => {
@@ -200,6 +172,12 @@ const updateTenantPassword = async (req, res) => {
 const getCurrentBill = async (req, res) => {
     const tenantId = req.user.id;
     try {
+        // Fetch user creation date for cycle info
+        const userResult = await db.query("SELECT created_at FROM users WHERE id = $1", [tenantId]);
+        const user = userResult.rows[0];
+        const creationDay = user?.created_at ? new Date(user.created_at).getDate() : 1;
+        const createdAt = user?.created_at || null;
+
         const result = await db.query(
             "SELECT id, billing_month, total_amount, amount_paid, balance, TO_CHAR(due_date, 'YYYY-MM-DD') AS due_date, status FROM bills WHERE tenant_id = $1 AND status != 'Paid' ORDER BY due_date ASC LIMIT 1",
             [tenantId]
@@ -215,8 +193,8 @@ const getCurrentBill = async (req, res) => {
                 amountPaid: 0,
                 remainingBalance: 0,
                 status: "Clear",
-                createdAt: user.created_at,
-                creationDay: new Date(user.created_at).getDate()
+                createdAt,
+                creationDay
             });
         }
 
@@ -229,6 +207,8 @@ const getCurrentBill = async (req, res) => {
             remainingBalance: parseFloat(bill.balance),
             dueDate: bill.due_date,
             status: bill.status,
+            createdAt,
+            creationDay,
             breakdown: { 
                 rent: parseFloat(bill.total_amount), 
                 water: 0, 
@@ -237,6 +217,7 @@ const getCurrentBill = async (req, res) => {
             }
         });
     } catch (error) {
+        console.error('Get Current Bill Error:', error);
         res.status(500).json({ message: 'Server error fetching current bill' });
     }
 };
@@ -262,6 +243,6 @@ const submitTenantPayment = async (req, res) => {
 
 module.exports = { 
     getTenantDashboard, getTenantProfile, updateTenantProfile, updateTenantPassword, 
-    submitRequest, getMyRequests, getTenantPayments, getCurrentBill, submitTenantPayment,
+    getTenantPayments, getCurrentBill, submitTenantPayment,
     getTenantMessages, sendTenantMessage, getUnreadCount 
 };
