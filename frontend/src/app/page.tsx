@@ -5,7 +5,7 @@ import { useRef, useState, useEffect } from 'react';
 // --- Smooth 2D Hover Feature Card Component ---
 const FeatureCard = ({ title, desc, icon }: { title: string, desc: string, icon: string }) => {
     return (
-        <div className="relative w-full max-w-xs group cursor-pointer">
+        <div className="relative w-full max-w-[300px] sm:max-w-xs md:max-w-full mx-auto group cursor-pointer">
             {/* Outer Ambient Glow (Fades in on hover) */}
             <div className="absolute inset-0 bg-cyan-500/10 dark:bg-cyan-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></div>
             
@@ -32,7 +32,7 @@ const PrimaryButton = ({ onClick, isEntering }: { onClick: () => void, isEnterin
     return (
         <button 
             onClick={onClick}
-            className={`relative group inline-flex items-center justify-center px-10 py-5 bg-cyan-600 dark:bg-white text-white dark:text-slate-900 font-black text-xs uppercase tracking-[0.2em] rounded-full overflow-hidden transition-all duration-300 ease-out hover:scale-105 active:scale-95 hover:shadow-[0_0_30px_rgba(6,182,212,0.4)] dark:hover:shadow-[0_0_40px_rgba(6,182,212,0.5)] ${isEntering ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}
+            className={`relative group inline-flex items-center justify-center px-8 py-4 sm:px-10 sm:py-5 bg-cyan-600 dark:bg-white text-white dark:text-slate-900 font-black text-[10px] sm:text-xs uppercase tracking-[0.2em] rounded-full overflow-hidden transition-all duration-300 ease-out hover:scale-105 active:scale-95 hover:shadow-[0_0_30px_rgba(6,182,212,0.4)] dark:hover:shadow-[0_0_40px_rgba(6,182,212,0.5)] ${isEntering ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}
         >
             {/* Shimmer Effect */}
             <span className="absolute inset-0 w-full h-full bg-linear-to-r from-transparent via-white/20 dark:via-cyan-100/50 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></span>
@@ -40,8 +40,8 @@ const PrimaryButton = ({ onClick, isEntering }: { onClick: () => void, isEnterin
             {/* Content */}
             <span className="relative z-10 flex items-center gap-3">
                 Enter Login-portal
-                <div className="w-6 h-6 rounded-full bg-white dark:bg-slate-900 text-cyan-600 dark:text-cyan-400 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1.5 shadow-[0_0_8px_rgba(6,182,212,0.2)] dark:shadow-[0_0_10px_rgba(6,182,212,0.5)]">
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 5l7 7-7 7"></path></svg>
+                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white dark:bg-slate-900 text-cyan-600 dark:text-cyan-400 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1.5 shadow-[0_0_8px_rgba(6,182,212,0.2)] dark:shadow-[0_0_10px_rgba(6,182,212,0.5)]">
+                    <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M9 5l7 7-7 7"></path></svg>
                 </div>
             </span>
         </button>
@@ -91,9 +91,9 @@ export default function LandingPage() {
 
     const handleMouseMove = (e: React.MouseEvent) => {
         if (!containerRef.current) return;
-        const { left, top } = containerRef.current.getBoundingClientRect();
-        mouseTarget.current.x = e.clientX - left;
-        mouseTarget.current.y = e.clientY - top;
+        // Adjust for scrolled position on mobile
+        mouseTarget.current.x = e.clientX;
+        mouseTarget.current.y = e.clientY;
     };
 
     const handleEnterPortal = () => {
@@ -107,7 +107,8 @@ export default function LandingPage() {
     };
 
     return (
-        <div ref={containerRef} onMouseMove={handleMouseMove} onMouseEnter={() => setIsMouseInside(true)} onMouseLeave={() => setIsMouseInside(false)} className="h-screen max-h-screen w-full bg-slate-50 dark:bg-[#020617] text-slate-800 dark:text-white selection:bg-cyan-500/30 overflow-hidden relative font-sans flex flex-col group/container transition-colors duration-500">
+        /* Replaced h-screen max-h-screen overflow-hidden with min-h-[100dvh] overflow-x-hidden so mobile can scroll */
+        <div ref={containerRef} onMouseMove={handleMouseMove} onMouseEnter={() => setIsMouseInside(true)} onMouseLeave={() => setIsMouseInside(false)} className="min-h-[100dvh] w-full bg-slate-50 dark:bg-[#020617] text-slate-800 dark:text-white selection:bg-cyan-500/30 overflow-x-hidden relative font-sans flex flex-col group/container transition-colors duration-500">
             
             {/* Custom Keyframe Animations */}
             <style>{`
@@ -139,10 +140,11 @@ export default function LandingPage() {
             `}</style>
 
             {/* --- INITIAL BOOT OVERLAY --- */}
-            <div className={`fixed inset-0 z-200 bg-slate-50 dark:bg-[#020617] pointer-events-none transition-opacity duration-1500 ease-out ${isMounted ? 'opacity-0' : 'opacity-100'}`} />
+            <div className={`fixed inset-0 z-[200] bg-slate-50 dark:bg-[#020617] pointer-events-none transition-opacity duration-1500 ease-out ${isMounted ? 'opacity-0' : 'opacity-100'}`} />
 
             {/* --- HIGH VISIBILITY TRACKING ENGINE --- */}
-            <div className={`pointer-events-none absolute inset-0 z-0 overflow-hidden transition-opacity duration-700 ease-out ${isMounted && isMouseInside ? 'opacity-100' : 'opacity-0'}`}>                
+            {/* Changed absolute inset-0 to fixed inset-0 so background stays put while scrolling */}
+            <div className={`pointer-events-none fixed inset-0 z-0 overflow-hidden transition-opacity duration-700 ease-out ${isMounted && isMouseInside ? 'opacity-100' : 'opacity-0'}`}>                
                 {/* Light Mode Effect */}
                 <div className="absolute inset-0 block dark:hidden">                    {/* Stronger Cyan Spotlight */}
                     <div className="absolute inset-0" style={{ background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(6, 182, 212, 0.30), transparent 70%)` }} />
@@ -178,20 +180,20 @@ export default function LandingPage() {
             </div>
 
             {/* --- HEADER --- */}
-            <header className={`relative z-50 w-full px-10 h-24 flex items-center justify-start transition-all duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] ${!isMounted || isEntering ? 'opacity-0 -translate-y-12' : 'opacity-100 translate-y-0'}`}>
+            <header className={`relative z-50 w-full px-6 md:px-10 h-20 md:h-24 flex items-center justify-start shrink-0 transition-all duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] ${!isMounted || isEntering ? 'opacity-0 -translate-y-12' : 'opacity-100 translate-y-0'}`}>
                 <div className="flex items-center gap-3 group cursor-default">
-                    <div className="w-10 h-10 bg-linear-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.3)] dark:shadow-[0_0_20px_rgba(6,182,212,0.5)] group-hover:scale-110 group-hover:rotate-3 transition-all duration-700 ease-out border border-transparent dark:border-cyan-300/30">
-                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-linear-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.3)] dark:shadow-[0_0_20px_rgba(6,182,212,0.5)] group-hover:scale-110 group-hover:rotate-3 transition-all duration-700 ease-out border border-transparent dark:border-cyan-300/30">
+                        <svg className="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                     </div>
-                    <span className="text-2xl font-black tracking-tighter text-slate-900 dark:text-white">Rent<span className="text-cyan-600 dark:text-cyan-400">Flow</span></span>
+                    <span className="text-xl md:text-2xl font-black tracking-tighter text-slate-900 dark:text-white">Rent<span className="text-cyan-600 dark:text-cyan-400">Flow</span></span>
                 </div>
             </header>
 
             {/* --- MAIN CONTENT --- */}
-            <main className={`relative z-10 flex-1 flex flex-col items-center justify-center px-6 text-center transition-all duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${!isMounted || isEntering ? 'opacity-0 scale-95 blur-xl' : 'opacity-100 scale-100 blur-0'}`}>
+            <main className={`relative z-10 flex-1 flex flex-col items-center justify-center px-4 sm:px-6 py-10 md:py-0 text-center transition-all duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${!isMounted || isEntering ? 'opacity-0 scale-95 blur-xl' : 'opacity-100 scale-100 blur-0'}`}>
 
-                {/* Staggered Glyph Reveal Heading */}
-                <h1 className="flex flex-col items-center text-6xl sm:text-7xl lg:text-9xl font-black tracking-tighter mb-8 leading-none">
+                {/* Staggered Glyph Reveal Heading - Adjusted scaling for mobile */}
+                <h1 className="flex flex-col items-center text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter mb-6 md:mb-8 leading-none">
                     <span className="block overflow-hidden relative z-10">
                         <span 
                             className="inline-block text-transparent bg-clip-text bg-linear-to-r from-cyan-600 via-slate-700 to-indigo-600 dark:from-cyan-300 dark:via-white dark:to-indigo-400 bg-size-[200%_auto] pb-2"
@@ -203,7 +205,7 @@ export default function LandingPage() {
                             Manage
                         </span>
                     </span>
-                    <span className="block overflow-hidden -mt-2 sm:-mt-4 lg:-mt-8">
+                    <span className="block overflow-hidden -mt-1 sm:-mt-4 lg:-mt-8">
                         <span 
                             className="inline-block text-transparent bg-clip-text bg-linear-to-r from-cyan-600 via-slate-700 to-indigo-600 dark:from-cyan-300 dark:via-white dark:to-indigo-400 bg-size-[200%_auto] pb-2"
                             style={{ 
@@ -216,17 +218,18 @@ export default function LandingPage() {
                     </span>
                 </h1>
 
-                <p className={`text-slate-600 dark:text-slate-300 text-sm md:text-base max-w-xl mb-10 leading-relaxed font-bold transition-all duration-100 ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                <p className={`text-slate-600 dark:text-slate-300 text-xs sm:text-sm md:text-base max-w-xs sm:max-w-xl mb-8 md:mb-10 leading-relaxed font-bold transition-all duration-100 ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                     "Everything your boarding house needs, in one smart system."                
                 </p>
 
                 {/* Primary Button */}
-                <div className={`mb-16 transition-all duration-1000 delay-800 ${isMounted ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
+                <div className={`mb-12 md:mb-16 transition-all duration-1000 delay-800 ${isMounted ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
                     <PrimaryButton onClick={handleEnterPortal} isEntering={isEntering} />
                 </div>
 
                 {/* --- 2D Smooth Hover Feature Cards --- */}
-                <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto w-full transition-all duration-1000 delay-1000 ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+                {/* Mobile stacks vertically, desktop places side by side */}
+                <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto w-full transition-all duration-1000 delay-1000 ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
                     <FeatureCard icon="🏢" title="Smart Allocation" desc="Drag and drop residents into optimized room layouts instantly." />
                     <FeatureCard icon="⚡" title="Automated Billing" desc="Generate invoices and track overdue balances with zero manual effort." />
                     <FeatureCard icon="🛠️" title="Live Maintenance" desc="Track, assign, and resolve property repair requests in real-time." />
@@ -235,25 +238,26 @@ export default function LandingPage() {
 
             {/* --- LOADING OVERLAY --- */}
             {isEntering && (
-                <div className="fixed inset-0 z-100 flex flex-col items-center justify-center bg-slate-50 dark:bg-[#020617] animate-in fade-in duration-700 ease-out transition-colors">
+                <div className="fixed inset-0 z-[150] flex flex-col items-center justify-center bg-slate-50 dark:bg-[#020617] animate-in fade-in duration-700 ease-out transition-colors">
                     <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at center, rgba(6, 182, 212, 0.08) 0%, transparent 40%)' }}></div>
                     
-                    <div className="relative mb-16 flex items-center gap-5 animate-breathe bg-white/70 dark:bg-slate-900/40 backdrop-blur-md px-8 py-6 rounded-3xl border border-cyan-100 dark:border-cyan-500/20 shadow-[0_10px_30px_-10px_rgba(6,182,212,0.15)] dark:shadow-[0_10px_40px_-10px_rgba(6,182,212,0.3)]">
-                        <div className="w-14 h-14 bg-linear-to-br from-cyan-500 to-blue-600 rounded-2xl flex items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.3)] dark:shadow-[0_0_30px_rgba(6,182,212,0.6)] border border-transparent dark:border-cyan-300/40 relative">
-                            <div className="absolute inset-0 bg-white/20 rounded-2xl animate-pulse"></div>
-                            <svg className="w-8 h-8 text-white relative z-10 animate-float-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                    <div className="relative mb-12 md:mb-16 flex items-center gap-4 md:gap-5 animate-breathe bg-white/70 dark:bg-slate-900/40 backdrop-blur-md px-6 py-5 md:px-8 md:py-6 rounded-3xl border border-cyan-100 dark:border-cyan-500/20 shadow-[0_10px_30px_-10px_rgba(6,182,212,0.15)] dark:shadow-[0_10px_40px_-10px_rgba(6,182,212,0.3)]">
+                        <div className="w-10 h-10 md:w-14 md:h-14 bg-linear-to-br from-cyan-500 to-blue-600 rounded-xl md:rounded-2xl flex items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.3)] dark:shadow-[0_0_30px_rgba(6,182,212,0.6)] border border-transparent dark:border-cyan-300/40 relative">
+                            <div className="absolute inset-0 bg-white/20 rounded-xl md:rounded-2xl animate-pulse"></div>
+                            <svg className="w-6 h-6 md:w-8 md:h-8 text-white relative z-10 animate-float-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                         </div>
                         
-                        <div className="text-4xl font-black tracking-tighter text-slate-900 dark:text-white drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(34,211,238,0.4)]">
+                        <div className="text-3xl md:text-4xl font-black tracking-tighter text-slate-900 dark:text-white drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(34,211,238,0.4)]">
                             Rent<span className="text-cyan-600 dark:text-cyan-400">Flow</span>
                         </div>
                     </div>
                     
-                    <div className="relative w-[320px] h-2 bg-slate-200 dark:bg-slate-800/80 rounded-full overflow-visible mb-8 border border-slate-300 dark:border-slate-700/50">
+                    {/* Progress Bar constrained to avoid mobile overflow */}
+                    <div className="relative w-[80vw] max-w-[320px] h-2 bg-slate-200 dark:bg-slate-800/80 rounded-full overflow-visible mb-8 border border-slate-300 dark:border-slate-700/50">
                         <div className="absolute top-0 left-0 h-full bg-linear-to-r from-blue-500 via-cyan-400 to-teal-300 rounded-full animate-progress-smooth flex justify-end items-center shadow-[0_0_10px_rgba(34,211,238,0.4)] dark:shadow-[0_0_20px_rgba(34,211,238,0.7)]">
-                            <div className="absolute right-0 translate-x-1/2 w-10 h-10 bg-white dark:bg-[#020617] border-2 border-cyan-500 dark:border-cyan-400 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(34,211,238,0.3)] dark:shadow-[0_0_20px_rgba(34,211,238,0.9)] z-20 overflow-hidden group">
+                            <div className="absolute right-0 translate-x-1/2 w-8 h-8 md:w-10 md:h-10 bg-white dark:bg-[#020617] border-2 border-cyan-500 dark:border-cyan-400 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(34,211,238,0.3)] dark:shadow-[0_0_20px_rgba(34,211,238,0.9)] z-20 overflow-hidden group">
                                 <div className="absolute inset-0 bg-cyan-400/20 animate-[spin_3s_linear_infinite]"></div>
-                                <svg className="w-5 h-5 text-cyan-600 dark:text-cyan-300 animate-pulse relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <svg className="w-4 h-4 md:w-5 md:h-5 text-cyan-600 dark:text-cyan-300 animate-pulse relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
                                 </svg>
                             </div>
@@ -262,7 +266,7 @@ export default function LandingPage() {
                     
                     <div className="h-6 relative flex items-center justify-center w-full">
                         {statuses.map((status, index) => (
-                            <p key={status} className={`absolute text-xs font-bold tracking-[0.2em] uppercase transition-all duration-500 ease-out ${loadingStep === index ? 'opacity-100 translate-y-0 text-cyan-700 dark:text-cyan-100 drop-shadow-sm dark:drop-shadow-[0_0_10px_rgba(34,211,238,0.6)]' : loadingStep > index ? 'opacity-0 -translate-y-4 text-slate-400 dark:text-slate-500' : 'opacity-0 translate-y-4 text-slate-400 dark:text-slate-500'}`}>
+                            <p key={status} className={`absolute text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-500 ease-out text-center px-4 ${loadingStep === index ? 'opacity-100 translate-y-0 text-cyan-700 dark:text-cyan-100 drop-shadow-sm dark:drop-shadow-[0_0_10px_rgba(34,211,238,0.6)]' : loadingStep > index ? 'opacity-0 -translate-y-4 text-slate-400 dark:text-slate-500' : 'opacity-0 translate-y-4 text-slate-400 dark:text-slate-500'}`}>
                                 {status}
                             </p>
                         ))}
@@ -271,9 +275,9 @@ export default function LandingPage() {
             )}
 
             {/* --- FOOTER --- */}
-            <footer className={`relative z-10 w-full h-24 flex flex-col items-center justify-center gap-2 transition-all duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] delay-1200 ${!isMounted || isEntering ? 'opacity-0 translate-y-12' : 'opacity-100 translate-y-0'}`}>
-                <p className="text-[9px] font-black text-slate-500 dark:text-slate-400 tracking-[0.5em] uppercase">Property Management Evolved</p>
-                <p className="text-[10px] text-slate-400 dark:text-slate-300 font-bold tracking-widest">&copy; {new Date().getFullYear()} RentFlow Systems.</p>
+            <footer className={`relative z-10 w-full shrink-0 h-20 md:h-24 flex flex-col items-center justify-center gap-1.5 transition-all duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] delay-1200 ${!isMounted || isEntering ? 'opacity-0 translate-y-12' : 'opacity-100 translate-y-0'}`}>
+                <p className="text-[8px] md:text-[9px] font-black text-slate-500 dark:text-slate-400 tracking-[0.3em] md:tracking-[0.5em] uppercase text-center">Property Management Evolved</p>
+                <p className="text-[9px] md:text-[10px] text-slate-400 dark:text-slate-300 font-bold tracking-widest text-center">&copy; {new Date().getFullYear()} RentFlow Systems.</p>
             </footer>
         </div>
     );
