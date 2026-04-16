@@ -14,7 +14,7 @@ const FeatureCard = ({ title, desc, icon }: { title: string, desc: string, icon:
             <div className="relative h-full p-6 rounded-2xl bg-white/60 dark:bg-cyan-950/20 border border-slate-200/80 dark:border-cyan-500/30 backdrop-blur-md text-left transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-2 group-hover:scale-[1.02] overflow-hidden shadow-sm hover:shadow-[0_20px_40px_rgba(6,182,212,0.15)] dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.2)]">
                 
                 {/* Inner Glass Glare (Fades in on hover) */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out bg-linear-to-br from-white/40 dark:from-white/10 to-transparent pointer-events-none"></div>
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out bg-gradient-to-br from-white/40 dark:from-white/10 to-transparent pointer-events-none"></div>
                 
                 {/* Animated Icon */}
                 <div className="text-3xl mb-4 transition-transform duration-500 ease-out group-hover:scale-110 group-hover:-rotate-6 origin-bottom-left drop-shadow-sm dark:drop-shadow-[0_0_10px_rgba(6,182,212,0.3)]">
@@ -36,7 +36,7 @@ const PrimaryButton = ({ onClick, isEntering }: { onClick: () => void, isEnterin
             className={`relative group inline-flex items-center justify-center px-8 py-4 sm:px-10 sm:py-5 bg-cyan-600 dark:bg-white text-white dark:text-slate-900 font-black text-[10px] sm:text-xs uppercase tracking-[0.2em] rounded-full overflow-hidden transition-all duration-300 ease-out hover:scale-105 active:scale-95 hover:shadow-[0_0_30px_rgba(6,182,212,0.4)] dark:hover:shadow-[0_0_40px_rgba(6,182,212,0.5)] ${isEntering ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}
         >
             {/* Shimmer Effect */}
-            <span className="absolute inset-0 w-full h-full bg-linear-to-r from-transparent via-white/20 dark:via-cyan-100/50 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></span>
+            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 dark:via-cyan-100/50 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></span>
             
             {/* Content */}
             <span className="relative z-10 flex items-center gap-3">
@@ -63,7 +63,19 @@ export default function LandingPage() {
     const mouseCurrent = useRef({ x: 0, y: 0 });
     const rafId = useRef<number | null>(null);
 
-    const statuses = ["Loading...", "Connecting to RentFlow Database..."];
+    const statuses = ["Loading...", "Please be patient...", "Entering log-in page..."];
+
+    // --- BULLETPROOF SCROLL LOCK ---
+    useEffect(() => {
+        if (!isMounted || isEntering) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'unset';
+        }
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isMounted, isEntering]);
 
     useEffect(() => {
         const mountTimer = setTimeout(() => setIsMounted(true), 100);
@@ -92,7 +104,6 @@ export default function LandingPage() {
 
     const handleMouseMove = (e: React.MouseEvent) => {
         if (!containerRef.current) return;
-        // scrolled position on mobile
         mouseTarget.current.x = e.clientX;
         mouseTarget.current.y = e.clientY;
     };
@@ -108,8 +119,13 @@ export default function LandingPage() {
     };
 
     return (
-        <div ref={containerRef} onMouseMove={handleMouseMove} onMouseEnter={() => setIsMouseInside(true)} onMouseLeave={() => setIsMouseInside(false)} className="min-h-[100dvh] w-full bg-slate-50 dark:bg-[#020617] text-slate-800 dark:text-white selection:bg-cyan-500/30 overflow-x-hidden relative font-sans flex flex-col group/container transition-colors duration-500">
-            
+        <div 
+                    ref={containerRef} 
+                    onMouseMove={handleMouseMove} 
+                    onMouseEnter={() => setIsMouseInside(true)} 
+                    onMouseLeave={() => setIsMouseInside(false)} 
+                    className={`w-full bg-slate-50 dark:bg-[#020617] text-slate-800 dark:text-white selection:bg-cyan-500/30 relative font-sans flex flex-col group/container transition-colors duration-500 md:h-[100dvh] md:overflow-hidden ${(!isMounted || isEntering) ? 'h-[100dvh] overflow-hidden' : 'min-h-[100dvh] overflow-x-hidden'}`}
+                >            
             {/* Custom Keyframe Animations */}
             <style>{`
                 @keyframes progress-smooth { 
@@ -181,7 +197,7 @@ export default function LandingPage() {
             {/* --- HEADER --- */}
             <header className={`relative z-50 w-full px-6 md:px-10 h-20 md:h-24 flex items-center justify-start shrink-0 transition-all duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] ${!isMounted || isEntering ? 'opacity-0 -translate-y-12' : 'opacity-100 translate-y-0'}`}>
                 <div className="flex items-center gap-3 group cursor-default">
-                    <div className="w-8 h-8 md:w-10 md:h-10 bg-linear-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.3)] dark:shadow-[0_0_20px_rgba(6,182,212,0.5)] group-hover:scale-110 group-hover:rotate-3 transition-all duration-700 ease-out border border-transparent dark:border-cyan-300/30">
+                    <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.3)] dark:shadow-[0_0_20px_rgba(6,182,212,0.5)] group-hover:scale-110 group-hover:rotate-3 transition-all duration-700 ease-out border border-transparent dark:border-cyan-300/30">
                         <svg className="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                     </div>
                     <span className="text-xl md:text-2xl font-black tracking-tighter text-slate-900 dark:text-white">Rent<span className="text-cyan-600 dark:text-cyan-400">Flow</span></span>
@@ -195,7 +211,7 @@ export default function LandingPage() {
                 <h1 className="flex flex-col items-center text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter mb-6 md:mb-8 leading-none">
                     <span className="block overflow-hidden relative z-10">
                         <span 
-                            className="inline-block text-transparent bg-clip-text bg-linear-to-r from-cyan-600 via-slate-700 to-indigo-600 dark:from-cyan-300 dark:via-white dark:to-indigo-400 bg-size-[200%_auto] pb-2"
+                            className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-slate-700 to-indigo-600 dark:from-cyan-300 dark:via-white dark:to-indigo-400 bg-[length:200%_auto] pb-2"
                             style={{ 
                                 opacity: 0, 
                                 animation: isMounted ? 'slideUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards, shimmer-text 6s linear infinite' : 'none' 
@@ -206,7 +222,7 @@ export default function LandingPage() {
                     </span>
                     <span className="block overflow-hidden -mt-1 sm:-mt-4 lg:-mt-8">
                         <span 
-                            className="inline-block text-transparent bg-clip-text bg-linear-to-r from-cyan-600 via-slate-700 to-indigo-600 dark:from-cyan-300 dark:via-white dark:to-indigo-400 bg-size-[200%_auto] pb-2"
+                            className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-slate-700 to-indigo-600 dark:from-cyan-300 dark:via-white dark:to-indigo-400 bg-[length:200%_auto] pb-2"
                             style={{ 
                                 opacity: 0, 
                                 animation: isMounted ? 'slideUpFade 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards, shimmer-text 6s linear infinite' : 'none' 
@@ -227,6 +243,7 @@ export default function LandingPage() {
                 </div>
 
                 {/* --- 2D Smooth Hover Feature Cards --- */}
+                {/* Mobile stacks vertically, desktop places side by side */}
                 <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto w-full transition-all duration-1000 delay-1000 ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
                     <FeatureCard icon="🏢" title="Smart Allocation" desc="Drag and drop residents into optimized room layouts instantly." />
                     <FeatureCard icon="⚡" title="Automated Billing" desc="Generate invoices and track overdue balances with zero manual effort." />
@@ -234,7 +251,6 @@ export default function LandingPage() {
                 </div>
             </main>
 
-            {/* --- LOADING OVERLAY --- */}
             {/* --- ULTRA-PREMIUM BOARDING HOUSE LOADING OVERLAY --- */}
             {isEntering && (
                 <div className="fixed inset-0 z-[150] flex flex-col items-center justify-center bg-slate-50 dark:bg-[#020617] animate-in fade-in duration-700 ease-out transition-colors">
