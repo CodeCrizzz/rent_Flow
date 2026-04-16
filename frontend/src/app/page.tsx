@@ -92,7 +92,7 @@ export default function LandingPage() {
 
     const handleMouseMove = (e: React.MouseEvent) => {
         if (!containerRef.current) return;
-        // Adjust for scrolled position on mobile
+        // scrolled position on mobile
         mouseTarget.current.x = e.clientX;
         mouseTarget.current.y = e.clientY;
     };
@@ -108,7 +108,6 @@ export default function LandingPage() {
     };
 
     return (
-        /* Replaced h-screen max-h-screen overflow-hidden with min-h-[100dvh] overflow-x-hidden so mobile can scroll */
         <div ref={containerRef} onMouseMove={handleMouseMove} onMouseEnter={() => setIsMouseInside(true)} onMouseLeave={() => setIsMouseInside(false)} className="min-h-[100dvh] w-full bg-slate-50 dark:bg-[#020617] text-slate-800 dark:text-white selection:bg-cyan-500/30 overflow-x-hidden relative font-sans flex flex-col group/container transition-colors duration-500">
             
             {/* Custom Keyframe Animations */}
@@ -144,12 +143,11 @@ export default function LandingPage() {
             <div className={`fixed inset-0 z-[200] bg-slate-50 dark:bg-[#020617] pointer-events-none transition-opacity duration-1500 ease-out ${isMounted ? 'opacity-0' : 'opacity-100'}`} />
 
             {/* --- HIGH VISIBILITY TRACKING ENGINE --- */}
-            {/* Changed absolute inset-0 to fixed inset-0 so background stays put while scrolling */}
             <div className={`pointer-events-none fixed inset-0 z-0 overflow-hidden transition-opacity duration-700 ease-out ${isMounted && isMouseInside ? 'opacity-100' : 'opacity-0'}`}>                
                 {/* Light Mode Effect */}
                 <div className="absolute inset-0 block dark:hidden">                    {/* Stronger Cyan Spotlight */}
                     <div className="absolute inset-0" style={{ background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(6, 182, 212, 0.30), transparent 70%)` }} />
-                    {/* Clearer Blueprint Grid */}
+                    {/* Blueprint Grid */}
                     <div className="absolute inset-0 opacity-60" style={{
                         backgroundImage: `
                             linear-gradient(rgba(6, 182, 212, 0.8) 1px, transparent 1px), 
@@ -229,7 +227,6 @@ export default function LandingPage() {
                 </div>
 
                 {/* --- 2D Smooth Hover Feature Cards --- */}
-                {/* Mobile stacks vertically, desktop places side by side */}
                 <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto w-full transition-all duration-1000 delay-1000 ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
                     <FeatureCard icon="🏢" title="Smart Allocation" desc="Drag and drop residents into optimized room layouts instantly." />
                     <FeatureCard icon="⚡" title="Automated Billing" desc="Generate invoices and track overdue balances with zero manual effort." />
@@ -238,48 +235,84 @@ export default function LandingPage() {
             </main>
 
             {/* --- LOADING OVERLAY --- */}
-            {/* --- CLEAN & AESTHETIC LOADING OVERLAY WITH PROGRESS BAR --- */}
+            {/* --- ULTRA-PREMIUM BOARDING HOUSE LOADING OVERLAY --- */}
             {isEntering && (
                 <div className="fixed inset-0 z-[150] flex flex-col items-center justify-center bg-slate-50 dark:bg-[#020617] animate-in fade-in duration-700 ease-out transition-colors">
-                    <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at center, rgba(6, 182, 212, 0.08) 0%, transparent 40%)' }}></div>
+                    {/* Ambient Core Lighting */}
+                    <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at center, rgba(6, 182, 212, 0.12) 0%, transparent 50%)' }}></div>
                     
                     {/* Animated Boarding House Icon Container */}
-                    <div className="relative mb-6 flex flex-col items-center justify-center">
-                        {/* Ambient Pulses */}
-                        <div className="absolute w-32 h-32 md:w-40 md:h-40 bg-cyan-400/20 dark:bg-cyan-500/10 rounded-full animate-ping opacity-75"></div>
-                        <div className="absolute w-48 h-48 md:w-56 md:h-56 border border-cyan-400/30 dark:border-cyan-500/20 rounded-full animate-pulse"></div>
+                    <div className="relative mb-8 flex flex-col items-center justify-center">
                         
-                        {/* Glass Box */}
-                        <div className="relative w-24 h-24 md:w-28 md:h-28 bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-3xl border border-cyan-100 dark:border-cyan-500/30 shadow-[0_10px_40px_-10px_rgba(6,182,212,0.3)] flex items-center justify-center overflow-hidden">
-                            {/* Shimmer sweep */}
-                            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/60 dark:via-cyan-400/10 to-transparent -translate-x-full animate-[shimmer_2s_infinite]"></div>
+                        {/* Glass Container */}
+                        <div className="relative w-32 h-32 md:w-40 md:h-40 bg-white/60 dark:bg-slate-900/40 backdrop-blur-2xl rounded-[2.5rem] border border-white/50 dark:border-cyan-500/30 shadow-[0_20px_50px_-10px_rgba(6,182,212,0.3)] flex items-center justify-center overflow-hidden group">
                             
-                            {/* Animated SVG (Boarding House) */}
-                            <svg className="w-12 h-12 md:w-14 md:h-14 text-cyan-600 dark:text-cyan-400 relative z-10 drop-shadow-[0_0_10px_rgba(6,182,212,0.4)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                            {/* Shimmer sweep effect */}
+                            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/80 dark:via-cyan-400/10 to-transparent -translate-x-full animate-[shimmer_2s_infinite]"></div>
+                            
+                            {/* Awesome Animated SVG (Boarding House) */}
+                            <svg className="w-20 h-20 md:w-24 md:h-24 relative z-10" fill="none" viewBox="0 0 64 64" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <defs>
+                                    <linearGradient id="cyan-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stopColor="#06b6d4" />
+                                        <stop offset="100%" stopColor="#3b82f6" />
+                                    </linearGradient>
+                                    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                                        <feGaussianBlur stdDeviation="2" result="blur" />
+                                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                    </filter>
+                                </defs>
+                                
+                                {/* Background ambient pulse */}
+                                <motion.circle cx="32" cy="32" r="16" fill="url(#cyan-glow)" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: [0, 0.15, 0], scale: [0.5, 1.5, 2] }} transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut" }} />
+
                                 {/* Ground Line */}
-                                <motion.path initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ duration: 0.8, ease: "easeOut" }} d="M2 21h20" />
-                                {/* Main Building Frame */}
-                                <motion.path initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ duration: 1.2, ease: "easeInOut", delay: 0.2 }} d="M5 21V7l7-4 7 4v14" />
-                                {/* Door */}
-                                <motion.path initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }} d="M9 21v-5a2 2 0 014 0v5" />
-                                {/* Windows lighting up (Boarding House Rooms) */}
-                                <motion.rect initial={{ fill: "transparent", opacity: 0 }} animate={{ fill: "currentColor", opacity: 1 }} transition={{ duration: 0.4, delay: 1.4 }} x="8" y="10" width="2.5" height="3" rx="0.5" />
-                                <motion.rect initial={{ fill: "transparent", opacity: 0 }} animate={{ fill: "currentColor", opacity: 1 }} transition={{ duration: 0.4, delay: 1.6 }} x="13.5" y="10" width="2.5" height="3" rx="0.5" />
-                                <motion.rect initial={{ fill: "transparent", opacity: 0 }} animate={{ fill: "currentColor", opacity: 1 }} transition={{ duration: 0.4, delay: 1.8 }} x="8" y="15" width="2.5" height="3" rx="0.5" />
-                                <motion.rect initial={{ fill: "transparent", opacity: 0 }} animate={{ fill: "currentColor", opacity: 1 }} transition={{ duration: 0.4, delay: 2.0 }} x="13.5" y="15" width="2.5" height="3" rx="0.5" />
+                                <motion.path stroke="url(#cyan-glow)" filter="url(#glow)" initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ duration: 1, ease: "easeOut" }} d="M8 56h48" />
+                                
+                                {/* Boarding House Outline (Walls & Pitched Roof) */}
+                                <motion.path stroke="url(#cyan-glow)" initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ duration: 1.5, delay: 0.3, ease: "easeInOut" }} d="M16 56V32L32 16l16 16v24" />
+                                
+                                {/* Chimney */}
+                                <motion.path stroke="currentColor" className="text-cyan-600 dark:text-cyan-500" opacity="0.6" initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 0.6 }} transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }} d="M40 24V12h6v18" />
+
+                                {/* Front Door */}
+                                <motion.path stroke="currentColor" className="text-cyan-600 dark:text-cyan-400" opacity="0.8" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, delay: 1 }} d="M28 56V46a4 4 0 0 1 8 0v10" />
+
+                                {/* Window Frames (Boarding House Units) */}
+                                <motion.rect x="20" y="28" width="8" height="8" rx="1" stroke="currentColor" className="text-cyan-700 dark:text-cyan-500" opacity="0.3" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.8 }} />
+                                <motion.rect x="36" y="28" width="8" height="8" rx="1" stroke="currentColor" className="text-cyan-700 dark:text-cyan-500" opacity="0.3" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.8 }} />
+                                <motion.rect x="16" y="44" width="8" height="8" rx="1" stroke="currentColor" className="text-cyan-700 dark:text-cyan-500" opacity="0.3" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.8 }} />
+                                <motion.rect x="40" y="44" width="8" height="8" rx="1" stroke="currentColor" className="text-cyan-700 dark:text-cyan-500" opacity="0.3" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.8 }} />
+
+                                {/* Windows Lighting Up (Rooms occupied/connecting) */}
+                                <motion.rect x="20" y="28" width="8" height="8" rx="1" fill="#06b6d4" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 1.4 }} />
+                                <motion.rect x="40" y="44" width="8" height="8" rx="1" fill="#3b82f6" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 1.6 }} />
+                                <motion.rect x="16" y="44" width="8" height="8" rx="1" fill="#3b82f6" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 1.8 }} />
+                                <motion.rect x="36" y="28" width="8" height="8" rx="1" fill="#06b6d4" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 2.0 }} />
+
+                                {/* Animated Chimney Smoke */}
+                                <motion.circle cx="43" cy="8" r="2" fill="#06b6d4" initial={{ opacity: 0, y: 0 }} animate={{ opacity: [0, 0.6, 0], y: -10 }} transition={{ duration: 2, delay: 1.5, repeat: Infinity }} />
+                                <motion.circle cx="45" cy="4" r="3" fill="#3b82f6" initial={{ opacity: 0, y: 0 }} animate={{ opacity: [0, 0.4, 0], y: -12 }} transition={{ duration: 2.5, delay: 2, repeat: Infinity }} />
                             </svg>
                         </div>
                     </div>
 
-                    {/* Brand Text */}
-                    <div className="mb-8 text-2xl md:text-3xl font-black tracking-tighter text-slate-900 dark:text-white drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(34,211,238,0.4)] animate-breathe">
-                        Rent<span className="text-cyan-600 dark:text-cyan-400">Flow</span>
+                    {/* Brand Text with Glass Background */}
+                    <div className="relative mb-8 group animate-breathe">
+                        {/* Glow behind the badge */}
+                        <div className="absolute inset-0 bg-cyan-400/30 dark:bg-cyan-500/20 blur-[20px] rounded-full"></div>
+                        
+                        {/* The Pill Badge */}
+                        <div className="relative px-8 py-3 md:px-10 md:py-3.5 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/50 dark:border-cyan-500/30 rounded-2xl shadow-[0_8px_30px_rgba(6,182,212,0.15)] dark:shadow-[0_8px_30px_rgba(6,182,212,0.2)] flex items-center justify-center">
+                            <span className="text-2xl md:text-3xl font-black tracking-tighter text-slate-900 dark:text-white drop-shadow-sm">
+                                Rent<span className="text-cyan-600 dark:text-cyan-400">Flow</span>
+                            </span>
+                        </div>
                     </div>
 
-                    {/* Progress Bar constrained to avoid mobile overflow */}
+                    {/* Progress Bar */}
                     <div className="relative w-[80vw] max-w-[320px] h-2 bg-slate-200 dark:bg-slate-800/80 rounded-full overflow-visible mb-6 border border-slate-300 dark:border-slate-700/50">
                         <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-300 rounded-full animate-progress-smooth flex justify-end items-center shadow-[0_0_10px_rgba(34,211,238,0.4)] dark:shadow-[0_0_20px_rgba(34,211,238,0.7)]">
-                            {/* Spinning Tracker Node */}
                             <div className="absolute right-0 translate-x-1/2 w-6 h-6 md:w-8 md:h-8 bg-white dark:bg-[#020617] border-2 border-cyan-500 dark:border-cyan-400 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(34,211,238,0.3)] dark:shadow-[0_0_20px_rgba(34,211,238,0.9)] z-20 overflow-hidden group">
                                 <div className="absolute inset-0 bg-cyan-400/20 animate-[spin_3s_linear_infinite]"></div>
                                 <div className="w-2 h-2 md:w-2.5 md:h-2.5 bg-cyan-500 dark:bg-cyan-400 rounded-full animate-pulse relative z-10"></div>
