@@ -1,6 +1,7 @@
 "use client";
 import { useRouter } from 'next/navigation';
 import { useRef, useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 // --- Smooth 2D Hover Feature Card Component ---
 const FeatureCard = ({ title, desc, icon }: { title: string, desc: string, icon: string }) => {
@@ -237,33 +238,56 @@ export default function LandingPage() {
             </main>
 
             {/* --- LOADING OVERLAY --- */}
+            {/* --- CLEAN & AESTHETIC LOADING OVERLAY WITH PROGRESS BAR --- */}
             {isEntering && (
                 <div className="fixed inset-0 z-[150] flex flex-col items-center justify-center bg-slate-50 dark:bg-[#020617] animate-in fade-in duration-700 ease-out transition-colors">
                     <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at center, rgba(6, 182, 212, 0.08) 0%, transparent 40%)' }}></div>
                     
-                    <div className="relative mb-12 md:mb-16 flex items-center gap-4 md:gap-5 animate-breathe bg-white/70 dark:bg-slate-900/40 backdrop-blur-md px-6 py-5 md:px-8 md:py-6 rounded-3xl border border-cyan-100 dark:border-cyan-500/20 shadow-[0_10px_30px_-10px_rgba(6,182,212,0.15)] dark:shadow-[0_10px_40px_-10px_rgba(6,182,212,0.3)]">
-                        <div className="w-10 h-10 md:w-14 md:h-14 bg-linear-to-br from-cyan-500 to-blue-600 rounded-xl md:rounded-2xl flex items-center justify-center shadow-[0_0_20px_rgba(6,182,212,0.3)] dark:shadow-[0_0_30px_rgba(6,182,212,0.6)] border border-transparent dark:border-cyan-300/40 relative">
-                            <div className="absolute inset-0 bg-white/20 rounded-xl md:rounded-2xl animate-pulse"></div>
-                            <svg className="w-6 h-6 md:w-8 md:h-8 text-white relative z-10 animate-float-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-                        </div>
+                    {/* Animated Boarding House Icon Container */}
+                    <div className="relative mb-6 flex flex-col items-center justify-center">
+                        {/* Ambient Pulses */}
+                        <div className="absolute w-32 h-32 md:w-40 md:h-40 bg-cyan-400/20 dark:bg-cyan-500/10 rounded-full animate-ping opacity-75"></div>
+                        <div className="absolute w-48 h-48 md:w-56 md:h-56 border border-cyan-400/30 dark:border-cyan-500/20 rounded-full animate-pulse"></div>
                         
-                        <div className="text-3xl md:text-4xl font-black tracking-tighter text-slate-900 dark:text-white drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(34,211,238,0.4)]">
-                            Rent<span className="text-cyan-600 dark:text-cyan-400">Flow</span>
+                        {/* Glass Box */}
+                        <div className="relative w-24 h-24 md:w-28 md:h-28 bg-white/70 dark:bg-slate-900/50 backdrop-blur-xl rounded-3xl border border-cyan-100 dark:border-cyan-500/30 shadow-[0_10px_40px_-10px_rgba(6,182,212,0.3)] flex items-center justify-center overflow-hidden">
+                            {/* Shimmer sweep */}
+                            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/60 dark:via-cyan-400/10 to-transparent -translate-x-full animate-[shimmer_2s_infinite]"></div>
+                            
+                            {/* Animated SVG (Boarding House) */}
+                            <svg className="w-12 h-12 md:w-14 md:h-14 text-cyan-600 dark:text-cyan-400 relative z-10 drop-shadow-[0_0_10px_rgba(6,182,212,0.4)]" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                {/* Ground Line */}
+                                <motion.path initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ duration: 0.8, ease: "easeOut" }} d="M2 21h20" />
+                                {/* Main Building Frame */}
+                                <motion.path initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ duration: 1.2, ease: "easeInOut", delay: 0.2 }} d="M5 21V7l7-4 7 4v14" />
+                                {/* Door */}
+                                <motion.path initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ duration: 0.8, ease: "easeOut", delay: 0.8 }} d="M9 21v-5a2 2 0 014 0v5" />
+                                {/* Windows lighting up (Boarding House Rooms) */}
+                                <motion.rect initial={{ fill: "transparent", opacity: 0 }} animate={{ fill: "currentColor", opacity: 1 }} transition={{ duration: 0.4, delay: 1.4 }} x="8" y="10" width="2.5" height="3" rx="0.5" />
+                                <motion.rect initial={{ fill: "transparent", opacity: 0 }} animate={{ fill: "currentColor", opacity: 1 }} transition={{ duration: 0.4, delay: 1.6 }} x="13.5" y="10" width="2.5" height="3" rx="0.5" />
+                                <motion.rect initial={{ fill: "transparent", opacity: 0 }} animate={{ fill: "currentColor", opacity: 1 }} transition={{ duration: 0.4, delay: 1.8 }} x="8" y="15" width="2.5" height="3" rx="0.5" />
+                                <motion.rect initial={{ fill: "transparent", opacity: 0 }} animate={{ fill: "currentColor", opacity: 1 }} transition={{ duration: 0.4, delay: 2.0 }} x="13.5" y="15" width="2.5" height="3" rx="0.5" />
+                            </svg>
                         </div>
                     </div>
-                    
+
+                    {/* Brand Text */}
+                    <div className="mb-8 text-2xl md:text-3xl font-black tracking-tighter text-slate-900 dark:text-white drop-shadow-sm dark:drop-shadow-[0_0_15px_rgba(34,211,238,0.4)] animate-breathe">
+                        Rent<span className="text-cyan-600 dark:text-cyan-400">Flow</span>
+                    </div>
+
                     {/* Progress Bar constrained to avoid mobile overflow */}
-                    <div className="relative w-[80vw] max-w-[320px] h-2 bg-slate-200 dark:bg-slate-800/80 rounded-full overflow-visible mb-8 border border-slate-300 dark:border-slate-700/50">
-                        <div className="absolute top-0 left-0 h-full bg-linear-to-r from-blue-500 via-cyan-400 to-teal-300 rounded-full animate-progress-smooth flex justify-end items-center shadow-[0_0_10px_rgba(34,211,238,0.4)] dark:shadow-[0_0_20px_rgba(34,211,238,0.7)]">
-                            <div className="absolute right-0 translate-x-1/2 w-8 h-8 md:w-10 md:h-10 bg-white dark:bg-[#020617] border-2 border-cyan-500 dark:border-cyan-400 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(34,211,238,0.3)] dark:shadow-[0_0_20px_rgba(34,211,238,0.9)] z-20 overflow-hidden group">
+                    <div className="relative w-[80vw] max-w-[320px] h-2 bg-slate-200 dark:bg-slate-800/80 rounded-full overflow-visible mb-6 border border-slate-300 dark:border-slate-700/50">
+                        <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-300 rounded-full animate-progress-smooth flex justify-end items-center shadow-[0_0_10px_rgba(34,211,238,0.4)] dark:shadow-[0_0_20px_rgba(34,211,238,0.7)]">
+                            {/* Spinning Tracker Node */}
+                            <div className="absolute right-0 translate-x-1/2 w-6 h-6 md:w-8 md:h-8 bg-white dark:bg-[#020617] border-2 border-cyan-500 dark:border-cyan-400 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(34,211,238,0.3)] dark:shadow-[0_0_20px_rgba(34,211,238,0.9)] z-20 overflow-hidden group">
                                 <div className="absolute inset-0 bg-cyan-400/20 animate-[spin_3s_linear_infinite]"></div>
-                                <svg className="w-4 h-4 md:w-5 md:h-5 text-cyan-600 dark:text-cyan-300 animate-pulse relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-                                </svg>
+                                <div className="w-2 h-2 md:w-2.5 md:h-2.5 bg-cyan-500 dark:bg-cyan-400 rounded-full animate-pulse relative z-10"></div>
                             </div>
                         </div>
                     </div>
                     
+                    {/* Status Text */}
                     <div className="h-6 relative flex items-center justify-center w-full">
                         {statuses.map((status, index) => (
                             <p key={status} className={`absolute text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-500 ease-out text-center px-4 ${loadingStep === index ? 'opacity-100 translate-y-0 text-cyan-700 dark:text-cyan-100 drop-shadow-sm dark:drop-shadow-[0_0_10px_rgba(34,211,238,0.6)]' : loadingStep > index ? 'opacity-0 -translate-y-4 text-slate-400 dark:text-slate-500' : 'opacity-0 translate-y-4 text-slate-400 dark:text-slate-500'}`}>
