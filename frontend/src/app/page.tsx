@@ -158,64 +158,77 @@ export default function LandingPage() {
             {/* --- INITIAL BOOT OVERLAY --- */}
             <div className={`fixed inset-0 z-[200] bg-slate-50 dark:bg-[#020617] pointer-events-none transition-opacity duration-1500 ease-out ${isMounted ? 'opacity-0' : 'opacity-100'}`} />
 
-            {/* --- ADVANCED CYBER BLUEPRINT ENGINE --- */}
-            <div className={`pointer-events-none fixed inset-0 z-0 overflow-hidden transition-opacity duration-700 ease-out ${isMounted && isMouseInside ? 'opacity-100' : 'opacity-0'}`}>                
+            {/* --- 3D KINETIC PARALLAX TOPOGRAPHY --- */}
+            {/* Fully visible background with dynamic multi-layered depth shifted by mouse movement (No Spotlight) */}
+            <div className={`pointer-events-none fixed inset-0 z-0 overflow-hidden transition-opacity duration-1000 ease-out ${isMounted ? 'opacity-100' : 'opacity-0'}`}>                
                 
                 {/* Light Mode Effect */}
                 <div className="absolute inset-0 block dark:hidden">
-                    {/* Cyan Wash Spotlight */}
-                    <div className="absolute inset-0" style={{ background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(6, 182, 212, 0.08), transparent 60%)` }} />
-                    
-                    {/* Blueprint Grid Structure */}
-                    <div className="absolute inset-0" style={{
-                        backgroundImage: `
-                            linear-gradient(rgba(15, 23, 42, 0.1) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(15, 23, 42, 0.1) 1px, transparent 1px),
-                            linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px)
-                        `,
-                        backgroundSize: '80px 80px, 80px 80px, 20px 20px, 20px 20px',
-                        backgroundPosition: '-1px -1px, -1px -1px, -1px -1px, -1px -1px',
-                        WebkitMaskImage: `radial-gradient(450px circle at var(--mouse-x) var(--mouse-y), black 10%, transparent 80%)`,
-                        maskImage: `radial-gradient(450px circle at var(--mouse-x) var(--mouse-y), black 10%, transparent 80%)`
+                    {/* Layer 1: Ambient Swaying Aura */}
+                    <div className="absolute inset-[-50%] w-[200%] h-[200%] opacity-40 blur-[80px]" style={{ 
+                        background: `radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.3) 0%, transparent 40%), radial-gradient(circle at 60% 60%, rgba(59, 130, 246, 0.2) 0%, transparent 40%)`,
+                        transform: `translate(calc(var(--mouse-x) * -0.05), calc(var(--mouse-y) * -0.05))`
                     }} />
                     
-                    {/* Glowing Nexus Points */}
+                    {/* Layer 2: Deep Core Topography Grid */}
+                    <div className="absolute inset-0 opacity-[0.06]" style={{
+                        backgroundImage: `repeating-linear-gradient(0deg, rgba(15, 23, 42, 1) 0, rgba(15, 23, 42, 1) 1px, transparent 1px, transparent 40px), repeating-linear-gradient(90deg, rgba(15, 23, 42, 1) 0, rgba(15, 23, 42, 1) 1px, transparent 1px, transparent 40px)`,
+                        backgroundPosition: `calc(var(--mouse-x) * 0.02) calc(var(--mouse-y) * 0.02)`
+                    }} />
+
+                    {/* Layer 3: Mid-Ground Diagonal Glitch Lines */}
+                    <div className="absolute inset-0 opacity-10" style={{
+                        backgroundImage: `repeating-linear-gradient(45deg, rgba(6, 182, 212, 1) 0, transparent 1px, transparent 200px)`,
+                        backgroundPosition: `calc(var(--mouse-x) * 0.08) calc(var(--mouse-y) * 0.08)`
+                    }} />
+
+                    {/* Layer 4: Foreground High-Speed Particles */}
                     <div className="absolute inset-0" style={{
-                        backgroundImage: `radial-gradient(circle at center, rgba(6, 182, 212, 0.8) 1.5px, transparent 1.5px)`,
-                        backgroundSize: '80px 80px',
-                        backgroundPosition: '-1px -1px',
-                        WebkitMaskImage: `radial-gradient(300px circle at var(--mouse-x) var(--mouse-y), black 20%, transparent 60%)`,
-                        maskImage: `radial-gradient(300px circle at var(--mouse-x) var(--mouse-y), black 20%, transparent 60%)`
+                        backgroundImage: `
+                            radial-gradient(circle, rgba(15, 23, 42, 0.15) 1.5px, transparent 1.5px),
+                            radial-gradient(circle, rgba(6, 182, 212, 0.3) 2.5px, transparent 2.5px)
+                        `,
+                        backgroundSize: '100px 100px, 180px 180px',
+                        backgroundPosition: `
+                            calc(var(--mouse-x) * -0.15) calc(var(--mouse-y) * -0.15),
+                            calc(var(--mouse-x) * -0.25) calc(var(--mouse-y) * -0.25)
+                        `
                     }} />
                 </div>
 
                 {/* Dark Mode Effect */}
                 <div className="absolute inset-0 hidden dark:block">
-                    {/* Deep Neon Spotlight */}
-                    <div className="absolute inset-0" style={{ background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(34, 211, 238, 0.12), transparent 70%)` }} />
-                    
-                    {/* Holographic Grid Structure */}
-                    <div className="absolute inset-0" style={{
-                        backgroundImage: `
-                            linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-                            linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)
-                        `,
-                        backgroundSize: '80px 80px, 80px 80px, 20px 20px, 20px 20px',
-                        backgroundPosition: '-1px -1px, -1px -1px, -1px -1px, -1px -1px',
-                        WebkitMaskImage: `radial-gradient(500px circle at var(--mouse-x) var(--mouse-y), black 20%, transparent 80%)`,
-                        maskImage: `radial-gradient(500px circle at var(--mouse-x) var(--mouse-y), black 20%, transparent 80%)`
+                    {/* Layer 1: Deep Space Ambient Glow */}
+                    <div className="absolute inset-[-50%] w-[200%] h-[200%] opacity-30 blur-[100px] mix-blend-screen" style={{ 
+                        background: `radial-gradient(circle at 30% 30%, rgba(34, 211, 238, 0.4) 0%, transparent 40%), radial-gradient(circle at 70% 60%, rgba(99, 102, 241, 0.2) 0%, transparent 40%)`,
+                        transform: `translate(calc(var(--mouse-x) * -0.06), calc(var(--mouse-y) * -0.06))`
                     }} />
                     
-                    {/* Glowing Nexus Points */}
-                    <div className="absolute inset-0" style={{
-                        backgroundImage: `radial-gradient(circle at center, rgba(34, 211, 238, 0.9) 2px, transparent 2px)`,
-                        backgroundSize: '80px 80px',
-                        backgroundPosition: '-1px -1px',
-                        WebkitMaskImage: `radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), black 30%, transparent 70%)`,
-                        maskImage: `radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), black 30%, transparent 70%)`
+                    {/* Layer 2: Deep Core Cyber Grid */}
+                    <div className="absolute inset-0 opacity-[0.06] mix-blend-screen" style={{
+                        backgroundImage: `repeating-linear-gradient(0deg, rgba(255, 255, 255, 1) 0, rgba(255, 255, 255, 1) 1px, transparent 1px, transparent 50px), repeating-linear-gradient(90deg, rgba(255, 255, 255, 1) 0, rgba(255, 255, 255, 1) 1px, transparent 1px, transparent 50px)`,
+                        backgroundPosition: `calc(var(--mouse-x) * 0.03) calc(var(--mouse-y) * 0.03)`
+                    }} />
+
+                    {/* Layer 3: Mid-Ground Fractal Data Streams */}
+                    <div className="absolute inset-0 opacity-20 mix-blend-screen" style={{
+                        backgroundImage: `repeating-linear-gradient(-45deg, rgba(34, 211, 238, 0.6) 0, transparent 2px, transparent 250px)`,
+                        backgroundPosition: `calc(var(--mouse-x) * 0.1) calc(var(--mouse-y) * 0.1)`
+                    }} />
+
+                    {/* Layer 4: Foreground Parallax Starfield & Nodes */}
+                    <div className="absolute inset-0 mix-blend-screen" style={{
+                        backgroundImage: `
+                            radial-gradient(circle, rgba(255, 255, 255, 0.3) 1.5px, transparent 1.5px),
+                            radial-gradient(circle, rgba(34, 211, 238, 0.7) 2.5px, transparent 2.5px),
+                            radial-gradient(circle, rgba(99, 102, 241, 0.5) 4px, transparent 4px)
+                        `,
+                        backgroundSize: '120px 120px, 200px 200px, 350px 350px',
+                        backgroundPosition: `
+                            calc(var(--mouse-x) * -0.15) calc(var(--mouse-y) * -0.15),
+                            calc(var(--mouse-x) * -0.28) calc(var(--mouse-y) * -0.28),
+                            calc(var(--mouse-x) * -0.45) calc(var(--mouse-y) * -0.45)
+                        `
                     }} />
                 </div>
             </div>
