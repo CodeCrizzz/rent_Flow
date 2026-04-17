@@ -158,34 +158,64 @@ export default function LandingPage() {
             {/* --- INITIAL BOOT OVERLAY --- */}
             <div className={`fixed inset-0 z-[200] bg-slate-50 dark:bg-[#020617] pointer-events-none transition-opacity duration-1500 ease-out ${isMounted ? 'opacity-0' : 'opacity-100'}`} />
 
-            {/* --- PRECISION CROSSHAIR TRACKING ENGINE --- */}
+            {/* --- ADVANCED CYBER BLUEPRINT ENGINE --- */}
             <div className={`pointer-events-none fixed inset-0 z-0 overflow-hidden transition-opacity duration-700 ease-out ${isMounted && isMouseInside ? 'opacity-100' : 'opacity-0'}`}>                
                 
                 {/* Light Mode Effect */}
                 <div className="absolute inset-0 block dark:hidden">
-                    {/* Smooth Blue/Cyan Spotlight */}
-                    <div className="absolute inset-0" style={{ background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(59, 130, 246, 0.12), transparent 60%)` }} />
+                    {/* Cyan Wash Spotlight */}
+                    <div className="absolute inset-0" style={{ background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(6, 182, 212, 0.08), transparent 60%)` }} />
                     
-                    {/* Crosshair Grid (+) */}
-                    <div className="absolute inset-0 opacity-60" style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 16v8M16 20h8' stroke='%230f172a' stroke-width='1.5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E")`,
-                        backgroundSize: '40px 40px',
-                        WebkitMaskImage: `radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), black 20%, transparent 80%)`,
-                        maskImage: `radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), black 20%, transparent 80%)`
+                    {/* Blueprint Grid Structure */}
+                    <div className="absolute inset-0" style={{
+                        backgroundImage: `
+                            linear-gradient(rgba(15, 23, 42, 0.1) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(15, 23, 42, 0.1) 1px, transparent 1px),
+                            linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px)
+                        `,
+                        backgroundSize: '80px 80px, 80px 80px, 20px 20px, 20px 20px',
+                        backgroundPosition: '-1px -1px, -1px -1px, -1px -1px, -1px -1px',
+                        WebkitMaskImage: `radial-gradient(450px circle at var(--mouse-x) var(--mouse-y), black 10%, transparent 80%)`,
+                        maskImage: `radial-gradient(450px circle at var(--mouse-x) var(--mouse-y), black 10%, transparent 80%)`
+                    }} />
+                    
+                    {/* Glowing Nexus Points */}
+                    <div className="absolute inset-0" style={{
+                        backgroundImage: `radial-gradient(circle at center, rgba(6, 182, 212, 0.8) 1.5px, transparent 1.5px)`,
+                        backgroundSize: '80px 80px',
+                        backgroundPosition: '-1px -1px',
+                        WebkitMaskImage: `radial-gradient(300px circle at var(--mouse-x) var(--mouse-y), black 20%, transparent 60%)`,
+                        maskImage: `radial-gradient(300px circle at var(--mouse-x) var(--mouse-y), black 20%, transparent 60%)`
                     }} />
                 </div>
 
                 {/* Dark Mode Effect */}
                 <div className="absolute inset-0 hidden dark:block">
-                    {/* Vivid Cyan Spotlight */}
-                    <div className="absolute inset-0" style={{ background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(34, 211, 238, 0.15), transparent 70%)` }} />
+                    {/* Deep Neon Spotlight */}
+                    <div className="absolute inset-0" style={{ background: `radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), rgba(34, 211, 238, 0.12), transparent 70%)` }} />
                     
-                    {/* Crosshair Grid (+) */}
-                    <div className="absolute inset-0 opacity-70" style={{
-                        backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 16v8M16 20h8' stroke='%23ffffff' stroke-width='1.5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E")`,
-                        backgroundSize: '40px 40px',
-                        WebkitMaskImage: `radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), black 30%, transparent 80%)`,
-                        maskImage: `radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), black 30%, transparent 80%)`
+                    {/* Holographic Grid Structure */}
+                    <div className="absolute inset-0" style={{
+                        backgroundImage: `
+                            linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                            linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px)
+                        `,
+                        backgroundSize: '80px 80px, 80px 80px, 20px 20px, 20px 20px',
+                        backgroundPosition: '-1px -1px, -1px -1px, -1px -1px, -1px -1px',
+                        WebkitMaskImage: `radial-gradient(500px circle at var(--mouse-x) var(--mouse-y), black 20%, transparent 80%)`,
+                        maskImage: `radial-gradient(500px circle at var(--mouse-x) var(--mouse-y), black 20%, transparent 80%)`
+                    }} />
+                    
+                    {/* Glowing Nexus Points */}
+                    <div className="absolute inset-0" style={{
+                        backgroundImage: `radial-gradient(circle at center, rgba(34, 211, 238, 0.9) 2px, transparent 2px)`,
+                        backgroundSize: '80px 80px',
+                        backgroundPosition: '-1px -1px',
+                        WebkitMaskImage: `radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), black 30%, transparent 70%)`,
+                        maskImage: `radial-gradient(400px circle at var(--mouse-x) var(--mouse-y), black 30%, transparent 70%)`
                     }} />
                 </div>
             </div>
