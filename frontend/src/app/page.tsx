@@ -290,23 +290,59 @@ export default function LandingPage() {
                 </div>
             </main>
 
-            {/* --- LOADING OVERLAY --- */}
+            {/* --- LOADING OVERLAY: HOLOGRAPHIC UPLINK --- */}
             {isEntering && (
-                <div className="fixed inset-0 z-[150] flex flex-col items-center justify-center bg-slate-50 dark:bg-[#020617] animate-in fade-in duration-700 ease-out transition-colors">
-                    {/* Ambient Core Lighting */}
-                    <div className="absolute inset-0 pointer-events-none" style={{ background: 'radial-gradient(circle at center, rgba(6, 182, 212, 0.12) 0%, transparent 50%)' }}></div>
+                <div className="fixed inset-0 z-[150] flex flex-col items-center justify-center bg-slate-50/90 dark:bg-[#020617]/90 backdrop-blur-xl animate-in fade-in duration-700 ease-out transition-colors overflow-hidden">
                     
-                    {/* Animated Boarding House Icon Container */}
-                    <div className="relative mb-8 flex flex-col items-center justify-center">
+                    {/* Custom Inline Animations for the HUD */}
+                    <style>{`
+                        @keyframes hud-scan {
+                            0% { transform: translateY(-10px); opacity: 0; }
+                            10% { opacity: 1; }
+                            90% { opacity: 1; }
+                            100% { transform: translateY(180px); opacity: 0; }
+                        }
+                        @keyframes hud-spin {
+                            0% { transform: rotate(0deg); }
+                            100% { transform: rotate(360deg); }
+                        }
+                    `}</style>
+                    
+                    {/* Tactical Background Grid */}
+                    <div className="absolute inset-0 pointer-events-none opacity-20 dark:opacity-30" style={{
+                        backgroundImage: `linear-gradient(rgba(6, 182, 212, 0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.4) 1px, transparent 1px)`,
+                        backgroundSize: '40px 40px',
+                        maskImage: `radial-gradient(circle at center, black 20%, transparent 70%)`,
+                        WebkitMaskImage: `radial-gradient(circle at center, black 20%, transparent 70%)`
+                    }}></div>
+
+                    {/* Holographic Uplink Core */}
+                    <div className="relative mb-20 flex flex-col items-center justify-center mt-12">
                         
-                        {/* Glass Container */}
-                        <div className="relative w-32 h-32 md:w-40 md:h-40 bg-white/60 dark:bg-slate-900/40 backdrop-blur-2xl rounded-[2.5rem] border border-white/50 dark:border-cyan-500/30 shadow-[0_20px_50px_-10px_rgba(6,182,212,0.3)] flex items-center justify-center overflow-hidden group">
+                        {/* Outer rotating dashed ring */}
+                        <div className="absolute inset-[-50px] md:inset-[-70px] rounded-full border border-dashed border-cyan-500/40 dark:border-cyan-400/30" style={{ animation: 'hud-spin 12s linear infinite' }}></div>
+                        {/* Inner rotating solid ring */}
+                        <div className="absolute inset-[-30px] md:inset-[-45px] rounded-full border-t-2 border-r-2 border-blue-500/50 dark:border-blue-400/50" style={{ animation: 'hud-spin 5s linear infinite reverse' }}></div>
+                        
+                        {/* HUD Target Brackets */}
+                        <div className="absolute inset-[-40px] md:inset-[-60px] pointer-events-none">
+                            <div className="absolute top-0 left-0 w-6 h-6 md:w-8 md:h-8 border-t-2 border-l-2 border-cyan-500 dark:border-cyan-400"></div>
+                            <div className="absolute top-0 right-0 w-6 h-6 md:w-8 md:h-8 border-t-2 border-r-2 border-cyan-500 dark:border-cyan-400"></div>
+                            <div className="absolute bottom-0 left-0 w-6 h-6 md:w-8 md:h-8 border-b-2 border-l-2 border-cyan-500 dark:border-cyan-400"></div>
+                            <div className="absolute bottom-0 right-0 w-6 h-6 md:w-8 md:h-8 border-b-2 border-r-2 border-cyan-500 dark:border-cyan-400"></div>
+                        </div>
+
+                        {/* Core Glass Container */}
+                        <div className="relative w-36 h-36 md:w-48 md:h-48 bg-slate-100/50 dark:bg-cyan-950/30 backdrop-blur-md rounded-2xl flex items-center justify-center overflow-hidden shadow-[0_0_40px_rgba(6,182,212,0.15)] dark:shadow-[0_0_50px_rgba(6,182,212,0.3)] border border-cyan-500/20">
                             
-                            {/* Shimmer sweep effect */}
-                            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/80 dark:via-cyan-400/10 to-transparent -translate-x-full animate-[shimmer_2s_infinite]"></div>
+                            {/* Scanning Laser Line */}
+                            <div className="absolute top-0 left-0 w-full h-[2px] bg-cyan-400 shadow-[0_0_15px_rgba(34,211,238,1)] z-20" style={{ animation: 'hud-scan 2.2s linear infinite' }}></div>
                             
+                            {/* Inner Holographic Glitch */}
+                            <div className="absolute inset-0 bg-gradient-to-b from-cyan-400/5 via-transparent to-cyan-500/10 mix-blend-overlay pointer-events-none"></div>
+
                             {/* Animated SVG (Boarding House) */}
-                            <svg className="w-20 h-20 md:w-24 md:h-24 relative z-10" fill="none" viewBox="0 0 64 64" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <svg className="w-20 h-20 md:w-28 md:h-28 relative z-10" fill="none" viewBox="0 0 64 64" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <defs>
                                     <linearGradient id="cyan-glow" x1="0%" y1="0%" x2="100%" y2="100%">
                                         <stop offset="0%" stopColor="#06b6d4" />
@@ -352,36 +388,31 @@ export default function LandingPage() {
                         </div>
                     </div>
 
-                    {/* Brand Text with Glass Background */}
-                    <div className="relative mb-8 group animate-breathe">
-                        {/* Glow behind the badge */}
-                        <div className="absolute inset-0 bg-cyan-400/30 dark:bg-cyan-500/20 blur-[20px] rounded-full"></div>
+                    {/* HUD Status Interface */}
+                    <div className="relative flex flex-col items-center w-full max-w-sm px-6">
                         
-                        {/* The Pill Badge */}
-                        <div className="relative px-8 py-3 md:px-10 md:py-3.5 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/50 dark:border-cyan-500/30 rounded-2xl shadow-[0_8px_30px_rgba(6,182,212,0.15)] dark:shadow-[0_8px_30px_rgba(6,182,212,0.2)] flex items-center justify-center">
-                            <span className="text-2xl md:text-3xl font-black tracking-tighter text-slate-900 dark:text-white drop-shadow-sm">
-                                Rent<span className="text-cyan-600 dark:text-cyan-400">Flow</span>
+                        {/* Connection Status Header */}
+                        <div className="flex items-center justify-between w-full mb-3 text-[10px] md:text-xs font-mono font-bold tracking-[0.2em] uppercase text-cyan-700 dark:text-cyan-400">
+                            <span className="flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse shadow-[0_0_8px_rgba(6,182,212,0.8)]"></span>
+                                SYS.UPLINK
                             </span>
+                            <span className="text-slate-500 dark:text-slate-400">INIT: [{loadingStep}/2]</span>
                         </div>
-                    </div>
-
-                    {/* Progress Bar */}
-                    <div className="relative w-[80vw] max-w-[320px] h-2 bg-slate-200 dark:bg-slate-800/80 rounded-full overflow-visible mb-6 border border-slate-300 dark:border-slate-700/50">
-                        <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-500 via-cyan-400 to-teal-300 rounded-full animate-progress-smooth flex justify-end items-center shadow-[0_0_10px_rgba(34,211,238,0.4)] dark:shadow-[0_0_20px_rgba(34,211,238,0.7)]">
-                            <div className="absolute right-0 translate-x-1/2 w-6 h-6 md:w-8 md:h-8 bg-white dark:bg-[#020617] border-2 border-cyan-500 dark:border-cyan-400 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(34,211,238,0.3)] dark:shadow-[0_0_20px_rgba(34,211,238,0.9)] z-20 overflow-hidden group">
-                                <div className="absolute inset-0 bg-cyan-400/20 animate-[spin_3s_linear_infinite]"></div>
-                                <div className="w-2 h-2 md:w-2.5 md:h-2.5 bg-cyan-500 dark:bg-cyan-400 rounded-full animate-pulse relative z-10"></div>
-                            </div>
+                        
+                        {/* Segmented Data Bar */}
+                        <div className="relative w-full h-1 md:h-1.5 bg-slate-200/50 dark:bg-slate-800/80 overflow-hidden mb-5 flex">
+                            <div className="h-full bg-cyan-500 dark:bg-cyan-400 animate-progress-smooth shadow-[0_0_10px_rgba(34,211,238,0.6)]"></div>
                         </div>
-                    </div>
-                    
-                    {/* Status Text */}
-                    <div className="h-6 relative flex items-center justify-center w-full">
-                        {statuses.map((status, index) => (
-                            <p key={status} className={`absolute text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-500 ease-out text-center px-4 ${loadingStep === index ? 'opacity-100 translate-y-0 text-cyan-700 dark:text-cyan-100 drop-shadow-sm dark:drop-shadow-[0_0_10px_rgba(34,211,238,0.6)]' : loadingStep > index ? 'opacity-0 -translate-y-4 text-slate-400 dark:text-slate-500' : 'opacity-0 translate-y-4 text-slate-400 dark:text-slate-500'}`}>
-                                {status}
-                            </p>
-                        ))}
+                        
+                        {/* Cross-fading status text */}
+                        <div className="h-6 relative flex items-center justify-center w-full">
+                            {statuses.map((status, index) => (
+                                <p key={status} className={`absolute text-[10px] md:text-xs font-mono font-bold tracking-widest transition-all duration-300 ease-out text-center ${loadingStep === index ? 'opacity-100 scale-100 text-slate-800 dark:text-white drop-shadow-sm dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]' : loadingStep > index ? 'opacity-0 scale-110 text-cyan-600 dark:text-cyan-400' : 'opacity-0 scale-90 text-slate-400'}`}>
+                                    {status}
+                                </p>
+                            ))}
+                        </div>
                     </div>
                 </div>
             )}
