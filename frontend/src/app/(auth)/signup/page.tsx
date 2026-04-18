@@ -45,7 +45,7 @@ export default function SignupPage() {
 
     return (
         /* Added py-10 so the card doesn't clip on small vertical screens */
-        <div className="min-h-[100dvh] flex flex-col items-center justify-center px-4 py-10 sm:p-6 lg:p-8 bg-[#0a0a0a] relative overflow-x-hidden font-sans">
+        <div className="min-h-dvh flex flex-col items-center justify-center px-4 py-10 sm:p-6 lg:p-8 bg-[#0a0a0a] relative overflow-x-hidden font-sans">
             
             {/* Ambient Background Glow */}
             <div className={`fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[300px] sm:h-[500px] bg-linear-to-b from-blue-600/10 to-transparent blur-[60px] sm:blur-[100px] rounded-full pointer-events-none transition-all duration-1000 ${isMounted ? 'opacity-100' : 'opacity-0 scale-50'}`}></div>
@@ -220,7 +220,7 @@ export default function SignupPage() {
                             initial={{ scale: 0.9, opacity: 0, y: 20 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                            className="bg-zinc-950 border border-white/10 rounded-[2rem] sm:rounded-[2.5rem] p-8 sm:p-10 max-w-sm w-full shadow-2xl relative shadow-black flex flex-col items-center"
+                            className="bg-zinc-950 border border-white/10 rounded-4xl sm:rounded-[2.5rem] p-8 sm:p-10 max-w-sm w-full shadow-2xl relative shadow-black flex flex-col items-center"
                         >
                             
                             {/* Close Button Top Right */}

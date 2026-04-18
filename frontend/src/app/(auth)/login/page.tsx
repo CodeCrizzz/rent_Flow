@@ -64,7 +64,7 @@ export default function LoginPage() {
 
     return (
         /* Use 100dvh to fix mobile browser address bar clipping */
-        <div className="min-h-[100dvh] flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-[#0a0a0a] relative overflow-hidden font-sans">
+        <div className="min-h-dvh flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-[#0a0a0a] relative overflow-hidden font-sans">
             
             {/* Ambient Background Glow */}
             <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[300px] sm:h-[500px] blur-[100px] rounded-full pointer-events-none transition-all duration-1000 ${isMounted ? 'opacity-100' : 'opacity-0 scale-50'} ${selectedRole === 'tenant' ? 'bg-blue-600/10' : 'bg-purple-600/10'}`}></div>

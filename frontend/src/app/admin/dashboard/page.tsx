@@ -80,7 +80,7 @@ export default function AdminDashboard() {
                         {/* Billing Overview */}
                         {/* Adjusted padding and border radius for mobile */}
                         <div className="bg-white dark:bg-[#0a0a0a] p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700 transition-colors duration-500 shadow-xl dark:shadow-2xl relative overflow-hidden group">
-                            <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 dark:from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <div className="absolute inset-0 bg-linear-to-br from-emerald-500/10 dark:from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             
                             <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mb-5 sm:mb-6 flex items-center gap-3 relative z-10 transition-colors duration-500">
                                 <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-lg sm:text-xl shadow-[0_0_15px_rgba(16,185,129,0.2)]">💰</span>
@@ -106,7 +106,7 @@ export default function AdminDashboard() {
 
                         {/* Room Status */}
                         <div className="bg-white dark:bg-[#0a0a0a] p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700 transition-colors duration-500 shadow-xl dark:shadow-2xl relative overflow-hidden group">
-                            <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 dark:from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <div className="absolute inset-0 bg-linear-to-br from-blue-500/10 dark:from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             
                             <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mb-5 sm:mb-6 flex items-center gap-3 relative z-10 transition-colors duration-500">
                                 <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg sm:text-xl shadow-[0_0_15px_rgba(59,130,246,0.2)]">🏢</span>
@@ -146,7 +146,7 @@ export default function AdminDashboard() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
                         {/* Tenant Overview */}
                         <div className="bg-white dark:bg-[#0a0a0a] p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700 transition-colors duration-500 shadow-xl dark:shadow-2xl flex flex-col justify-center relative overflow-hidden group">
-                            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 dark:from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <div className="absolute inset-0 bg-linear-to-br from-indigo-500/10 dark:from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             
                             <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mb-5 sm:mb-6 flex items-center gap-3 relative z-10 transition-colors duration-500">
                                 <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-lg sm:text-xl shadow-[0_0_15px_rgba(99,102,241,0.2)]">👥</span>
@@ -154,7 +154,7 @@ export default function AdminDashboard() {
                             </h3>
                             {/* Adjusted flex directions: stacks on very small screens and MD tablets, side-by-side on SM and LG */}
                             <div className="flex flex-col sm:flex-row md:flex-col xl:flex-row items-center gap-6 sm:gap-8 relative z-10">
-                                <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-[8px] sm:border-10 border-slate-100 dark:border-zinc-900 flex items-center justify-center shrink-0 shadow-[0_0_30px_rgba(99,102,241,0.15)] relative transition-colors duration-500">
+                                <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-8 sm:border-10 border-slate-100 dark:border-zinc-900 flex items-center justify-center shrink-0 shadow-[0_0_30px_rgba(99,102,241,0.15)] relative transition-colors duration-500">
                                     {/* Glowing ring */}
                                     <svg className="absolute inset-0 w-full h-full -rotate-90">
                                         <circle cx="50%" cy="50%" r="48%" fill="none" stroke="rgba(99,102,241,0.2)" strokeWidth="4"></circle>
@@ -177,7 +177,7 @@ export default function AdminDashboard() {
 
                         {/* Maintenance Summary */}
                         <div className="bg-white dark:bg-[#0a0a0a] p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700 transition-colors duration-500 shadow-xl dark:shadow-2xl relative overflow-hidden group">
-                            <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 dark:from-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <div className="absolute inset-0 bg-linear-to-br from-orange-500/10 dark:from-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             
                             <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mb-5 sm:mb-6 flex items-center gap-3 relative z-10 transition-colors duration-500">
                                 <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-orange-50 dark:bg-orange-500/10 border border-orange-200 dark:border-orange-500/20 text-orange-600 dark:text-orange-400 flex items-center justify-center text-lg sm:text-xl shadow-[0_0_15px_rgba(249,115,22,0.2)]">🛠️</span>
@@ -216,7 +216,7 @@ export default function AdminDashboard() {
 
                 {/* Right Column: Recent Activities */}
                 <div className="bg-white dark:bg-[#0a0a0a] p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 shadow-xl dark:shadow-2xl h-full flex flex-col relative overflow-hidden group transition-colors duration-500">
-                    <div className="absolute inset-0 bg-gradient-to-b from-purple-500/10 dark:from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div className="absolute inset-0 bg-linear-to-b from-purple-500/10 dark:from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     
                     <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mb-6 sm:mb-8 flex items-center gap-3 relative z-10 transition-colors duration-500">
                         <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-purple-50 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center text-lg sm:text-xl shadow-[0_0_15px_rgba(168,85,247,0.2)]">⚡</span>
