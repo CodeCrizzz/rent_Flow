@@ -63,7 +63,7 @@ export default function LandingPage() {
     const mouseCurrent = useRef({ x: 0, y: 0 });
     const rafId = useRef<number | null>(null);
 
-    const statuses = ["Loading...", "Please be patient...", "Entering log-in page..."];
+    const statuses = ["Loading...", "Connecting...", "Entering portal..."];
 
     // --- BULLETPROOF SCROLL LOCK ---
     useEffect(() => {
@@ -165,28 +165,23 @@ export default function LandingPage() {
                 {/* Light Mode Effect */}
                 <div className="absolute inset-0 block dark:hidden">
                     {/* Layer 1: Ambient Swaying Aura */}
-                    <div className="absolute inset-[-50%] w-[200%] h-[200%] opacity-40 blur-[80px]" style={{ 
-                        background: `radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.3) 0%, transparent 40%), radial-gradient(circle at 60% 60%, rgba(59, 130, 246, 0.2) 0%, transparent 40%)`,
+                    <div className="absolute inset-[-50%] w-[200%] h-[200%] opacity-60 blur-[80px]" style={{ 
+                        background: `radial-gradient(circle at 40% 40%, rgba(6, 182, 212, 0.5) 0%, transparent 40%), radial-gradient(circle at 60% 60%, rgba(59, 130, 246, 0.4) 0%, transparent 40%)`,
                         transform: `translate(calc(var(--mouse-x) * -0.05), calc(var(--mouse-y) * -0.05))`
                     }} />
-                    
-                    {/* Layer 2: Deep Core Topography Grid */}
-                    <div className="absolute inset-0 opacity-[0.06]" style={{
-                        backgroundImage: `repeating-linear-gradient(0deg, rgba(15, 23, 42, 1) 0, rgba(15, 23, 42, 1) 1px, transparent 1px, transparent 40px), repeating-linear-gradient(90deg, rgba(15, 23, 42, 1) 0, rgba(15, 23, 42, 1) 1px, transparent 1px, transparent 40px)`,
-                        backgroundPosition: `calc(var(--mouse-x) * 0.02) calc(var(--mouse-y) * 0.02)`
-                    }} />
+
 
                     {/* Layer 3: Mid-Ground Diagonal Glitch Lines */}
-                    <div className="absolute inset-0 opacity-10" style={{
-                        backgroundImage: `repeating-linear-gradient(45deg, rgba(6, 182, 212, 1) 0, transparent 1px, transparent 200px)`,
+                    <div className="absolute inset-0 opacity-25" style={{
+                        backgroundImage: `repeating-linear-gradient(45deg, rgba(15, 23, 42, 1) 0, transparent 1px, transparent 200px)`,
                         backgroundPosition: `calc(var(--mouse-x) * 0.08) calc(var(--mouse-y) * 0.08)`
                     }} />
 
                     {/* Layer 4: Foreground High-Speed Particles */}
                     <div className="absolute inset-0" style={{
                         backgroundImage: `
-                            radial-gradient(circle, rgba(15, 23, 42, 0.15) 1.5px, transparent 1.5px),
-                            radial-gradient(circle, rgba(6, 182, 212, 0.3) 2.5px, transparent 2.5px)
+                            radial-gradient(circle, rgba(15, 23, 42, 0.5) 1.5px, transparent 1.5px),
+                            radial-gradient(circle, rgba(15, 23, 42, 0.8) 2.5px, transparent 2.5px)
                         `,
                         backgroundSize: '100px 100px, 180px 180px',
                         backgroundPosition: `
@@ -203,12 +198,7 @@ export default function LandingPage() {
                         background: `radial-gradient(circle at 30% 30%, rgba(34, 211, 238, 0.4) 0%, transparent 40%), radial-gradient(circle at 70% 60%, rgba(99, 102, 241, 0.2) 0%, transparent 40%)`,
                         transform: `translate(calc(var(--mouse-x) * -0.06), calc(var(--mouse-y) * -0.06))`
                     }} />
-                    
-                    {/* Layer 2: Deep Core Cyber Grid */}
-                    <div className="absolute inset-0 opacity-[0.06] mix-blend-screen" style={{
-                        backgroundImage: `repeating-linear-gradient(0deg, rgba(255, 255, 255, 1) 0, rgba(255, 255, 255, 1) 1px, transparent 1px, transparent 50px), repeating-linear-gradient(90deg, rgba(255, 255, 255, 1) 0, rgba(255, 255, 255, 1) 1px, transparent 1px, transparent 50px)`,
-                        backgroundPosition: `calc(var(--mouse-x) * 0.03) calc(var(--mouse-y) * 0.03)`
-                    }} />
+
 
                     {/* Layer 3: Mid-Ground Fractal Data Streams */}
                     <div className="absolute inset-0 opacity-20 mix-blend-screen" style={{
@@ -290,129 +280,84 @@ export default function LandingPage() {
                 </div>
             </main>
 
-            {/* --- LOADING OVERLAY: HOLOGRAPHIC UPLINK --- */}
+            {/* --- LOADING OVERLAY: CLEAN DESIGN --- */}
             {isEntering && (
-                <div className="fixed inset-0 z-[150] flex flex-col items-center justify-center bg-slate-50/90 dark:bg-[#020617]/90 backdrop-blur-xl animate-in fade-in duration-700 ease-out transition-colors overflow-hidden">
+                <div className="fixed inset-0 z-[150] flex flex-col items-center justify-center bg-slate-50 dark:bg-[#020617] animate-in fade-in duration-700 ease-out transition-colors overflow-hidden">
                     
-                    {/* Custom Inline Animations for the HUD */}
-                    <style>{`
-                        @keyframes hud-scan {
-                            0% { transform: translateY(-10px); opacity: 0; }
-                            10% { opacity: 1; }
-                            90% { opacity: 1; }
-                            100% { transform: translateY(180px); opacity: 0; }
-                        }
-                        @keyframes hud-spin {
-                            0% { transform: rotate(0deg); }
-                            100% { transform: rotate(360deg); }
-                        }
-                    `}</style>
-                    
-                    {/* Tactical Background Grid */}
-                    <div className="absolute inset-0 pointer-events-none opacity-20 dark:opacity-30" style={{
-                        backgroundImage: `linear-gradient(rgba(6, 182, 212, 0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(6, 182, 212, 0.4) 1px, transparent 1px)`,
-                        backgroundSize: '40px 40px',
-                        maskImage: `radial-gradient(circle at center, black 20%, transparent 70%)`,
-                        WebkitMaskImage: `radial-gradient(circle at center, black 20%, transparent 70%)`
-                    }}></div>
-
-                    {/* Holographic Uplink Core */}
-                    <div className="relative mb-20 flex flex-col items-center justify-center mt-12">
-                        
-                        {/* Outer rotating dashed ring */}
-                        <div className="absolute inset-[-50px] md:inset-[-70px] rounded-full border border-dashed border-cyan-500/40 dark:border-cyan-400/30" style={{ animation: 'hud-spin 12s linear infinite' }}></div>
-                        {/* Inner rotating solid ring */}
-                        <div className="absolute inset-[-30px] md:inset-[-45px] rounded-full border-t-2 border-r-2 border-blue-500/50 dark:border-blue-400/50" style={{ animation: 'hud-spin 5s linear infinite reverse' }}></div>
-                        
-                        {/* HUD Target Brackets */}
-                        <div className="absolute inset-[-40px] md:inset-[-60px] pointer-events-none">
-                            <div className="absolute top-0 left-0 w-6 h-6 md:w-8 md:h-8 border-t-2 border-l-2 border-cyan-500 dark:border-cyan-400"></div>
-                            <div className="absolute top-0 right-0 w-6 h-6 md:w-8 md:h-8 border-t-2 border-r-2 border-cyan-500 dark:border-cyan-400"></div>
-                            <div className="absolute bottom-0 left-0 w-6 h-6 md:w-8 md:h-8 border-b-2 border-l-2 border-cyan-500 dark:border-cyan-400"></div>
-                            <div className="absolute bottom-0 right-0 w-6 h-6 md:w-8 md:h-8 border-b-2 border-r-2 border-cyan-500 dark:border-cyan-400"></div>
-                        </div>
-
-                        {/* Core Glass Container */}
-                        <div className="relative w-36 h-36 md:w-48 md:h-48 bg-slate-100/50 dark:bg-cyan-950/30 backdrop-blur-md rounded-2xl flex items-center justify-center overflow-hidden shadow-[0_0_40px_rgba(6,182,212,0.15)] dark:shadow-[0_0_50px_rgba(6,182,212,0.3)] border border-cyan-500/20">
+                    {/* Animated Boarding House Icon */}
+                    <div className="relative mb-12 flex flex-col items-center justify-center">
+                        <svg className="w-24 h-24 md:w-32 md:h-32 relative z-10" fill="none" viewBox="0 0 64 64" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <defs>
+                                <linearGradient id="cyan-glow" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stopColor="#06b6d4" />
+                                    <stop offset="100%" stopColor="#3b82f6" />
+                                </linearGradient>
+                                <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                                    <feGaussianBlur stdDeviation="2" result="blur" />
+                                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                                </filter>
+                            </defs>
                             
-                            {/* Scanning Laser Line */}
-                            <div className="absolute top-0 left-0 w-full h-[2px] bg-cyan-400 shadow-[0_0_15px_rgba(34,211,238,1)] z-20" style={{ animation: 'hud-scan 2.2s linear infinite' }}></div>
+                            {/* Background ambient pulse */}
+                            <motion.circle cx="32" cy="32" r="16" fill="url(#cyan-glow)" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: [0, 0.15, 0], scale: [0.5, 1.5, 2] }} transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut" }} />
+
+                            {/* Ground Line */}
+                            <motion.path stroke="url(#cyan-glow)" filter="url(#glow)" initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ duration: 1, ease: "easeOut" }} d="M8 56h48" />
                             
-                            {/* Inner Holographic Glitch */}
-                            <div className="absolute inset-0 bg-gradient-to-b from-cyan-400/5 via-transparent to-cyan-500/10 mix-blend-overlay pointer-events-none"></div>
+                            {/* BH Outline */}
+                            <motion.path stroke="url(#cyan-glow)" initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ duration: 1.5, delay: 0.3, ease: "easeInOut" }} d="M16 56V32L32 16l16 16v24" />
+                            
+                            {/* Chimney */}
+                            <motion.path stroke="currentColor" className="text-cyan-600 dark:text-cyan-500" opacity="0.6" initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 0.6 }} transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }} d="M40 24V12h6v18" />
 
-                            {/* Animated SVG (Boarding House) */}
-                            <svg className="w-20 h-20 md:w-28 md:h-28 relative z-10" fill="none" viewBox="0 0 64 64" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <defs>
-                                    <linearGradient id="cyan-glow" x1="0%" y1="0%" x2="100%" y2="100%">
-                                        <stop offset="0%" stopColor="#06b6d4" />
-                                        <stop offset="100%" stopColor="#3b82f6" />
-                                    </linearGradient>
-                                    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                                        <feGaussianBlur stdDeviation="2" result="blur" />
-                                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                                    </filter>
-                                </defs>
-                                
-                                {/* Background ambient pulse */}
-                                <motion.circle cx="32" cy="32" r="16" fill="url(#cyan-glow)" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: [0, 0.15, 0], scale: [0.5, 1.5, 2] }} transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut" }} />
+                            {/* Front Door */}
+                            <motion.path stroke="currentColor" className="text-cyan-600 dark:text-cyan-400" opacity="0.8" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, delay: 1 }} d="M28 56V46a4 4 0 0 1 8 0v10" />
 
-                                {/* Ground Line */}
-                                <motion.path stroke="url(#cyan-glow)" filter="url(#glow)" initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ duration: 1, ease: "easeOut" }} d="M8 56h48" />
-                                
-                                {/* BH Outline */}
-                                <motion.path stroke="url(#cyan-glow)" initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ duration: 1.5, delay: 0.3, ease: "easeInOut" }} d="M16 56V32L32 16l16 16v24" />
-                                
-                                {/* Chimney */}
-                                <motion.path stroke="currentColor" className="text-cyan-600 dark:text-cyan-500" opacity="0.6" initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 0.6 }} transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }} d="M40 24V12h6v18" />
+                            {/* Window Frames (Boarding House Units) */}
+                            <motion.rect x="20" y="28" width="8" height="8" rx="1" stroke="currentColor" className="text-cyan-700 dark:text-cyan-500" opacity="0.3" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.8 }} />
+                            <motion.rect x="36" y="28" width="8" height="8" rx="1" stroke="currentColor" className="text-cyan-700 dark:text-cyan-500" opacity="0.3" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.8 }} />
+                            <motion.rect x="16" y="44" width="8" height="8" rx="1" stroke="currentColor" className="text-cyan-700 dark:text-cyan-500" opacity="0.3" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.8 }} />
+                            <motion.rect x="40" y="44" width="8" height="8" rx="1" stroke="currentColor" className="text-cyan-700 dark:text-cyan-500" opacity="0.3" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.8 }} />
 
-                                {/* Front Door */}
-                                <motion.path stroke="currentColor" className="text-cyan-600 dark:text-cyan-400" opacity="0.8" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, delay: 1 }} d="M28 56V46a4 4 0 0 1 8 0v10" />
+                            {/* Windows Lighting Up (Rooms occupied/connecting) */}
+                            <motion.rect x="20" y="28" width="8" height="8" rx="1" fill="#06b6d4" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 1.4 }} />
+                            <motion.rect x="40" y="44" width="8" height="8" rx="1" fill="#3b82f6" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 1.6 }} />
+                            <motion.rect x="16" y="44" width="8" height="8" rx="1" fill="#3b82f6" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 1.8 }} />
+                            <motion.rect x="36" y="28" width="8" height="8" rx="1" fill="#06b6d4" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 2.0 }} />
 
-                                {/* Window Frames (Boarding House Units) */}
-                                <motion.rect x="20" y="28" width="8" height="8" rx="1" stroke="currentColor" className="text-cyan-700 dark:text-cyan-500" opacity="0.3" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.8 }} />
-                                <motion.rect x="36" y="28" width="8" height="8" rx="1" stroke="currentColor" className="text-cyan-700 dark:text-cyan-500" opacity="0.3" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.8 }} />
-                                <motion.rect x="16" y="44" width="8" height="8" rx="1" stroke="currentColor" className="text-cyan-700 dark:text-cyan-500" opacity="0.3" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.8 }} />
-                                <motion.rect x="40" y="44" width="8" height="8" rx="1" stroke="currentColor" className="text-cyan-700 dark:text-cyan-500" opacity="0.3" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, delay: 0.8 }} />
-
-                                {/* Windows Lighting Up (Rooms occupied/connecting) */}
-                                <motion.rect x="20" y="28" width="8" height="8" rx="1" fill="#06b6d4" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 1.4 }} />
-                                <motion.rect x="40" y="44" width="8" height="8" rx="1" fill="#3b82f6" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 1.6 }} />
-                                <motion.rect x="16" y="44" width="8" height="8" rx="1" fill="#3b82f6" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 1.8 }} />
-                                <motion.rect x="36" y="28" width="8" height="8" rx="1" fill="#06b6d4" initial={{ opacity: 0, scale: 0.8 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, delay: 2.0 }} />
-
-                                {/* Animated Chimney Smoke */}
-                                <motion.circle cx="43" cy="8" r="2" fill="#06b6d4" initial={{ opacity: 0, y: 0 }} animate={{ opacity: [0, 0.6, 0], y: -10 }} transition={{ duration: 2, delay: 1.5, repeat: Infinity }} />
-                                <motion.circle cx="45" cy="4" r="3" fill="#3b82f6" initial={{ opacity: 0, y: 0 }} animate={{ opacity: [0, 0.4, 0], y: -12 }} transition={{ duration: 2.5, delay: 2, repeat: Infinity }} />
-                            </svg>
-                        </div>
+                            {/* Animated Chimney Smoke */}
+                            <motion.circle cx="43" cy="8" r="2" fill="#06b6d4" initial={{ opacity: 0, y: 0 }} animate={{ opacity: [0, 0.6, 0], y: -10 }} transition={{ duration: 2, delay: 1.5, repeat: Infinity }} />
+                            <motion.circle cx="45" cy="4" r="3" fill="#3b82f6" initial={{ opacity: 0, y: 0 }} animate={{ opacity: [0, 0.4, 0], y: -12 }} transition={{ duration: 2.5, delay: 2, repeat: Infinity }} />
+                        </svg>
                     </div>
 
-                    {/* HUD Status Interface */}
-                    <div className="relative flex flex-col items-center w-full max-w-sm px-6">
+                    {/* Simple Clean Progress Interface */}
+                    <div className="relative flex flex-col items-center w-full max-w-[200px] md:max-w-[260px] mt-4">
                         
-                        {/* Connection Status Header */}
-                        <div className="flex items-center justify-between w-full mb-3 text-[10px] md:text-xs font-mono font-bold tracking-[0.2em] uppercase text-cyan-700 dark:text-cyan-400">
-                            <span className="flex items-center gap-2">
-                                <span className="w-2 h-2 rounded-full bg-cyan-500 animate-pulse shadow-[0_0_8px_rgba(6,182,212,0.8)]"></span>
-                                SYS.UPLINK
-                            </span>
-                            <span className="text-slate-500 dark:text-slate-400">INIT: [{loadingStep}/2]</span>
+                        {/* Clean Progress Bar with Leading Icon */}
+                        <div className="relative w-full h-1.5 md:h-2 bg-slate-200 dark:bg-slate-800 rounded-full mb-6 border border-slate-300/50 dark:border-slate-700/50">
+                            
+                            <div className="absolute top-0 left-0 h-full bg-cyan-500 dark:bg-cyan-400 animate-progress-smooth rounded-full flex justify-end items-center shadow-[0_0_10px_rgba(6,182,212,0.4)]">
+                                
+                                {/* Leading Edge Icon (Boarding House) */}
+                                <div className="absolute right-0 translate-x-1/2 w-6 h-6 md:w-8 md:h-8 bg-white dark:bg-[#020617] border-2 border-cyan-500 dark:border-cyan-400 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.4)] z-20">
+                                    <svg className="w-3 h-3 md:w-4 md:h-4 text-cyan-600 dark:text-cyan-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                    </svg>
+                                </div>
+                                
+                            </div>
                         </div>
                         
-                        {/* Segmented Data Bar */}
-                        <div className="relative w-full h-1 md:h-1.5 bg-slate-200/50 dark:bg-slate-800/80 overflow-hidden mb-5 flex">
-                            <div className="h-full bg-cyan-500 dark:bg-cyan-400 animate-progress-smooth shadow-[0_0_10px_rgba(34,211,238,0.6)]"></div>
-                        </div>
-                        
-                        {/* Cross-fading status text */}
-                        <div className="h-6 relative flex items-center justify-center w-full">
+                        {/* Status Text */}
+                        <div className="h-6 relative flex items-center justify-center w-full mt-2">
                             {statuses.map((status, index) => (
-                                <p key={status} className={`absolute text-[10px] md:text-xs font-mono font-bold tracking-widest transition-all duration-300 ease-out text-center ${loadingStep === index ? 'opacity-100 scale-100 text-slate-800 dark:text-white drop-shadow-sm dark:drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]' : loadingStep > index ? 'opacity-0 scale-110 text-cyan-600 dark:text-cyan-400' : 'opacity-0 scale-90 text-slate-400'}`}>
+                                <p key={status} className={`absolute text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 ease-out text-center px-4 ${loadingStep === index ? 'opacity-100 translate-y-0 text-slate-800 dark:text-slate-200' : loadingStep > index ? 'opacity-0 -translate-y-2 text-slate-400 dark:text-slate-600' : 'opacity-0 translate-y-2 text-slate-400 dark:text-slate-600'}`}>
                                     {status}
                                 </p>
                             ))}
                         </div>
+                        
                     </div>
                 </div>
             )}
