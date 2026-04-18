@@ -3,28 +3,52 @@ import { useRouter } from 'next/navigation';
 import { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
-// --- Smooth 2D Hover Feature Card Component ---
-const FeatureCard = ({ title, desc, icon }: { title: string, desc: string, icon: string }) => {
+// --- feature cards ---
+const FeatureCard = ({ title, desc, icon, delay }: { title: string, desc: string, icon: string, delay: number }) => {
     return (
-        <div className="relative w-full max-w-[300px] sm:max-w-xs md:max-w-full mx-auto group cursor-pointer">
-            {/* Outer Ambient Glow (Fades in on hover) */}
-            <div className="absolute inset-0 bg-cyan-500/10 dark:bg-cyan-500/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out"></div>
+        <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay, ease: [0.16, 1, 0.3, 1] }}
+            className="relative w-full max-w-[260px] sm:max-w-[280px] md:max-w-full mx-auto group cursor-pointer"
+        >
+            {/* Animated Laser Edge (Top) */}
+            <div className="absolute top-0 left-[15%] right-[15%] h-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 shadow-[0_0_15px_rgba(34,211,238,0.8)] z-20"></div>
             
             {/* Main Card Body */}
-            <div className="relative h-full p-6 rounded-2xl bg-white/60 dark:bg-cyan-950/20 border border-slate-200/80 dark:border-cyan-500/30 backdrop-blur-md text-left transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-2 group-hover:scale-[1.02] overflow-hidden shadow-sm hover:shadow-[0_20px_40px_rgba(6,182,212,0.15)] dark:hover:shadow-[0_20px_40px_rgba(6,182,212,0.2)]">
+            <div className="relative h-full p-5 rounded-2xl bg-white dark:bg-[#0b1120] border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col justify-between z-10 transition-all duration-500 group-hover:-translate-y-2 group-hover:bg-slate-50 dark:group-hover:bg-[#121c33] group-hover:border-slate-300 dark:group-hover:border-slate-700 group-hover:shadow-[0_15px_30px_-10px_rgba(6,182,212,0.15)] shadow-sm">
                 
-                {/* Inner Glass Glare (Fades in on hover) */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 ease-out bg-gradient-to-br from-white/40 dark:from-white/10 to-transparent pointer-events-none"></div>
-                
-                {/* Animated Icon */}
-                <div className="text-3xl mb-4 transition-transform duration-500 ease-out group-hover:scale-110 group-hover:-rotate-6 origin-bottom-left drop-shadow-sm dark:drop-shadow-[0_0_10px_rgba(6,182,212,0.3)]">
-                    {icon}
+                {/* Radial Hover Gradient inside the card */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(34,211,238,0.05),transparent_60%)] dark:bg-[radial-gradient(circle_at_50%_0%,rgba(34,211,238,0.08),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+
+                <div className="relative z-10 flex flex-col h-full">
+                    <div className="flex items-center gap-3 mb-2">
+                        {/* Floating Orbital Icon Container */}
+                        <div className="relative w-10 h-10 shrink-0 flex items-center justify-center transition-transform duration-500 group-hover:scale-110">
+                            {/* Outer Rotating Ring */}
+                            <div className="absolute inset-0 rounded-full border border-slate-200 dark:border-white/10 border-t-cyan-500/50 group-hover:rotate-180 transition-all duration-700 ease-out"></div>
+                            
+                            {/* Inner Pulse Glow */}
+                            <div className="absolute inset-1.5 rounded-full bg-cyan-500/10 blur-[6px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                            
+                            {/* The Icon */}
+                            <span className="text-xl drop-shadow-sm dark:drop-shadow-[0_0_6px_rgba(255,255,255,0.3)] group-hover:drop-shadow-[0_0_10px_rgba(34,211,238,0.8)] transition-all duration-500 relative z-10">
+                                {icon}
+                            </span>
+                        </div>
+                        
+                        {/* Typography */}
+                        <h3 className="text-slate-800 dark:text-white font-bold text-base tracking-tight group-hover:text-cyan-700 dark:group-hover:text-cyan-50 transition-colors duration-300">
+                            {title}
+                        </h3>
+                    </div>
+                    
+                    <p className="text-slate-500 dark:text-zinc-400 text-xs font-medium leading-relaxed group-hover:text-slate-700 dark:group-hover:text-zinc-300 transition-colors duration-300">
+                        {desc}
+                    </p>
                 </div>
-                
-                <h3 className="text-slate-800 dark:text-white font-black text-lg mb-2 relative z-10">{title}</h3>
-                <p className="text-slate-500 dark:text-cyan-100/60 text-xs font-medium leading-relaxed relative z-10">{desc}</p>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
@@ -273,10 +297,10 @@ export default function LandingPage() {
 
                 {/* --- 2D Smooth Hover Feature Cards --- */}
                 {/* Mobile stacks vertically, desktop places side by side */}
-                <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-5xl mx-auto w-full transition-all duration-1000 delay-1000 ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
-                    <FeatureCard icon="🏢" title="Smart Allocation" desc="Drag and drop residents into optimized room layouts instantly." />
-                    <FeatureCard icon="⚡" title="Automated Billing" desc="Generate invoices and track overdue balances with zero manual effort." />
-                    <FeatureCard icon="🛠️" title="Live Maintenance" desc="Track, assign, and resolve property repair requests in real-time." />
+                <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto w-full transition-all duration-1000 delay-1000 ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+                    <FeatureCard icon="🏢" title="Smart Allocation" desc="Drag and drop residents into optimized room layouts instantly." delay={0} />
+                    <FeatureCard icon="⚡" title="Automated Billing" desc="Generate invoices and track overdue balances with zero manual effort." delay={0} />
+                    <FeatureCard icon="🛠️" title="Live Maintenance" desc="Track, assign, and resolve property repair requests in real-time." delay={0} />
                 </div>
             </main>
 
