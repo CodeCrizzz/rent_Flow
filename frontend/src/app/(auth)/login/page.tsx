@@ -33,7 +33,7 @@ export default function LoginPage() {
         }, 200); 
     };
 
-    const handleLogin = async (e: React.FormEvent) => {
+    const handleLogin = async (e: React.ChangeEvent) => {
         e.preventDefault();
         setIsLoading(true);
         setErrorMsg('');
