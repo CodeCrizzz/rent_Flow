@@ -44,17 +44,17 @@ export default function SignupPage() {
     };
 
     return (
-        /* Use 100dvh to fix mobile browser address bar clipping */
-        <div className="min-h-[100dvh] flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-[#0a0a0a] relative overflow-hidden font-sans">
+        /* Added py-10 so the card doesn't clip on small vertical screens */
+        <div className="min-h-[100dvh] flex flex-col items-center justify-center px-4 py-10 sm:p-6 lg:p-8 bg-[#0a0a0a] relative overflow-x-hidden font-sans">
             
             {/* Ambient Background Glow */}
-            <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[300px] sm:h-[500px] bg-linear-to-b from-blue-600/10 to-transparent blur-[60px] sm:blur-[100px] rounded-full pointer-events-none transition-all duration-1000 ${isMounted ? 'opacity-100' : 'opacity-0 scale-50'}`}></div>
+            <div className={`fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[300px] sm:h-[500px] bg-linear-to-b from-blue-600/10 to-transparent blur-[60px] sm:blur-[100px] rounded-full pointer-events-none transition-all duration-1000 ${isMounted ? 'opacity-100' : 'opacity-0 scale-50'}`}></div>
             
-            {/* Main Wrapper */}
-            <div className={`w-full max-w-5xl bg-zinc-950 rounded-3xl sm:rounded-[2.5rem] shadow-2xl shadow-black/50 overflow-hidden flex flex-col md:flex-row relative z-10 border border-white/5 transition-all duration-1000 transform ${isMounted ? 'opacity-100 translate-y-0 scale-100 blur-0' : 'opacity-0 translate-y-12 scale-95 blur-md'}`}>
+            {/* Main Wrapper - Uses my-auto to gracefully handle scrolling on short screens */}
+            <div className={`w-full max-w-5xl my-auto bg-zinc-950 rounded-3xl sm:rounded-[2.5rem] shadow-2xl shadow-black/50 overflow-hidden flex flex-col md:flex-row relative z-10 border border-white/5 transition-all duration-1000 transform ${isMounted ? 'opacity-100 translate-y-0 scale-100 blur-0' : 'opacity-0 translate-y-12 scale-95 blur-md'}`}>
                 
-                {/* --- LEFT PANEL: Branding --- */}
-                <div className={`w-full md:w-5/12 bg-[#0a0a0a] p-8 sm:p-10 lg:p-14 flex flex-col justify-between relative overflow-hidden border-b md:border-b-0 md:border-r border-white/5 transition-all duration-1000 delay-300 ${isMounted ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}`}>
+                {/* --- LEFT PANEL: Branding (HIDDEN ON MOBILE) --- */}
+                <div className={`hidden md:flex w-full md:w-5/12 bg-[#0a0a0a] p-8 sm:p-10 lg:p-14 flex-col justify-between relative overflow-hidden border-r border-white/5 transition-all duration-1000 delay-300 ${isMounted ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}`}>
                     
                     <div className="absolute top-[-20%] left-[-20%] w-48 h-48 sm:w-64 sm:h-64 bg-blue-600 rounded-full mix-blend-screen filter blur-[60px] sm:blur-[80px] opacity-30 animate-pulse-slow"></div>
                     <div className="absolute bottom-[-20%] right-[-20%] w-48 h-48 sm:w-64 sm:h-64 bg-indigo-600 rounded-full mix-blend-screen filter blur-[60px] sm:blur-[80px] opacity-30"></div>
@@ -79,6 +79,16 @@ export default function SignupPage() {
                 {/* --- RIGHT PANEL: Form --- */}
                 <div className={`w-full md:w-7/12 p-6 sm:p-10 lg:p-14 bg-zinc-950 flex flex-col justify-center transition-all duration-1000 delay-500 ${isMounted ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
                     
+                    {/* MOBILE BRANDING HEADER (Visible ONLY on Mobile) */}
+                    <div className="flex md:hidden items-center justify-center gap-2.5 mb-8">
+                        <div className="w-9 h-9 bg-blue-500 rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                            </svg>
+                        </div>
+                        <span className="text-2xl font-black tracking-tight text-white">Rent<span className="text-blue-500">Flow</span></span>
+                    </div>
+
                     <div className="mb-6 sm:mb-8 text-center md:text-left">
                         <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-1 sm:mb-2">Create an account</h2>
                         <p className="text-zinc-500 text-xs sm:text-sm">Please enter your details to apply for residency.</p>
@@ -98,25 +108,25 @@ export default function SignupPage() {
                             {/* Full Name Input */}
                             <div className="sm:col-span-2">
                                 <label className="block text-[10px] sm:text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1.5 sm:mb-2 ml-1">Full Name</label>
-                                <input type="text" placeholder="Enter Full name" className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setName(e.target.value)} required />
+                                <input type="text" placeholder="Enter Full name" className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 px-4 sm:px-5 py-3 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setName(e.target.value)} required />
                             </div>
 
                             {/* Email Input */}
                             <div className="sm:col-span-1">
                                 <label className="block text-[10px] sm:text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1.5 sm:mb-2 ml-1">Email Address</label>
-                                <input type="email" placeholder="name@example.com" className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setEmail(e.target.value)} required />
+                                <input type="email" placeholder="Enter Email Address" className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 px-4 sm:px-5 py-3 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setEmail(e.target.value)} required />
                             </div>
 
                             {/* Phone Input */}
                             <div className="sm:col-span-1">
                                 <label className="block text-[10px] sm:text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1.5 sm:mb-2 ml-1">Contact Number</label>
-                                <input type="tel" placeholder="09xxxxxxxxx" className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setPhone(e.target.value)} required />
+                                <input type="tel" placeholder="09xxxxx8022" className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 px-4 sm:px-5 py-3 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setPhone(e.target.value)} required />
                             </div>
 
                             {/* Gender Input */}
                             <div className="sm:col-span-1">
                                 <label className="block text-[10px] sm:text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1.5 sm:mb-2 ml-1">Gender</label>
-                                <select value={gender} className="w-full bg-zinc-900/30 border border-white/5 text-zinc-400 focus:text-white px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium appearance-none" onChange={(e) => setGender(e.target.value)} required>
+                                <select value={gender} className="w-full bg-zinc-900/30 border border-white/5 text-zinc-400 focus:text-white px-4 sm:px-5 py-3 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium appearance-none" onChange={(e) => setGender(e.target.value)} required>
                                     <option value="" disabled>Select Gender</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
@@ -126,8 +136,8 @@ export default function SignupPage() {
 
                             {/* Address Input */}
                             <div className="sm:col-span-1">
-                                <label className="block text-[10px] sm:text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1.5 sm:mb-2 ml-1">Home Address <span className="normal-case tracking-normal font-normal opacity-70">(Optional)</span></label>
-                                <input type="text" placeholder="City, Region" className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setAddress(e.target.value)} />
+                                <label className="block text-[10px] sm:text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1.5 sm:mb-2 ml-1">Home Address</label>
+                                <input type="text" placeholder="Enter Home Address" className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 px-4 sm:px-5 py-3 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setAddress(e.target.value)} />
                             </div>
 
                             {/* Password Input */}
@@ -137,7 +147,7 @@ export default function SignupPage() {
                                     <input
                                         type={showPassword ? "text" : "password"}
                                         placeholder="••••••••"
-                                        className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 pl-4 sm:pl-5 pr-12 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium"
+                                        className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 pl-4 sm:pl-5 pr-12 py-3 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium"
                                         onChange={(e) => setPassword(e.target.value)} required minLength={6}
                                     />
                                     <button 
@@ -161,7 +171,7 @@ export default function SignupPage() {
                                     <input
                                         type={showConfirmPassword ? "text" : "password"}
                                         placeholder="••••••••"
-                                        className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 pl-4 sm:pl-5 pr-12 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium"
+                                        className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 pl-4 sm:pl-5 pr-12 py-3 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium"
                                         onChange={(e) => setConfirmPassword(e.target.value)} required minLength={6}
                                     />
                                     <button 
@@ -180,8 +190,8 @@ export default function SignupPage() {
                         </div>
 
                         <div className="pt-4 sm:pt-6">
-                            <button type="submit" disabled={isLoading} className="w-full flex justify-center items-center py-4 px-4 rounded-xl sm:rounded-2xl shadow-xl shadow-blue-900/20 text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-white bg-blue-600 hover:bg-blue-500 hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-blue-500/30 transition-all duration-300 disabled:opacity-70 disabled:hover:translate-y-0 disabled:cursor-not-allowed">
-                                {isLoading ? "Processing Application..." : "Complete Sign Up"}
+                            <button type="submit" disabled={isLoading} className="w-full flex justify-center items-center py-3.5 sm:py-4 px-4 rounded-xl sm:rounded-2xl shadow-xl shadow-blue-900/20 text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-white bg-blue-600 hover:bg-blue-500 hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-blue-500/30 transition-all duration-300 disabled:opacity-70 disabled:hover:translate-y-0 disabled:cursor-not-allowed">
+                                {isLoading ? "Processing Application..." : "Sign Up"}
                             </button>
 
                             <div className="mt-6 sm:mt-8 text-center animate-in fade-in slide-in-from-bottom-2 duration-700 delay-300">
@@ -242,7 +252,7 @@ export default function SignupPage() {
 
                             <h3 className="text-xl sm:text-2xl font-black text-white text-center mb-2 sm:mb-3">Account Registered!</h3>
                             <p className="text-zinc-400 text-center mb-6 sm:mb-8 text-xs sm:text-sm leading-relaxed">
-                                Welcome to RentFlow. Your tenant account has been created. You can now log in to manage your residency.
+                                Welcome to RentFlow. Your account has been created. wait for the admin for the account approval.
                             </p>
 
                             <button 
