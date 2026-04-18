@@ -15,7 +15,8 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
         try {
             const token = localStorage.getItem('token');
             if (!token) return;
-            const res = await fetch('http://localhost:5000/api/tenant/chat/unread', {
+            const baseUrl = typeof window !== 'undefined' ? `http://${window.location.hostname}:5000/api` : 'http://localhost:5000/api';
+            const res = await fetch(`${baseUrl}/tenant/chat/unread`, {
                 headers: { 'Authorization': `Bearer ${token}` }
             });
             if (res.ok) {

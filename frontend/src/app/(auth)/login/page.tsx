@@ -108,10 +108,23 @@ export default function LoginPage() {
                     
                     {/* Responsive Role Switcher */}
                     <div className="flex bg-zinc-900/50 p-1.5 rounded-2xl mb-8 border border-white/5 relative z-20 overflow-hidden">
+                        {/* Sliding Background Indicator */}
                         <div className={`absolute top-1.5 bottom-1.5 w-[calc(50%-6px)] bg-zinc-800 rounded-xl shadow-md border border-white/10 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${selectedRole === 'admin' ? 'translate-x-full' : 'translate-x-0'}`}></div>
 
-                        <button type="button" onClick={() => handleRoleChange('tenant')} className={`flex-1 py-3 rounded-xl text-xs sm:text-sm font-bold relative z-10 transition-colors duration-300 ${selectedRole === 'tenant' ? 'text-white' : 'text-zinc-500 hover:text-zinc-300'}`}>Tenant Portal</button>
-                        <button type="button" onClick={() => handleRoleChange('admin')} className={`flex-1 py-3 rounded-xl text-xs sm:text-sm font-bold relative z-10 transition-colors duration-300 ${selectedRole === 'admin' ? 'text-white' : 'text-zinc-500 hover:text-zinc-300'}`}>Admin Portal</button>
+                        <button 
+                            type="button" 
+                            onClick={() => handleRoleChange('tenant')} 
+                            className={`flex-1 py-3 rounded-xl text-xs sm:text-sm font-bold relative z-10 transition-colors duration-300 ${selectedRole === 'tenant' ? 'text-white' : 'text-zinc-500 hover:text-zinc-300'}`}
+                        >
+                            Tenant Portal
+                        </button>
+                        <button 
+                            type="button" 
+                            onClick={() => handleRoleChange('admin')} 
+                            className={`flex-1 py-3 rounded-xl text-xs sm:text-sm font-bold relative z-10 transition-colors duration-300 ${selectedRole === 'admin' ? 'text-white' : 'text-zinc-500 hover:text-zinc-300'}`}
+                        >
+                            Admin Portal
+                        </button>
                     </div>
 
                     {/* Form Container with Blur/Fade Transition */}
