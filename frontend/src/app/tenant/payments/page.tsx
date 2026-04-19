@@ -182,11 +182,11 @@ export default function TenantPayments() {
                     </div>
                 </motion.header>
 
-                {/* --- BENTO GRID LAYOUT --- */}
-                <div className="shrink-0 grid grid-cols-12 gap-3 sm:gap-6">
+                {/* --- CURRENT BILL OVERVIEW --- */}
+                <div className="shrink-0 w-full max-w-4xl mx-auto">
                     
                     {/* CURRENT BILL CARD */}
-                    <motion.div variants={itemVariants} className="col-span-7 relative rounded-2xl sm:rounded-4xl bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col p-3 sm:p-8 lg:p-10">
+                    <motion.div variants={itemVariants} className="relative rounded-2xl sm:rounded-4xl bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col p-5 sm:p-8 lg:p-10">
                         <div className="absolute inset-0 glass-noise z-0"></div>
                         <div className="absolute top-0 right-0 -mr-10 sm:-mr-20 -mt-10 sm:-mt-20 w-32 sm:w-72 h-32 sm:h-72 bg-indigo-50 dark:bg-indigo-500/5 rounded-full blur-xl sm:blur-3xl pointer-events-none z-0"></div>
 
@@ -251,40 +251,6 @@ export default function TenantPayments() {
                         </div>
                     </motion.div>
 
-                    {/* BILL BREAKDOWN CARD */}
-                    <motion.div variants={itemVariants} className="col-span-5 relative rounded-2xl sm:rounded-4xl bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col p-3 sm:p-8 lg:p-10">
-                        <div className="absolute inset-0 glass-noise z-0"></div>
-                        
-                        <div className="relative z-10 mb-3 sm:mb-6">
-                            <h3 className="text-[10px] sm:text-lg font-bold text-neutral-900 dark:text-white flex items-center gap-1.5 sm:gap-2">
-                                <svg className="w-3 h-3 sm:w-5 sm:h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2-2v14a2 2 0 002 2z"></path></svg>
-                                Breakdown
-                            </h3>
-                        </div>
-
-                        <div className="relative z-10 flex-1 flex flex-col justify-center space-y-2 sm:space-y-4">
-                            <div className="flex justify-between items-center text-[8px] sm:text-sm font-semibold">
-                                <span className="text-neutral-500 dark:text-neutral-400">Rent</span>
-                                <span className="text-neutral-900 dark:text-white font-mono">₱{(currentBill.breakdown?.rent || 0).toLocaleString()}</span>
-                            </div>
-                            <div className="flex justify-between items-center text-[8px] sm:text-sm font-semibold">
-                                <span className="text-neutral-500 dark:text-neutral-400">Water</span>
-                                <span className="text-neutral-900 dark:text-white font-mono">₱{(currentBill.breakdown?.water || 0).toLocaleString()}</span>
-                            </div>
-                            <div className="flex justify-between items-center text-[8px] sm:text-sm font-semibold">
-                                <span className="text-neutral-500 dark:text-neutral-400">Electricity</span>
-                                <span className="text-neutral-900 dark:text-white font-mono">₱{(currentBill.breakdown?.electricity || 0).toLocaleString()}</span>
-                            </div>
-                            <div className="flex justify-between items-center text-[8px] sm:text-sm font-semibold pb-2 sm:pb-4 border-b border-neutral-200/50 dark:border-white/10">
-                                <span className="text-neutral-500 dark:text-neutral-400">Other</span>
-                                <span className="text-neutral-900 dark:text-white font-mono">₱{(currentBill.breakdown?.other || 0).toLocaleString()}</span>
-                            </div>
-                            <div className="flex justify-between items-center text-[9px] sm:text-base font-bold pt-1 sm:pt-2">
-                                <span className="text-neutral-900 dark:text-white">Total</span>
-                                <span className="text-indigo-600 dark:text-indigo-400 font-mono">₱{(currentBill.totalAmount || 0).toLocaleString()}</span>
-                            </div>
-                        </div>
-                    </motion.div>
                 </div>
 
                 {/* --- HISTORY TABLE SECTION (Constrained height on mobile) --- */}

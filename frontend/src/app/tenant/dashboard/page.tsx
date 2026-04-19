@@ -218,19 +218,22 @@ export default function TenantDashboard() {
                 <div className={`flex-1 flex flex-col min-h-0 relative bg-white/60 dark:bg-[#121212]/60 rounded-2xl sm:rounded-4xl border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden transition-all duration-700 ease-out delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                     <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                     
-                    {/* Sticky Header inside the box */}
-                    <div className="relative z-10 shrink-0 p-3 sm:p-6 lg:px-8 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md">
+                    {/* Header inside the box */}
+                    <div className="relative z-10 shrink-0 p-3 sm:p-6 lg:px-8 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex justify-between items-center">
                         <div>
-                            <h2 className="text-sm sm:text-xl font-bold">Payment History</h2>
-                            <p className="text-[8px] sm:text-sm font-medium text-neutral-500 dark:text-neutral-400 mt-0.5 sm:mt-1">A complete record of your billing and payments.</p>
+                            <h2 className="text-sm sm:text-lg font-bold">Recent Payments</h2>
+                            <p className="text-[8px] sm:text-xs font-medium text-neutral-500 dark:text-neutral-400 mt-0.5 sm:mt-1">Your latest transactions.</p>
                         </div>
+                        <Link href="/tenant/payments" className="text-[8px] sm:text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 flex items-center gap-1 transition-colors">
+                            View Full History <span aria-hidden="true">&rarr;</span>
+                        </Link>
                     </div>
 
                     {/* Scrollable List container */}
                     <div className="relative z-10 flex-1 overflow-y-auto p-2 sm:p-4 [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                         {tenantData.recentTransactions && tenantData.recentTransactions.length > 0 ? (
                             <div className="space-y-1 pb-4">
-                                {tenantData.recentTransactions.map((tx: any, i) => (
+                                {tenantData.recentTransactions.slice(0, 3).map((tx: any, i) => (
                                     <div key={i} className="group relative flex items-center justify-between p-2.5 sm:p-4 rounded-xl sm:rounded-2xl hover:bg-white/40 dark:hover:bg-white/5 transition-all duration-300 cursor-default gap-2">
                                         <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-0 bg-indigo-500 rounded-r-full transition-all duration-300 group-hover:h-3/4 opacity-0 group-hover:opacity-100"></div>
 
