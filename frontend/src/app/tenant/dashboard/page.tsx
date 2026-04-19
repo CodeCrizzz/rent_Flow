@@ -99,7 +99,6 @@ export default function TenantDashboard() {
     if (!isMounted) return null; 
 
     return (
-        /* CHANGED: h-[100dvh], removed pb-20, added global scrollbar hiding */
         <div className="w-full h-[100dvh] text-neutral-900 dark:text-neutral-100 font-sans flex flex-col bg-transparent overflow-hidden relative [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             
             {/* Ambient Background Glows */}
@@ -113,13 +112,6 @@ export default function TenantDashboard() {
                 <header className={`shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 transition-all duration-700 ease-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
                     <div className="relative w-full flex justify-between items-start">
                         <div>
-                            <div className="inline-flex items-center gap-1.5 sm:gap-2 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-white/60 dark:bg-white/5 border border-neutral-200/50 dark:border-white/10 backdrop-blur-md text-indigo-600 dark:text-indigo-400 text-[8px] sm:text-xs font-bold tracking-wide mb-1 sm:mb-2 shadow-sm">
-                                <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-500 opacity-75"></span>
-                                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-indigo-600"></span>
-                                </span>
-                                Tenant Portal
-                            </div>
                             <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white drop-shadow-sm pb-1 leading-tight">
                                 Welcome, {userName.split(' ')[0] || 'Resident'}
                             </h1>
@@ -127,7 +119,7 @@ export default function TenantDashboard() {
                     </div>
                 </header>
 
-                {/* --- BENTO GRID LAYOUT (Shrinks to fit) --- */}
+                {/* --- BENTO GRID LAYOUT --- */}
                 <div className={`shrink-0 grid grid-cols-12 gap-3 sm:gap-6 transition-all duration-700 ease-out delay-150 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                     
                     {/* HERO CARD: Billing & Balance */}
