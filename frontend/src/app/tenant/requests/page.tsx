@@ -287,35 +287,36 @@ export default function TenantMaintenance() {
                     </motion.div>
 
                     {/* HISTORY TABLE & FILTERS (Right Side) */}
-                    {/* MIN-H-0 already present here, locking the table correctly */}
                     <motion.div variants={itemVariants} className="col-span-7 sm:col-span-8 relative bg-white/60 dark:bg-[#121212]/60 rounded-xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 flex flex-col min-h-0 overflow-hidden">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
 
-                        {/* Toolbar - NO SCROLLBAR */}
-                        <div className="relative z-10 shrink-0 p-1.5 sm:p-4 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex flex-nowrap items-center justify-between gap-1.5 sm:gap-2 overflow-x-auto [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                            <div className="flex flex-nowrap items-center gap-1 sm:gap-2 shrink-0">
-                                <div className="relative w-16 sm:w-48 shrink-0">
-                                    <svg className="absolute left-1 sm:left-2.5 top-1/2 -translate-y-1/2 w-2 h-2 sm:w-3.5 sm:h-3.5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                                    <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl pl-3.5 sm:pl-8 pr-1 sm:pr-2 py-0.5 sm:py-2 text-[5px] sm:text-xs outline-none focus:ring-2 focus:ring-indigo-500/50 text-neutral-900 dark:text-white" />
-                                </div>
-                                <select value={filterStatus} onChange={(e) => { setFilterStatus(e.target.value); setCurrentPage(1); }} className="bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-2 py-0.5 sm:py-2 text-[5px] sm:text-xs outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0">
-                                    <option value="All" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Status</option>
-                                    <option value="Pending" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Pending</option>
-                                    <option value="In Progress" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">In Progress</option>
-                                    <option value="Resolved" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Resolved</option>
-                                    <option value="Cancelled" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Cancelled</option>
-                                </select>
-                                <select value={filterCategory} onChange={(e) => { setFilterCategory(e.target.value); setCurrentPage(1); }} className="bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-2 py-0.5 sm:py-2 text-[5px] sm:text-xs outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0">
-                                    <option value="All" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Category</option>
-                                    <option value="Plumbing" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Plumbing</option>
-                                    <option value="Electrical" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Electrical</option>
-                                    <option value="Furniture" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Furniture</option>
-                                    <option value="Internet" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Internet</option>
-                                    <option value="Other" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Other</option>
-                                </select>
+                        {/*-- Toolbar --*/}
+                        <div className="relative z-10 shrink-0 p-1.5 sm:p-4 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex flex-nowrap items-center gap-1.5 sm:gap-2 overflow-x-auto [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                            
+                            <div className="relative w-20 sm:w-48 h-6 sm:h-9 shrink-0 flex items-center">
+                                <svg className="absolute left-1.5 sm:left-2.5 w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-neutral-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full h-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl pl-5 sm:pl-8 pr-1.5 sm:pr-2 text-[5px] sm:text-xs outline-none focus:ring-2 focus:ring-indigo-500/50 text-neutral-900 dark:text-white m-0" />
                             </div>
-                            <div className="flex items-center shrink-0">
-                                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-2 py-0.5 sm:py-2 text-[5px] sm:text-xs outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0">
+                            
+                            <select value={filterStatus} onChange={(e) => { setFilterStatus(e.target.value); setCurrentPage(1); }} className="h-6 sm:h-9 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-2 text-[5px] sm:text-xs outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
+                                <option value="All" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Status</option>
+                                <option value="Pending" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Pending</option>
+                                <option value="In Progress" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">In Progress</option>
+                                <option value="Resolved" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Resolved</option>
+                                <option value="Cancelled" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Cancelled</option>
+                            </select>
+                            
+                            <select value={filterCategory} onChange={(e) => { setFilterCategory(e.target.value); setCurrentPage(1); }} className="h-6 sm:h-9 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-2 text-[5px] sm:text-xs outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
+                                <option value="All" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Category</option>
+                                <option value="Plumbing" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Plumbing</option>
+                                <option value="Electrical" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Electrical</option>
+                                <option value="Furniture" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Furniture</option>
+                                <option value="Internet" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Internet</option>
+                                <option value="Other" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Other</option>
+                            </select>
+
+                            <div className="ml-auto flex items-center shrink-0">
+                                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="h-6 sm:h-9 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-2 text-[5px] sm:text-xs outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
                                     <option value="date_desc" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Newest</option>
                                     <option value="date_asc" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Oldest</option>
                                     <option value="priority_desc" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Priority</option>
@@ -323,7 +324,7 @@ export default function TenantMaintenance() {
                             </div>
                         </div>
 
-                        {/* Table Body - NO SCROLLBAR + OVERSCROLL-CONTAIN */}
+                        {/*-- Table Body --*/}
                         <div className="relative z-10 flex-1 overflow-y-auto overflow-x-auto [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden overscroll-contain">
                             <table className="w-full text-left border-collapse min-w-[280px] sm:min-w-[700px]">
                                 <thead className="sticky top-0 z-20 bg-neutral-50/95 dark:bg-[#18181B]/95 backdrop-blur-md shadow-sm">
