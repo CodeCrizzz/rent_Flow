@@ -173,23 +173,46 @@ export default function TenantMaintenance() {
         }
     };
 
-    const containerVariants: Variants = { hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.05 } } };
-    const itemVariants: Variants = { hidden: { opacity: 0, y: 15, filter: "blur(8px)" }, visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } } };
+    const containerVariants: Variants = { 
+        hidden: { opacity: 0 }, 
+        visible: { 
+            opacity: 1, 
+            transition: { 
+                duration: 0.6, 
+                ease: [0.16, 1, 0.3, 1],
+                staggerChildren: 0.1, 
+                delayChildren: 0.05 
+            } 
+        } 
+    };
+    const itemVariants: Variants = { 
+        hidden: { opacity: 0, y: 20, filter: "blur(12px)" }, 
+        visible: { 
+            opacity: 1, 
+            y: 0, 
+            filter: "blur(0px)", 
+            transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] } 
+        } 
+    };
 
     return (
-        <div className="fixed inset-0 w-full h-[100dvh] md:pl-64 lg:pl-72 text-neutral-900 dark:text-neutral-100 font-sans flex flex-col bg-transparent overflow-hidden">
+        /* ABSOLUTE VIEWPORT LOCK: fixed inset-0 disables all global scrollbars */
+        <div className="fixed inset-0 w-full h-full md:pl-64 lg:pl-72 text-neutral-900 dark:text-neutral-100 font-sans flex flex-col bg-transparent overflow-hidden">
             
             <div className="absolute top-0 left-1/3 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-indigo-400/20 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none -z-10 dark:hidden"></div>
             <div className="absolute bottom-0 right-1/4 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] bg-cyan-400/20 rounded-full blur-[60px] sm:blur-[100px] pointer-events-none -z-10 dark:hidden"></div>
 
-            <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-[1400px] mx-auto w-full h-full flex flex-col min-h-0 gap-2 sm:gap-4 pt-6 px-2 sm:px-8 pb-3 sm:pb-4 relative z-10">
+            {/* MAIN WRAPPER: pt-6 perfectly levels with the absolute top-6 Theme Toggle */}
+            <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-7xl mx-auto w-full h-full flex flex-col min-h-0 gap-3 sm:gap-5 pt-6 px-4 sm:px-8 pb-4 relative z-10">
                 
-                <motion.header variants={itemVariants} className="shrink-0 flex flex-row items-center justify-between h-8 sm:h-10 px-1 sm:px-0">
-                    <div className="flex flex-row items-center gap-2 sm:gap-4 h-full">
-                        <h1 className="text-xl sm:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white leading-none">
+                {/* --- HEADER --- */}
+                {/* Strict h-10 and items-center guarantees perfect horizontal leveling */}
+                <motion.header variants={itemVariants} className="shrink-0 flex flex-row items-center justify-between h-10">
+                    <div className="flex flex-row items-center gap-3 sm:gap-4 h-full">
+                        <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white leading-none">
                             Facility Support
                         </h1>
-                        <div className="inline-flex items-center gap-1 sm:gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1.5 rounded-full bg-white/60 dark:bg-white/5 border border-neutral-200/50 dark:border-white/10 backdrop-blur-md text-indigo-600 dark:text-indigo-400 text-[6px] sm:text-xs font-bold tracking-wide shadow-sm">
+                        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:py-1.5 rounded-full bg-white/60 dark:bg-white/5 border border-neutral-200/50 dark:border-white/10 backdrop-blur-md text-indigo-600 dark:text-indigo-400 text-[8px] sm:text-xs font-bold tracking-wide shadow-sm">
                             <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-500 opacity-75"></span><span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-indigo-600"></span></span>
                             Maintenance Hub
                         </div>
@@ -199,35 +222,35 @@ export default function TenantMaintenance() {
                 <motion.div variants={itemVariants} className="shrink-0 relative rounded-xl sm:rounded-2xl bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-2 sm:p-4 overflow-hidden">
                     <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                     <div className="relative z-10 grid grid-cols-4 divide-x divide-neutral-200/50 dark:divide-white/10">
-                        <div className="px-2 sm:px-6 text-center sm:text-left"><p className="text-[5px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest">Total</p><p className="text-[9px] sm:text-2xl font-black font-mono leading-none sm:leading-tight mt-0.5 sm:mt-0">{summary.total}</p></div>
-                        <div className="px-2 sm:px-6 text-center sm:text-left"><p className="text-[5px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest">Pending</p><p className="text-[9px] sm:text-2xl font-black font-mono text-amber-500 leading-none sm:leading-tight mt-0.5 sm:mt-0">{summary.pending}</p></div>
-                        <div className="px-2 sm:px-6 text-center sm:text-left"><p className="text-[5px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest">In Progress</p><p className="text-[9px] sm:text-2xl font-black font-mono text-blue-500 leading-none sm:leading-tight mt-0.5 sm:mt-0">{summary.progress}</p></div>
-                        <div className="px-2 sm:px-6 text-center sm:text-left"><p className="text-[5px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest">Resolved</p><p className="text-[9px] sm:text-2xl font-black font-mono text-emerald-500 leading-none sm:leading-tight mt-0.5 sm:mt-0">{summary.resolved}</p></div>
+                        <div className="px-2 sm:px-6 text-center sm:text-left"><p className="text-[6px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest">Total</p><p className="text-[10px] sm:text-2xl font-black font-mono leading-none mt-0.5 sm:mt-1">{summary.total}</p></div>
+                        <div className="px-2 sm:px-6 text-center sm:text-left"><p className="text-[6px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest">Pending</p><p className="text-[10px] sm:text-2xl font-black font-mono text-amber-500 leading-none mt-0.5 sm:mt-1">{summary.pending}</p></div>
+                        <div className="px-2 sm:px-6 text-center sm:text-left"><p className="text-[6px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest">In Progress</p><p className="text-[10px] sm:text-2xl font-black font-mono text-blue-500 leading-none mt-0.5 sm:mt-1">{summary.progress}</p></div>
+                        <div className="px-2 sm:px-6 text-center sm:text-left"><p className="text-[6px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest">Resolved</p><p className="text-[10px] sm:text-2xl font-black font-mono text-emerald-500 leading-none mt-0.5 sm:mt-1">{summary.resolved}</p></div>
                     </div>
                 </motion.div>
 
-                <div className="flex-1 min-h-0 grid grid-cols-12 gap-1.5 sm:gap-5">
+                <div className="flex-1 min-h-0 grid grid-cols-12 gap-2 sm:gap-5">
                     
                     {/* NEW REQUEST FORM (Left Side) */}
                     <motion.div variants={itemVariants} className="col-span-5 sm:col-span-4 relative rounded-xl sm:rounded-[2rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
-                        <div className="relative z-10 shrink-0 p-2 sm:p-5 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex justify-between items-center">
-                            <h2 className="text-[8px] sm:text-base font-bold flex items-center gap-1 sm:gap-1.5"><svg className="w-2.5 h-2.5 sm:w-4 sm:h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg> File Request</h2>
-                            <button onClick={handleClearForm} className="text-[5px] sm:text-[10px] font-bold uppercase tracking-widest text-neutral-500 hover:text-red-500 transition-colors">Clear</button>
+                        <div className="relative z-10 shrink-0 p-3 sm:p-5 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex justify-between items-center">
+                            <h2 className="text-[10px] sm:text-base font-bold flex items-center gap-1.5"><svg className="w-3 h-3 sm:w-4 sm:h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg> File Request</h2>
+                            <button onClick={handleClearForm} className="text-[6px] sm:text-[10px] font-bold uppercase tracking-widest text-neutral-500 hover:text-red-500 transition-colors">Clear</button>
                         </div>
 
-                        <div className="relative z-10 flex-1 overflow-y-auto p-2 sm:p-5 custom-scrollbar">
-                            <form id="maintenance-form" onSubmit={handleSubmit} className="flex flex-col gap-1.5 sm:gap-4">
-                                {formError && <div className="p-1 sm:p-2.5 bg-red-500/10 rounded text-red-500 text-[6px] sm:text-xs font-bold">{formError}</div>}
+                        <div className="relative z-10 flex-1 overflow-y-auto p-2.5 sm:p-5 custom-scrollbar">
+                            <form id="maintenance-form" onSubmit={handleSubmit} className="flex flex-col gap-2 sm:gap-4">
+                                {formError && <div className="p-1.5 sm:p-2.5 bg-red-500/10 rounded-lg text-red-500 text-[7px] sm:text-xs font-bold">{formError}</div>}
                                 
                                 <div>
-                                    <label className="block text-[5px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest mb-0.5 sm:mb-1 ml-1">Issue Title</label>
-                                    <input type="text" required placeholder="E.g. Leaking Faucet" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-md sm:rounded-xl px-1.5 sm:px-3 py-1 sm:py-2.5 text-[6px] sm:text-sm font-bold focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm text-neutral-900 dark:text-white" />
+                                    <label className="block text-[6px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest mb-1 ml-1">Issue Title</label>
+                                    <input type="text" required placeholder="E.g. Leaking Faucet" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-md sm:rounded-xl px-2 sm:px-3 py-1.5 sm:py-2.5 text-[8px] sm:text-sm font-bold focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm text-neutral-900 dark:text-white" />
                                 </div>
-                                <div className="grid grid-cols-1 xl:grid-cols-2 gap-1.5 sm:gap-4">
+                                <div className="grid grid-cols-1 xl:grid-cols-2 gap-2 sm:gap-4">
                                     <div>
-                                        <label className="block text-[5px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest mb-0.5 sm:mb-1 ml-1">Category</label>
-                                        <select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-md sm:rounded-xl px-1 sm:px-3 py-1 sm:py-2.5 text-[6px] sm:text-sm font-bold focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm cursor-pointer text-neutral-900 dark:text-white">
+                                        <label className="block text-[6px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest mb-1 ml-1">Category</label>
+                                        <select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-md sm:rounded-xl px-2 sm:px-3 py-1.5 sm:py-2.5 text-[8px] sm:text-sm font-bold focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm cursor-pointer text-neutral-900 dark:text-white">
                                             <option value="Plumbing" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Plumbing</option>
                                             <option value="Electrical" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Electrical</option>
                                             <option value="Furniture" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Furniture</option>
@@ -236,8 +259,8 @@ export default function TenantMaintenance() {
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="block text-[5px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest mb-0.5 sm:mb-1 ml-1">Priority</label>
-                                        <select value={priority} onChange={(e) => setPriority(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-md sm:rounded-xl px-1 sm:px-3 py-1 sm:py-2.5 text-[6px] sm:text-sm font-bold focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm cursor-pointer text-neutral-900 dark:text-white">
+                                        <label className="block text-[6px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest mb-1 ml-1">Priority</label>
+                                        <select value={priority} onChange={(e) => setPriority(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-md sm:rounded-xl px-2 sm:px-3 py-1.5 sm:py-2.5 text-[8px] sm:text-sm font-bold focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm cursor-pointer text-neutral-900 dark:text-white">
                                             <option value="Low" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Low</option>
                                             <option value="Medium" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Medium</option>
                                             <option value="High" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">High</option>
@@ -246,19 +269,19 @@ export default function TenantMaintenance() {
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-[5px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest mb-0.5 sm:mb-1 ml-1">Description</label>
-                                    <textarea required rows={2} placeholder="Explain the issue..." value={description} onChange={(e) => setDescription(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-md sm:rounded-xl px-1.5 sm:px-3 py-1 sm:py-2.5 text-[6px] sm:text-sm font-medium focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm resize-none text-neutral-900 dark:text-white" />
+                                    <label className="block text-[6px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest mb-1 ml-1">Description</label>
+                                    <textarea required rows={2} placeholder="Explain the issue..." value={description} onChange={(e) => setDescription(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-md sm:rounded-xl px-2 sm:px-3 py-1.5 sm:py-2.5 text-[8px] sm:text-sm font-medium focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm resize-none text-neutral-900 dark:text-white" />
                                 </div>
                                 <div>
-                                    <label className="block text-[5px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest mb-0.5 sm:mb-1 ml-1">Pref. Schedule <span className="normal-case opacity-70">(Opt)</span></label>
-                                    <input type="text" placeholder="E.g. Tomorrow morning" value={schedule} onChange={(e) => setSchedule(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-md sm:rounded-xl px-1.5 sm:px-3 py-1 sm:py-2.5 text-[6px] sm:text-sm font-medium focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm text-neutral-900 dark:text-white" />
+                                    <label className="block text-[6px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest mb-1 ml-1">Pref. Schedule <span className="normal-case opacity-70">(Opt)</span></label>
+                                    <input type="text" placeholder="E.g. Tomorrow morning" value={schedule} onChange={(e) => setSchedule(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-md sm:rounded-xl px-2 sm:px-3 py-1.5 sm:py-2.5 text-[8px] sm:text-sm font-medium focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm text-neutral-900 dark:text-white" />
                                 </div>
-                                <div>
-                                    <div className="w-full border-2 border-dashed border-neutral-200 dark:border-white/10 hover:border-indigo-400 rounded-md sm:rounded-xl p-1.5 sm:p-4 flex flex-col items-center cursor-pointer bg-neutral-50/50 dark:bg-white/[0.02] transition-colors" onClick={() => fileInputRef.current?.click()}>
+                                <div className="mt-1">
+                                    <div className="w-full border-2 border-dashed border-neutral-200 dark:border-white/10 hover:border-indigo-400 rounded-md sm:rounded-xl p-2 sm:p-4 flex flex-col items-center cursor-pointer bg-neutral-50/50 dark:bg-white/[0.02] transition-colors" onClick={() => fileInputRef.current?.click()}>
                                         {imageFile ? (
-                                            <span className="text-[5px] sm:text-[10px] font-bold text-indigo-500 truncate px-1">{imageFile.name}</span>
+                                            <span className="text-[7px] sm:text-[10px] font-bold text-indigo-500 truncate px-2">{imageFile.name}</span>
                                         ) : (
-                                            <span className="text-[5px] sm:text-[10px] font-bold text-neutral-400 flex items-center gap-1 sm:gap-1.5"><svg className="w-2.5 h-2.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg> Attach Image (Max 5MB)</span>
+                                            <span className="text-[7px] sm:text-[10px] font-bold text-neutral-400 flex items-center gap-1.5"><svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg> Attach Image (Max 5MB)</span>
                                         )}
                                         <input ref={fileInputRef} type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
                                     </div>
@@ -266,9 +289,9 @@ export default function TenantMaintenance() {
                             </form>
                         </div>
                         
-                        <div className="relative z-10 shrink-0 p-2 sm:p-5 border-t border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md">
-                            <button type="submit" form="maintenance-form" disabled={isSubmitting} className={`w-full py-1.5 sm:py-3 text-[6px] sm:text-xs font-bold uppercase tracking-widest rounded-md sm:rounded-xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 ${isSubmitting ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-400 cursor-wait' : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20 active:scale-95'}`}>
-                                {isSubmitting && <div className="w-2 h-2 sm:w-4 sm:h-4 border-2 border-current/30 border-t-current rounded-full animate-spin"></div>}
+                        <div className="relative z-10 shrink-0 p-2.5 sm:p-5 border-t border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md">
+                            <button type="submit" form="maintenance-form" disabled={isSubmitting} className={`w-full py-1.5 sm:py-3 text-[8px] sm:text-xs font-bold uppercase tracking-widest rounded-md sm:rounded-xl transition-all flex items-center justify-center gap-2 ${isSubmitting ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-400 cursor-wait' : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20 active:scale-95'}`}>
+                                {isSubmitting && <div className="w-2.5 h-2.5 sm:w-4 sm:h-4 border-2 border-current/30 border-t-current rounded-full animate-spin"></div>}
                                 {isSubmitting ? 'Submitting...' : 'Submit Request'}
                             </button>
                         </div>
@@ -278,9 +301,9 @@ export default function TenantMaintenance() {
                     <motion.div variants={itemVariants} className="col-span-7 sm:col-span-8 relative bg-white/60 dark:bg-[#121212]/60 rounded-xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 flex flex-col min-h-0 overflow-hidden">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
 
-                        {/* Toolbar - Forced single line with flex-nowrap to prevent vertical stacking on mobile */}
+                        {/* Toolbar */}
                         <div className="relative z-10 shrink-0 p-2 sm:p-4 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex flex-nowrap items-center justify-between gap-1.5 sm:gap-2 overflow-x-auto custom-scrollbar">
-                            <div className="flex flex-nowrap items-center gap-1 sm:gap-2 shrink-0">
+                            <div className="flex flex-nowrap items-center gap-1.5 sm:gap-2 shrink-0">
                                 <div className="relative w-16 sm:w-48 shrink-0">
                                     <svg className="absolute left-1.5 sm:left-2.5 top-1/2 -translate-y-1/2 w-2 h-2 sm:w-3.5 sm:h-3.5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                                     <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl pl-4 sm:pl-8 pr-1 sm:pr-2 py-0.5 sm:py-2 text-[5px] sm:text-xs outline-none focus:ring-2 focus:ring-indigo-500/50 text-neutral-900 dark:text-white" />
@@ -312,41 +335,41 @@ export default function TenantMaintenance() {
 
                         {/* Table Body */}
                         <div className="relative z-10 flex-1 overflow-y-auto overflow-x-auto custom-scrollbar">
-                            <table className="w-full text-left border-collapse min-w-[280px] sm:min-w-[700px]">
+                            <table className="w-full text-left border-collapse min-w-[300px] sm:min-w-[700px]">
                                 <thead className="sticky top-0 z-20 bg-neutral-50/95 dark:bg-[#18181B]/95 backdrop-blur-md shadow-sm">
                                     <tr>
-                                        <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[4px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest">ID / Date</th>
-                                        <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[4px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Issue</th>
-                                        <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[4px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center">Priority</th>
-                                        <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[4px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center">Status</th>
-                                        <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[4px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-right">Action</th>
+                                        <th className="px-2 py-1.5 sm:px-4 sm:py-4 text-[5px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest">ID / Date</th>
+                                        <th className="px-2 py-1.5 sm:px-4 sm:py-4 text-[5px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Issue</th>
+                                        <th className="px-2 py-1.5 sm:px-4 sm:py-4 text-[5px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center">Priority</th>
+                                        <th className="px-2 py-1.5 sm:px-4 sm:py-4 text-[5px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center">Status</th>
+                                        <th className="px-2 py-1.5 sm:px-4 sm:py-4 text-[5px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-right">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-neutral-200/30 dark:divide-white/5">
                                     {isLoading ? (
-                                        <tr><td colSpan={5} className="px-4 py-8 sm:py-20 text-center"><div className="w-4 h-4 sm:w-10 sm:h-10 mx-auto border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin"></div></td></tr>
+                                        <tr><td colSpan={5} className="px-4 py-8 sm:py-20 text-center"><div className="w-6 h-6 sm:w-10 sm:h-10 mx-auto border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin"></div></td></tr>
                                     ) : paginatedRequests.length === 0 ? (
-                                        <tr><td colSpan={5} className="px-4 py-8 sm:py-20 text-center text-neutral-500 text-[6px] sm:text-sm">No requests found.</td></tr>
+                                        <tr><td colSpan={5} className="px-4 py-8 sm:py-20 text-center text-neutral-500 text-[8px] sm:text-sm">No requests found.</td></tr>
                                     ) : (
                                         paginatedRequests.map((r) => (
                                             <motion.tr key={r.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="group hover:bg-white/40 dark:hover:bg-white/[0.02] transition-all duration-300">
-                                                <td className="px-1.5 py-1.5 sm:px-4 sm:py-3 align-middle">
-                                                    <p className="font-bold text-[5px] sm:text-xs text-neutral-900 dark:text-white">#{r.id.toString().padStart(4, '0')}</p>
-                                                    <p className="text-[4px] sm:text-[10px] font-mono text-neutral-400 mt-0.5">{formatDate(r.created_at)}</p>
+                                                <td className="px-2 py-2 sm:px-4 sm:py-3 align-middle">
+                                                    <p className="font-bold text-[6px] sm:text-xs text-neutral-900 dark:text-white">#{r.id.toString().padStart(4, '0')}</p>
+                                                    <p className="text-[5px] sm:text-[10px] font-mono text-neutral-400 mt-0.5">{formatDate(r.created_at)}</p>
                                                 </td>
-                                                <td className="px-1.5 py-1.5 sm:px-4 sm:py-3 align-middle min-w-0">
-                                                    <p className="text-[5px] sm:text-sm font-bold truncate max-w-[60px] sm:max-w-[200px] text-neutral-900 dark:text-white" title={r.title}>{r.title}</p>
-                                                    <p className="text-[4px] sm:text-[10px] text-neutral-500 mt-0.5">{r.category}</p>
+                                                <td className="px-2 py-2 sm:px-4 sm:py-3 align-middle min-w-0">
+                                                    <p className="text-[7px] sm:text-sm font-bold truncate max-w-[80px] sm:max-w-[200px]" title={r.title}>{r.title}</p>
+                                                    <p className="text-[5px] sm:text-[10px] text-neutral-500 mt-0.5">{r.category}</p>
                                                 </td>
-                                                <td className="px-1.5 py-1.5 sm:px-4 sm:py-3 align-middle text-center">
-                                                    <span className={`text-[5px] sm:text-xs font-bold ${getPriorityColor(r.priority)}`}>{r.priority}</span>
+                                                <td className="px-2 py-2 sm:px-4 sm:py-3 align-middle text-center">
+                                                    <span className={`text-[6px] sm:text-xs font-bold ${getPriorityColor(r.priority)}`}>{r.priority}</span>
                                                 </td>
-                                                <td className="px-1.5 py-1.5 sm:px-4 sm:py-3 align-middle text-center">
-                                                    <span className={`inline-flex items-center px-1 py-0.5 sm:px-2.5 sm:py-1 text-[4px] sm:text-[10px] font-bold uppercase tracking-widest rounded-full border ${getStatusColor(r.status)}`}>{r.status}</span>
+                                                <td className="px-2 py-2 sm:px-4 sm:py-3 align-middle text-center">
+                                                    <span className={`inline-flex items-center px-1.5 py-0.5 sm:px-2.5 sm:py-1 text-[5px] sm:text-[10px] font-bold uppercase tracking-widest rounded-full border ${getStatusColor(r.status)}`}>{r.status}</span>
                                                 </td>
-                                                <td className="px-1.5 py-1.5 sm:px-4 sm:py-3 align-middle text-right">
-                                                    <button onClick={() => setSelectedRequest(r)} className="p-0.5 sm:p-1.5 rounded bg-neutral-100 dark:bg-white/5 hover:text-indigo-600 transition-colors text-neutral-500" title="View Details">
-                                                        <svg className="w-2.5 h-2.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                                <td className="px-2 py-2 sm:px-4 sm:py-3 align-middle text-right">
+                                                    <button onClick={() => setSelectedRequest(r)} className="p-1 sm:p-1.5 rounded bg-neutral-100 dark:bg-white/5 hover:text-indigo-600 transition-colors" title="View Details">
+                                                        <svg className="w-2.5 h-2.5 sm:w-4 sm:h-4 text-neutral-500 hover:text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                                                     </button>
                                                 </td>
                                             </motion.tr>
@@ -357,11 +380,11 @@ export default function TenantMaintenance() {
                         </div>
 
                         {/* Pagination Footer */}
-                        <div className="relative z-10 shrink-0 p-1 sm:p-3 border-t border-neutral-200/50 dark:border-white/10 bg-white/20 dark:bg-black/10 flex justify-between items-center">
-                            <span className="text-[5px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest ml-1 sm:ml-2">Page {currentPage} of {totalPages || 1}</span>
+                        <div className="relative z-10 shrink-0 p-1.5 sm:p-3 border-t border-neutral-200/50 dark:border-white/10 bg-white/20 dark:bg-black/10 flex justify-between items-center">
+                            <span className="text-[6px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest ml-2">Page {currentPage} of {totalPages || 1}</span>
                             <div className="flex gap-1 sm:gap-2">
-                                <button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1} className="px-1 py-0.5 sm:px-2 sm:py-1 bg-white dark:bg-white/5 rounded border border-neutral-200 dark:border-white/10 text-[5px] sm:text-[11px] disabled:opacity-50 text-neutral-900 dark:text-white">Prev</button>
-                                <button onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages || totalPages === 0} className="px-1 py-0.5 sm:px-2 sm:py-1 bg-white dark:bg-white/5 rounded border border-neutral-200 dark:border-white/10 text-[5px] sm:text-[11px] disabled:opacity-50 text-neutral-900 dark:text-white">Next</button>
+                                <button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1} className="px-1.5 py-0.5 sm:px-2 sm:py-1 bg-white dark:bg-white/5 rounded border border-neutral-200 dark:border-white/10 text-[6px] sm:text-[11px] disabled:opacity-50 text-neutral-900 dark:text-white">Prev</button>
+                                <button onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages || totalPages === 0} className="px-1.5 py-0.5 sm:px-2 sm:py-1 bg-white dark:bg-white/5 rounded border border-neutral-200 dark:border-white/10 text-[6px] sm:text-[11px] disabled:opacity-50 text-neutral-900 dark:text-white">Next</button>
                             </div>
                         </div>
                     </motion.div>
