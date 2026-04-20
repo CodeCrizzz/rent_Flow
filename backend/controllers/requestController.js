@@ -46,7 +46,7 @@ const getAllRequests = async (req, res) => {
     try {
         const requests = await db.query(`
             SELECT 
-                r.id, r.title, r.description, r.category, r.priority, r.status, r.created_at, r.assigned_to, r.admin_notes,
+                r.id, r.title, r.description, r.category, r.priority, r.status, r.created_at, r.assigned_to, r.admin_notes, r.scheduled_date, r.date_resolved,
                 u.name as tenant_name,
                 rm.room_number
             FROM requests r
@@ -67,21 +67,33 @@ const getAllRequests = async (req, res) => {
 const updateRequest = async (req, res) => {
     try {
         const { id } = req.params;
-        const { status, priority, assigned_to, admin_notes } = req.body;
+        const { status, priority, assigned_to, admin_notes, scheduled_date, date_resolved } = req.body;
+
+        const reqDb = await db.query('SELECT * FROM requests WHERE id = $1', [id]);
+        if (reqDb.rows.length === 0) {
+            return res.status(404).json({ message: 'Request not found' });
+        }
+        const existing = reqDb.rows[0];
 
         const updatedRequest = await db.query(
             `UPDATE requests 
-             SET status = COALESCE($1, status),
-                 priority = COALESCE($2, priority),
-                 assigned_to = COALESCE($3, assigned_to),
-                 admin_notes = COALESCE($4, admin_notes)
-             WHERE id = $5 RETURNING *`,
-            [status, priority, assigned_to, admin_notes, id]
+             SET status = $1,
+                 priority = $2,
+                 assigned_to = $3,
+                 admin_notes = $4,
+                 scheduled_date = $5,
+                 date_resolved = $6
+             WHERE id = $7 RETURNING *`,
+            [
+                status !== undefined ? status : existing.status,
+                priority !== undefined ? priority : existing.priority,
+                assigned_to !== undefined ? assigned_to : existing.assigned_to,
+                admin_notes !== undefined ? admin_notes : existing.admin_notes,
+                scheduled_date !== undefined ? scheduled_date : existing.scheduled_date,
+                date_resolved !== undefined ? date_resolved : existing.date_resolved,
+                id
+            ]
         );
-
-        if (updatedRequest.rows.length === 0) {
-            return res.status(404).json({ message: 'Request not found' });
-        }
 
         res.status(200).json({ message: 'Request updated successfully', request: updatedRequest.rows[0] });
     } catch (error) {

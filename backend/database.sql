@@ -77,6 +77,8 @@ CREATE TABLE IF NOT EXISTS requests (
     attachment_url VARCHAR(255),
     admin_notes TEXT,
     assigned_to VARCHAR(255),
+    scheduled_date TIMESTAMP,
+    date_resolved TIMESTAMP,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

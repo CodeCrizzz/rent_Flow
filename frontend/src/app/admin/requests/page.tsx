@@ -14,6 +14,8 @@ interface Request {
     admin_notes: string | null;
     tenant_name: string;
     room_number: string | null;
+    scheduled_date: string | null;
+    date_resolved: string | null;
 }
 
 export default function AdminRequests() {
@@ -35,6 +37,8 @@ export default function AdminRequests() {
     const [updatePriority, setUpdatePriority] = useState('');
     const [updateAssigned, setUpdateAssigned] = useState('');
     const [updateNotes, setUpdateNotes] = useState('');
+    const [updateScheduledDate, setUpdateScheduledDate] = useState('');
+    const [updateDateResolved, setUpdateDateResolved] = useState('');
     const [isUpdating, setIsUpdating] = useState(false);
 
     const fetchRequests = async () => {
@@ -73,6 +77,8 @@ export default function AdminRequests() {
         setUpdatePriority(req.priority);
         setUpdateAssigned(req.assigned_to || '');
         setUpdateNotes(req.admin_notes || '');
+        setUpdateScheduledDate(req.scheduled_date ? new Date(req.scheduled_date).toISOString().split('T')[0] : '');
+        setUpdateDateResolved(req.date_resolved ? new Date(req.date_resolved).toISOString().split('T')[0] : '');
     };
 
     const handleUpdateSubmit = async (e: React.FormEvent) => {
@@ -85,7 +91,9 @@ export default function AdminRequests() {
                 status: updateStatus,
                 priority: updatePriority,
                 assigned_to: updateAssigned,
-                admin_notes: updateNotes
+                admin_notes: updateNotes,
+                scheduled_date: updateScheduledDate || null,
+                date_resolved: updateDateResolved || null
             });
             await fetchRequests();
             setUpdateModalReq(null);
@@ -333,10 +341,18 @@ export default function AdminRequests() {
                                     </div>
                                 </div>
                                 <div>
-                                    <h4 className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-3">Admin Notes</h4>
-                                    <div className="bg-slate-50 dark:bg-zinc-900/50 p-5 rounded-2xl text-slate-700 dark:text-zinc-300 text-sm border border-slate-200 dark:border-zinc-800 font-medium leading-relaxed">
-                                        {viewModalReq.admin_notes || <span className="text-slate-400 dark:text-zinc-600 italic">No notes</span>}
+                                    <h4 className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-3">Scheduling</h4>
+                                    <div className="bg-slate-50 dark:bg-zinc-900/50 p-5 rounded-2xl text-slate-900 dark:text-white text-sm border border-slate-200 dark:border-zinc-800 font-medium space-y-2">
+                                        <div><span className="text-slate-500 dark:text-zinc-500 font-bold uppercase tracking-widest text-[9px] mr-2">Scheduled:</span> {viewModalReq.scheduled_date ? new Date(viewModalReq.scheduled_date).toLocaleDateString() : <span className="text-slate-400 italic">Not set</span>}</div>
+                                        <div><span className="text-slate-500 dark:text-zinc-500 font-bold uppercase tracking-widest text-[9px] mr-2">Resolved:</span> {viewModalReq.date_resolved ? new Date(viewModalReq.date_resolved).toLocaleDateString() : <span className="text-slate-400 italic">Not set</span>}</div>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-3">Admin Notes</h4>
+                                <div className="bg-slate-50 dark:bg-zinc-900/50 p-5 rounded-2xl text-slate-700 dark:text-zinc-300 text-sm border border-slate-200 dark:border-zinc-800 font-medium leading-relaxed">
+                                    {viewModalReq.admin_notes || <span className="text-slate-400 dark:text-zinc-600 italic">No notes</span>}
                                 </div>
                             </div>
                         </div>
@@ -412,6 +428,27 @@ export default function AdminRequests() {
                                     value={updateAssigned}
                                     onChange={(e) => setUpdateAssigned(e.target.value)}
                                 />
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Scheduled Date</label>
+                                    <input 
+                                        type="date"
+                                        className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl outline-none focus:border-indigo-500 text-slate-900 dark:text-white font-bold transition-colors [color-scheme:light_dark]"
+                                        value={updateScheduledDate}
+                                        onChange={(e) => setUpdateScheduledDate(e.target.value)}
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Date Resolved</label>
+                                    <input 
+                                        type="date"
+                                        className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl outline-none focus:border-indigo-500 text-slate-900 dark:text-white font-bold transition-colors [color-scheme:light_dark]"
+                                        value={updateDateResolved}
+                                        onChange={(e) => setUpdateDateResolved(e.target.value)}
+                                    />
+                                </div>
                             </div>
 
                             <div className="space-y-2">
