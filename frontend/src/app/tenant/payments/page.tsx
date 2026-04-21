@@ -237,41 +237,39 @@ export default function TenantPayments() {
                             Pay Now
                         </button>
                     </div>
-                </motion.div>
-
+                </motion.div>                
                 {/* --- LAYER 2: BREAKDOWN & SUMMARY --- */}
-                <div className="shrink-0 grid grid-cols-2 gap-1.5 sm:gap-4">
+                <div className="shrink-0 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                     
                     {/* BREAKDOWN CARD */}
-                    <motion.div variants={itemVariants} className="relative rounded-xl sm:rounded-[1.5rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-2.5 sm:p-4 lg:p-6 flex flex-col justify-center">
+                    <motion.div variants={itemVariants} className="relative rounded-xl sm:rounded-[1.5rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
-                        <h3 className="relative z-10 text-[8px] sm:text-sm font-bold text-neutral-900 dark:text-white flex items-center gap-1 sm:gap-1.5 mb-1 sm:mb-3">
-                            <svg className="w-3 h-3 sm:w-4 sm:h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2-2v14a2 2 0 002 2z"></path></svg> Breakdown
+                        <h3 className="relative z-10 text-sm sm:text-base font-bold text-neutral-900 dark:text-white flex items-center gap-1.5 mb-2 sm:mb-4">
+                            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2-2v14a2 2 0 002 2z"></path></svg> Breakdown
                         </h3>
-                        <div className="relative z-10 flex-1 space-y-0.5 sm:space-y-2">
-                            <div className="flex justify-between text-[7px] sm:text-xs font-semibold"><span className="text-neutral-500">Rent</span><span className="font-mono">₱{(currentBill.breakdown?.rent || 0).toLocaleString()}</span></div>
-                            <div className="flex justify-between text-[7px] sm:text-xs font-semibold"><span className="text-neutral-500">Water</span><span className="font-mono">₱{(currentBill.breakdown?.water || 0).toLocaleString()}</span></div>
-                            <div className="flex justify-between text-[7px] sm:text-xs font-semibold"><span className="text-neutral-500">Power</span><span className="font-mono">₱{(currentBill.breakdown?.electricity || 0).toLocaleString()}</span></div>
+                        <div className="relative z-10 flex-1 space-y-1.5 sm:space-y-3">
+                            <div className="flex justify-between text-xs sm:text-sm font-semibold"><span className="text-neutral-500">Rent</span><span className="font-mono">₱{(currentBill.breakdown?.rent || 0).toLocaleString()}</span></div>
+                            <div className="flex justify-between text-xs sm:text-sm font-semibold"><span className="text-neutral-500">Water</span><span className="font-mono">₱{(currentBill.breakdown?.water || 0).toLocaleString()}</span></div>
+                            <div className="flex justify-between text-xs sm:text-sm font-semibold"><span className="text-neutral-500">Power</span><span className="font-mono">₱{(currentBill.breakdown?.electricity || 0).toLocaleString()}</span></div>
                             {currentBill.breakdown?.penalty > 0 && (
-                                <div className="flex justify-between text-[7px] sm:text-xs font-semibold text-red-500"><span className="flex items-center gap-0.5"><svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg> Penalty</span><span className="font-mono">₱{currentBill.breakdown.penalty.toLocaleString()}</span></div>
+                                <div className="flex justify-between text-xs sm:text-sm font-semibold text-red-500"><span className="flex items-center gap-1"><svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg> Penalty</span><span className="font-mono">₱{currentBill.breakdown.penalty.toLocaleString()}</span></div>
                             )}
-                            <div className="flex justify-between text-[8px] sm:text-sm font-bold pt-1 sm:pt-2.5 border-t border-neutral-200/50 dark:border-white/10"><span className="text-neutral-900 dark:text-white">Total</span><span className="text-indigo-600 dark:text-indigo-400 font-mono">₱{(currentBill.totalAmount || 0).toLocaleString()}</span></div>
+                            <div className="flex justify-between text-sm sm:text-base font-bold pt-2 sm:pt-3 border-t border-neutral-200/50 dark:border-white/10"><span className="text-neutral-900 dark:text-white">Total</span><span className="text-indigo-600 dark:text-indigo-400 font-mono">₱{(currentBill.totalAmount || 0).toLocaleString()}</span></div>
                         </div>
                     </motion.div>
-
                     {/* SUMMARY CARD */}
-                    <motion.div variants={itemVariants} className="relative rounded-xl sm:rounded-[1.5rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-2.5 sm:p-4 lg:p-6 flex flex-col justify-center">
+                    <motion.div variants={itemVariants} className="relative rounded-xl sm:rounded-[1.5rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
-                        <h3 className="relative z-10 text-[8px] sm:text-sm font-bold text-neutral-900 dark:text-white flex items-center gap-1 sm:gap-1.5 mb-1 sm:mb-3">
-                            <svg className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg> Summary
+                        <h3 className="relative z-10 text-sm sm:text-base font-bold text-neutral-900 dark:text-white flex items-center gap-1.5 mb-2 sm:mb-4">
+                            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg> Summary
                         </h3>
-                        <div className="relative z-10 flex-1 space-y-0.5 sm:space-y-2">
-                            <div className="flex justify-between text-[7px] sm:text-xs font-semibold"><span className="text-neutral-500">Month</span><span className="font-mono text-emerald-600 dark:text-emerald-400">₱{summary.monthTotal.toLocaleString()}</span></div>
-                            <div className="flex justify-between text-[7px] sm:text-xs font-semibold"><span className="text-neutral-500">Year</span><span className="font-mono text-emerald-600 dark:text-emerald-400">₱{summary.yearTotal.toLocaleString()}</span></div>
-                            <div className="flex justify-between text-[7px] sm:text-xs font-semibold border-t border-neutral-200/50 dark:border-white/10 pt-1 sm:pt-2.5"><span className="text-neutral-500">Txns</span><span className="font-mono font-bold text-neutral-900 dark:text-white">{summary.txCount}</span></div>
+                        <div className="relative z-10 flex-1 space-y-1.5 sm:space-y-3">
+                            <div className="flex justify-between text-xs sm:text-sm font-semibold"><span className="text-neutral-500">Month</span><span className="font-mono text-emerald-600 dark:text-emerald-400">₱{summary.monthTotal.toLocaleString()}</span></div>
+                            <div className="flex justify-between text-xs sm:text-sm font-semibold"><span className="text-neutral-500">Year</span><span className="font-mono text-emerald-600 dark:text-emerald-400">₱{summary.yearTotal.toLocaleString()}</span></div>
+                            <div className="flex justify-between text-xs sm:text-sm font-semibold border-t border-neutral-200/50 dark:border-white/10 pt-2 sm:pt-3"><span className="text-neutral-500">Txns</span><span className="font-mono font-bold text-neutral-900 dark:text-white">{summary.txCount}</span></div>
                         </div>
                     </motion.div>
-                </div>
+                </div>            
 
                 {/* --- LAYER 3: FILTERS & TABLE SECTION --- */}
                 <motion.div variants={itemVariants} className="flex-1 flex flex-col relative bg-white/60 dark:bg-[#121212]/60 rounded-xl sm:rounded-[1.5rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden min-h-[450px] mb-12 sm:mb-24">
@@ -304,51 +302,51 @@ export default function TenantPayments() {
 
                     {/* Table Body */}
                     <div className="relative z-10 flex-1 overflow-x-auto pr-1 pb-4 sm:pb-6">
-                        <table className="w-full text-left border-collapse min-w-[700px] sm:min-w-[800px] mb-4">
+                        <table className="w-full text-left border-collapse min-w-[500px] sm:min-w-[800px] mb-4">
                             <thead className="sticky top-0 z-20 bg-neutral-50/95 dark:bg-[#18181B]/95 backdrop-blur-md shadow-sm">
                                 <tr>
-                                    <th className="px-3 py-3 sm:px-4 sm:py-4 text-[11px] sm:text-[12px] font-bold text-neutral-400 uppercase tracking-widest">Date / Ref</th>
-                                    <th className="px-3 py-3 sm:px-4 sm:py-4 text-[11px] sm:text-[12px] font-bold text-neutral-400 uppercase tracking-widest">Method & Desc</th>
-                                    <th className="px-3 py-3 sm:px-4 sm:py-4 text-[11px] sm:text-[12px] font-bold text-neutral-400 uppercase tracking-widest text-right">Amount</th>
-                                    <th className="px-3 py-3 sm:px-4 sm:py-4 text-[11px] sm:text-[12px] font-bold text-neutral-400 uppercase tracking-widest text-center">Status</th>
-                                    <th className="px-3 py-3 sm:px-4 sm:py-4 text-[11px] sm:text-[12px] font-bold text-neutral-400 uppercase tracking-widest text-center">Receipt</th>
+                                    <th className="px-2 py-2 sm:px-4 sm:py-4 text-[9px] sm:text-[12px] font-bold text-neutral-400 uppercase tracking-widest">Date / Ref</th>
+                                    <th className="px-2 py-2 sm:px-4 sm:py-4 text-[9px] sm:text-[12px] font-bold text-neutral-400 uppercase tracking-widest">Method & Desc</th>
+                                    <th className="px-2 py-2 sm:px-4 sm:py-4 text-[9px] sm:text-[12px] font-bold text-neutral-400 uppercase tracking-widest text-right">Amount</th>
+                                    <th className="px-2 py-2 sm:px-4 sm:py-4 text-[9px] sm:text-[12px] font-bold text-neutral-400 uppercase tracking-widest text-center">Status</th>
+                                    <th className="px-2 py-2 sm:px-4 sm:py-4 text-[9px] sm:text-[12px] font-bold text-neutral-400 uppercase tracking-widest text-center">Receipt</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-neutral-200/30 dark:divide-white/5">
                                 {filteredPayments.length === 0 ? (
                                     <tr>
-                                        <td colSpan={5} className="px-6 py-12 text-center text-neutral-500 text-sm sm:text-base">No transactions match your filters.</td>
+                                        <td colSpan={5} className="px-6 py-8 text-center text-neutral-500 text-xs sm:text-base">No transactions match your filters.</td>
                                     </tr>
                                 ) : (
                                     filteredPayments.map((p) => (
                                         <motion.tr key={p.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="group hover:bg-white/40 dark:hover:bg-white/[0.02] transition-all duration-300">
-                                            <td className="px-3 py-4 sm:px-4 sm:py-4 align-middle">
-                                                <p className="font-bold text-xs sm:text-sm text-neutral-900 dark:text-white">{formatDate(p.date)}</p>
-                                                <p className="text-[10px] sm:text-xs font-mono text-neutral-400 mt-1">{p.referenceNumber}</p>
+                                            <td className="px-2 py-2.5 sm:px-4 sm:py-4 align-middle">
+                                                <p className="font-bold text-[10px] sm:text-sm text-neutral-900 dark:text-white">{formatDate(p.date)}</p>
+                                                <p className="text-[8px] sm:text-xs font-mono text-neutral-400 mt-0.5">{p.referenceNumber}</p>
                                             </td>
-                                            <td className="px-3 py-4 sm:px-4 sm:py-4 align-middle flex items-center gap-3 sm:gap-4 min-w-0">
-                                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-white/50 dark:bg-black/30 border border-neutral-200/50 dark:border-white/5 flex items-center justify-center shrink-0">
-                                                    {p.method.includes('GCash') ? <span className="text-xs sm:text-sm font-black text-blue-500">G</span> : <svg className="w-4 h-4 sm:w-5 sm:h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>}
+                                            <td className="px-2 py-2.5 sm:px-4 sm:py-4 align-middle flex items-center gap-2 sm:gap-4 min-w-0">
+                                                <div className="w-6 h-6 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-white/50 dark:bg-black/30 border border-neutral-200/50 dark:border-white/5 flex items-center justify-center shrink-0">
+                                                    {p.method.includes('GCash') ? <span className="text-[10px] sm:text-sm font-black text-blue-500">G</span> : <svg className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>}
                                                 </div>
                                                 <div className="min-w-0">
-                                                    <p className="text-xs sm:text-sm font-bold truncate max-w-[150px] sm:max-w-[250px] text-neutral-900 dark:text-white">{p.description}</p>
-                                                    <p className="text-[10px] sm:text-xs text-neutral-500 mt-0.5">{p.method}</p>
+                                                    <p className="text-[10px] sm:text-sm font-bold truncate max-w-[120px] sm:max-w-[250px] text-neutral-900 dark:text-white">{p.description}</p>
+                                                    <p className="text-[8px] sm:text-xs text-neutral-500 mt-0.5">{p.method}</p>
                                                 </div>
                                             </td>
-                                            <td className="px-3 py-4 sm:px-4 sm:py-4 align-middle text-right">
-                                                <p className="text-sm sm:text-base font-black font-mono text-neutral-900 dark:text-white">₱{Number(p.amount).toLocaleString()}</p>
+                                            <td className="px-2 py-2.5 sm:px-4 sm:py-4 align-middle text-right">
+                                                <p className="text-xs sm:text-base font-black font-mono text-neutral-900 dark:text-white">₱{Number(p.amount).toLocaleString()}</p>
                                             </td>
-                                            <td className="px-3 py-4 sm:px-4 sm:py-4 align-middle text-center">
-                                                <span className={`inline-flex items-center px-2.5 py-1 sm:px-3 sm:py-1.5 text-[9px] sm:text-xs font-bold uppercase tracking-widest rounded-full border ${getStatusColor(p.status)}`}>
+                                            <td className="px-2 py-2.5 sm:px-4 sm:py-4 align-middle text-center">
+                                                <span className={`inline-flex items-center px-1.5 py-0.5 sm:px-3 sm:py-1.5 text-[8px] sm:text-xs font-bold uppercase tracking-widest rounded-full border ${getStatusColor(p.status)}`}>
                                                     {p.status}
                                                 </span>
                                             </td>
-                                            <td className="px-3 py-4 sm:px-4 sm:py-4 align-middle text-center">
+                                            <td className="px-2 py-2.5 sm:px-4 sm:py-4 align-middle text-center">
                                                 {p.hasReceipt ? (
-                                                    <button onClick={() => setViewReceiptUrl(p.receiptUrl)} className="p-2 sm:p-2.5 rounded-lg bg-neutral-100 dark:bg-white/5 hover:text-indigo-600 transition-colors">
-                                                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                                    <button onClick={() => setViewReceiptUrl(p.receiptUrl)} className="p-1.5 sm:p-2.5 rounded-lg bg-neutral-100 dark:bg-white/5 hover:text-indigo-600 transition-colors">
+                                                        <svg className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                                                     </button>
-                                                ) : <span className="text-[10px] sm:text-xs text-neutral-400 italic">N/A</span>}
+                                                ) : <span className="text-[8px] sm:text-xs text-neutral-400 italic">N/A</span>}
                                             </td>
                                         </motion.tr>
                                     ))
