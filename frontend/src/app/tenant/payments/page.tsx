@@ -276,26 +276,26 @@ export default function TenantPayments() {
                     <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
 
                     {/* Toolbar */}
-                    <div className="relative z-10 shrink-0 p-3 sm:p-4 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 overflow-x-auto">
-                        <div className="relative w-full sm:w-64 h-10 sm:h-12 shrink-0 flex items-center">
-                            <svg className="absolute left-3 sm:left-4 w-4 h-4 sm:w-5 sm:h-5 text-neutral-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                            <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full h-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-xl sm:rounded-xl pl-9 sm:pl-12 pr-3 sm:pr-4 text-xs sm:text-sm outline-none focus:ring-2 focus:ring-indigo-500/50 text-neutral-900 dark:text-white m-0" />
+                    <div className="relative z-10 shrink-0 p-2 sm:p-4 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex flex-wrap sm:flex-nowrap items-center gap-1.5 sm:gap-3 overflow-x-auto">
+                        <div className="relative w-full sm:w-64 h-8 sm:h-12 shrink-0 flex items-center">
+                            <svg className="absolute left-2.5 sm:left-4 w-3.5 h-3.5 sm:w-5 sm:h-5 text-neutral-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full h-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-lg sm:rounded-xl pl-8 sm:pl-12 pr-2.5 sm:pr-4 text-[10px] sm:text-sm outline-none focus:ring-2 focus:ring-indigo-500/50 text-neutral-900 dark:text-white m-0" />
                         </div>
-                        <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="w-full sm:w-auto h-10 sm:h-12 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-xl sm:rounded-xl px-2 sm:px-3 text-xs sm:text-sm outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
+                        <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="w-full sm:w-auto h-8 sm:h-12 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-lg sm:rounded-xl px-1.5 sm:px-3 text-[10px] sm:text-sm outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
                             <option value="All" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">All Status</option>
                             <option value="Paid" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Paid</option>
                             <option value="Pending" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Pending</option>
                             <option value="Rejected" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Rejected</option>
                         </select>
-                        <div className="ml-auto w-full sm:w-auto flex items-center gap-2 sm:gap-3 shrink-0">
-                            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="flex-1 sm:flex-none h-10 sm:h-12 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-xl sm:rounded-xl px-2 sm:px-3 text-xs sm:text-sm outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
+                        <div className="ml-auto w-full sm:w-auto flex items-center gap-1.5 sm:gap-3 shrink-0">
+                            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="flex-1 sm:flex-none h-8 sm:h-12 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-lg sm:rounded-xl px-1.5 sm:px-3 text-[10px] sm:text-sm outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
                                 <option value="date_desc" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Newest</option>
                                 <option value="date_asc" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Oldest</option>
                                 <option value="amount_desc" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">High-Low</option>
                                 <option value="amount_asc" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Low-High</option>
                             </select>
-                            <button onClick={() => alert("Exporting CSV")} className="h-10 sm:h-12 px-3 sm:px-4 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 font-bold text-xs sm:text-sm rounded-xl sm:rounded-xl border border-indigo-200 dark:border-indigo-500/20 hover:bg-indigo-100 dark:hover:bg-indigo-500/30 flex items-center justify-center gap-1.5 transition-colors m-0">
-                                <svg className="w-4 h-4 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> <span className="inline">Export</span>
+                            <button onClick={() => alert("Exporting CSV")} className="h-8 sm:h-12 px-2.5 sm:px-4 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 font-bold text-[10px] sm:text-sm rounded-lg sm:rounded-xl border border-indigo-200 dark:border-indigo-500/20 hover:bg-indigo-100 dark:hover:bg-indigo-500/30 flex items-center justify-center gap-1 sm:gap-1.5 transition-colors m-0">
+                                <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> <span className="inline">Export</span>
                             </button>
                         </div>
                     </div>
