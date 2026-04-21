@@ -40,8 +40,6 @@ export default function TenantPayments() {
     const [searchQuery, setSearchQuery] = useState("");
     const [filterStatus, setFilterStatus] = useState("All");
     const [sortBy, setSortBy] = useState("date_desc");
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 5;
 
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
     const [viewReceiptUrl, setViewReceiptUrl] = useState<string | null>(null);
@@ -114,9 +112,6 @@ export default function TenantPayments() {
         });
     }, [payments, searchQuery, filterStatus, sortBy]);
 
-    const paginatedPayments = filteredPayments.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-    const totalPages = Math.ceil(filteredPayments.length / itemsPerPage);
-
     const handlePaymentSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setFileError("");
@@ -162,11 +157,11 @@ export default function TenantPayments() {
 
     const containerVariants: Variants = {
         hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.05 } }
+        visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.05 } }
     };
     const itemVariants: Variants = {
         hidden: { opacity: 0, y: 15, filter: "blur(8px)" },
-        visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }
+        visible: { opacity: 1, y: 0, filter: "blur(0px)", transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] } }
     };
 
     const getStatusColor = (status: string) => {
@@ -180,20 +175,19 @@ export default function TenantPayments() {
     };
 
     return (
-        /* ABSOLUTE VIEWPORT LOCK: Edge-to-edge, zero scrollbar bouncing */
-        <div className="fixed inset-0 w-full h-full md:pl-64 lg:pl-72 text-neutral-900 dark:text-neutral-100 font-sans flex flex-col bg-transparent overflow-hidden overscroll-none">
+        <div className="fixed inset-0 w-full h-full md:pl-[280px] text-neutral-900 dark:text-neutral-100 font-sans flex flex-col bg-transparent overscroll-none overflow-y-auto">
             
             {/* Ambient Background Glows */}
-            <div className="absolute top-0 left-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-indigo-400/20 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none -z-10 dark:hidden"></div>
-            <div className="absolute bottom-0 right-1/4 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] bg-purple-400/20 rounded-full blur-[60px] sm:blur-[100px] pointer-events-none -z-10 dark:hidden"></div>
+            <div className="fixed top-0 left-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-indigo-400/20 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none -z-10 dark:hidden"></div>
+            <div className="fixed bottom-0 right-1/4 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] bg-purple-400/20 rounded-full blur-[60px] sm:blur-[100px] pointer-events-none -z-10 dark:hidden"></div>
 
-            {/* MAIN WRAPPER: Minimal mobile padding (px-2) to maximize UI scale */}
-            <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-7xl mx-auto w-full h-full flex flex-col min-h-0 gap-2 sm:gap-5 pt-6 px-2 sm:px-8 pb-3 sm:pb-4 relative z-10">
+            {/* MAIN WRAPPER */}
+            <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-7xl mx-auto w-full flex flex-col gap-2 sm:gap-3 pt-4 sm:pt-6 px-2 sm:px-8 pb-12 sm:pb-20 lg:pb-32 relative z-10 min-h-full">
                 
                 {/* --- HEADER --- */}
-                <motion.header variants={itemVariants} className="shrink-0 flex flex-row items-center justify-between h-10 px-1 sm:px-0">
+                <motion.header variants={itemVariants} className="shrink-0 flex flex-row items-center justify-between h-8 sm:h-10 px-1 sm:px-0">
                     <div className="flex flex-row items-center gap-3 sm:gap-4 h-full">
-                        <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white leading-none">
+                        <h1 className="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white leading-none">
                             Payment Center
                         </h1>
                         <div className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:py-1.5 rounded-full bg-white/60 dark:bg-white/5 border border-neutral-200/50 dark:border-white/10 backdrop-blur-md text-indigo-600 dark:text-indigo-400 text-[8px] sm:text-xs font-bold tracking-wide shadow-sm">
@@ -203,37 +197,37 @@ export default function TenantPayments() {
                     </div>
                 </motion.header>
 
-                {/* --- LAYER 1: CURRENT BILL (Full Width Banner) --- */}
-                <motion.div variants={itemVariants} className="shrink-0 relative rounded-xl sm:rounded-[2rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col p-2.5 sm:p-6 lg:p-8">
+                {/* --- LAYER 1: CURRENT BILL --- */}
+                <motion.div variants={itemVariants} className="shrink-0 relative rounded-xl sm:rounded-[1.5rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col p-2.5 sm:p-4 lg:p-6">
                     <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                     {currentBill.status === 'Overdue' && <div className="absolute top-0 left-0 w-full h-1 bg-red-500 z-20 shadow-[0_0_20px_rgba(239,68,68,0.8)]"></div>}
 
-                    <div className="relative z-10 flex justify-between items-start mb-2 sm:mb-4">
+                    <div className="relative z-10 flex justify-between items-start mb-1.5 sm:mb-3">
                         <div>
                             <h3 className="text-[7px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest mb-0.5">Current Bill</h3>
-                            <p className="text-[10px] sm:text-xl font-bold text-neutral-900 dark:text-white leading-none">{currentBill.month}</p>
+                            <p className="text-[10px] sm:text-lg font-bold text-neutral-900 dark:text-white leading-none">{currentBill.month}</p>
                         </div>
                         <span className={`px-1.5 py-0.5 sm:px-2.5 sm:py-1 text-[6px] sm:text-[10px] font-black uppercase tracking-widest rounded-full border backdrop-blur-sm ${getStatusColor(currentBill.status)}`}>
                             {currentBill.status}
                         </span>
                     </div>
 
-                    <div className="relative z-10 grid grid-cols-2 gap-1.5 sm:gap-6 mb-2 sm:mb-4">
+                    <div className="relative z-10 grid grid-cols-2 gap-1.5 sm:gap-6 mb-1.5 sm:mb-3">
                         <div>
                             <p className="text-[7px] sm:text-xs font-semibold text-neutral-500 mb-0.5">Remaining</p>
-                            <p className={`text-[14px] sm:text-5xl font-black tracking-tighter font-mono leading-none ${currentBill.status === 'Overdue' ? 'text-red-500' : 'text-indigo-600 dark:text-indigo-400'}`}>
+                            <p className={`text-[14px] sm:text-3xl lg:text-4xl font-black tracking-tighter font-mono leading-none ${currentBill.status === 'Overdue' ? 'text-red-500' : 'text-indigo-600 dark:text-indigo-400'}`}>
                                 ₱{currentBill.remainingBalance.toLocaleString()}
                             </p>
                         </div>
                         <div>
                             <p className="text-[7px] sm:text-xs font-semibold text-neutral-500 mb-0.5">Paid</p>
-                            <p className="text-[10px] sm:text-3xl font-bold tracking-tight text-neutral-900 dark:text-white font-mono leading-none mt-1 sm:mt-2">
+                            <p className="text-[10px] sm:text-xl lg:text-2xl font-bold tracking-tight text-neutral-900 dark:text-white font-mono leading-none mt-1 sm:mt-1.5">
                                 ₱{currentBill.amountPaid.toLocaleString()}
                             </p>
                         </div>
                     </div>
 
-                    <div className="relative z-10 flex items-center justify-between border-t border-neutral-200/50 dark:border-white/10 pt-2 sm:pt-4 mt-auto gap-1.5">
+                    <div className="relative z-10 flex items-center justify-between border-t border-neutral-200/50 dark:border-white/10 pt-2 sm:pt-3 mt-auto gap-1.5">
                         <div className="hidden sm:block">
                             <p className="text-[7px] sm:text-xs font-medium text-neutral-500">Due Date</p>
                             <p className={`text-[8px] sm:text-sm font-bold ${currentBill.status === 'Overdue' ? 'text-red-500 animate-pulse' : 'text-neutral-900 dark:text-white'}`}>
@@ -243,7 +237,7 @@ export default function TenantPayments() {
                         <button 
                             onClick={() => setIsPaymentModalOpen(true)}
                             disabled={currentBill.remainingBalance <= 0 || currentBill.status === 'Pending Verification'}
-                            className={`w-full sm:w-auto px-2 sm:px-8 py-1.5 sm:py-3 font-bold rounded-md sm:rounded-xl flex items-center justify-center gap-1 text-[8px] sm:text-sm shrink-0 transition-transform active:scale-95 ${
+                            className={`w-full sm:w-auto px-2 sm:px-8 py-1.5 sm:py-2 font-bold rounded-md sm:rounded-xl flex items-center justify-center gap-1 text-[8px] sm:text-sm shrink-0 transition-transform active:scale-95 ${
                                 currentBill.remainingBalance <= 0 || currentBill.status === 'Pending Verification'
                                 ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-400 cursor-not-allowed border border-neutral-200 dark:border-white/5' 
                                 : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20 border border-indigo-500'
@@ -254,59 +248,56 @@ export default function TenantPayments() {
                     </div>
                 </motion.div>
 
-                {/* --- LAYER 2: BREAKDOWN & SUMMARY (Side by Side) --- */}
-                <div className="shrink-0 grid grid-cols-2 gap-1.5 sm:gap-5">
+                {/* --- LAYER 2: BREAKDOWN & SUMMARY --- */}
+                <div className="shrink-0 grid grid-cols-2 gap-1.5 sm:gap-4">
                     
                     {/* BREAKDOWN CARD */}
-                    <motion.div variants={itemVariants} className="relative rounded-xl sm:rounded-[2rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-2.5 sm:p-6 lg:p-8 flex flex-col justify-center">
+                    <motion.div variants={itemVariants} className="relative rounded-xl sm:rounded-[1.5rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-2.5 sm:p-4 lg:p-6 flex flex-col justify-center">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
-                        <h3 className="relative z-10 text-[8px] sm:text-sm font-bold text-neutral-900 dark:text-white flex items-center gap-1 sm:gap-1.5 mb-1.5 sm:mb-5">
+                        <h3 className="relative z-10 text-[8px] sm:text-sm font-bold text-neutral-900 dark:text-white flex items-center gap-1 sm:gap-1.5 mb-1 sm:mb-3">
                             <svg className="w-3 h-3 sm:w-4 sm:h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2-2v14a2 2 0 002 2z"></path></svg> Breakdown
                         </h3>
-                        <div className="relative z-10 flex-1 space-y-1 sm:space-y-3">
+                        <div className="relative z-10 flex-1 space-y-0.5 sm:space-y-2">
                             <div className="flex justify-between text-[7px] sm:text-xs font-semibold"><span className="text-neutral-500">Rent</span><span className="font-mono">₱{(currentBill.breakdown?.rent || 0).toLocaleString()}</span></div>
                             <div className="flex justify-between text-[7px] sm:text-xs font-semibold"><span className="text-neutral-500">Water</span><span className="font-mono">₱{(currentBill.breakdown?.water || 0).toLocaleString()}</span></div>
                             <div className="flex justify-between text-[7px] sm:text-xs font-semibold"><span className="text-neutral-500">Power</span><span className="font-mono">₱{(currentBill.breakdown?.electricity || 0).toLocaleString()}</span></div>
                             {currentBill.breakdown?.penalty > 0 && (
                                 <div className="flex justify-between text-[7px] sm:text-xs font-semibold text-red-500"><span className="flex items-center gap-0.5"><svg className="w-2.5 h-2.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg> Penalty</span><span className="font-mono">₱{currentBill.breakdown.penalty.toLocaleString()}</span></div>
                             )}
-                            <div className="flex justify-between text-[8px] sm:text-sm font-bold pt-1.5 sm:pt-3 border-t border-neutral-200/50 dark:border-white/10"><span className="text-neutral-900 dark:text-white">Total</span><span className="text-indigo-600 dark:text-indigo-400 font-mono">₱{(currentBill.totalAmount || 0).toLocaleString()}</span></div>
+                            <div className="flex justify-between text-[8px] sm:text-sm font-bold pt-1 sm:pt-2.5 border-t border-neutral-200/50 dark:border-white/10"><span className="text-neutral-900 dark:text-white">Total</span><span className="text-indigo-600 dark:text-indigo-400 font-mono">₱{(currentBill.totalAmount || 0).toLocaleString()}</span></div>
                         </div>
                     </motion.div>
 
                     {/* SUMMARY CARD */}
-                    <motion.div variants={itemVariants} className="relative rounded-xl sm:rounded-[2rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-2.5 sm:p-6 lg:p-8 flex flex-col justify-center">
+                    <motion.div variants={itemVariants} className="relative rounded-xl sm:rounded-[1.5rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-2.5 sm:p-4 lg:p-6 flex flex-col justify-center">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
-                        <h3 className="relative z-10 text-[8px] sm:text-sm font-bold text-neutral-900 dark:text-white flex items-center gap-1 sm:gap-1.5 mb-1.5 sm:mb-5">
+                        <h3 className="relative z-10 text-[8px] sm:text-sm font-bold text-neutral-900 dark:text-white flex items-center gap-1 sm:gap-1.5 mb-1 sm:mb-3">
                             <svg className="w-3 h-3 sm:w-4 sm:h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg> Summary
                         </h3>
-                        <div className="relative z-10 flex-1 space-y-1 sm:space-y-3">
+                        <div className="relative z-10 flex-1 space-y-0.5 sm:space-y-2">
                             <div className="flex justify-between text-[7px] sm:text-xs font-semibold"><span className="text-neutral-500">Month</span><span className="font-mono text-emerald-600 dark:text-emerald-400">₱{summary.monthTotal.toLocaleString()}</span></div>
                             <div className="flex justify-between text-[7px] sm:text-xs font-semibold"><span className="text-neutral-500">Year</span><span className="font-mono text-emerald-600 dark:text-emerald-400">₱{summary.yearTotal.toLocaleString()}</span></div>
-                            <div className="flex justify-between text-[7px] sm:text-xs font-semibold border-t border-neutral-200/50 dark:border-white/10 pt-1.5 sm:pt-3"><span className="text-neutral-500">Txns</span><span className="font-mono font-bold text-neutral-900 dark:text-white">{summary.txCount}</span></div>
+                            <div className="flex justify-between text-[7px] sm:text-xs font-semibold border-t border-neutral-200/50 dark:border-white/10 pt-1 sm:pt-2.5"><span className="text-neutral-500">Txns</span><span className="font-mono font-bold text-neutral-900 dark:text-white">{summary.txCount}</span></div>
                         </div>
                     </motion.div>
                 </div>
 
                 {/* --- LAYER 3: FILTERS & TABLE SECTION --- */}
-                <motion.div variants={itemVariants} className="flex-1 flex flex-col min-h-0 relative bg-white/60 dark:bg-[#121212]/60 rounded-xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden">
+                <motion.div variants={itemVariants} className="flex-1 flex flex-col relative bg-white/60 dark:bg-[#121212]/60 rounded-xl sm:rounded-[1.5rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden min-h-[500px] mb-12 sm:mb-24">
                     <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
 
-                    {/* Toolbar - LOCKED HEIGHT & ALIGNMENT */}
+                    {/* Toolbar */}
                     <div className="relative z-10 shrink-0 p-1.5 sm:p-4 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex flex-nowrap items-center gap-1.5 sm:gap-2 overflow-x-auto [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                        
                         <div className="relative w-24 sm:w-64 h-6 sm:h-9 shrink-0 flex items-center">
                             <svg className="absolute left-1.5 sm:left-2.5 w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-neutral-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                             <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full h-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl pl-5 sm:pl-8 pr-1.5 sm:pr-2 text-[7px] sm:text-xs outline-none focus:ring-2 focus:ring-indigo-500/50 text-neutral-900 dark:text-white m-0" />
                         </div>
-                        
-                        <select value={filterStatus} onChange={(e) => { setFilterStatus(e.target.value); setCurrentPage(1); }} className="h-6 sm:h-9 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-2 text-[7px] sm:text-xs outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
+                        <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="h-6 sm:h-9 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-2 text-[7px] sm:text-xs outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
                             <option value="All" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">All Status</option>
                             <option value="Paid" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Paid</option>
                             <option value="Pending" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Pending</option>
                             <option value="Rejected" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Rejected</option>
                         </select>
-
                         <div className="ml-auto flex items-center gap-1.5 sm:gap-2 shrink-0">
                             <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="h-6 sm:h-9 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-2 text-[7px] sm:text-xs outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
                                 <option value="date_desc" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Newest</option>
@@ -321,30 +312,30 @@ export default function TenantPayments() {
                     </div>
 
                     {/* Table Body */}
-                    <div className="relative z-10 flex-1 min-h-0 overflow-y-auto overflow-x-auto [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden overscroll-contain">
-                        <table className="w-full text-left border-collapse min-w-[400px] sm:min-w-[800px]">
+                    <div className="relative z-10 flex-1 overflow-x-auto pr-1 pb-4 sm:pb-6">
+                        <table className="w-full text-left border-collapse min-w-[400px] sm:min-w-[800px] mb-4">
                             <thead className="sticky top-0 z-20 bg-neutral-50/95 dark:bg-[#18181B]/95 backdrop-blur-md shadow-sm">
                                 <tr>
-                                    <th className="px-2 py-1.5 sm:px-4 sm:py-4 text-[7px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Date / Ref</th>
-                                    <th className="px-2 py-1.5 sm:px-4 sm:py-4 text-[7px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Method & Desc</th>
-                                    <th className="px-2 py-1.5 sm:px-4 sm:py-4 text-[7px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-right">Amount</th>
-                                    <th className="px-2 py-1.5 sm:px-4 sm:py-4 text-[7px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center">Status</th>
-                                    <th className="px-2 py-1.5 sm:px-4 sm:py-4 text-[7px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center">Receipt</th>
+                                    <th className="px-2 py-1.5 sm:px-4 sm:py-3 text-[7px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Date / Ref</th>
+                                    <th className="px-2 py-1.5 sm:px-4 sm:py-3 text-[7px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Method & Desc</th>
+                                    <th className="px-2 py-1.5 sm:px-4 sm:py-3 text-[7px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-right">Amount</th>
+                                    <th className="px-2 py-1.5 sm:px-4 sm:py-3 text-[7px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center">Status</th>
+                                    <th className="px-2 py-1.5 sm:px-4 sm:py-3 text-[7px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center">Receipt</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-neutral-200/30 dark:divide-white/5">
-                                {paginatedPayments.length === 0 ? (
+                                {filteredPayments.length === 0 ? (
                                     <tr>
                                         <td colSpan={5} className="px-6 py-8 text-center text-neutral-500 text-[10px] sm:text-sm">No transactions match your filters.</td>
                                     </tr>
                                 ) : (
-                                    paginatedPayments.map((p) => (
+                                    filteredPayments.map((p) => (
                                         <motion.tr key={p.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="group hover:bg-white/40 dark:hover:bg-white/[0.02] transition-all duration-300">
-                                            <td className="px-2 py-2 sm:px-4 sm:py-4 align-middle">
+                                            <td className="px-2 py-2 sm:px-4 sm:py-3 align-middle">
                                                 <p className="font-bold text-[8px] sm:text-xs text-neutral-900 dark:text-white">{formatDate(p.date)}</p>
                                                 <p className="text-[6px] sm:text-[9px] font-mono text-neutral-400 mt-0.5">{p.referenceNumber}</p>
                                             </td>
-                                            <td className="px-2 py-2 sm:px-4 sm:py-4 align-middle flex items-center gap-2 sm:gap-3 min-w-0">
+                                            <td className="px-2 py-2 sm:px-4 sm:py-3 align-middle flex items-center gap-2 sm:gap-3 min-w-0">
                                                 <div className="w-5 h-5 sm:w-8 sm:h-8 rounded sm:rounded-lg bg-white/50 dark:bg-black/30 border border-neutral-200/50 dark:border-white/5 flex items-center justify-center shrink-0">
                                                     {p.method.includes('GCash') ? <span className="text-[8px] sm:text-[10px] font-black text-blue-500">G</span> : <svg className="w-3 h-3 sm:w-4 sm:h-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>}
                                                 </div>
@@ -353,15 +344,15 @@ export default function TenantPayments() {
                                                     <p className="text-[6px] sm:text-[9px] text-neutral-500">{p.method}</p>
                                                 </div>
                                             </td>
-                                            <td className="px-2 py-2 sm:px-4 sm:py-4 align-middle text-right">
+                                            <td className="px-2 py-2 sm:px-4 sm:py-3 align-middle text-right">
                                                 <p className="text-[9px] sm:text-sm font-black font-mono text-neutral-900 dark:text-white">₱{Number(p.amount).toLocaleString()}</p>
                                             </td>
-                                            <td className="px-2 py-2 sm:px-4 sm:py-4 align-middle text-center">
+                                            <td className="px-2 py-2 sm:px-4 sm:py-3 align-middle text-center">
                                                 <span className={`inline-flex items-center px-1.5 py-0.5 sm:px-2.5 sm:py-1 text-[6px] sm:text-[9px] font-bold uppercase tracking-widest rounded-full border ${getStatusColor(p.status)}`}>
                                                     {p.status}
                                                 </span>
                                             </td>
-                                            <td className="px-2 py-2 sm:px-4 sm:py-4 align-middle text-center">
+                                            <td className="px-2 py-2 sm:px-4 sm:py-3 align-middle text-center">
                                                 {p.hasReceipt ? (
                                                     <button onClick={() => setViewReceiptUrl(p.receiptUrl)} className="p-1 sm:p-1.5 rounded bg-neutral-100 dark:bg-white/5 hover:text-indigo-600 transition-colors">
                                                         <svg className="w-3 h-3 sm:w-4 sm:h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
@@ -373,15 +364,6 @@ export default function TenantPayments() {
                                 )}
                             </tbody>
                         </table>
-                    </div>
-
-                    {/* Pagination Footer */}
-                    <div className="relative z-10 shrink-0 p-1.5 sm:p-3 border-t border-neutral-200/50 dark:border-white/10 bg-white/20 dark:bg-black/10 flex justify-between items-center">
-                        <span className="text-[7px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest ml-2">Page {currentPage} of {totalPages || 1}</span>
-                        <div className="flex gap-1.5 sm:gap-2">
-                            <button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1} className="px-2 py-1 sm:px-2 sm:py-1 bg-white dark:bg-white/5 rounded border border-neutral-200 dark:border-white/10 text-[7px] sm:text-[11px] disabled:opacity-50 text-neutral-900 dark:text-white">Prev</button>
-                            <button onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages || totalPages === 0} className="px-2 py-1 sm:px-2 sm:py-1 bg-white dark:bg-white/5 rounded border border-neutral-200 dark:border-white/10 text-[7px] sm:text-[11px] disabled:opacity-50 text-neutral-900 dark:text-white">Next</button>
-                        </div>
                     </div>
                 </motion.div>
 
@@ -445,7 +427,6 @@ export default function TenantPayments() {
                     </>
                 )}
             </AnimatePresence>
-
         </div>
     );
 }
