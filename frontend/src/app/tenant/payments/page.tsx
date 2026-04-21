@@ -3,15 +3,6 @@ import { useEffect, useState, useRef, useMemo } from 'react';
 import api from '@/lib/api';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 
-// --- Helpers ---
-const getOrdinalSuffix = (i: number) => {
-    const j = i % 10, k = i % 100;
-    if (j === 1 && k !== 11) return "st";
-    if (j === 2 && k !== 12) return "nd";
-    if (j === 3 && k !== 13) return "rd";
-    return "th";
-};
-
 const formatDate = (dateString: string | null | undefined, options?: Intl.DateTimeFormatOptions) => {
     if (!dateString) return "N/A";
     const date = new Date(dateString);
@@ -283,7 +274,7 @@ export default function TenantPayments() {
                 </div>
 
                 {/* --- LAYER 3: FILTERS & TABLE SECTION --- */}
-                <motion.div variants={itemVariants} className="flex-1 flex flex-col relative bg-white/60 dark:bg-[#121212]/60 rounded-xl sm:rounded-[1.5rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden min-h-[500px] mb-12 sm:mb-24">
+                <motion.div variants={itemVariants} className="flex-1 flex flex-col relative bg-white/60 dark:bg-[#121212]/60 rounded-xl sm:rounded-[1.5rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden min-h-[450px] mb-12 sm:mb-24">
                     <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
 
                     {/* Toolbar */}
