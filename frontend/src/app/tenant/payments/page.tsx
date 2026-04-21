@@ -181,54 +181,54 @@ export default function TenantPayments() {
                         <h1 className="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white leading-none">
                             Payment Center
                         </h1>
-                        <div className="inline-flex items-center gap-1.5 px-2.5 py-1 sm:py-1.5 rounded-full bg-white/60 dark:bg-white/5 border border-neutral-200/50 dark:border-white/10 backdrop-blur-md text-indigo-600 dark:text-indigo-400 text-[8px] sm:text-xs font-bold tracking-wide shadow-sm">
-                            <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-500 opacity-75"></span><span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-indigo-600"></span></span>
+                        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-2.5 sm:py-1.5 rounded-full bg-white/60 dark:bg-white/5 border border-neutral-200/50 dark:border-white/10 backdrop-blur-md text-indigo-600 dark:text-indigo-400 text-[10px] sm:text-xs font-bold tracking-wide shadow-sm">
+                            <span className="relative flex h-2 w-2 sm:h-2 sm:w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-500 opacity-75"></span><span className="relative inline-flex rounded-full h-2 w-2 sm:h-2 sm:w-2 bg-indigo-600"></span></span>
                             Billing & Invoices
                         </div>
                     </div>
                 </motion.header>
 
                 {/* --- LAYER 1: CURRENT BILL --- */}
-                <motion.div variants={itemVariants} className="shrink-0 relative rounded-xl sm:rounded-[1.5rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col p-2.5 sm:p-4 lg:p-6">
+                <motion.div variants={itemVariants} className="shrink-0 relative rounded-xl sm:rounded-[1.5rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col p-4 sm:p-6 lg:p-8">
                     <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                     {currentBill.status === 'Overdue' && <div className="absolute top-0 left-0 w-full h-1 bg-red-500 z-20 shadow-[0_0_20px_rgba(239,68,68,0.8)]"></div>}
 
-                    <div className="relative z-10 flex justify-between items-start mb-1.5 sm:mb-3">
+                    <div className="relative z-10 flex justify-between items-start mb-2 sm:mb-4">
                         <div>
-                            <h3 className="text-[7px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest mb-0.5">Current Bill</h3>
-                            <p className="text-[10px] sm:text-lg font-bold text-neutral-900 dark:text-white leading-none">{currentBill.month}</p>
+                            <h3 className="text-xs sm:text-sm font-bold text-neutral-500 uppercase tracking-widest mb-1">Current Bill</h3>
+                            <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-neutral-900 dark:text-white leading-none">{currentBill.month}</p>
                         </div>
-                        <span className={`px-1.5 py-0.5 sm:px-2.5 sm:py-1 text-[6px] sm:text-[10px] font-black uppercase tracking-widest rounded-full border backdrop-blur-sm ${getStatusColor(currentBill.status)}`}>
+                        <span className={`px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-black uppercase tracking-widest rounded-full border backdrop-blur-sm ${getStatusColor(currentBill.status)}`}>
                             {currentBill.status}
                         </span>
                     </div>
 
-                    <div className="relative z-10 grid grid-cols-2 gap-1.5 sm:gap-6 mb-1.5 sm:mb-3">
+                    <div className="relative z-10 grid grid-cols-2 gap-3 sm:gap-6 mb-3 sm:mb-6">
                         <div>
-                            <p className="text-[7px] sm:text-xs font-semibold text-neutral-500 mb-0.5">Remaining</p>
-                            <p className={`text-[14px] sm:text-3xl lg:text-4xl font-black tracking-tighter font-mono leading-none ${currentBill.status === 'Overdue' ? 'text-red-500' : 'text-indigo-600 dark:text-indigo-400'}`}>
+                            <p className="text-xs sm:text-sm font-semibold text-neutral-500 mb-1">Remaining</p>
+                            <p className={`text-2xl sm:text-4xl font-black tracking-tighter font-mono leading-none ${currentBill.status === 'Overdue' ? 'text-red-500' : 'text-indigo-600 dark:text-indigo-400'}`}>
                                 ₱{currentBill.remainingBalance.toLocaleString()}
                             </p>
                         </div>
                         <div>
-                            <p className="text-[7px] sm:text-xs font-semibold text-neutral-500 mb-0.5">Paid</p>
-                            <p className="text-[10px] sm:text-xl lg:text-2xl font-bold tracking-tight text-neutral-900 dark:text-white font-mono leading-none mt-1 sm:mt-1.5">
+                            <p className="text-xs sm:text-sm font-semibold text-neutral-500 mb-1">Paid</p>
+                            <p className="text-lg sm:text-2xl font-bold tracking-tight text-neutral-900 dark:text-white font-mono leading-none mt-1 sm:mt-1.5">
                                 ₱{currentBill.amountPaid.toLocaleString()}
                             </p>
                         </div>
                     </div>
 
-                    <div className="relative z-10 flex items-center justify-between border-t border-neutral-200/50 dark:border-white/10 pt-2 sm:pt-3 mt-auto gap-1.5">
-                        <div className="hidden sm:block">
-                            <p className="text-[7px] sm:text-xs font-medium text-neutral-500">Due Date</p>
-                            <p className={`text-[8px] sm:text-sm font-bold ${currentBill.status === 'Overdue' ? 'text-red-500 animate-pulse' : 'text-neutral-900 dark:text-white'}`}>
+                    <div className="relative z-10 flex items-center justify-between border-t border-neutral-200/50 dark:border-white/10 pt-3 sm:pt-4 mt-auto gap-2">
+                        <div className="block">
+                            <p className="text-xs sm:text-sm font-medium text-neutral-500">Due Date</p>
+                            <p className={`text-sm sm:text-base font-bold ${currentBill.status === 'Overdue' ? 'text-red-500 animate-pulse' : 'text-neutral-900 dark:text-white'}`}>
                                 {formatDate(currentBill.dueDate, { month: 'short', day: 'numeric' })}
                             </p>
                         </div>
                         <button 
                             onClick={() => setIsPaymentModalOpen(true)}
                             disabled={currentBill.remainingBalance <= 0 || currentBill.status === 'Pending Verification'}
-                            className={`w-full sm:w-auto px-2 sm:px-8 py-1.5 sm:py-2 font-bold rounded-md sm:rounded-xl flex items-center justify-center gap-1 text-[8px] sm:text-sm shrink-0 transition-transform active:scale-95 ${
+                            className={`w-full sm:w-auto px-4 sm:px-8 py-2.5 sm:py-3 font-bold rounded-xl sm:rounded-xl flex items-center justify-center gap-1 text-sm sm:text-base shrink-0 transition-transform active:scale-95 ${
                                 currentBill.remainingBalance <= 0 || currentBill.status === 'Pending Verification'
                                 ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-400 cursor-not-allowed border border-neutral-200 dark:border-white/5' 
                                 : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20 border border-indigo-500'
@@ -278,77 +278,77 @@ export default function TenantPayments() {
                     <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
 
                     {/* Toolbar */}
-                    <div className="relative z-10 shrink-0 p-1.5 sm:p-4 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex flex-nowrap items-center gap-1.5 sm:gap-2 overflow-x-auto [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                        <div className="relative w-24 sm:w-64 h-6 sm:h-9 shrink-0 flex items-center">
-                            <svg className="absolute left-1.5 sm:left-2.5 w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-neutral-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                            <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full h-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl pl-5 sm:pl-8 pr-1.5 sm:pr-2 text-[7px] sm:text-xs outline-none focus:ring-2 focus:ring-indigo-500/50 text-neutral-900 dark:text-white m-0" />
+                    <div className="relative z-10 shrink-0 p-3 sm:p-4 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3 overflow-x-auto">
+                        <div className="relative w-full sm:w-64 h-10 sm:h-12 shrink-0 flex items-center">
+                            <svg className="absolute left-3 sm:left-4 w-4 h-4 sm:w-5 sm:h-5 text-neutral-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full h-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-xl sm:rounded-xl pl-9 sm:pl-12 pr-3 sm:pr-4 text-xs sm:text-sm outline-none focus:ring-2 focus:ring-indigo-500/50 text-neutral-900 dark:text-white m-0" />
                         </div>
-                        <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="h-6 sm:h-9 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-2 text-[7px] sm:text-xs outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
+                        <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="w-full sm:w-auto h-10 sm:h-12 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-xl sm:rounded-xl px-2 sm:px-3 text-xs sm:text-sm outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
                             <option value="All" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">All Status</option>
                             <option value="Paid" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Paid</option>
                             <option value="Pending" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Pending</option>
                             <option value="Rejected" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Rejected</option>
                         </select>
-                        <div className="ml-auto flex items-center gap-1.5 sm:gap-2 shrink-0">
-                            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="h-6 sm:h-9 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-2 text-[7px] sm:text-xs outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
+                        <div className="ml-auto w-full sm:w-auto flex items-center gap-2 sm:gap-3 shrink-0">
+                            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="flex-1 sm:flex-none h-10 sm:h-12 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-xl sm:rounded-xl px-2 sm:px-3 text-xs sm:text-sm outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
                                 <option value="date_desc" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Newest</option>
                                 <option value="date_asc" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Oldest</option>
                                 <option value="amount_desc" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">High-Low</option>
                                 <option value="amount_asc" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Low-High</option>
                             </select>
-                            <button onClick={() => alert("Exporting CSV")} className="h-6 sm:h-9 px-2 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 font-bold text-[7px] sm:text-xs rounded sm:rounded-xl border border-indigo-200 dark:border-indigo-500/20 hover:bg-indigo-100 dark:hover:bg-indigo-500/30 flex items-center gap-1 transition-colors m-0">
-                                <svg className="w-2.5 h-2.5 sm:w-3 sm:h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> <span className="hidden sm:inline">Export</span>
+                            <button onClick={() => alert("Exporting CSV")} className="h-10 sm:h-12 px-3 sm:px-4 bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 font-bold text-xs sm:text-sm rounded-xl sm:rounded-xl border border-indigo-200 dark:border-indigo-500/20 hover:bg-indigo-100 dark:hover:bg-indigo-500/30 flex items-center justify-center gap-1.5 transition-colors m-0">
+                                <svg className="w-4 h-4 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg> <span className="inline">Export</span>
                             </button>
                         </div>
                     </div>
 
                     {/* Table Body */}
                     <div className="relative z-10 flex-1 overflow-x-auto pr-1 pb-4 sm:pb-6">
-                        <table className="w-full text-left border-collapse min-w-[400px] sm:min-w-[800px] mb-4">
+                        <table className="w-full text-left border-collapse min-w-[700px] sm:min-w-[800px] mb-4">
                             <thead className="sticky top-0 z-20 bg-neutral-50/95 dark:bg-[#18181B]/95 backdrop-blur-md shadow-sm">
                                 <tr>
-                                    <th className="px-2 py-1.5 sm:px-4 sm:py-3 text-[7px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Date / Ref</th>
-                                    <th className="px-2 py-1.5 sm:px-4 sm:py-3 text-[7px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Method & Desc</th>
-                                    <th className="px-2 py-1.5 sm:px-4 sm:py-3 text-[7px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-right">Amount</th>
-                                    <th className="px-2 py-1.5 sm:px-4 sm:py-3 text-[7px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center">Status</th>
-                                    <th className="px-2 py-1.5 sm:px-4 sm:py-3 text-[7px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center">Receipt</th>
+                                    <th className="px-3 py-3 sm:px-4 sm:py-4 text-[11px] sm:text-[12px] font-bold text-neutral-400 uppercase tracking-widest">Date / Ref</th>
+                                    <th className="px-3 py-3 sm:px-4 sm:py-4 text-[11px] sm:text-[12px] font-bold text-neutral-400 uppercase tracking-widest">Method & Desc</th>
+                                    <th className="px-3 py-3 sm:px-4 sm:py-4 text-[11px] sm:text-[12px] font-bold text-neutral-400 uppercase tracking-widest text-right">Amount</th>
+                                    <th className="px-3 py-3 sm:px-4 sm:py-4 text-[11px] sm:text-[12px] font-bold text-neutral-400 uppercase tracking-widest text-center">Status</th>
+                                    <th className="px-3 py-3 sm:px-4 sm:py-4 text-[11px] sm:text-[12px] font-bold text-neutral-400 uppercase tracking-widest text-center">Receipt</th>
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-neutral-200/30 dark:divide-white/5">
                                 {filteredPayments.length === 0 ? (
                                     <tr>
-                                        <td colSpan={5} className="px-6 py-8 text-center text-neutral-500 text-[10px] sm:text-sm">No transactions match your filters.</td>
+                                        <td colSpan={5} className="px-6 py-12 text-center text-neutral-500 text-sm sm:text-base">No transactions match your filters.</td>
                                     </tr>
                                 ) : (
                                     filteredPayments.map((p) => (
                                         <motion.tr key={p.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="group hover:bg-white/40 dark:hover:bg-white/[0.02] transition-all duration-300">
-                                            <td className="px-2 py-2 sm:px-4 sm:py-3 align-middle">
-                                                <p className="font-bold text-[8px] sm:text-xs text-neutral-900 dark:text-white">{formatDate(p.date)}</p>
-                                                <p className="text-[6px] sm:text-[9px] font-mono text-neutral-400 mt-0.5">{p.referenceNumber}</p>
+                                            <td className="px-3 py-4 sm:px-4 sm:py-4 align-middle">
+                                                <p className="font-bold text-xs sm:text-sm text-neutral-900 dark:text-white">{formatDate(p.date)}</p>
+                                                <p className="text-[10px] sm:text-xs font-mono text-neutral-400 mt-1">{p.referenceNumber}</p>
                                             </td>
-                                            <td className="px-2 py-2 sm:px-4 sm:py-3 align-middle flex items-center gap-2 sm:gap-3 min-w-0">
-                                                <div className="w-5 h-5 sm:w-8 sm:h-8 rounded sm:rounded-lg bg-white/50 dark:bg-black/30 border border-neutral-200/50 dark:border-white/5 flex items-center justify-center shrink-0">
-                                                    {p.method.includes('GCash') ? <span className="text-[8px] sm:text-[10px] font-black text-blue-500">G</span> : <svg className="w-3 h-3 sm:w-4 sm:h-4 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>}
+                                            <td className="px-3 py-4 sm:px-4 sm:py-4 align-middle flex items-center gap-3 sm:gap-4 min-w-0">
+                                                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-white/50 dark:bg-black/30 border border-neutral-200/50 dark:border-white/5 flex items-center justify-center shrink-0">
+                                                    {p.method.includes('GCash') ? <span className="text-xs sm:text-sm font-black text-blue-500">G</span> : <svg className="w-4 h-4 sm:w-5 sm:h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>}
                                                 </div>
                                                 <div className="min-w-0">
-                                                    <p className="text-[8px] sm:text-xs font-bold truncate max-w-[100px] sm:max-w-[200px] text-neutral-900 dark:text-white">{p.description}</p>
-                                                    <p className="text-[6px] sm:text-[9px] text-neutral-500">{p.method}</p>
+                                                    <p className="text-xs sm:text-sm font-bold truncate max-w-[150px] sm:max-w-[250px] text-neutral-900 dark:text-white">{p.description}</p>
+                                                    <p className="text-[10px] sm:text-xs text-neutral-500 mt-0.5">{p.method}</p>
                                                 </div>
                                             </td>
-                                            <td className="px-2 py-2 sm:px-4 sm:py-3 align-middle text-right">
-                                                <p className="text-[9px] sm:text-sm font-black font-mono text-neutral-900 dark:text-white">₱{Number(p.amount).toLocaleString()}</p>
+                                            <td className="px-3 py-4 sm:px-4 sm:py-4 align-middle text-right">
+                                                <p className="text-sm sm:text-base font-black font-mono text-neutral-900 dark:text-white">₱{Number(p.amount).toLocaleString()}</p>
                                             </td>
-                                            <td className="px-2 py-2 sm:px-4 sm:py-3 align-middle text-center">
-                                                <span className={`inline-flex items-center px-1.5 py-0.5 sm:px-2.5 sm:py-1 text-[6px] sm:text-[9px] font-bold uppercase tracking-widest rounded-full border ${getStatusColor(p.status)}`}>
+                                            <td className="px-3 py-4 sm:px-4 sm:py-4 align-middle text-center">
+                                                <span className={`inline-flex items-center px-2.5 py-1 sm:px-3 sm:py-1.5 text-[9px] sm:text-xs font-bold uppercase tracking-widest rounded-full border ${getStatusColor(p.status)}`}>
                                                     {p.status}
                                                 </span>
                                             </td>
-                                            <td className="px-2 py-2 sm:px-4 sm:py-3 align-middle text-center">
+                                            <td className="px-3 py-4 sm:px-4 sm:py-4 align-middle text-center">
                                                 {p.hasReceipt ? (
-                                                    <button onClick={() => setViewReceiptUrl(p.receiptUrl)} className="p-1 sm:p-1.5 rounded bg-neutral-100 dark:bg-white/5 hover:text-indigo-600 transition-colors">
-                                                        <svg className="w-3 h-3 sm:w-4 sm:h-4 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                                    <button onClick={() => setViewReceiptUrl(p.receiptUrl)} className="p-2 sm:p-2.5 rounded-lg bg-neutral-100 dark:bg-white/5 hover:text-indigo-600 transition-colors">
+                                                        <svg className="w-4 h-4 sm:w-5 sm:h-5 text-neutral-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                                                     </button>
-                                                ) : <span className="text-[6px] sm:text-[9px] text-neutral-400 italic">N/A</span>}
+                                                ) : <span className="text-[10px] sm:text-xs text-neutral-400 italic">N/A</span>}
                                             </td>
                                         </motion.tr>
                                     ))
@@ -367,40 +367,40 @@ export default function TenantPayments() {
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-neutral-900/60 dark:bg-black/70 backdrop-blur-sm z-[100]" onClick={() => !isSubmitting && setIsPaymentModalOpen(false)} />
                         <div className="fixed inset-0 flex items-center justify-center p-4 z-[101] pointer-events-none">
                             <motion.div initial={{ opacity: 0, scale: 0.95, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.95, y: 20 }} className="w-full max-w-md bg-white dark:bg-[#18181B] rounded-3xl shadow-2xl border border-neutral-200 dark:border-white/10 overflow-hidden pointer-events-auto flex flex-col max-h-[85vh]">
-                                <div className="p-4 border-b border-neutral-100 dark:border-white/5 flex justify-between items-center bg-neutral-50/50 dark:bg-white/[0.02]">
-                                    <div><h2 className="text-sm font-extrabold text-neutral-900 dark:text-white">Submit Payment</h2><p className="text-[9px] text-neutral-500 mt-0.5">Paying for {currentBill.month} Bill</p></div>
-                                    <button onClick={() => !isSubmitting && setIsPaymentModalOpen(false)} className="p-1.5 rounded-full hover:bg-neutral-200 dark:hover:bg-white/10 text-neutral-500 transition-colors"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+                                <div className="p-5 border-b border-neutral-100 dark:border-white/5 flex justify-between items-center bg-neutral-50/50 dark:bg-white/[0.02]">
+                                    <div><h2 className="text-base sm:text-lg font-extrabold text-neutral-900 dark:text-white">Submit Payment</h2><p className="text-xs sm:text-sm text-neutral-500 mt-0.5">Paying for {currentBill.month} Bill</p></div>
+                                    <button onClick={() => !isSubmitting && setIsPaymentModalOpen(false)} className="p-2 rounded-full hover:bg-neutral-200 dark:hover:bg-white/10 text-neutral-500 transition-colors"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
                                 </div>
-                                <form onSubmit={handlePaymentSubmit} className="p-4 overflow-y-auto [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden overscroll-contain flex flex-col gap-3">
-                                    {fileError && <div className="p-2 bg-red-500/10 rounded-lg text-red-500 text-[10px] font-bold">{fileError}</div>}
-                                    <div className="grid grid-cols-2 gap-3">
+                                <form onSubmit={handlePaymentSubmit} className="p-5 overflow-y-auto [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden overscroll-contain flex flex-col gap-4">
+                                    {fileError && <div className="p-3 bg-red-500/10 rounded-xl text-red-500 text-xs font-bold">{fileError}</div>}
+                                    <div className="grid grid-cols-2 gap-4">
                                         <div className="col-span-2">
-                                            <label className="block text-[9px] font-bold text-neutral-500 uppercase tracking-widest mb-1 ml-1">Amount</label>
+                                            <label className="block text-[10px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest mb-1.5 ml-1">Amount</label>
                                             <div className="relative">
-                                                <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-bold text-neutral-400">₱</span>
-                                                <input type="number" required min="1" step="0.01" value={payAmount} onChange={(e) => setPayAmount(e.target.value)} className="w-full bg-neutral-50 dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-xl py-2 pl-7 pr-3 text-sm font-bold outline-none text-neutral-900 dark:text-white" />
+                                                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-sm sm:text-base font-bold text-neutral-400">₱</span>
+                                                <input type="number" required min="1" step="0.01" value={payAmount} onChange={(e) => setPayAmount(e.target.value)} className="w-full bg-neutral-50 dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-xl py-2.5 sm:py-3 pl-9 pr-3 sm:pr-4 text-sm sm:text-base font-bold outline-none text-neutral-900 dark:text-white" />
                                             </div>
                                         </div>
                                         <div className="col-span-2">
-                                            <label className="block text-[9px] font-bold text-neutral-500 uppercase tracking-widest mb-1 ml-1">Method</label>
-                                            <div className="grid grid-cols-3 gap-2">
+                                            <label className="block text-[10px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest mb-1.5 ml-1">Method</label>
+                                            <div className="grid grid-cols-3 gap-2 sm:gap-3">
                                                 {['GCash', 'Bank', 'Cash'].map((m) => (
-                                                    <button key={m} type="button" onClick={() => setPayMethod(m as any)} className={`py-1.5 rounded-lg text-[9px] font-bold border ${payMethod === m || (payMethod === 'Bank Transfer' && m === 'Bank') ? 'bg-indigo-50 dark:bg-indigo-500/20 border-indigo-500 text-indigo-700 dark:text-indigo-400' : 'bg-white dark:bg-white/5 border-neutral-200 dark:border-white/10 text-neutral-500'}`}>{m}</button>
+                                                    <button key={m} type="button" onClick={() => setPayMethod(m as any)} className={`py-2 rounded-lg text-xs sm:text-sm font-bold border ${payMethod === m || (payMethod === 'Bank Transfer' && m === 'Bank') ? 'bg-indigo-50 dark:bg-indigo-500/20 border-indigo-500 text-indigo-700 dark:text-indigo-400' : 'bg-white dark:bg-white/5 border-neutral-200 dark:border-white/10 text-neutral-500'}`}>{m}</button>
                                                 ))}
                                             </div>
                                         </div>
                                         <div className="col-span-2">
-                                            <label className="block text-[9px] font-bold text-neutral-500 uppercase tracking-widest mb-1 ml-1">Notes (Optional)</label>
-                                            <textarea rows={2} value={payNotes} onChange={(e) => setPayNotes(e.target.value)} className="w-full bg-neutral-50 dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-xl py-1.5 px-3 text-[10px] outline-none resize-none text-neutral-900 dark:text-white" />
+                                            <label className="block text-[10px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest mb-1.5 ml-1">Notes (Optional)</label>
+                                            <textarea rows={3} value={payNotes} onChange={(e) => setPayNotes(e.target.value)} className="w-full bg-neutral-50 dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-xl py-2 px-3 text-xs sm:text-sm outline-none resize-none text-neutral-900 dark:text-white" />
                                         </div>
                                         <div className="col-span-2">
-                                            <div className="w-full border-2 border-dashed border-neutral-200 dark:border-white/10 rounded-xl p-3 flex flex-col items-center cursor-pointer bg-neutral-50/50 dark:bg-white/[0.02]" onClick={() => fileInputRef.current?.click()}>
-                                                {proofFile ? <span className="text-[9px] font-bold text-indigo-500 truncate px-2">{proofFile.name}</span> : <span className="text-[9px] font-bold text-neutral-400">Tap to Upload Proof</span>}
+                                            <div className="w-full border-2 border-dashed border-neutral-200 dark:border-white/10 rounded-xl p-4 sm:p-5 flex flex-col items-center cursor-pointer bg-neutral-50/50 dark:bg-white/[0.02]" onClick={() => fileInputRef.current?.click()}>
+                                                {proofFile ? <span className="text-xs sm:text-sm font-bold text-indigo-500 truncate px-2">{proofFile.name}</span> : <span className="text-xs sm:text-sm font-bold text-neutral-400">Tap to Upload Proof</span>}
                                                 <input ref={fileInputRef} type="file" className="hidden" accept="image/*,.pdf" onChange={handleFileChange} />
                                             </div>
                                         </div>
                                     </div>
-                                    <button type="submit" disabled={isSubmitting} className="w-full py-2.5 text-[10px] font-bold uppercase tracking-widest rounded-xl bg-indigo-600 text-white mt-1">{isSubmitting ? 'Processing...' : 'Submit Payment'}</button>
+                                    <button type="submit" disabled={isSubmitting} className="w-full py-3 sm:py-3.5 text-xs sm:text-sm font-bold uppercase tracking-widest rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white mt-2 transition-colors">{isSubmitting ? 'Processing...' : 'Submit Payment'}</button>
                                 </form>
                             </motion.div>
                         </div>
