@@ -66,7 +66,6 @@ export default function AdminRequests() {
             const matchesStatus = statusFilter === 'All' || req.status === statusFilter;
             const matchesPriority = priorityFilter === 'All' || req.priority === priorityFilter;
             const matchesCategory = categoryFilter === 'All' || req.category === categoryFilter;
-
             return matchesSearch && matchesStatus && matchesPriority && matchesCategory;
         });
     }, [requests, searchTerm, statusFilter, priorityFilter, categoryFilter]);
