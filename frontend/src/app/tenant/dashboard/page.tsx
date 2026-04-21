@@ -99,14 +99,11 @@ export default function TenantDashboard() {
     if (!isMounted) return null; 
 
     return (
-        /* ABSOLUTE VIEWPORT LOCK: bypasses all parent padding, stretches edge-to-edge, hides scrollbars */
         <div className="fixed inset-0 w-full h-full md:pl-64 lg:pl-72 text-neutral-900 dark:text-neutral-100 font-sans flex flex-col bg-transparent overflow-hidden overscroll-none">
-            
             {/* Ambient Background Glows */}
             <div className="absolute top-0 left-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-indigo-400/20 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none -z-10 mix-blend-multiply dark:hidden"></div>
             <div className="absolute bottom-0 right-1/4 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] bg-purple-400/20 rounded-full blur-[60px] sm:blur-[100px] pointer-events-none -z-10 mix-blend-multiply dark:hidden"></div>
-
-            {/* Main Wrapper: Minimal px-3 padding on mobile so cards are large but don't touch the exact pixel edge */}
+            {/* Main Wrapper */}
             <div className="max-w-7xl mx-auto w-full h-full flex flex-col gap-2.5 sm:gap-6 pt-6 px-3 sm:px-8 pb-3 sm:pb-6 relative z-10">
                 
                 {/* --- HEADER --- */}
@@ -120,7 +117,6 @@ export default function TenantDashboard() {
                 <div className={`shrink-0 grid grid-cols-12 gap-2.5 sm:gap-6 transition-all duration-700 ease-out delay-150 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                     
                     {/* HERO CARD: Billing & Balance */}
-                    {/* Increased padding and text scaling for a "bigger" feel */}
                     <div className="col-span-7 lg:col-span-8 relative rounded-2xl sm:rounded-[2rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col justify-between p-4 sm:p-8 lg:p-10 min-h-0">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                         <div className="absolute top-0 right-0 -mr-10 sm:-mr-20 -mt-10 sm:-mt-20 w-32 sm:w-72 h-32 sm:h-72 bg-indigo-50 dark:bg-indigo-500/5 rounded-full blur-xl sm:blur-3xl pointer-events-none z-0"></div>
@@ -164,7 +160,6 @@ export default function TenantDashboard() {
 
                     {/* SIDE CARDS */}
                     <div className="col-span-5 lg:col-span-4 flex flex-col gap-2.5 sm:gap-6">
-                        
                         {/* Status Card */}
                         <div className="relative bg-white/60 dark:bg-[#121212]/60 p-3 sm:p-6 rounded-2xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-xl shadow-xl shadow-indigo-500/5 flex-1 flex flex-col justify-center overflow-hidden">
                             <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
@@ -218,7 +213,6 @@ export default function TenantDashboard() {
                         </Link>
                     </div>
 
-                    {/* Scrollable list with invisible scrollbars and scroll trapping */}
                     <div className="relative z-10 flex-1 overflow-y-auto p-2 sm:p-4 [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden overscroll-contain">
                         {tenantData.recentTransactions && tenantData.recentTransactions.length > 0 ? (
                             <div className="space-y-1.5 pb-4">
