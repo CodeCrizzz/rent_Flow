@@ -231,25 +231,25 @@ export default function TenantProfile() {
                     </motion.div>
 
                     {/* --- BENTO INFORMATION GRID --- */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-2 gap-3 sm:gap-6">
                         
                         {/* ROOM INFORMATION */}
                         <motion.div 
                             variants={itemVariants} 
                             whileHover={{ scale: 1.02, translateY: -5 }}
-                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-4xl p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 group/bento"
+                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-3xl md:rounded-4xl p-4 sm:p-6 md:p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 group/bento"
                         >
                             <div className="absolute inset-0 glass-noise"></div>
-                            <div className="absolute top-4 right-4 text-[8px] font-black uppercase tracking-widest text-rose-500 bg-rose-500/10 px-2 py-1 rounded border border-rose-500/20">Admin Only</div>
-                            <h3 className="relative z-10 text-xs font-black text-neutral-400 uppercase tracking-widest mb-6 flex items-center gap-2 group-hover/bento:text-blue-500 transition-colors">
-                                <span className="text-xl group-hover/bento:scale-125 transition-transform duration-500">🚪</span> Room Info
+                            <div className="absolute top-3 right-3 sm:top-4 sm:right-4 text-[6px] sm:text-[8px] font-black uppercase tracking-widest text-rose-500 bg-rose-500/10 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded border border-rose-500/20">Admin Only</div>
+                            <h3 className="relative z-10 text-[9px] sm:text-xs font-black text-neutral-400 uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-1.5 sm:gap-2 group-hover/bento:text-blue-500 transition-colors">
+                                <span className="text-base sm:text-xl group-hover/bento:scale-125 transition-transform duration-500">🚪</span> <span className="truncate">Room Info</span>
                             </h3>
-                            <div className="relative z-10 space-y-4">
-                                <div className="flex justify-between items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-xs font-bold text-neutral-500">Room</span><span className="text-sm font-black text-blue-600 dark:text-cyan-400">{profile.room?.number || 'TBD'}</span></div>
-                                <div className="flex justify-between items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-xs font-bold text-neutral-500">Type</span><span className="text-xs font-bold">{profile.room?.type || 'N/A'}</span></div>
-                                <div className="flex justify-between items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-xs font-bold text-neutral-500">Rent</span><span className="text-sm font-black">₱{profile.room?.rent?.toLocaleString() || '0'}</span></div>
-                                <div className="flex justify-between items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-xs font-bold text-neutral-500">Move-in</span><span className="text-xs font-bold">{profile.room?.move_in ? new Date(profile.room.move_in).toLocaleDateString() : 'N/A'}</span></div>
-                                <div className="flex justify-between items-center pt-1"><span className="text-xs font-bold text-neutral-500">Contract End</span><span className="text-xs font-black text-rose-500">{profile.room?.contract_end || 'N/A'}</span></div>
+                            <div className="relative z-10 space-y-3 sm:space-y-4">
+                                <div className="flex flex-col xl:flex-row xl:justify-between items-start xl:items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-[9px] sm:text-xs font-bold text-neutral-500 mb-0.5 xl:mb-0">Room</span><span className="text-[10px] sm:text-sm font-black text-blue-600 dark:text-cyan-400 truncate w-full xl:w-auto xl:text-right">{profile.room?.number || 'TBD'}</span></div>
+                                <div className="flex flex-col xl:flex-row xl:justify-between items-start xl:items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-[9px] sm:text-xs font-bold text-neutral-500 mb-0.5 xl:mb-0">Type</span><span className="text-[9px] sm:text-xs font-bold truncate w-full xl:w-auto xl:text-right">{profile.room?.type || 'N/A'}</span></div>
+                                <div className="flex flex-col xl:flex-row xl:justify-between items-start xl:items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-[9px] sm:text-xs font-bold text-neutral-500 mb-0.5 xl:mb-0">Rent</span><span className="text-[10px] sm:text-sm font-black truncate w-full xl:w-auto xl:text-right">₱{profile.room?.rent?.toLocaleString() || '0'}</span></div>
+                                <div className="flex flex-col xl:flex-row xl:justify-between items-start xl:items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-[9px] sm:text-xs font-bold text-neutral-500 mb-0.5 xl:mb-0">Move-in</span><span className="text-[9px] sm:text-xs font-bold truncate w-full xl:w-auto xl:text-right">{profile.room?.move_in ? new Date(profile.room.move_in).toLocaleDateString() : 'N/A'}</span></div>
+                                <div className="flex flex-col xl:flex-row xl:justify-between items-start xl:items-center pt-1"><span className="text-[9px] sm:text-xs font-bold text-neutral-500 mb-0.5 xl:mb-0">Contract</span><span className="text-[9px] sm:text-xs font-black text-rose-500 truncate w-full xl:w-auto xl:text-right">{profile.room?.contract_end || 'N/A'}</span></div>
                             </div>
                         </motion.div>
 
@@ -257,16 +257,21 @@ export default function TenantProfile() {
                         <motion.div 
                             variants={itemVariants} 
                             whileHover={{ scale: 1.02, translateY: -5 }}
-                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-4xl p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-emerald-500/30 transition-all duration-500 group/bento"
+                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-3xl md:rounded-4xl p-4 sm:p-6 md:p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-emerald-500/30 transition-all duration-500 group/bento"
                         >
                             <div className="absolute inset-0 glass-noise"></div>
-                            <h3 className="relative z-10 text-xs font-black text-neutral-400 uppercase tracking-widest mb-6 flex items-center gap-2 group-hover/bento:text-emerald-500 transition-colors">
-                                <span className="text-xl group-hover/bento:scale-125 transition-transform duration-500">👤</span> Account Info
+                            <h3 className="relative z-10 text-[9px] sm:text-xs font-black text-neutral-400 uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-1.5 sm:gap-2 group-hover/bento:text-emerald-500 transition-colors">
+                                <span className="text-base sm:text-xl group-hover/bento:scale-125 transition-transform duration-500">👤</span> <span className="truncate">Account Info</span>
                             </h3>
-                            <div className="relative z-10 space-y-4 flex-1">
-                                <div className="flex justify-between items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-xs font-bold text-neutral-500">Username</span><span className="text-xs font-bold truncate max-w-[150px]">{profile.account?.username || profile.email}</span></div>
-                                <div className="flex justify-between items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-xs font-bold text-neutral-500">Status</span><span className={`px-2.5 py-1 rounded text-[9px] font-black uppercase tracking-wider ${profile.account?.status === 'Active' ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' : 'bg-amber-500/10 text-amber-500 border border-amber-500/20'}`}>{profile.account?.status || 'Pending'}</span></div>
-                                <div className="flex justify-between items-center"><span className="text-xs font-bold text-neutral-500">Registered</span><span className="text-xs font-bold">{profile.account?.registered_at ? new Date(profile.account.registered_at).toLocaleDateString() : 'N/A'}</span></div>
+                            <div className="relative z-10 space-y-3 sm:space-y-4 flex-1">
+                                <div className="flex flex-col xl:flex-row xl:justify-between items-start xl:items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-[9px] sm:text-xs font-bold text-neutral-500 mb-0.5 xl:mb-0">Username</span><span className="text-[9px] sm:text-xs font-bold truncate max-w-full xl:max-w-[150px]">{profile.account?.username || profile.email}</span></div>
+                                <div className="flex flex-col xl:flex-row xl:justify-between items-start xl:items-center pb-2 border-b border-black/5 dark:border-white/5">
+                                    <span className="text-[9px] sm:text-xs font-bold text-neutral-500 mb-1 xl:mb-0">Status</span>
+                                    <span className={`px-2 sm:px-2.5 py-0.5 sm:py-1 rounded text-[7px] sm:text-[9px] font-black uppercase tracking-wider ${profile.account?.status === 'Active' ? 'bg-emerald-500/10 text-emerald-500 border border-emerald-500/20' : 'bg-amber-500/10 text-amber-500 border border-amber-500/20'}`}>
+                                        {profile.account?.status || 'Pending'}
+                                    </span>
+                                </div>
+                                <div className="flex flex-col xl:flex-row xl:justify-between items-start xl:items-center"><span className="text-[9px] sm:text-xs font-bold text-neutral-500 mb-0.5 xl:mb-0">Registered</span><span className="text-[9px] sm:text-xs font-bold truncate w-full xl:w-auto xl:text-right">{profile.account?.registered_at ? new Date(profile.account.registered_at).toLocaleDateString() : 'N/A'}</span></div>
                             </div>
                         </motion.div>
 
@@ -274,16 +279,16 @@ export default function TenantProfile() {
                         <motion.div 
                             variants={itemVariants} 
                             whileHover={{ scale: 1.02, translateY: -5 }}
-                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-4xl p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-rose-500/30 transition-all duration-500 group/bento"
+                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-3xl md:rounded-4xl p-4 sm:p-6 md:p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-rose-500/30 transition-all duration-500 group/bento"
                         >
                             <div className="absolute inset-0 glass-noise"></div>
-                            <h3 className="relative z-10 text-xs font-black text-neutral-400 uppercase tracking-widest mb-6 flex items-center gap-2 group-hover/bento:text-rose-500 transition-colors">
-                                <span className="text-xl group-hover/bento:scale-125 transition-transform duration-500">💳</span> Payment Summary
+                            <h3 className="relative z-10 text-[9px] sm:text-xs font-black text-neutral-400 uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-1.5 sm:gap-2 group-hover/bento:text-rose-500 transition-colors">
+                                <span className="text-base sm:text-xl group-hover/bento:scale-125 transition-transform duration-500">💳</span> <span className="truncate">Payment</span>
                             </h3>
-                            <div className="relative z-10 space-y-4 flex-1">
-                                <div className="flex justify-between items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-xs font-bold text-neutral-500">Current Balance</span><span className="text-lg font-black text-rose-500 dark:text-rose-400">₱{profile.payment?.balance?.toLocaleString() || '0'}</span></div>
-                                <div className="flex justify-between items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-xs font-bold text-neutral-500">Status</span><span className={`text-xs font-black uppercase ${profile.payment?.status === 'Paid' ? 'text-emerald-500' : profile.payment?.status === 'Partial' ? 'text-amber-500' : 'text-rose-500'}`}>{profile.payment?.status || 'Up to date'}</span></div>
-                                <div className="flex justify-between items-center"><span className="text-xs font-bold text-neutral-500">Last Payment</span><span className="text-xs font-bold">{profile.payment?.last_payment ? new Date(profile.payment.last_payment).toLocaleDateString() : 'N/A'}</span></div>
+                            <div className="relative z-10 space-y-3 sm:space-y-4 flex-1">
+                                <div className="flex flex-col xl:flex-row xl:justify-between items-start xl:items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-[9px] sm:text-xs font-bold text-neutral-500 mb-0.5 xl:mb-0">Balance</span><span className="text-[11px] sm:text-lg font-black text-rose-500 dark:text-rose-400 truncate w-full xl:w-auto xl:text-right">₱{profile.payment?.balance?.toLocaleString() || '0'}</span></div>
+                                <div className="flex flex-col xl:flex-row xl:justify-between items-start xl:items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-[9px] sm:text-xs font-bold text-neutral-500 mb-0.5 xl:mb-0">Status</span><span className={`text-[8px] sm:text-[10px] lg:text-xs font-black uppercase truncate w-full xl:w-auto xl:text-right ${profile.payment?.status === 'Paid' ? 'text-emerald-500' : profile.payment?.status === 'Partial' ? 'text-amber-500' : 'text-rose-500'}`}>{profile.payment?.status || 'Up to date'}</span></div>
+                                <div className="flex flex-col xl:flex-row xl:justify-between items-start xl:items-center"><span className="text-[9px] sm:text-xs font-bold text-neutral-500 mb-0.5 xl:mb-0">Last Payment</span><span className="text-[9px] sm:text-xs font-bold truncate w-full xl:w-auto xl:text-right">{profile.payment?.last_payment ? new Date(profile.payment.last_payment).toLocaleDateString() : 'N/A'}</span></div>
                             </div>
                         </motion.div>
 
@@ -291,16 +296,16 @@ export default function TenantProfile() {
                         <motion.div 
                             variants={itemVariants} 
                             whileHover={{ scale: 1.02, translateY: -5 }}
-                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-4xl p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-amber-500/30 transition-all duration-500 group/bento"
+                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-3xl md:rounded-4xl p-4 sm:p-6 md:p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-amber-500/30 transition-all duration-500 group/bento"
                         >
                             <div className="absolute inset-0 glass-noise"></div>
-                            <h3 className="relative z-10 text-xs font-black text-neutral-400 uppercase tracking-widest mb-6 flex items-center gap-2 group-hover/bento:text-amber-500 transition-colors">
-                                <span className="text-xl group-hover/bento:scale-125 transition-transform duration-500">🛠️</span> Maintenance
+                            <h3 className="relative z-10 text-[9px] sm:text-xs font-black text-neutral-400 uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-1.5 sm:gap-2 group-hover/bento:text-amber-500 transition-colors">
+                                <span className="text-base sm:text-xl group-hover/bento:scale-125 transition-transform duration-500">🛠️</span> <span className="truncate">Maintenance</span>
                             </h3>
-                            <div className="relative z-10 space-y-4 flex-1">
-                                <div className="flex justify-between items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-xs font-bold text-neutral-500">Total Requests</span><span className="text-sm font-black">{profile.maintenance?.total || '0'}</span></div>
-                                <div className="flex justify-between items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-xs font-bold text-neutral-500">Pending</span><span className="text-sm font-black text-amber-500">{profile.maintenance?.pending || '0'}</span></div>
-                                <div className="flex justify-between items-center"><span className="text-xs font-bold text-neutral-500">Recent Status</span><span className="text-xs font-bold uppercase tracking-wide text-blue-500">{profile.maintenance?.recent_status || 'None'}</span></div>
+                            <div className="relative z-10 space-y-3 sm:space-y-4 flex-1">
+                                <div className="flex flex-col xl:flex-row xl:justify-between items-start xl:items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-[9px] sm:text-xs font-bold text-neutral-500 mb-0.5 xl:mb-0">Requests</span><span className="text-[10px] sm:text-sm font-black truncate w-full xl:w-auto xl:text-right">{profile.maintenance?.total || '0'}</span></div>
+                                <div className="flex flex-col xl:flex-row xl:justify-between items-start xl:items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-[9px] sm:text-xs font-bold text-neutral-500 mb-0.5 xl:mb-0">Pending</span><span className="text-[10px] sm:text-sm font-black text-amber-500 truncate w-full xl:w-auto xl:text-right">{profile.maintenance?.pending || '0'}</span></div>
+                                <div className="flex flex-col xl:flex-row xl:justify-between items-start xl:items-center"><span className="text-[9px] sm:text-xs font-bold text-neutral-500 mb-0.5 xl:mb-0">Status</span><span className="text-[8px] sm:text-xs font-bold uppercase tracking-wide text-blue-500 truncate w-full xl:w-auto xl:text-right">{profile.maintenance?.recent_status || 'None'}</span></div>
                             </div>
                         </motion.div>
 
