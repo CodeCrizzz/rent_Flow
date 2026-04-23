@@ -4,6 +4,7 @@ import api from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function SignupPage() {
     const [name, setName] = useState('');
@@ -59,7 +60,7 @@ export default function SignupPage() {
                     <div className="absolute top-[-20%] left-[-20%] w-48 h-48 sm:w-64 sm:h-64 bg-blue-600 rounded-full mix-blend-screen filter blur-[60px] sm:blur-[80px] opacity-30 animate-pulse-slow"></div>
                     <div className="absolute bottom-[-20%] right-[-20%] w-48 h-48 sm:w-64 sm:h-64 bg-indigo-600 rounded-full mix-blend-screen filter blur-[60px] sm:blur-[80px] opacity-30"></div>
 
-                    <div className="relative z-10 mb-8 md:mb-12">
+                    <div className="relative z-10 mb-8 md:mb-12 flex items-center justify-between">
                         <Link href="/" className="inline-flex items-center gap-3 group">
                             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-500 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(59,130,246,0.3)] transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
                                 <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -68,6 +69,7 @@ export default function SignupPage() {
                             </div>
                             <span className="text-2xl sm:text-3xl font-black tracking-tight text-white transition-colors">Rent<span className="text-blue-500">Flow</span></span>
                         </Link>
+                        <ThemeToggle />
                     </div>
 
                     <div className="relative z-10 mt-auto">

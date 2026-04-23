@@ -173,23 +173,18 @@ export default function TenantPayments() {
             <div className="fixed bottom-0 right-1/4 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] bg-purple-400/20 rounded-full blur-[60px] sm:blur-[100px] pointer-events-none -z-10 dark:hidden"></div>
 
             {/* MAIN WRAPPER */}
-            <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-7xl mx-auto w-full flex flex-col gap-2 sm:gap-3 pt-4 sm:pt-6 px-2 sm:px-8 pb-12 sm:pb-20 lg:pb-32 relative z-10 min-h-full">
-                
+            <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-8xl mx-auto w-full flex flex-col gap-2 sm:gap-3 pt-4 sm:pt-6 px-2 sm:px-8 pb-12 sm:pb-20 lg:pb-32 relative z-10 min-h-full">
                 {/* --- HEADER --- */}
-                <motion.header variants={itemVariants} className="shrink-0 flex flex-row items-center justify-between h-8 sm:h-10 px-1 sm:px-0">
+                <motion.header variants={itemVariants} className="shrink-0 flex flex-row items-center justify-between h-8 sm:h-10 px-1 sm:px-0 mb-4 sm:mb-2">
                     <div className="flex flex-row items-center gap-3 sm:gap-4 h-full">
                         <h1 className="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white leading-none">
                             Payment Center
                         </h1>
-                        <div className="inline-flex items-center gap-1.5 px-3 py-1.5 sm:px-2.5 sm:py-1.5 rounded-full bg-white/60 dark:bg-white/5 border border-neutral-200/50 dark:border-white/10 backdrop-blur-md text-indigo-600 dark:text-indigo-400 text-[10px] sm:text-xs font-bold tracking-wide shadow-sm">
-                            <span className="relative flex h-2 w-2 sm:h-2 sm:w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-500 opacity-75"></span><span className="relative inline-flex rounded-full h-2 w-2 sm:h-2 sm:w-2 bg-indigo-600"></span></span>
-                            Billing & Invoices
-                        </div>
                     </div>
                 </motion.header>
 
                 {/* --- LAYER 1: CURRENT BILL --- */}
-                <motion.div variants={itemVariants} className="shrink-0 relative rounded-xl sm:rounded-[1.5rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col p-4 sm:p-6 lg:p-8">
+                <motion.div variants={itemVariants} className="shrink-0 relative rounded-xl sm:rounded-[1.7rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col p-6 sm:p-8 lg:p-8">
                     <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                     {currentBill.status === 'Overdue' && <div className="absolute top-0 left-0 w-full h-1 bg-red-500 z-20 shadow-[0_0_20px_rgba(239,68,68,0.8)]"></div>}
 
@@ -270,7 +265,7 @@ export default function TenantPayments() {
                         </div>
                     </motion.div>
                 </div>            
-1
+
                 {/* --- LAYER 3: FILTERS & TABLE SECTION --- */}
                 <motion.div variants={itemVariants} className="flex-1 flex flex-col relative bg-white/60 dark:bg-[#121212]/60 rounded-xl sm:rounded-[1.5rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden min-h-[450px] mb-12 sm:mb-24">
                     <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>

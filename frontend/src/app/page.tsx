@@ -2,6 +2,7 @@
 import { useRouter } from 'next/navigation';
 import { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { ThemeToggle } from "@/components/theme-toggle";
 
 // --- feature cards ---
 const FeatureCard = ({ title, desc, icon, delay }: { title: string, desc: string, icon: string, delay: number }) => {
@@ -239,12 +240,15 @@ export default function LandingPage() {
             </div>
 
             {/* --- HEADER --- */}
-            <header className={`relative z-50 w-full px-6 md:px-10 h-20 md:h-24 flex items-center justify-start shrink-0 transition-all duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] ${!isMounted || isEntering ? 'opacity-0 -translate-y-12' : 'opacity-100 translate-y-0'}`}>
+            <header className={`relative z-50 w-full px-6 md:px-10 h-20 md:h-24 flex items-center justify-between shrink-0 transition-all duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] ${!isMounted || isEntering ? 'opacity-0 -translate-y-12' : 'opacity-100 translate-y-0'}`}>
                 <div className="flex items-center gap-3 group cursor-default">
                     <div className="w-8 h-8 md:w-10 md:h-10 bg-gradient-to-br from-cyan-500 to-blue-600 rounded-xl flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.3)] dark:shadow-[0_0_20px_rgba(6,182,212,0.5)] group-hover:scale-110 group-hover:rotate-3 transition-all duration-700 ease-out border border-transparent dark:border-cyan-300/30">
                         <svg className="w-5 h-5 md:w-6 md:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                     </div>
                     <span className="text-xl md:text-2xl font-black tracking-tighter text-slate-900 dark:text-white">Rent<span className="text-cyan-600 dark:text-cyan-400">Flow</span></span>
+                </div>
+                <div className="flex items-center">
+                    <ThemeToggle />
                 </div>
             </header>
 

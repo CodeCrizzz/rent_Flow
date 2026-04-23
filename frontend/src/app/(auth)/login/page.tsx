@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import api from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -79,7 +80,7 @@ export default function LoginPage() {
                     <div className={`absolute top-[-20%] left-[-20%] w-48 h-48 sm:w-64 sm:h-64 rounded-full mix-blend-screen filter blur-[60px] sm:blur-[80px] opacity-30 animate-pulse-slow transition-colors duration-1000 ${primaryGlow}`}></div>
                     <div className={`absolute bottom-[-20%] right-[-20%] w-48 h-48 sm:w-64 sm:h-64 rounded-full mix-blend-screen filter blur-[60px] sm:blur-[80px] opacity-30 transition-colors duration-1000 ${secondaryGlow}`}></div>
 
-                    <div className="relative z-10 mb-8 md:mb-12">
+                    <div className="relative z-10 mb-8 md:mb-12 flex items-center justify-between">
                         <Link href="/" className="inline-flex items-center gap-3 group">
                             <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center transition-all duration-500 shadow-lg group-hover:scale-110 group-hover:rotate-3 ${
                                 selectedRole === 'tenant' 
@@ -93,6 +94,7 @@ export default function LoginPage() {
                                 Rent<span className={selectedRole === 'tenant' ? 'text-blue-500' : 'text-purple-500'}>Flow</span>
                             </span>
                         </Link>
+                        <ThemeToggle />
                     </div>
 
                     <div className="relative z-10 mt-auto">

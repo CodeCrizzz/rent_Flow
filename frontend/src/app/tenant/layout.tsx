@@ -4,6 +4,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { motion, AnimatePresence } from 'framer-motion';
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function TenantLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
@@ -56,13 +57,14 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
             <aside className="w-[280px] bg-white/80 dark:bg-[#0a0a0c]/90 backdrop-blur-3xl flex-col hidden md:flex border-r border-slate-200 dark:border-white/5 shadow-2xl z-20 relative transition-colors duration-500 text-left">
                 <div className="absolute top-0 left-0 w-full h-64 bg-indigo-600/10 dark:bg-indigo-600/5 blur-[80px] pointer-events-none"></div>
 
-                <div className="p-8 relative z-10">
+                <div className="p-8 relative z-10 flex items-center justify-between">
                     <div className="inline-flex items-center gap-3 transition-opacity group cursor-default">
                         <div className="w-10 h-10 bg-linear-to-br from-indigo-500 to-blue-600 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(79,70,229,0.3)] transition-all duration-500">
                             <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                         </div>
                         <span className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">Rent<span className="text-indigo-600 dark:text-indigo-400">Flow</span></span>
                     </div>
+                    <ThemeToggle />
                 </div>
 
                 <nav className="flex-1 px-4 space-y-3 mt-6 relative z-10">

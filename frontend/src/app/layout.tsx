@@ -36,9 +36,6 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          <div className="absolute top-4 right-4 md:top-8 md:right-10 z-100">
-            <ThemeToggle />
-          </div>
           {children}
         </ThemeProvider>
       </body>
