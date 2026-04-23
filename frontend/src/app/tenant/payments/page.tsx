@@ -218,17 +218,17 @@ export default function TenantPayments() {
                         </div>
                     </div>
 
-                    <div className="relative z-10 flex items-center justify-between border-t border-neutral-200/50 dark:border-white/10 pt-3 sm:pt-4 mt-auto gap-2">
-                        <div className="block">
-                            <p className="text-xs sm:text-sm font-medium text-neutral-500">Due Date</p>
-                            <p className={`text-sm sm:text-base font-bold ${currentBill.status === 'Overdue' ? 'text-red-500 animate-pulse' : 'text-neutral-900 dark:text-white'}`}>
+                    <div className="relative z-10 flex flex-row items-center justify-between border-t border-neutral-200/50 dark:border-white/10 pt-3 sm:pt-4 mt-auto gap-4">
+                        <div className="flex flex-col justify-center">
+                            <p className="text-[10px] sm:text-xs font-medium text-neutral-500 uppercase tracking-widest mb-1">Due Date</p>
+                            <p className={`text-sm sm:text-base font-bold leading-none ${currentBill.status === 'Overdue' ? 'text-red-500 animate-pulse' : 'text-neutral-900 dark:text-white'}`}>
                                 {formatDate(currentBill.dueDate, { month: 'short', day: 'numeric' })}
                             </p>
                         </div>
                         <button 
                             onClick={() => setIsPaymentModalOpen(true)}
                             disabled={currentBill.remainingBalance <= 0 || currentBill.status === 'Pending Verification'}
-                            className={`w-full sm:w-auto px-4 sm:px-8 py-2.5 sm:py-3 font-bold rounded-xl sm:rounded-xl flex items-center justify-center gap-1 text-sm sm:text-base shrink-0 transition-transform active:scale-95 ${
+                            className={`px-6 sm:px-8 py-2.5 sm:py-3 font-bold rounded-xl flex items-center justify-center gap-1 text-xs sm:text-sm shrink-0 transition-transform active:scale-95 ${
                                 currentBill.remainingBalance <= 0 || currentBill.status === 'Pending Verification'
                                 ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-400 cursor-not-allowed border border-neutral-200 dark:border-white/5' 
                                 : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20 border border-indigo-500'
@@ -266,11 +266,11 @@ export default function TenantPayments() {
                         <div className="relative z-10 flex-1 space-y-1 sm:space-y-3">
                             <div className="flex justify-between text-[9px] sm:text-sm font-semibold"><span className="text-neutral-500">Month</span><span className="font-mono text-emerald-600 dark:text-emerald-400">₱{summary.monthTotal.toLocaleString()}</span></div>
                             <div className="flex justify-between text-[9px] sm:text-sm font-semibold"><span className="text-neutral-500">Year</span><span className="font-mono text-emerald-600 dark:text-emerald-400">₱{summary.yearTotal.toLocaleString()}</span></div>
-                            <div className="flex justify-between text-[9px] sm:text-sm font-semibold border-t border-neutral-200/50 dark:border-white/10 pt-1.5 sm:pt-3 mt-0.5 sm:mt-0"><span className="text-neutral-500">Txns</span><span className="font-mono font-bold text-neutral-900 dark:text-white">{summary.txCount}</span></div>
+                            <div className="flex justify-between text-[9px] sm:text-sm font-semibold border-t border-neutral-200/50 dark:border-white/10 pt-1.5 sm:pt-3 mt-0.5 sm:mt-0"><span className="text-neutral-500">Transactions</span><span className="font-mono font-bold text-neutral-900 dark:text-white">{summary.txCount}</span></div>
                         </div>
                     </motion.div>
                 </div>            
-
+1
                 {/* --- LAYER 3: FILTERS & TABLE SECTION --- */}
                 <motion.div variants={itemVariants} className="flex-1 flex flex-col relative bg-white/60 dark:bg-[#121212]/60 rounded-xl sm:rounded-[1.5rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden min-h-[450px] mb-12 sm:mb-24">
                     <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
