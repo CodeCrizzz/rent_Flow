@@ -94,11 +94,20 @@ export default function LandingPage() {
     useEffect(() => {
         if (!isMounted || isEntering) {
             document.body.style.overflow = 'hidden';
+            document.body.classList.add('no-scrollbar');
+            document.documentElement.style.overflow = 'hidden';
+            document.documentElement.classList.add('no-scrollbar');
         } else {
             document.body.style.overflow = 'unset';
+            document.body.classList.remove('no-scrollbar');
+            document.documentElement.style.overflow = 'unset';
+            document.documentElement.classList.remove('no-scrollbar');
         }
         return () => {
             document.body.style.overflow = 'unset';
+            document.body.classList.remove('no-scrollbar');
+            document.documentElement.style.overflow = 'unset';
+            document.documentElement.classList.remove('no-scrollbar');
         };
     }, [isMounted, isEntering]);
 
@@ -149,7 +158,7 @@ export default function LandingPage() {
             onMouseMove={handleMouseMove} 
             onMouseEnter={() => setIsMouseInside(true)} 
             onMouseLeave={() => setIsMouseInside(false)} 
-            className={`w-full bg-slate-50 dark:bg-[#020617] text-slate-800 dark:text-white selection:bg-cyan-500/30 relative font-sans flex flex-col group/container transition-colors duration-500 overflow-x-hidden ${(!isMounted || isEntering) ? 'h-[100dvh] overflow-hidden' : 'min-h-[100dvh]'}`}
+            className={`w-full bg-slate-50 dark:bg-[#020617] text-slate-800 dark:text-white selection:bg-cyan-500/30 relative font-sans flex flex-col group/container transition-colors duration-500 overflow-x-hidden ${(!isMounted || isEntering) ? 'h-[100dvh] overflow-hidden no-scrollbar' : 'min-h-[100dvh]'}`}
         >            
             {/* Custom Keyframe Animations */}
             <style>{`
@@ -300,7 +309,7 @@ export default function LandingPage() {
 
             {/* --- LOADING OVERLAY: CLEAN DESIGN --- */}
             {isEntering && (
-                <div className="fixed inset-0 z-[150] flex flex-col items-center justify-center bg-slate-50 dark:bg-[#020617] animate-in fade-in duration-700 ease-out transition-colors overflow-hidden px-4">
+                <div className="fixed inset-0 z-[150] flex flex-col items-center justify-center bg-slate-50 dark:bg-[#020617] animate-in fade-in duration-700 ease-out transition-colors overflow-hidden no-scrollbar px-4">
                     
                     {/* Animated Boarding House Icon */}
                     <div className="relative mb-12 flex flex-col items-center justify-center">
