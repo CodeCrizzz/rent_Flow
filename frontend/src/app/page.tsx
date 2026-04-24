@@ -17,7 +17,7 @@ const FeatureCard = ({ title, desc, icon, delay }: { title: string, desc: string
             <div className="absolute top-0 left-[10%] right-[10%] h-[1px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 shadow-[0_0_15px_rgba(34,211,238,0.8)] z-20"></div>
             
             {/* Main Card Body */}
-            <div className="relative h-full p-5 sm:p-6 rounded-2xl bg-white dark:bg-[#0b1120] border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col justify-between z-10 transition-all duration-500 group-hover:-translate-y-2 group-hover:bg-slate-50 dark:group-hover:bg-[#121c33] group-hover:border-slate-300 dark:group-hover:border-slate-700 group-hover:shadow-[0_15px_30px_-10px_rgba(6,182,212,0.15)] shadow-sm">
+            <div className="relative h-full p-4 sm:p-6 rounded-2xl bg-white dark:bg-[#0b1120] border border-slate-200 dark:border-slate-800 overflow-hidden flex flex-col justify-between z-10 transition-all duration-500 group-hover:-translate-y-2 group-hover:bg-slate-50 dark:group-hover:bg-[#121c33] group-hover:border-slate-300 dark:group-hover:border-slate-700 group-hover:shadow-[0_15px_30px_-10px_rgba(6,182,212,0.15)] shadow-sm">
                 
                 {/* Radial Hover Gradient inside the card */}
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(34,211,238,0.05),transparent_60%)] dark:bg-[radial-gradient(circle_at_50%_0%,rgba(34,211,238,0.08),transparent_60%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
@@ -92,24 +92,13 @@ export default function LandingPage() {
 
     // --- BULLETPROOF SCROLL LOCK ---
     useEffect(() => {
-        if (!isMounted || isEntering) {
-            document.body.style.overflow = 'hidden';
-            document.body.classList.add('no-scrollbar');
-            document.documentElement.style.overflow = 'hidden';
-            document.documentElement.classList.add('no-scrollbar');
-        } else {
-            document.body.style.overflow = 'unset';
-            document.body.classList.remove('no-scrollbar');
-            document.documentElement.style.overflow = 'unset';
-            document.documentElement.classList.remove('no-scrollbar');
-        }
+        document.body.classList.add('no-scrollbar');
+        document.documentElement.classList.add('no-scrollbar');
         return () => {
-            document.body.style.overflow = 'unset';
             document.body.classList.remove('no-scrollbar');
-            document.documentElement.style.overflow = 'unset';
             document.documentElement.classList.remove('no-scrollbar');
         };
-    }, [isMounted, isEntering]);
+    }, []);
 
     useEffect(() => {
         const mountTimer = setTimeout(() => setIsMounted(true), 100);
@@ -158,10 +147,19 @@ export default function LandingPage() {
             onMouseMove={handleMouseMove} 
             onMouseEnter={() => setIsMouseInside(true)} 
             onMouseLeave={() => setIsMouseInside(false)} 
-            className={`w-full bg-slate-50 dark:bg-[#020617] text-slate-800 dark:text-white selection:bg-cyan-500/30 relative font-sans flex flex-col group/container transition-colors duration-500 overflow-x-hidden ${(!isMounted || isEntering) ? 'h-[100dvh] overflow-hidden no-scrollbar' : 'min-h-[100dvh]'}`}
+            className="w-full bg-slate-50 dark:bg-[#020617] text-slate-800 dark:text-white selection:bg-cyan-500/30 relative font-sans flex flex-col group/container transition-colors duration-500 overflow-hidden h-[100dvh] no-scrollbar"
         >            
             {/* Custom Keyframe Animations */}
             <style>{`
+                html, body {
+                    overflow: hidden !important;
+                    height: 100dvh !important;
+                    scrollbar-width: none !important;
+                    -ms-overflow-style: none !important;
+                }
+                html::-webkit-scrollbar, body::-webkit-scrollbar {
+                    display: none !important;
+                }
                 @keyframes progress-smooth { 
                     0% { width: 0%; opacity: 0; } 
                     10% { opacity: 1; } 
@@ -262,10 +260,10 @@ export default function LandingPage() {
             </header>
 
             {/* --- MAIN CONTENT --- */}
-            <main className={`relative z-10 flex-1 flex flex-col items-center justify-center px-4 sm:px-6 py-8 md:py-0 text-center transition-all duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${!isMounted || isEntering ? 'opacity-0 scale-95 blur-xl' : 'opacity-100 scale-100 blur-0'}`}>
+            <main className={`relative z-10 flex-1 flex flex-col items-center justify-center px-4 sm:px-6 py-4 md:py-0 text-center transition-all duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${!isMounted || isEntering ? 'opacity-0 scale-95 blur-xl' : 'opacity-100 scale-100 blur-0'}`}>
 
                 {/* Staggered Glyph Reveal Heading */}
-                <h1 className="flex flex-col items-center text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter mb-4 md:mb-8 leading-[1.1] md:leading-none">
+                <h1 className="flex flex-col items-center text-3xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter mb-2 md:mb-8 leading-[1.1] md:leading-none">
                     <span className="block overflow-hidden relative z-10">
                         <span 
                             className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-slate-700 to-indigo-600 dark:from-cyan-300 dark:via-white dark:to-indigo-400 bg-[length:200%_auto] pb-1 md:pb-2"
@@ -290,17 +288,17 @@ export default function LandingPage() {
                     </span>
                 </h1>
 
-                <p className={`text-slate-600 dark:text-slate-300 text-sm sm:text-base md:text-lg max-w-xs sm:max-w-xl mb-8 md:mb-10 leading-relaxed font-bold transition-all duration-100 ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                <p className={`text-slate-600 dark:text-slate-300 text-xs sm:text-base md:text-lg max-w-xs sm:max-w-xl mb-6 md:mb-10 leading-relaxed font-bold transition-all duration-100 ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                     "Everything your boarding house needs, in one smart system."                
                 </p>
 
                 {/* Primary Button */}
-                <div className={`mb-12 md:mb-16 transition-all duration-1000 delay-800 ${isMounted ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
+                <div className={`mb-8 md:mb-16 transition-all duration-1000 delay-800 ${isMounted ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
                     <PrimaryButton onClick={handleEnterPortal} isEntering={isEntering} />
                 </div>
 
                 {/* --- 2D Smooth Hover Feature Cards --- */}
-                <div className={`w-full max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 transition-all duration-1000 delay-1000 ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
+                <div className={`w-full max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6 transition-all duration-1000 delay-1000 ${isMounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'}`}>
                     <FeatureCard icon="🏢" title="Smart Allocation" desc="Drag and drop residents into optimized room layouts instantly." delay={0} />
                     <FeatureCard icon="⚡" title="Automated Billing" desc="Generate invoices and track overdue balances with zero manual effort." delay={0} />
                     <FeatureCard icon="🛠️" title="Live Maintenance" desc="Track, assign, and resolve property repair requests in real-time." delay={0} />
