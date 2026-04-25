@@ -64,7 +64,6 @@ export default function LoginPage() {
     const buttonColor = selectedRole === 'tenant' ? 'bg-blue-600 shadow-blue-900/20 hover:bg-blue-500' : 'bg-purple-600 shadow-purple-900/20 hover:bg-purple-500';
 
     return (
-        /* Use 100dvh to fix mobile browser address bar clipping */
         <div className="min-h-dvh flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-[#0a0a0a] relative overflow-hidden font-sans">
             
             {/* Ambient Background Glow */}
@@ -74,7 +73,6 @@ export default function LoginPage() {
             <div className={`w-full max-w-5xl bg-zinc-950 rounded-3xl sm:rounded-[2.5rem] shadow-2xl shadow-black/50 overflow-hidden flex flex-col md:flex-row relative z-10 border border-white/5 transition-all duration-1000 transform ${isMounted ? 'opacity-100 translate-y-0 scale-100 blur-0' : 'opacity-0 translate-y-12 scale-95 blur-md'}`}>
                 
                 {/* --- LEFT PANEL --- */}
-                {/* On mobile, this stacks on top with a bottom border. On PC, it's on the left with a right border. */}
                 <div className={`w-full md:w-5/12 bg-[#0a0a0a] p-8 sm:p-10 lg:p-14 flex flex-col justify-between relative overflow-hidden border-b md:border-b-0 md:border-r border-white/5 transition-all duration-1000 delay-300 ${isMounted ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}`}>
                     
                     <div className={`absolute top-[-20%] left-[-20%] w-48 h-48 sm:w-64 sm:h-64 rounded-full mix-blend-screen filter blur-[60px] sm:blur-[80px] opacity-30 animate-pulse-slow transition-colors duration-1000 ${primaryGlow}`}></div>
@@ -164,7 +162,7 @@ export default function LoginPage() {
 
                             <div className="pt-4 sm:pt-6">
                                 <button type="submit" disabled={isLoading} className={`w-full flex justify-center items-center py-3.5 sm:py-4 rounded-xl sm:rounded-2xl shadow-xl text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-white transition-all duration-300 hover:scale-[1.02] active:scale-95 disabled:opacity-50 ${buttonColor}`}>
-                                    {isLoading ? "Authenticating..." : "Sign In Securely"}
+                                    {isLoading ? "Authenticating..." : "Login"}
                                 </button>
                                 
                                 {selectedRole === 'tenant' && (
