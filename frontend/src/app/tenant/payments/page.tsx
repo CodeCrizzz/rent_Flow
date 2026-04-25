@@ -267,8 +267,15 @@ export default function TenantPayments() {
                 </div>            
 
                 {/* --- LAYER 3: FILTERS & TABLE SECTION --- */}
-                <motion.div variants={itemVariants} className="flex-1 flex flex-col relative bg-white/60 dark:bg-[#121212]/60 rounded-xl sm:rounded-[1.5rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden min-h-[450px] mb-12 sm:mb-24">
+                <motion.div variants={itemVariants} className=" flex-1 flex flex-col relative bg-white/60 dark:bg-[#121212]/60 rounded-xl sm:rounded-[1.5rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden min-h-[650px] mb-24">
                     <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
+                    {/* Title */}
+                    <div className="relative z-10 shrink-0 p-4 sm:p-6 pb-0 sm:pb-2 flex items-center justify-between">
+                        <h2 className="text-base sm:text-xl font-bold text-neutral-900 dark:text-white flex items-center gap-2">
+                            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Payment History
+                        </h2>
+                    </div>
 
                     {/* Toolbar */}
                     <div className="relative z-10 shrink-0 p-2 sm:p-4 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex flex-wrap sm:flex-nowrap items-center gap-1.5 sm:gap-3 overflow-x-auto">
