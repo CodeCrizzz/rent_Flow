@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -10,17 +11,20 @@ export default function TenantDashboard() {
         recentTransactions: any[];
         status: string;
         roomNumber: string | null;
+        unreadCount: number;
     }>({
         balanceDue: 0,
         recentTransactions: [],
         status: 'Pending',
-        roomNumber: null
+        roomNumber: null,
+        unreadCount: 0
     });
     
     const [userName, setUserName] = useState('');
     const [displayBalance, setDisplayBalance] = useState(0);
     const [isMounted, setIsMounted] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
+    const router = useRouter();
 
     useEffect(() => {
         setIsMounted(true);
@@ -33,7 +37,11 @@ export default function TenantDashboard() {
 
         const fetchDashboardData = async () => {
             try {
-                const { data } = await api.get('/tenant/dashboard');
+                const [dashboardRes, unreadRes] = await Promise.all([
+                    api.get('/tenant/dashboard'),
+                    api.get('/tenant/chat/unread').catch(() => ({ data: { unreadCount: 0 } }))
+                ]);
+                const { data } = dashboardRes;
                 setTenantData({
                     balanceDue: parseFloat(data.balanceDue) || 0,
                     status: data.status || 'Pending',
@@ -45,7 +53,8 @@ export default function TenantDashboard() {
                         date: (tx.payment_date || tx.created_at) ? new Date(tx.payment_date || tx.created_at).toLocaleDateString() : 'N/A',
                         amount: parseFloat(tx.amount_paid || tx.total_amount),
                         status: tx.status
-                    }))
+                    })),
+                    unreadCount: unreadRes.data?.unreadCount || 0
                 });
             } catch (error) {
                 console.error("Failed to fetch dashboard data:", error);
@@ -78,33 +87,14 @@ export default function TenantDashboard() {
         }
     }, [tenantData.balanceDue]);
 
-    const [isPaying, setIsPaying] = useState(false);
-    const [payStatus, setPayStatus] = useState<string | null>(null);
-
-    const handlePayment = async () => {
-        setIsPaying(true);
-        setPayStatus(null);
-        try {
-            await new Promise(resolve => setTimeout(resolve, 2000));
-            setPayStatus('Payment Verified');
-            setTenantData(prev => ({ ...prev, balanceDue: 0 }));
-            setTimeout(() => setPayStatus(null), 5000);
-        } catch (error) {
-            console.error("Payment failed:", error);
-        } finally {
-            setIsPaying(false);
-        }
-    };
-
     if (!isMounted) return null; 
-
     return (
         <div className="fixed inset-0 w-full h-full md:pl-64 lg:pl-72 text-neutral-900 dark:text-neutral-100 font-sans flex flex-col bg-transparent overflow-hidden overscroll-none">
             {/* Ambient Background Glows */}
             <div className="absolute top-0 left-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-indigo-400/20 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none -z-10 mix-blend-multiply dark:hidden"></div>
             <div className="absolute bottom-0 right-1/4 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] bg-purple-400/20 rounded-full blur-[60px] sm:blur-[100px] pointer-events-none -z-10 mix-blend-multiply dark:hidden"></div>
             {/* Main Wrapper */}
-            <div className="max-w-7xl mx-auto w-full h-full flex flex-col gap-2.5 sm:gap-6 pt-6 px-3 sm:px-8 pb-3 sm:pb-6 relative z-10">
+            <div className="max-w-8xl mx-auto w-full h-full flex flex-col gap-2.5 sm:gap-6 pt-6 px-3 sm:px-8 pb-3 sm:pb-6 relative z-10">
                 
                 {/* --- HEADER --- */}
                 <header className={`shrink-0 flex flex-row items-center justify-between h-10 px-1 sm:px-0 transition-all duration-700 ease-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
@@ -136,25 +126,16 @@ export default function TenantDashboard() {
                                 Your next billing cycle generates on the 1st of the month.
                             </p>
                             
-                            {payStatus ? (
-                                <div className="w-full sm:w-auto px-3 sm:px-8 py-2.5 sm:py-3.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-600 dark:text-emerald-400 text-center font-bold rounded-xl sm:rounded-2xl animate-in zoom-in duration-300 flex items-center justify-center gap-1.5 shadow-[0_0_20px_rgba(16,185,129,0.15)] text-[10px] sm:text-base">
-                                    <svg className="w-3.5 h-3.5 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path></svg>
-                                    {payStatus}
-                                </div>
-                            ) : (
-                                <button 
-                                    onClick={handlePayment}
-                                    disabled={isPaying || tenantData.balanceDue === 0}
-                                    className={`w-full sm:w-auto px-3 sm:px-8 py-2.5 sm:py-3.5 font-bold rounded-xl sm:rounded-2xl transition-all duration-300 flex items-center justify-center gap-1.5 backdrop-blur-md text-[10px] sm:text-base ${
-                                        isPaying ? 'bg-neutral-100/50 dark:bg-neutral-800/50 text-neutral-400 cursor-wait border border-neutral-200/50 dark:border-white/5' : 
-                                        tenantData.balanceDue === 0 ? 'bg-white/50 dark:bg-[#181818]/50 text-neutral-400 cursor-not-allowed border border-neutral-200/50 dark:border-white/5' :
-                                        'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 hover:-translate-y-0.5 border border-indigo-500'
-                                    }`}
-                                >
-                                    {isPaying && <div className="w-3 h-3 sm:w-4 sm:h-4 border-2 border-current/30 border-t-current rounded-full animate-spin"></div>}
-                                    {isPaying ? 'Processing...' : tenantData.balanceDue === 0 ? 'Account Settled' : 'Make Payment'}
-                                </button>
-                            )}
+                            <button 
+                                onClick={() => router.push('/tenant/payments')}
+                                disabled={tenantData.balanceDue === 0}
+                                className={`w-full sm:w-auto px-3 sm:px-8 py-2.5 sm:py-3.5 font-bold rounded-xl sm:rounded-2xl transition-all duration-300 flex items-center justify-center gap-1.5 backdrop-blur-md text-[10px] sm:text-base ${
+                                    tenantData.balanceDue === 0 ? 'bg-white/50 dark:bg-[#181818]/50 text-neutral-400 cursor-not-allowed border border-neutral-200/50 dark:border-white/5' :
+                                    'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 hover:-translate-y-0.5 border border-indigo-500'
+                                }`}
+                            >
+                                {tenantData.balanceDue === 0 ? 'Account Settled' : 'Make Payment'}
+                            </button>
                         </div>
                     </div>
 
@@ -190,7 +171,7 @@ export default function TenantDashboard() {
                                 <span className="text-[7px] sm:text-xs font-bold uppercase tracking-widest text-neutral-400">Messages</span>
                             </div>
                             <div className="relative z-10">
-                                <p className="text-base sm:text-2xl font-bold mb-1 leading-none">0 Unread</p>
+                                <p className="text-base sm:text-2xl font-bold mb-1 leading-none">{tenantData.unreadCount || 0} Unread</p>
                                 <Link href="/tenant/chat" className="inline-flex items-center text-[9px] sm:text-sm font-bold text-indigo-600 dark:text-indigo-400 group-hover:text-indigo-700 dark:group-hover:text-indigo-300">
                                     Open Inbox <svg className="w-3 h-3 sm:w-4 sm:h-4 ml-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7"></path></svg>
                                 </Link>
