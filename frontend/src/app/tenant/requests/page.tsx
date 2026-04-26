@@ -183,13 +183,13 @@ export default function TenantMaintenance() {
     };
 
     return (
-        /* OVERSCROLL-NONE added to root to stop mobile browser bouncing/URL bar hiding */
         <div className="fixed inset-0 w-full h-full md:pl-64 lg:pl-72 text-neutral-900 dark:text-neutral-100 font-sans flex flex-col bg-transparent overflow-hidden overscroll-none">
             
             <div className="absolute top-0 left-1/3 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-indigo-400/20 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none -z-10 dark:hidden"></div>
             <div className="absolute bottom-0 right-1/4 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] bg-cyan-400/20 rounded-full blur-[60px] sm:blur-[100px] pointer-events-none -z-10 dark:hidden"></div>
 
-            <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-7xl mx-auto w-full h-full flex flex-col min-h-0 gap-2 sm:gap-5 pt-6 px-3 sm:px-8 pb-2 sm:pb-4 relative z-10">
+            {/* Changed from max-w-7xl to max-w-[1600px] to make the entire UI much wider on desktop */}
+            <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-[1600px] mx-auto w-full h-full flex flex-col min-h-0 gap-2 sm:gap-5 pt-6 px-3 sm:px-8 pb-2 sm:pb-4 relative z-10">
                 
                 {/* --- HEADER --- */}
                 <motion.header variants={itemVariants} className="shrink-0 flex flex-row items-center justify-between h-8 sm:h-10 px-1 sm:px-0">
@@ -219,7 +219,6 @@ export default function TenantMaintenance() {
                 <div className="flex-1 min-h-0 grid grid-cols-12 gap-1.5 sm:gap-5">
                     
                     {/* NEW REQUEST FORM */}
-                    {/* MIN-H-0 added to prevent form from blowing out the grid height on mobile */}
                     <motion.div variants={itemVariants} className="col-span-5 sm:col-span-4 relative rounded-xl sm:rounded-[2rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col min-h-0">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                         <div className="relative z-10 shrink-0 p-2 sm:p-5 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex justify-between items-center">
@@ -227,7 +226,6 @@ export default function TenantMaintenance() {
                             <button onClick={handleClearForm} className="text-[5px] sm:text-[10px] font-bold uppercase tracking-widest text-neutral-500 hover:text-red-500 transition-colors">Clear</button>
                         </div>
 
-                        {/* OVERSCROLL-CONTAIN traps the touch events here so it doesn't drag the main page */}
                         <div className="relative z-10 flex-1 overflow-y-auto p-1.5 sm:p-5 [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden overscroll-contain">
                             <form id="maintenance-form" onSubmit={handleSubmit} className="flex flex-col gap-1.5 sm:gap-4">
                                 {formError && <div className="p-1 sm:p-2.5 bg-red-500/10 rounded text-red-500 text-[5px] sm:text-xs font-bold">{formError}</div>}

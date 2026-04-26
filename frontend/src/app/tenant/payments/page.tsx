@@ -173,7 +173,8 @@ export default function TenantPayments() {
             <div className="fixed bottom-0 right-1/4 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] bg-purple-400/20 rounded-full blur-[60px] sm:blur-[100px] pointer-events-none -z-10 dark:hidden"></div>
 
             {/* MAIN WRAPPER */}
-            <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-[1500px] mx-auto w-full h-full flex flex-col min-h-0 gap-2 sm:gap-5 pt-6 px-3 sm:px-8 pb-2 sm:pb-4 relative z-10">                 {/* --- HEADER --- */}
+            <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-8xl mx-auto w-full flex flex-col gap-2 sm:gap-3 pt-4 sm:pt-6 px-2 sm:px-8 pb-12 sm:pb-20 lg:pb-32 relative z-10 min-h-full">
+                {/* --- HEADER --- */}
                 <motion.header variants={itemVariants} className="shrink-0 flex flex-row items-center justify-between h-8 sm:h-10 px-1 sm:px-0 mb-4 sm:mb-2">
                     <div className="flex flex-row items-center gap-3 sm:gap-4 h-full">
                         <h1 className="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white leading-none">
