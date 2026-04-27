@@ -165,16 +165,21 @@ export default function TenantProfile() {
             {/* Ambient Background Glows */}
             <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-indigo-400/20 dark:bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none -z-10 mix-blend-multiply dark:mix-blend-screen"></div>
             <div className="fixed bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-400/20 dark:bg-purple-500/10 rounded-full blur-[100px] pointer-events-none -z-10 mix-blend-multiply dark:mix-blend-screen"></div>
-
             {/* --- MAIN WRAPPER --- */}
-            <div className="flex min-h-screen w-full flex-col items-center justify-center p-4 sm:p-8 md:p-10">
-                <motion.div initial="hidden" animate="visible" variants={containerVariants} className="w-full max-w-8xl space-y-6 sm:space-y-8 relative z-10 py-15">
+            <div className="flex w-full flex-col items-center justify-start pt-6 px-3 sm:px-8 pb-6">
+                <motion.div initial="hidden" animate="visible" variants={containerVariants} className="w-full max-w-8xl flex flex-col gap-4 sm:gap-6 relative z-10">
                     
                     {/* --- HEADER --- */}
-                    <motion.header variants={itemVariants} className="shrink-0 flex flex-row items-center justify-between px-1 sm:px-0">
-                        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white drop-shadow-sm leading-none">
-                            My Profile
-                        </h1>
+                    <motion.header variants={itemVariants} className="shrink-0 flex flex-row items-center justify-between h-8 sm:h-10 px-1 sm:px-0">
+                        <div className="flex flex-row items-center gap-2 sm:gap-4 h-full">
+                            <h1 className="text-xl sm:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white leading-none">
+                                My Profile
+                            </h1>
+                            <div className="inline-flex items-center gap-1 sm:gap-1.5 px-2 py-0.5 sm:px-2.5 sm:py-1.5 rounded-full bg-white/60 dark:bg-white/5 border border-neutral-200/50 dark:border-white/10 backdrop-blur-md text-indigo-600 dark:text-indigo-400 text-[6px] sm:text-xs font-bold tracking-wide shadow-sm">
+                                <span className="relative flex h-1.5 w-1.5 sm:h-2 sm:w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-500 opacity-75"></span><span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-indigo-600"></span></span>
+                                Account Settings
+                            </div>
+                        </div>
                     </motion.header>
 
                     {/* --- 1. PROFILE OVERVIEW & ACTIONS --- */}
@@ -191,7 +196,7 @@ export default function TenantProfile() {
                                 <div className="w-32 h-32 rounded-full bg-linear-to-br from-blue-600 to-cyan-400 flex items-center justify-center text-white text-5xl font-black shadow-lg overflow-hidden group-hover/card:scale-105 transition-transform duration-500">
                                     {profile.profile_picture ? <img src={profile.profile_picture} className="w-full h-full object-cover" alt="Profile" /> : profile.name.charAt(0)}
                                 </div>
-                                <div className="absolute bottom-0 right-0 w-8 h-8 bg-emerald-500 border-[3px] border-white dark:border-[#0a0a0a] rounded-full flex items-center justify-center shadow-sm">
+                                <div className="absolute    bottom-0 right-0 w-8 h-8 bg-emerald-500 border-[3px] border-white dark:border-[#0a0a0a] rounded-full flex items-center justify-center shadow-sm">
                                     <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path></svg>
                                 </div>
                             </div>
