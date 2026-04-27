@@ -151,6 +151,8 @@ export default function TenantProfile() {
 
     return (
         <div className="fixed inset-0 md:pl-64 lg:pl-72 z-50 overflow-y-auto overflow-x-hidden bg-slate-50 dark:bg-[#050505] text-neutral-900 dark:text-neutral-100 font-sans transition-colors duration-500">
+            {/* Page Transition Overlay */}
+            <motion.div initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ duration: 0.5, ease: "easeInOut" }} className="absolute inset-0 z-[9999] bg-slate-50 dark:bg-[#050505] pointer-events-none" />
             
             {/* Custom Animations & Texture */}
             <style>{`
