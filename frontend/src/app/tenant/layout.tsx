@@ -113,17 +113,7 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
 
             <main className="flex-1 flex flex-col relative h-screen overflow-hidden">
                 <div className={`flex-1 overflow-y-auto p-6 md:p-10 lg:p-14 relative z-0 dark:bg-[#050505] scrollbar-track-transparent ${pathname === '/tenant/profile' ? 'no-scrollbar' : 'scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-bg-slate-100'}`}>
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            key={pathname}
-                            initial={{ opacity: 0, x: 20 }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: -20 }}
-                            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                        >
-                            {children}
-                        </motion.div>
-                    </AnimatePresence>
+                    {children}
                 </div>
             </main>
         </div>
