@@ -150,7 +150,7 @@ export default function TenantProfile() {
     if (!profile) return null;
 
     return (
-        <div className="fixed inset-0 md:pl-[280px] z-50 overflow-y-auto overflow-x-hidden bg-slate-50 dark:bg-[#050505] text-neutral-900 dark:text-neutral-100 font-sans transition-colors duration-500">
+        <div className="fixed inset-0 md:pl-64 lg:pl-72 z-50 overflow-y-auto overflow-x-hidden bg-slate-50 dark:bg-[#050505] text-neutral-900 dark:text-neutral-100 font-sans transition-colors duration-500">
             
             {/* Custom Animations & Texture */}
             <style>{`
@@ -167,8 +167,16 @@ export default function TenantProfile() {
             <div className="fixed bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-400/20 dark:bg-purple-500/10 rounded-full blur-[100px] pointer-events-none -z-10 mix-blend-multiply dark:mix-blend-screen"></div>
 
             {/* --- MAIN WRAPPER --- */}
-            <div className="flex min-h-screen w-full flex-col items-center justify-center p-4 sm:p-8">
-                <motion.div initial="hidden" animate="visible" variants={containerVariants} className="w-full max-w-5xl space-y-6 relative z-10 py-15">
+            <div className="flex min-h-screen w-full flex-col items-center justify-center p-4 sm:p-8 md:p-10">
+                <motion.div initial="hidden" animate="visible" variants={containerVariants} className="w-full max-w-8xl space-y-6 sm:space-y-8 relative z-10 py-15">
+                    
+                    {/* --- HEADER --- */}
+                    <motion.header variants={itemVariants} className="shrink-0 flex flex-row items-center justify-between px-1 sm:px-0">
+                        <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white drop-shadow-sm leading-none">
+                            My Profile
+                        </h1>
+                    </motion.header>
+
                     {/* --- 1. PROFILE OVERVIEW & ACTIONS --- */}
                     <motion.div 
                         variants={itemVariants} 
