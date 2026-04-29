@@ -97,7 +97,7 @@ export default function TenantChat() {
 
     return (
         /* --- VIEWPORT  CONTAINER --- */
-        <div className="flex-1 flex flex-col relative w-full h-full pb-[76px] md:pb-0 bg-slate-50 dark:bg-[#050505] text-neutral-900 dark:text-neutral-100 font-sans transition-colors duration-500 overflow-hidden">
+        <div className="flex-1 flex flex-col relative w-full h-full bg-slate-50 dark:bg-[#050505] text-neutral-900 dark:text-neutral-100 font-sans transition-colors duration-500 overflow-hidden">
             {/* Custom Texture */}
             <style>{`
                 .glass-noise {
