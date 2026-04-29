@@ -183,7 +183,7 @@ export default function TenantMaintenance() {
     };
 
     return (
-        <div className="fixed inset-0 w-full h-full md:pl-64 lg:pl-72 text-neutral-900 dark:text-neutral-100 font-sans flex flex-col bg-transparent overflow-hidden overscroll-none">
+        <div className="flex-1 flex flex-col w-full text-neutral-900 dark:text-neutral-100 font-sans bg-transparent pb-16">
             {/* Page Transition Overlay */}
             <motion.div initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ duration: 0.5, ease: "easeInOut" }} className="absolute inset-0 z-[9999] bg-slate-50 dark:bg-[#050505] pointer-events-none" />
             <div className="absolute top-0 left-1/3 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-indigo-400/20 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none -z-10 dark:hidden"></div>
@@ -211,9 +211,9 @@ export default function TenantMaintenance() {
                 </motion.div>
 
                 {/* MAIN CONTENT GRID */}
-                <div className="flex-1 min-h-0 grid grid-cols-12 gap-1.5 sm:gap-5">
+                <div className="flex-1 flex flex-col sm:grid sm:grid-cols-12 gap-4 sm:gap-5">
                     {/* NEW REQUEST FORM */}
-                    <motion.div variants={itemVariants} className="col-span-5 sm:col-span-4 relative rounded-xl sm:rounded-[2rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col min-h-0">
+                    <motion.div variants={itemVariants} className="col-span-5 sm:col-span-4 relative rounded-xl sm:rounded-[2rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col min-h-[400px]">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                         <div className="relative z-10 shrink-0 p-2 sm:p-5 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex justify-between items-center">
                             <h2 className="text-[8px] sm:text-base font-bold flex items-center gap-1 sm:gap-1.5"><svg className="w-2.5 h-2.5 sm:w-4 sm:h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg> File Request</h2>
@@ -279,7 +279,7 @@ export default function TenantMaintenance() {
                     </motion.div>
 
                     {/* HISTORY TABLE & FILTERS (Right Side) */}
-                    <motion.div variants={itemVariants} className="col-span-7 sm:col-span-8 relative bg-white/60 dark:bg-[#121212]/60 rounded-xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 flex flex-col min-h-0 overflow-hidden">
+                    <motion.div variants={itemVariants} className="col-span-7 sm:col-span-8 relative bg-white/60 dark:bg-[#121212]/60 rounded-xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 flex flex-col min-h-[500px] overflow-hidden">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
 
                         {/*-- Toolbar --*/}

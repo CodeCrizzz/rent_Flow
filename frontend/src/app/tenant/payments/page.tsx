@@ -166,7 +166,7 @@ export default function TenantPayments() {
     };
 
     return (
-        <div className="fixed inset-0 w-full h-full md:pl-[280px] text-neutral-900 dark:text-neutral-100 font-sans flex flex-col bg-transparent overscroll-none overflow-y-auto">
+        <div className="flex-1 flex flex-col w-full min-h-full text-neutral-900 dark:text-neutral-100 font-sans bg-transparent">
             {/* Page Transition Overlay */}
             <motion.div initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ duration: 0.5, ease: "easeInOut" }} className="absolute inset-0 z-[9999] bg-slate-50 dark:bg-[#050505] pointer-events-none" />
             
@@ -269,7 +269,7 @@ export default function TenantPayments() {
                 </div>            
 
                 {/* --- LAYER 3: FILTERS & TABLE SECTION --- */}
-                <motion.div variants={itemVariants} className=" flex-1 flex flex-col relative bg-white/60 dark:bg-[#121212]/60 rounded-xl sm:rounded-[1.5rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden min-h-[650px] mb-24">
+                <motion.div variants={itemVariants} className="flex flex-col relative bg-white/60 dark:bg-[#121212]/60 rounded-xl sm:rounded-3xl border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden min-h-[650px] mb-4">
                     <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                     {/* Title */}
                     <div className="relative z-10 shrink-0 p-4 sm:p-6 pb-0 sm:pb-2 flex items-center justify-between">
@@ -305,7 +305,7 @@ export default function TenantPayments() {
                     </div>
 
                     {/* Table Body */}
-                    <div className="relative z-10 flex-1 overflow-x-auto pr-1 pb-4 sm:pb-6">
+                    <div className="relative z-10 w-full overflow-x-auto pr-1 pb-4 sm:pb-6">
                         <table className="w-full text-left border-collapse min-w-[350px] sm:min-w-[800px] mb-4">
                             <thead className="sticky top-0 z-20 bg-neutral-50/95 dark:bg-[#18181B]/95 backdrop-blur-md shadow-sm">
                                 <tr>
@@ -397,7 +397,7 @@ export default function TenantPayments() {
                                         </div>
                                         <div className="col-span-2">
                                             <div className="w-full border-2 border-dashed border-neutral-200 dark:border-white/10 rounded-xl p-4 sm:p-5 flex flex-col items-center cursor-pointer bg-neutral-50/50 dark:bg-white/[0.02]" onClick={() => fileInputRef.current?.click()}>
-                                                {proofFile ? <span className="text-xs sm:text-sm font-bold text-indigo-500 truncate px-2">{proofFile.name}</span> : <span className="text-xs sm:text-sm font-bold text-neutral-400">Tap to Upload Proof</span>}
+                                                {proofFile ? <span className="text-xs sm:text-sm font-bold text-indigo-500 truncate px-2">{proofFile?.name}</span> : <span className="text-xs sm:text-sm font-bold text-neutral-400">Tap to Upload Proof</span>}
                                                 <input ref={fileInputRef} type="file" className="hidden" accept="image/*,.pdf" onChange={handleFileChange} />
                                             </div>
                                         </div>
@@ -414,7 +414,7 @@ export default function TenantPayments() {
                         <div className="fixed inset-0 flex items-center justify-center p-4 z-[201] pointer-events-none">
                             <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="relative pointer-events-auto flex flex-col items-center">
                                 <button onClick={() => setViewReceiptUrl(null)} className="absolute -top-10 sm:-top-12 right-0 p-1.5 sm:p-2 bg-white/10 hover:bg-white/20 rounded-full text-white transition-colors"><svg className="w-4 h-4 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
-                                <img src={viewReceiptUrl} alt="Receipt" className="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl border border-white/10" />
+                                <img src={viewReceiptUrl || undefined} alt="Receipt" className="max-w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl border border-white/10" />
                             </motion.div>
                         </div>
                     </>

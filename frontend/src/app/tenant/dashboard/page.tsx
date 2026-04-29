@@ -89,7 +89,7 @@ export default function TenantDashboard() {
 
     if (!isMounted) return null; 
     return (
-        <div className="fixed inset-0 w-full h-full md:pl-64 lg:pl-72 text-neutral-900 dark:text-neutral-100 font-sans flex flex-col bg-transparent overflow-hidden overscroll-none">
+        <div className="flex-1 flex flex-col w-full text-neutral-900 dark:text-neutral-100 font-sans bg-transparent">
             {/* Page Transition Overlay */}
             <motion.div initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ duration: 0.5, ease: "easeInOut" }} className="absolute inset-0 z-[9999] bg-slate-50 dark:bg-[#050505] pointer-events-none" />
             {/* Ambient Background Glows */}
@@ -180,8 +180,8 @@ export default function TenantDashboard() {
                     </div>
                 </div>
 
-                {/* --- TRANSACTIONS SECTION (flex-1 locked) --- */}
-                <div className={`flex-1 flex flex-col min-h-0 relative bg-white/60 dark:bg-[#121212]/60 rounded-2xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden transition-all duration-700 ease-out delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                {/* --- TRANSACTIONS SECTION --- */}
+                <div className={`flex flex-col relative bg-white/60 dark:bg-[#121212]/60 rounded-2xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden transition-all duration-700 ease-out delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                     <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                     
                     <div className="relative z-10 shrink-0 p-3.5 sm:p-6 lg:px-8 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex justify-between items-center">
@@ -194,7 +194,7 @@ export default function TenantDashboard() {
                         </Link>
                     </div>
 
-                    <div className="relative z-10 flex-1 overflow-y-auto p-2 sm:p-4 [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden overscroll-contain">
+                    <div className="relative z-10 p-2 sm:p-4">
                         {tenantData.recentTransactions && tenantData.recentTransactions.length > 0 ? (
                             <div className="space-y-1.5 pb-4">
                                 {tenantData.recentTransactions.slice(0, 3).map((tx: any, i) => (
