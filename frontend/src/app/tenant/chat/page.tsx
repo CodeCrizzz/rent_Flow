@@ -98,8 +98,6 @@ export default function TenantChat() {
     return (
         /* --- FULL VIEWPORT GLASSMORPHISM CONTAINER --- */
         <div className="fixed inset-0 md:pl-[280px] z-50 flex flex-col bg-slate-50 dark:bg-[#050505] text-neutral-900 dark:text-neutral-100 font-sans transition-colors duration-500">
-            {/* Page Transition Overlay */}
-            <motion.div initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ duration: 0.5, ease: "easeInOut" }} className="absolute inset-0 z-[9999] bg-slate-50 dark:bg-[#050505] pointer-events-none" />
             
             {/* Custom Texture */}
             <style>{`
@@ -151,19 +149,19 @@ export default function TenantChat() {
                     <div className="relative z-10 flex items-center justify-between p-4 sm:px-8 border-b border-slate-200/50 dark:border-white/10 bg-white/50 dark:bg-[#09090b]/50 backdrop-blur-xl shrink-0">
                         <div className="flex items-center gap-4">
                             <div className="relative">
-                                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-blue-600 flex items-center justify-center text-white font-black text-xl shadow-lg shadow-indigo-500/30">
+                                <div className="w-14 h-14 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-blue-600 flex items-center justify-center text-white font-black text-2xl sm:text-xl shadow-lg shadow-indigo-500/30">
                                     BA
                                 </div>
                             </div>
                             <div>
-                                <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
+                                <h2 className="text-xl sm:text-lg font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
                                     Boarding Admin
-                                    <svg className="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
+                                    <svg className="w-5 h-5 sm:w-4 sm:h-4 text-blue-500" fill="currentColor" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
                                 </h2>
-                                <p className="text-xs font-medium text-emerald-500 tracking-wide flex items-center gap-1.5 mt-0.5">
-                                    <span className="relative flex h-2 w-2">
+                                <p className="text-sm sm:text-xs font-medium text-emerald-500 tracking-wide flex items-center gap-2 sm:gap-1.5 mt-1 sm:mt-0.5">
+                                    <span className="relative flex h-2.5 w-2.5 sm:h-2 sm:w-2">
                                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                                      <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 sm:h-2 sm:w-2 bg-emerald-500"></span>
                                     </span>
                                     Online right now
                                 </p>
@@ -201,8 +199,8 @@ export default function TenantChat() {
                                             <div className="absolute inset-0 rounded-full bg-blue-500/20 blur-xl animate-pulse"></div>
                                             <svg className="w-10 h-10 text-blue-600 dark:text-blue-400 relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
                                         </div>
-                                        <h4 className="text-xl font-bold text-slate-900 dark:text-white mb-2">How can we help?</h4>
-                                        <p className="text-sm text-slate-500 dark:text-neutral-400">Send a message to our boarding admin team. We typically reply within a few minutes.</p>
+                                        <h4 className="text-2xl sm:text-xl font-bold text-slate-900 dark:text-white mb-2">How can we help?</h4>
+                                        <p className="text-base sm:text-sm text-slate-500 dark:text-neutral-400">Send a message to our boarding admin team. We typically reply within a few minutes.</p>
                                     </div>
                                 </motion.div>
                             ) : (
@@ -219,11 +217,11 @@ export default function TenantChat() {
                                             {/* Message Bubble */}
                                             <div className="relative flex items-center gap-2">
                                                 {msg.sender_type === 'admin' && (
-                                                    <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-blue-600 flex-shrink-0 flex items-center justify-center text-[10px] font-bold text-white shadow-sm mt-auto mb-1">
+                                                    <div className="w-10 h-10 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-indigo-500 to-blue-600 flex-shrink-0 flex items-center justify-center text-xs sm:text-[10px] font-bold text-white shadow-sm mt-auto mb-1">
                                                         BA
                                                     </div>
                                                 )}
-                                                <div className={`px-5 py-3.5 text-[15px] leading-relaxed shadow-sm ${
+                                                <div className={`px-5 py-4 sm:py-3.5 text-base sm:text-[15px] leading-relaxed shadow-sm ${
                                                     msg.sender_type === 'tenant' 
                                                         ? 'bg-gradient-to-br from-blue-600 to-indigo-600 text-white rounded-2xl rounded-br-[4px]' 
                                                         : 'bg-white dark:bg-[#1a1a1a] text-slate-800 dark:text-white rounded-2xl rounded-bl-[4px] border border-slate-100 dark:border-white/5'
@@ -233,7 +231,7 @@ export default function TenantChat() {
                                             </div>
 
                                             {/* Message Details (Time & Status) */}
-                                            <div className={`flex items-center gap-2 mt-1.5 text-xs font-medium text-slate-400 dark:text-neutral-500 ${msg.sender_type === 'tenant' ? 'justify-end pr-1' : 'justify-start pl-11'}`}>
+                                            <div className={`flex items-center gap-2 mt-2 sm:mt-1.5 text-sm sm:text-xs font-medium text-slate-400 dark:text-neutral-500 ${msg.sender_type === 'tenant' ? 'justify-end pr-1' : 'justify-start pl-14 sm:pl-11'}`}>
                                                 <span>{formatTime(msg.created_at)}</span>
                                                 
                                                 {/* Status Indicator (Only show for sent messages) */}
@@ -241,9 +239,9 @@ export default function TenantChat() {
                                                     <div className="flex items-center">
                                                         <span className={`flex items-center gap-0.5 ${msg.status === 'Seen' ? 'text-blue-500' : 'text-slate-400'}`}>
                                                             {/* Checkmarks */}
-                                                            {msg.status === 'Sent' && <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path></svg>}
-                                                            {msg.status === 'Delivered' && <div className="flex -space-x-2"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path></svg><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path></svg></div>}
-                                                            {msg.status === 'Seen' && <div className="flex -space-x-2 text-blue-500"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path></svg><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path></svg></div>}
+                                                            {msg.status === 'Sent' && <svg className="w-5 h-5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path></svg>}
+                                                            {msg.status === 'Delivered' && <div className="flex -space-x-2"><svg className="w-5 h-5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path></svg><svg className="w-5 h-5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path></svg></div>}
+                                                            {msg.status === 'Seen' && <div className="flex -space-x-2 text-blue-500"><svg className="w-5 h-5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path></svg><svg className="w-5 h-5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7"></path></svg></div>}
                                                         </span>
                                                     </div>
                                                 )}
@@ -257,21 +255,21 @@ export default function TenantChat() {
 
                     {/* 3. SEND MESSAGE SECTION */}
                     <div className="relative z-10 p-4 sm:p-6 bg-white/60 dark:bg-[#09090b]/80 border-t border-slate-200/50 dark:border-white/5 backdrop-blur-2xl shrink-0">
-                        <form onSubmit={handleSend} className="flex gap-3 items-end max-w-4xl mx-auto relative">
+                        <form onSubmit={handleSend} className="flex gap-2 sm:gap-3 items-end max-w-4xl mx-auto relative">
                             
                             {/* Upload Attachment Button */}
-                            <button type="button" className="mb-1 p-3 text-slate-400 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-full transition-colors shrink-0">
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
+                            <button type="button" className="mb-1 p-2 sm:p-3 text-slate-400 dark:text-neutral-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-500/10 rounded-full transition-colors shrink-0">
+                                <svg className="w-7 h-7 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
                             </button>
 
                             {/* Text Input Container */}
-                            <div className="flex-1 relative bg-slate-100/80 dark:bg-white/5 rounded-[1.5rem] border border-transparent focus-within:border-blue-500/30 focus-within:bg-white dark:focus-within:bg-[#121214] transition-all shadow-sm flex items-center min-h-[56px] overflow-hidden">
+                            <div className="flex-1 relative bg-slate-100/80 dark:bg-white/5 rounded-3xl sm:rounded-[1.5rem] border border-transparent focus-within:border-blue-500/30 focus-within:bg-white dark:focus-within:bg-[#121214] transition-all shadow-sm flex items-center min-h-[60px] sm:min-h-[56px] overflow-hidden">
                                 <input 
                                     type="text"
                                     value={newMessage}
                                     onChange={(e) => setNewMessage(e.target.value)}
                                     placeholder="Type your message..." 
-                                    className="w-full bg-transparent border-none text-[15px] text-slate-900 dark:text-white px-5 py-4 outline-none placeholder:text-slate-400 dark:placeholder:text-neutral-500"
+                                    className="w-full bg-transparent border-none text-base sm:text-[15px] text-slate-900 dark:text-white px-5 py-4 outline-none placeholder:text-slate-400 dark:placeholder:text-neutral-500"
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter') {
                                             if (newMessage.trim() && !isLoading) {
@@ -285,9 +283,9 @@ export default function TenantChat() {
                             <button 
                                 type="submit" 
                                 disabled={!newMessage.trim() || isLoading}
-                                className="mb-1 w-12 h-12 flex items-center justify-center bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all shadow-[0_4px_14px_0_rgb(37,99,235,0.39)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.23)] hover:-translate-y-0.5 active:translate-y-0 active:scale-95 disabled:opacity-50 disabled:shadow-none disabled:hover:translate-y-0 shrink-0"
+                                className="mb-1 w-14 h-14 sm:w-12 sm:h-12 flex items-center justify-center bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-all shadow-[0_4px_14px_0_rgb(37,99,235,0.39)] hover:shadow-[0_6px_20px_rgba(37,99,235,0.23)] hover:-translate-y-0.5 active:translate-y-0 active:scale-95 disabled:opacity-50 disabled:shadow-none disabled:hover:translate-y-0 shrink-0"
                             >
-                                <svg className="w-5 h-5 translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                                <svg className="w-6 h-6 sm:w-5 sm:h-5 translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                             </button>
                         </form>
                     </div>
