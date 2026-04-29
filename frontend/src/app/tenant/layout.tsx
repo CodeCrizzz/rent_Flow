@@ -112,7 +112,7 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
             </aside>
 
             <main className="flex-1 flex flex-col relative h-[100dvh] overflow-hidden">
-                <div className={`flex-1 flex flex-col overflow-y-auto ${pathname === '/tenant/chat' ? 'p-0' : 'p-6 md:p-10 lg:p-14 pb-24 md:pb-10 lg:pb-14'} relative z-0 dark:bg-[#050505] scrollbar-track-transparent ${pathname === '/tenant/profile' ? 'no-scrollbar' : 'scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-bg-slate-100'}`}>
+                <div className={`flex-1 flex flex-col overflow-y-auto p-0 pb-20 md:pb-0 relative z-0 dark:bg-[#050505] scrollbar-track-transparent ${pathname === '/tenant/profile' ? 'no-scrollbar' : 'scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-bg-slate-100'}`}>
                     {children}
                 </div>
 
