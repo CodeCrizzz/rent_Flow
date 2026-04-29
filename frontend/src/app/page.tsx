@@ -90,15 +90,20 @@ export default function LandingPage() {
 
     const statuses = ["Loading...", "Connecting...", "Entering portal..."];
 
-    // --- BULLETPROOF SCROLL LOCK ---
+    // --- SCROLL LOCK ONLY DURING TRANSITION ---
     useEffect(() => {
-        document.body.classList.add('no-scrollbar');
-        document.documentElement.classList.add('no-scrollbar');
+        if (!isMounted || isEntering) {
+            document.body.style.overflow = 'hidden';
+            document.documentElement.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
+        }
         return () => {
-            document.body.classList.remove('no-scrollbar');
-            document.documentElement.classList.remove('no-scrollbar');
+            document.body.style.overflow = '';
+            document.documentElement.style.overflow = '';
         };
-    }, []);
+    }, [isMounted, isEntering]);
 
     useEffect(() => {
         const mountTimer = setTimeout(() => setIsMounted(true), 100);
@@ -147,13 +152,11 @@ export default function LandingPage() {
             onMouseMove={handleMouseMove} 
             onMouseEnter={() => setIsMouseInside(true)} 
             onMouseLeave={() => setIsMouseInside(false)} 
-            className="w-full bg-slate-50 dark:bg-[#020617] text-slate-800 dark:text-white selection:bg-cyan-500/30 relative font-sans flex flex-col group/container transition-colors duration-500 overflow-hidden h-[100dvh] no-scrollbar"
+            className="w-full bg-slate-50 dark:bg-[#020617] text-slate-800 dark:text-white selection:bg-cyan-500/30 relative font-sans flex flex-col group/container transition-colors duration-500 overflow-x-hidden min-h-[100dvh] no-scrollbar"
         >            
             {/* Custom Keyframe Animations */}
             <style>{`
                 html, body {
-                    overflow: hidden !important;
-                    height: 100dvh !important;
                     scrollbar-width: none !important;
                     -ms-overflow-style: none !important;
                 }
@@ -263,7 +266,7 @@ export default function LandingPage() {
             <main className={`relative z-10 flex-1 flex flex-col items-center justify-center px-4 sm:px-6 py-4 md:py-0 text-center transition-all duration-1200 ease-[cubic-bezier(0.16,1,0.3,1)] delay-100 ${!isMounted || isEntering ? 'opacity-0 scale-95 blur-xl' : 'opacity-100 scale-100 blur-0'}`}>
 
                 {/* Staggered Glyph Reveal Heading */}
-                <h1 className="flex flex-col items-center text-3xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter mb-2 md:mb-8 leading-[1.1] md:leading-none">
+                <h1 className="flex flex-col items-center text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter mb-4 md:mb-8 leading-[1.1] md:leading-none">
                     <span className="block overflow-hidden relative z-10">
                         <span 
                             className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-slate-700 to-indigo-600 dark:from-cyan-300 dark:via-white dark:to-indigo-400 bg-[length:200%_auto] pb-1 md:pb-2"
@@ -275,7 +278,7 @@ export default function LandingPage() {
                             Manage
                         </span>
                     </span>
-                    <span className="block overflow-hidden -mt-2 sm:-mt-4 lg:-mt-8">
+                    <span className="block overflow-hidden -mt-3 sm:-mt-4 lg:-mt-8">
                         <span 
                             className="inline-block text-transparent bg-clip-text bg-gradient-to-r from-cyan-600 via-slate-700 to-indigo-600 dark:from-cyan-300 dark:via-white dark:to-indigo-400 bg-[length:200%_auto] pb-1 md:pb-2"
                             style={{ 

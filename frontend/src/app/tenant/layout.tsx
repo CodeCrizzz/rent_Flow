@@ -111,10 +111,32 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
                 </div>
             </aside>
 
-            <main className="flex-1 flex flex-col relative h-screen overflow-hidden">
-                <div className={`flex-1 overflow-y-auto p-6 md:p-10 lg:p-14 relative z-0 dark:bg-[#050505] scrollbar-track-transparent ${pathname === '/tenant/profile' ? 'no-scrollbar' : 'scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-bg-slate-100'}`}>
+            <main className="flex-1 flex flex-col relative h-[100dvh] overflow-hidden">
+                <div className={`flex-1 flex flex-col overflow-y-auto ${pathname === '/tenant/chat' ? 'p-0' : 'p-6 md:p-10 lg:p-14 pb-24 md:pb-10 lg:pb-14'} relative z-0 dark:bg-[#050505] scrollbar-track-transparent ${pathname === '/tenant/profile' ? 'no-scrollbar' : 'scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-bg-slate-100'}`}>
                     {children}
                 </div>
+
+                {/* Mobile Bottom Navigation */}
+                <nav className="md:hidden flex items-center justify-around bg-white/90 dark:bg-[#0a0a0c]/90 backdrop-blur-2xl border-t border-slate-200 dark:border-white/5 pb-safe pt-2 px-2 z-50 absolute bottom-0 left-0 right-0">
+                    {navItems.map((item) => {
+                        const isActive = pathname === item.path;
+                        return (
+                            <Link key={item.name} href={item.path} className="flex-1 flex flex-col items-center justify-center py-2 relative group">
+                                <div className={`p-1.5 rounded-xl transition-all duration-300 relative ${isActive ? 'bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-zinc-500 group-hover:text-slate-600 dark:group-hover:text-zinc-300'}`}>
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={item.icon}></path></svg>
+                                    {item.name === 'Messages' && unreadCount > 0 && (
+                                        <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[9px] font-black text-white border-2 border-white dark:border-[#0a0a0c]">
+                                            {unreadCount}
+                                        </span>
+                                    )}
+                                </div>
+                                <span className={`text-[10px] mt-1 font-bold ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-zinc-500'}`}>
+                                    {item.name.replace('My ', '')}
+                                </span>
+                            </Link>
+                        );
+                    })}
+                </nav>
             </main>
         </div>
     );

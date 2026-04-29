@@ -97,7 +97,7 @@ export default function TenantChat() {
 
     return (
         /* --- FULL VIEWPORT GLASSMORPHISM CONTAINER --- */
-        <div className="fixed inset-0 md:pl-[280px] z-50 flex flex-col bg-slate-50 dark:bg-[#050505] text-neutral-900 dark:text-neutral-100 font-sans transition-colors duration-500">
+        <div className="flex-1 flex flex-col relative w-full h-full pb-[76px] md:pb-0 bg-slate-50 dark:bg-[#050505] text-neutral-900 dark:text-neutral-100 font-sans transition-colors duration-500 overflow-hidden">
             
             {/* Custom Texture */}
             <style>{`
