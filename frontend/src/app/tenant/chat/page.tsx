@@ -122,11 +122,10 @@ export default function TenantChat() {
                 initial="hidden" 
                 animate="visible" 
                 variants={{
-                    hidden: { opacity: 0, y: 30, scale: 0.99 },
+                    hidden: { opacity: 0, y: 10 },
                     visible: { 
                         opacity: 1, 
                         y: 0,
-                        scale: 1,
                         transition: { 
                             type: "spring",
                             stiffness: 80,
@@ -136,18 +135,17 @@ export default function TenantChat() {
                         } 
                     }
                 }}
-                className="flex-1 flex flex-col max-w-6xl mx-auto w-full p-4 sm:p-6 lg:p-8 h-full"
+                className="flex-1 flex flex-col w-full h-full"
             >
 
                 {/* --- MAIN CHAT INTERFACE --- */}
                 <motion.div 
                     variants={{
-                        hidden: { opacity: 0, y: 20 },
-                        visible: { opacity: 1, y: 0 }
+                        hidden: { opacity: 0 },
+                        visible: { opacity: 1 }
                     }}
-                    className="flex-1 flex flex-col relative bg-white/80 dark:bg-[#09090b]/80 border border-slate-200/50 dark:border-white/10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] backdrop-blur-3xl overflow-hidden min-h-0"
+                    className="flex-1 flex flex-col relative overflow-hidden min-h-0"
                 >
-                    <div className="absolute inset-0 glass-noise"></div>
                     
                     {/* 1. CHAT HEADER */}
                     <div className="relative z-10 flex items-center justify-between p-4 sm:px-8 border-b border-slate-200/50 dark:border-white/10 bg-white/50 dark:bg-[#09090b]/50 backdrop-blur-xl shrink-0">
@@ -156,7 +154,6 @@ export default function TenantChat() {
                                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-blue-600 flex items-center justify-center text-white font-black text-xl shadow-lg shadow-indigo-500/30">
                                     BA
                                 </div>
-                                <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 border-2 border-white dark:border-[#09090b] rounded-full shadow-sm"></div>
                             </div>
                             <div>
                                 <h2 className="text-lg font-bold tracking-tight text-slate-900 dark:text-white flex items-center gap-2">
