@@ -150,7 +150,7 @@ export default function TenantProfile() {
     if (!profile) return null;
 
     return (
-        <div className="flex-1 flex flex-col w-full text-neutral-900 dark:text-neutral-100 font-sans transition-colors duration-500">
+        <div className="flex-1 flex flex-col w-full text-neutral-900 dark:text-neutral-100 font-sans transition-colors duration-300">
             {/* Page Transition Overlay */}
             <motion.div initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ duration: 0.5, ease: "easeInOut" }} className="absolute inset-0 z-[9999] bg-slate-50 dark:bg-[#050505] pointer-events-none" />
             
@@ -184,14 +184,14 @@ export default function TenantProfile() {
                     <motion.div 
                         variants={itemVariants} 
                         whileHover={{ scale: 1.01, translateY: -4 }}
-                        className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-[2.5rem] p-8 sm:p-10 shadow-xl hover:shadow-2xl hover:border-blue-500/30 dark:hover:border-blue-500/30 backdrop-blur-2xl overflow-hidden transition-all duration-500 group/card"
+                        className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-[2.5rem] p-8 sm:p-10 shadow-xl hover:shadow-2xl hover:border-blue-500/30 dark:hover:border-blue-500/30 backdrop-blur-2xl overflow-hidden transition-all duration-300 group/card"
                     >
                         <div className="absolute inset-0 glass-noise"></div>
                         <div className="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-8 text-center md:text-left">
                             
                             {/* Profile Picture */}
                             <div className="relative shrink-0">
-                                <div className="w-32 h-32 rounded-full bg-linear-to-br from-blue-600 to-cyan-400 flex items-center justify-center text-white text-5xl font-black shadow-lg overflow-hidden group-hover/card:scale-105 transition-transform duration-500">
+                                <div className="w-32 h-32 rounded-full bg-linear-to-br from-blue-600 to-cyan-400 flex items-center justify-center text-white text-5xl font-black shadow-lg overflow-hidden group-hover/card:scale-105 transition-transform duration-300">
                                     {profile.profile_picture ? <img src={profile.profile_picture} className="w-full h-full object-cover" alt="Profile" /> : profile.name.charAt(0)}
                                 </div>
                                 <div className="absolute    bottom-0 right-0 w-8 h-8 bg-emerald-500 border-[3px] border-white dark:border-[#0a0a0a] rounded-full flex items-center justify-center shadow-sm">
@@ -237,12 +237,12 @@ export default function TenantProfile() {
                         <motion.div 
                             variants={itemVariants} 
                             whileHover={{ scale: 1.02, translateY: -5 }}
-                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-3xl md:rounded-4xl p-4 sm:p-6 md:p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-blue-500/30 transition-all duration-500 group/bento"
+                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-3xl md:rounded-4xl p-4 sm:p-6 md:p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-blue-500/30 transition-all duration-300 group/bento"
                         >
                             <div className="absolute inset-0 glass-noise"></div>
                             <div className="absolute top-3 right-3 sm:top-4 sm:right-4 text-[7px] sm:text-[9px] font-black uppercase tracking-widest text-rose-500 bg-rose-500/10 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded border border-rose-500/20 hidden sm:block">Admin Only</div>
                             <h3 className="relative z-10 text-xs sm:text-sm font-black text-neutral-400 uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-1.5 sm:gap-2 group-hover/bento:text-blue-500 transition-colors">
-                                <span className="text-xl sm:text-2xl group-hover/bento:scale-125 transition-transform duration-500">🚪</span> <span className="truncate">Room Info</span>
+                                <span className="text-xl sm:text-2xl group-hover/bento:scale-125 transition-transform duration-300">🚪</span> <span className="truncate">Room Info</span>
                             </h3>
                             <div className="relative z-10 space-y-3 sm:space-y-4">
                                 <div className="flex flex-col xl:flex-row xl:justify-between items-start xl:items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-[11px] sm:text-xs font-bold text-neutral-500 mb-0.5 xl:mb-0">Room</span><span className="text-xs sm:text-sm font-black text-blue-600 dark:text-cyan-400 truncate w-full xl:w-auto xl:text-right">{profile.room?.number || 'TBD'}</span></div>
@@ -257,11 +257,11 @@ export default function TenantProfile() {
                         <motion.div 
                             variants={itemVariants} 
                             whileHover={{ scale: 1.02, translateY: -5 }}
-                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-3xl md:rounded-4xl p-4 sm:p-6 md:p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-emerald-500/30 transition-all duration-500 group/bento"
+                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-3xl md:rounded-4xl p-4 sm:p-6 md:p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-emerald-500/30 transition-all duration-300 group/bento"
                         >
                             <div className="absolute inset-0 glass-noise"></div>
                             <h3 className="relative z-10 text-xs sm:text-sm font-black text-neutral-400 uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-1.5 sm:gap-2 group-hover/bento:text-emerald-500 transition-colors">
-                                <span className="text-xl sm:text-2xl group-hover/bento:scale-125 transition-transform duration-500">👤</span> <span className="truncate">Account Info</span>
+                                <span className="text-xl sm:text-2xl group-hover/bento:scale-125 transition-transform duration-300">👤</span> <span className="truncate">Account Info</span>
                             </h3>
                             <div className="relative z-10 space-y-3 sm:space-y-4 flex-1">
                                 <div className="flex flex-col xl:flex-row xl:justify-between items-start xl:items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-[11px] sm:text-xs font-bold text-neutral-500 mb-0.5 xl:mb-0">Username</span><span className="text-[11px] sm:text-xs font-bold truncate max-w-full xl:max-w-[150px]">{profile.account?.username || profile.email}</span></div>
@@ -279,11 +279,11 @@ export default function TenantProfile() {
                         <motion.div 
                             variants={itemVariants} 
                             whileHover={{ scale: 1.02, translateY: -5 }}
-                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-3xl md:rounded-4xl p-4 sm:p-6 md:p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-rose-500/30 transition-all duration-500 group/bento"
+                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-3xl md:rounded-4xl p-4 sm:p-6 md:p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-rose-500/30 transition-all duration-300 group/bento"
                         >
                             <div className="absolute inset-0 glass-noise"></div>
                             <h3 className="relative z-10 text-xs sm:text-sm font-black text-neutral-400 uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-1.5 sm:gap-2 group-hover/bento:text-rose-500 transition-colors">
-                                <span className="text-xl sm:text-2xl group-hover/bento:scale-125 transition-transform duration-500">💳</span> <span className="truncate">Payment</span>
+                                <span className="text-xl sm:text-2xl group-hover/bento:scale-125 transition-transform duration-300">💳</span> <span className="truncate">Payment</span>
                             </h3>
                             <div className="relative z-10 space-y-3 sm:space-y-4 flex-1">
                                 <div className="flex flex-col xl:flex-row xl:justify-between items-start xl:items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-[11px] sm:text-xs font-bold text-neutral-500 mb-0.5 xl:mb-0">Balance</span><span className="text-sm sm:text-lg font-black text-rose-500 dark:text-rose-400 truncate w-full xl:w-auto xl:text-right">₱{profile.payment?.balance?.toLocaleString() || '0'}</span></div>
@@ -296,11 +296,11 @@ export default function TenantProfile() {
                         <motion.div 
                             variants={itemVariants} 
                             whileHover={{ scale: 1.02, translateY: -5 }}
-                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-3xl md:rounded-4xl p-4 sm:p-6 md:p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-amber-500/30 transition-all duration-500 group/bento"
+                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-3xl md:rounded-4xl p-4 sm:p-6 md:p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-amber-500/30 transition-all duration-300 group/bento"
                         >
                             <div className="absolute inset-0 glass-noise"></div>
                             <h3 className="relative z-10 text-xs sm:text-sm font-black text-neutral-400 uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-1.5 sm:gap-2 group-hover/bento:text-amber-500 transition-colors">
-                                <span className="text-xl sm:text-2xl group-hover/bento:scale-125 transition-transform duration-500">🛠️</span> <span className="truncate">Maintenance</span>
+                                <span className="text-xl sm:text-2xl group-hover/bento:scale-125 transition-transform duration-300">🛠️</span> <span className="truncate">Maintenance</span>
                             </h3>
                             <div className="relative z-10 space-y-3 sm:space-y-4 flex-1">
                                 <div className="flex flex-col xl:flex-row xl:justify-between items-start xl:items-center pb-2 border-b border-black/5 dark:border-white/5"><span className="text-[11px] sm:text-xs font-bold text-neutral-500 mb-0.5 xl:mb-0">Requests</span><span className="text-xs sm:text-sm font-black truncate w-full xl:w-auto xl:text-right">{profile.maintenance?.total || '0'}</span></div>

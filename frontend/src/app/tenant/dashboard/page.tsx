@@ -98,14 +98,14 @@ export default function TenantDashboard() {
             {/* Main Wrapper */}
             <div className="max-w-8xl mx-auto w-full h-full flex flex-col gap-2.5 sm:gap-6 pt-6 px-3 sm:px-8 pb-3 sm:pb-6 relative z-10">  
                 {/* --- HEADER --- */}
-                <header className={`shrink-0 flex flex-row items-center justify-between h-10 px-1 sm:px-0 transition-all duration-700 ease-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+                <header className={`shrink-0 flex flex-row items-center justify-between h-10 px-1 sm:px-0 transition-all duration-300 ease-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
                     <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white drop-shadow-sm leading-none">
                         Welcome, {userName.split(' ')[0] || 'Resident'}
                     </h1>
                 </header>
 
                 {/* --- BENTO GRID LAYOUT --- */}
-                <div className={`shrink-0 grid grid-cols-12 gap-2.5 sm:gap-6 transition-all duration-700 ease-out delay-150 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                <div className={`shrink-0 grid grid-cols-12 gap-2.5 sm:gap-6 transition-all duration-300 ease-out delay-150 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                     {/* HERO CARD: Billing & Balance */}
                     <div className="col-span-7 lg:col-span-8 relative rounded-2xl sm:rounded-[2rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col justify-between p-4 sm:p-8 lg:p-10 min-h-0">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
@@ -181,7 +181,7 @@ export default function TenantDashboard() {
                 </div>
 
                 {/* --- TRANSACTIONS SECTION --- */}
-                <div className={`flex flex-col relative bg-white/60 dark:bg-[#121212]/60 rounded-2xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden transition-all duration-700 ease-out delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                <div className={`flex flex-col relative bg-white/60 dark:bg-[#121212]/60 rounded-2xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden transition-all duration-300 ease-out delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                     <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                     
                     <div className="relative z-10 shrink-0 p-3.5 sm:p-6 lg:px-8 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex justify-between items-center">

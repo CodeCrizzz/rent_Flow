@@ -53,8 +53,8 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
     ];
 
     return (
-        <div className="flex h-screen bg-slate-50 dark:bg-[#050505] text-slate-900 dark:text-white overflow-hidden selection:bg-indigo-500/30 transition-colors duration-500">
-            <aside className="w-[280px] bg-white/80 dark:bg-[#0a0a0c]/90 backdrop-blur-3xl flex-col hidden md:flex border-r border-slate-200 dark:border-white/5 shadow-2xl z-20 relative transition-colors duration-500 text-left">
+        <div className="flex h-screen bg-slate-50 dark:bg-[#050505] text-slate-900 dark:text-white overflow-hidden selection:bg-indigo-500/30 transition-colors duration-300">
+            <aside className="w-[280px] bg-white/80 dark:bg-[#0a0a0c]/90 backdrop-blur-3xl flex-col hidden md:flex border-r border-slate-200 dark:border-white/5 shadow-2xl z-20 relative transition-colors duration-300 text-left">
                 <div className="absolute top-0 left-0 w-full h-64 bg-indigo-600/10 dark:bg-indigo-600/5 blur-[80px] pointer-events-none"></div>
 
                 <div className="p-8 relative z-10 flex items-center justify-between">
@@ -91,7 +91,7 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
                     })}
                 </nav>
 
-                <div className="p-5 border-t border-slate-200 dark:border-white/5 bg-slate-100/50 dark:bg-black/20 relative z-10 transition-colors duration-500">
+                <div className="p-5 border-t border-slate-200 dark:border-white/5 bg-slate-100/50 dark:bg-black/20 relative z-10 transition-colors duration-300">
                     <div className="flex items-center gap-3 px-3 py-2 mb-4">
                         <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-sm font-black text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 shadow-inner">
                             {tenantName.charAt(0).toUpperCase()}
