@@ -211,7 +211,7 @@ export default function TenantMaintenance() {
                 </motion.div>
 
                 {/* MAIN CONTENT GRID */}
-                <div className="flex-1 flex flex-col sm:grid sm:grid-cols-12 gap-4 sm:gap-5">
+                <div className="flex-1 flex flex-col sm:grid sm:grid-cols-12 gap-4 sm:gap-4">
                     {/* NEW REQUEST FORM */}
                     <motion.div variants={itemVariants} className="col-span-5 sm:col-span-4 relative rounded-xl sm:rounded-[2rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col min-h-[400px]">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
@@ -279,7 +279,7 @@ export default function TenantMaintenance() {
                     </motion.div>
 
                     {/* HISTORY TABLE & FILTERS (Right Side) */}
-                    <motion.div variants={itemVariants} className="col-span-7 sm:col-span-8 relative bg-white/60 dark:bg-[#121212]/60 rounded-xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 flex flex-col min-h-[500px] overflow-hidden">
+                    <motion.div variants={itemVariants} className="col-span-7 sm:col-span-8 relative bg-white/60 dark:bg-[#121212]/60 rounded-xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 flex flex-col min-h-[300px] sm:min-h-[500px] overflow-hidden">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
 
                         {/*-- Toolbar --*/}
@@ -317,7 +317,7 @@ export default function TenantMaintenance() {
                         </div>
 
                         {/*-- Table Body --*/}
-                        <div className="relative z-10 flex-1 overflow-y-auto overflow-x-auto [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden overscroll-contain">
+                        <div className="relative z-10 flex-1 overflow-y-auto overflow-x-auto overscroll-contain scrollbar-thin scrollbar-thumb-neutral-300 dark:scrollbar-thumb-neutral-700">
                             <table className="w-full text-left border-collapse min-w-[280px] sm:min-w-[700px]">
                                 <thead className="sticky top-0 z-20 bg-neutral-50/95 dark:bg-[#18181B]/95 backdrop-blur-md shadow-sm">
                                     <tr>
