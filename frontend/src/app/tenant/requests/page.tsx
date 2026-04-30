@@ -188,10 +188,10 @@ export default function TenantMaintenance() {
             <motion.div initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ duration: 0.5, ease: "easeInOut" }} className="absolute inset-0 z-[9999] bg-slate-50 dark:bg-[#050505] pointer-events-none" />
             <div className="absolute top-0 left-1/3 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-indigo-400/20 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none -z-10 dark:hidden"></div>
             <div className="absolute bottom-0 right-1/4 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] bg-cyan-400/20 rounded-full blur-[60px] sm:blur-[100px] pointer-events-none -z-10 dark:hidden"></div>
-            <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-[1600px] mx-auto w-full h-full flex flex-col min-h-0 gap-1 sm:gap-5 pt-3 px-3 sm:px-8 pb-2 sm:pb-4 relative z-10">
+            <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-[1600px] mx-auto w-full h-full flex flex-col min-h-0 gap-1 sm:gap-5 pt-0 px-3 sm:px-8 pb-2 sm:pb-4 relative z-10">
                 
                 {/* --- HEADER --- */}
-                <motion.header variants={itemVariants} className="shrink-0 flex flex-row items-center justify-between h-10 px-1 sm:px-0">
+                <motion.header variants={itemVariants} className="sticky top-0 z-40 shrink-0 flex flex-row items-center justify-between h-14 bg-slate-50/80 dark:bg-[#050505]/80 backdrop-blur-xl -mx-3 px-4 sm:mx-0 sm:px-0 mb-1 sm:mb-0 transition-all">
                     <div className="flex flex-row items-center gap-2 sm:gap-4 h-full">
                         <h1 className="text-xl sm:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white leading-none">
                             Facility Support
@@ -215,7 +215,7 @@ export default function TenantMaintenance() {
                     {/* NEW REQUEST FORM */}
                     <motion.div variants={itemVariants} className="col-span-5 sm:col-span-4 relative rounded-xl sm:rounded-[2rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col h-fit">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
-                        <div className="relative z-10 shrink-0 p-2 sm:p-5 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex justify-between items-center">
+                        <div className="relative z-10 shrink-0 p-1 sm:p-5 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex justify-between items-center">
                             <h2 className="text-sm sm:text-lg font-bold flex items-center gap-1 sm:gap-1.5"><svg className="w-2.5 h-2.5 sm:w-4 sm:h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg> File Request</h2>
                             <button onClick={handleClearForm} className="text-[9px] sm:text-xs font-bold uppercase tracking-widest text-neutral-500 hover:text-red-500 transition-colors">Clear</button>
                         </div>

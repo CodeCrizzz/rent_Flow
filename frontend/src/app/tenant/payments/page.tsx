@@ -175,9 +175,9 @@ export default function TenantPayments() {
             <div className="fixed bottom-0 right-1/4 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] bg-purple-400/20 rounded-full blur-[60px] sm:blur-[100px] pointer-events-none -z-10 dark:hidden"></div>
 
             {/* MAIN WRAPPER */}
-            <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-8xl mx-auto w-full flex flex-col gap-1 sm:gap-3 pt-3 sm:pt-6 px-2 sm:px-8 pb-12 sm:pb-20 lg:pb-32 relative z-10 min-h-full">
+            <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-8xl mx-auto w-full flex flex-col gap-1 sm:gap-3 pt-0 sm:pt-6 px-2 sm:px-8 pb-12 sm:pb-20 lg:pb-32 relative z-10 min-h-full">
                 {/* --- HEADER --- */}
-                <motion.header variants={itemVariants} className="shrink-0 flex flex-row items-center justify-between h-10 px-1 sm:px-0 mb-1 sm:mb-2">
+                <motion.header variants={itemVariants} className="sticky top-0 z-40 shrink-0 flex flex-row items-center justify-between h-14 bg-slate-50/80 dark:bg-[#050505]/80 backdrop-blur-xl -mx-2 px-4 sm:mx-0 sm:px-0 mb-1 sm:mb-2 transition-all">
                     <div className="flex flex-row items-center gap-3 sm:gap-4 h-full">
                         <h1 className="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white leading-none">
                             Payment Center

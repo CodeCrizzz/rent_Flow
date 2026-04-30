@@ -168,11 +168,11 @@ export default function TenantProfile() {
             <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-indigo-400/20 dark:bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none -z-10 mix-blend-multiply dark:mix-blend-screen"></div>
             <div className="fixed bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-400/20 dark:bg-purple-500/10 rounded-full blur-[100px] pointer-events-none -z-10 mix-blend-multiply dark:mix-blend-screen"></div>
             {/* --- MAIN WRAPPER --- */}
-            <div className="flex w-full flex-col items-center justify-start pt-3 px-3 sm:px-8 pb-6">
+            <div className="flex w-full flex-col items-center justify-start pt-0 px-3 sm:px-8 pb-6">
                 <motion.div initial="hidden" animate="visible" variants={containerVariants} className="w-full max-w-8xl flex flex-col gap-2 sm:gap-6 relative z-10">
                     
                     {/* --- HEADER --- */}
-                    <motion.header variants={itemVariants} className="shrink-0 flex flex-row items-center justify-between h-10 px-1 sm:px-0">
+                    <motion.header variants={itemVariants} className="sticky top-0 z-40 shrink-0 flex flex-row items-center justify-between h-14 bg-slate-50/80 dark:bg-[#050505]/80 backdrop-blur-xl -mx-3 px-4 sm:mx-0 sm:px-0 mb-1 sm:mb-0 transition-all">
                         <div className="flex flex-row items-center gap-2 sm:gap-4 h-full">
                             <h1 className="text-xl sm:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white leading-none">
                                 My Profile
