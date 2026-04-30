@@ -269,7 +269,7 @@ export default function TenantPayments() {
                 </div>            
 
                 {/* --- LAYER 3: FILTERS & TABLE SECTION --- */}
-                <motion.div variants={itemVariants} className="flex flex-col relative bg-white/60 dark:bg-[#121212]/60 rounded-xl sm:rounded-3xl border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden min-h-[650px] mb-4">
+                <motion.div variants={itemVariants} className="flex flex-col relative bg-white/60 dark:bg-[#121212]/60 rounded-xl sm:rounded-3xl border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden min-h-[400px] sm:min-h-[650px] mb-4">
                     <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                     {/* Title */}
                     <div className="relative z-10 shrink-0 p-4 sm:p-6 pb-0 sm:pb-2 flex items-center justify-between">
@@ -305,7 +305,7 @@ export default function TenantPayments() {
                     </div>
 
                     {/* Table Body */}
-                    <div className="relative z-10 w-full overflow-x-auto pr-1 pb-4 sm:pb-6">
+                    <div className="relative z-10 w-full overflow-auto max-h-[300px] sm:max-h-none pr-1 pb-4 sm:pb-6 scrollbar-thin scrollbar-thumb-indigo-500/20">
                         <table className="w-full text-left border-collapse min-w-[350px] sm:min-w-[800px] mb-4">
                             <thead className="sticky top-0 z-20 bg-neutral-50/95 dark:bg-[#18181B]/95 backdrop-blur-md shadow-sm">
                                 <tr>
