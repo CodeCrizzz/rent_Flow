@@ -203,10 +203,10 @@ export default function TenantMaintenance() {
                 <motion.div variants={itemVariants} className="shrink-0 relative rounded-xl sm:rounded-2xl bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-2 sm:p-4 overflow-hidden">
                     <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                     <div className="relative z-10 grid grid-cols-4 divide-x divide-neutral-200/50 dark:divide-white/10">
-                        <div className="px-1.5 sm:px-6 text-center sm:text-left"><p className="text-[5px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest">Total</p><p className="text-[9px] sm:text-2xl font-black font-mono leading-none mt-0.5 sm:mt-1">{summary.total}</p></div>
-                        <div className="px-1.5 sm:px-6 text-center sm:text-left"><p className="text-[5px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest">Pending</p><p className="text-[9px] sm:text-2xl font-black font-mono text-amber-500 leading-none mt-0.5 sm:mt-1">{summary.pending}</p></div>
-                        <div className="px-1.5 sm:px-6 text-center sm:text-left"><p className="text-[5px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest">In Progress</p><p className="text-[9px] sm:text-2xl font-black font-mono text-blue-500 leading-none mt-0.5 sm:mt-1">{summary.progress}</p></div>
-                        <div className="px-1.5 sm:px-6 text-center sm:text-left"><p className="text-[5px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest">Resolved</p><p className="text-[9px] sm:text-2xl font-black font-mono text-emerald-500 leading-none mt-0.5 sm:mt-1">{summary.resolved}</p></div>
+                        <div className="px-1.5 sm:px-6 text-center sm:text-left"><p className="text-[9px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest">Total</p><p className="text-lg sm:text-3xl font-black font-mono leading-none mt-0.5 sm:mt-1">{summary.total}</p></div>
+                        <div className="px-1.5 sm:px-6 text-center sm:text-left"><p className="text-[9px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest">Pending</p><p className="text-lg sm:text-3xl font-black font-mono text-amber-500 leading-none mt-0.5 sm:mt-1">{summary.pending}</p></div>
+                        <div className="px-1.5 sm:px-6 text-center sm:text-left"><p className="text-[9px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest">In Progress</p><p className="text-lg sm:text-3xl font-black font-mono text-blue-500 leading-none mt-0.5 sm:mt-1">{summary.progress}</p></div>
+                        <div className="px-1.5 sm:px-6 text-center sm:text-left"><p className="text-[9px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest">Resolved</p><p className="text-lg sm:text-3xl font-black font-mono text-emerald-500 leading-none mt-0.5 sm:mt-1">{summary.resolved}</p></div>
                     </div>
                 </motion.div>
 
@@ -216,22 +216,22 @@ export default function TenantMaintenance() {
                     <motion.div variants={itemVariants} className="col-span-5 sm:col-span-4 relative rounded-xl sm:rounded-[2rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col min-h-[400px]">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                         <div className="relative z-10 shrink-0 p-2 sm:p-5 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex justify-between items-center">
-                            <h2 className="text-[8px] sm:text-base font-bold flex items-center gap-1 sm:gap-1.5"><svg className="w-2.5 h-2.5 sm:w-4 sm:h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg> File Request</h2>
-                            <button onClick={handleClearForm} className="text-[5px] sm:text-[10px] font-bold uppercase tracking-widest text-neutral-500 hover:text-red-500 transition-colors">Clear</button>
+                            <h2 className="text-sm sm:text-lg font-bold flex items-center gap-1 sm:gap-1.5"><svg className="w-2.5 h-2.5 sm:w-4 sm:h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg> File Request</h2>
+                            <button onClick={handleClearForm} className="text-[9px] sm:text-xs font-bold uppercase tracking-widest text-neutral-500 hover:text-red-500 transition-colors">Clear</button>
                         </div>
 
                         <div className="relative z-10 flex-1 overflow-y-auto p-1.5 sm:p-5 [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden overscroll-contain">
                             <form id="maintenance-form" onSubmit={handleSubmit} className="flex flex-col gap-1.5 sm:gap-4">
-                                {formError && <div className="p-1 sm:p-2.5 bg-red-500/10 rounded text-red-500 text-[5px] sm:text-xs font-bold">{formError}</div>}
+                                {formError && <div className="p-1 sm:p-2.5 bg-red-500/10 rounded text-red-500 text-[10px] sm:text-sm font-bold">{formError}</div>}
                                 
                                 <div>
-                                    <label className="block text-[4px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest mb-0.5 sm:mb-1 ml-1">Issue Title</label>
-                                    <input type="text" required placeholder="E.g. Leaking Faucet" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1.5 sm:px-3 py-1 sm:py-2.5 text-[6px] sm:text-sm font-bold focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm text-neutral-900 dark:text-white" />
+                                    <label className="block text-[8px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest mb-0.5 sm:mb-1 ml-1">Issue Title</label>
+                                    <input type="text" required placeholder="E.g. Leaking Faucet" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1.5 sm:px-3 py-1 sm:py-2.5 text-xs sm:text-sm font-bold focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm text-neutral-900 dark:text-white" />
                                 </div>
                                 <div className="grid grid-cols-2 gap-1.5 sm:gap-4">
                                     <div>
-                                        <label className="block text-[4px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest mb-0.5 sm:mb-1 ml-1">Category</label>
-                                        <select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-3 py-1 sm:py-2.5 text-[6px] sm:text-sm font-bold focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm cursor-pointer text-neutral-900 dark:text-white">
+                                        <label className="block text-[8px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest mb-0.5 sm:mb-1 ml-1">Category</label>
+                                        <select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-3 py-1 sm:py-2.5 text-xs sm:text-sm font-bold focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm cursor-pointer text-neutral-900 dark:text-white">
                                             <option value="Plumbing" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Plumbing</option>
                                             <option value="Electrical" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Electrical</option>
                                             <option value="Furniture" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Furniture</option>
@@ -240,8 +240,8 @@ export default function TenantMaintenance() {
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="block text-[4px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest mb-0.5 sm:mb-1 ml-1">Priority</label>
-                                        <select value={priority} onChange={(e) => setPriority(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-3 py-1 sm:py-2.5 text-[6px] sm:text-sm font-bold focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm cursor-pointer text-neutral-900 dark:text-white">
+                                        <label className="block text-[8px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest mb-0.5 sm:mb-1 ml-1">Priority</label>
+                                        <select value={priority} onChange={(e) => setPriority(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-3 py-1 sm:py-2.5 text-xs sm:text-sm font-bold focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm cursor-pointer text-neutral-900 dark:text-white">
                                             <option value="Low" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Low</option>
                                             <option value="Medium" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Medium</option>
                                             <option value="High" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">High</option>
@@ -250,19 +250,19 @@ export default function TenantMaintenance() {
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-[4px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest mb-0.5 sm:mb-1 ml-1">Description</label>
-                                    <textarea required rows={2} placeholder="Explain the issue..." value={description} onChange={(e) => setDescription(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1.5 sm:px-3 py-1 sm:py-2.5 text-[6px] sm:text-sm font-medium focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm resize-none text-neutral-900 dark:text-white" />
+                                    <label className="block text-[8px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest mb-0.5 sm:mb-1 ml-1">Description</label>
+                                    <textarea required rows={2} placeholder="Explain the issue..." value={description} onChange={(e) => setDescription(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1.5 sm:px-3 py-1 sm:py-2.5 text-xs sm:text-sm font-medium focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm resize-none text-neutral-900 dark:text-white" />
                                 </div>
                                 <div>
-                                    <label className="block text-[4px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest mb-0.5 sm:mb-1 ml-1">Pref. Schedule <span className="normal-case opacity-70">(Opt)</span></label>
-                                    <input type="text" placeholder="E.g. Tomorrow morning" value={schedule} onChange={(e) => setSchedule(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1.5 sm:px-3 py-1 sm:py-2.5 text-[6px] sm:text-sm font-medium focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm text-neutral-900 dark:text-white" />
+                                    <label className="block text-[8px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest mb-0.5 sm:mb-1 ml-1">Pref. Schedule <span className="normal-case opacity-70">(Opt)</span></label>
+                                    <input type="text" placeholder="E.g. Tomorrow morning" value={schedule} onChange={(e) => setSchedule(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1.5 sm:px-3 py-1 sm:py-2.5 text-xs sm:text-sm font-medium focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm text-neutral-900 dark:text-white" />
                                 </div>
                                 <div className="mt-0.5 sm:mt-1">
                                     <div className="w-full border-2 border-dashed border-neutral-200 dark:border-white/10 hover:border-indigo-400 rounded sm:rounded-xl p-1.5 sm:p-4 flex flex-col items-center cursor-pointer bg-neutral-50/50 dark:bg-white/[0.02] transition-colors" onClick={() => fileInputRef.current?.click()}>
                                         {imageFile ? (
-                                            <span className="text-[5px] sm:text-[10px] font-bold text-indigo-500 truncate px-1">{imageFile.name}</span>
+                                            <span className="text-[9px] sm:text-xs font-bold text-indigo-500 truncate px-1">{imageFile.name}</span>
                                         ) : (
-                                            <span className="text-[5px] sm:text-[10px] font-bold text-neutral-400 flex items-center gap-1 sm:gap-1.5"><svg className="w-2.5 h-2.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg> Attach Image (Max 5MB)</span>
+                                            <span className="text-[9px] sm:text-xs font-bold text-neutral-400 flex items-center gap-1 sm:gap-1.5"><svg className="w-2.5 h-2.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg> Attach Image (Max 5MB)</span>
                                         )}
                                         <input ref={fileInputRef} type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
                                     </div>
@@ -271,7 +271,7 @@ export default function TenantMaintenance() {
                         </div>
                         
                         <div className="relative z-10 shrink-0 p-1.5 sm:p-5 border-t border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md">
-                            <button type="submit" form="maintenance-form" disabled={isSubmitting} className={`w-full py-1 sm:py-3 text-[6px] sm:text-xs font-bold uppercase tracking-widest rounded sm:rounded-xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 ${isSubmitting ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-400 cursor-wait' : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20 active:scale-95'}`}>
+                            <button type="submit" form="maintenance-form" disabled={isSubmitting} className={`w-full py-1 sm:py-3 text-[10px] sm:text-sm font-bold uppercase tracking-widest rounded sm:rounded-xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 ${isSubmitting ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-400 cursor-wait' : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20 active:scale-95'}`}>
                                 {isSubmitting && <div className="w-2 h-2 sm:w-4 sm:h-4 border-2 border-current/30 border-t-current rounded-full animate-spin"></div>}
                                 {isSubmitting ? 'Submitting...' : 'Submit Request'}
                             </button>
@@ -287,10 +287,10 @@ export default function TenantMaintenance() {
                             
                             <div className="relative w-20 sm:w-48 h-6 sm:h-9 shrink-0 flex items-center">
                                 <svg className="absolute left-1.5 sm:left-2.5 w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-neutral-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                                <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full h-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl pl-5 sm:pl-8 pr-1.5 sm:pr-2 text-[5px] sm:text-xs outline-none focus:ring-2 focus:ring-indigo-500/50 text-neutral-900 dark:text-white m-0" />
+                                <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full h-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl pl-5 sm:pl-8 pr-1.5 sm:pr-2 text-[10px] sm:text-sm outline-none focus:ring-2 focus:ring-indigo-500/50 text-neutral-900 dark:text-white m-0" />
                             </div>
                             
-                            <select value={filterStatus} onChange={(e) => { setFilterStatus(e.target.value); setCurrentPage(1); }} className="h-6 sm:h-9 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-2 text-[5px] sm:text-xs outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
+                            <select value={filterStatus} onChange={(e) => { setFilterStatus(e.target.value); setCurrentPage(1); }} className="h-6 sm:h-9 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-2 text-[10px] sm:text-sm outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
                                 <option value="All" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Status</option>
                                 <option value="Pending" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Pending</option>
                                 <option value="In Progress" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">In Progress</option>
@@ -298,7 +298,7 @@ export default function TenantMaintenance() {
                                 <option value="Cancelled" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Cancelled</option>
                             </select>
                             
-                            <select value={filterCategory} onChange={(e) => { setFilterCategory(e.target.value); setCurrentPage(1); }} className="h-6 sm:h-9 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-2 text-[5px] sm:text-xs outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
+                            <select value={filterCategory} onChange={(e) => { setFilterCategory(e.target.value); setCurrentPage(1); }} className="h-6 sm:h-9 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-2 text-[10px] sm:text-sm outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
                                 <option value="All" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Category</option>
                                 <option value="Plumbing" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Plumbing</option>
                                 <option value="Electrical" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Electrical</option>
@@ -308,7 +308,7 @@ export default function TenantMaintenance() {
                             </select>
 
                             <div className="ml-auto flex items-center shrink-0">
-                                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="h-6 sm:h-9 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-2 text-[5px] sm:text-xs outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
+                                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="h-6 sm:h-9 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-2 text-[10px] sm:text-sm outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
                                     <option value="date_desc" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Newest</option>
                                     <option value="date_asc" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Oldest</option>
                                     <option value="priority_desc" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Priority</option>
@@ -321,34 +321,34 @@ export default function TenantMaintenance() {
                             <table className="w-full text-left border-collapse min-w-[280px] sm:min-w-[700px]">
                                 <thead className="sticky top-0 z-20 bg-neutral-50/95 dark:bg-[#18181B]/95 backdrop-blur-md shadow-sm">
                                     <tr>
-                                        <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[4px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest">ID / Date</th>
-                                        <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[4px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest">Issue</th>
-                                        <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[4px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center">Priority</th>
-                                        <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[4px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-center">Status</th>
-                                        <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[4px] sm:text-[10px] font-bold text-neutral-400 uppercase tracking-widest text-right">Action</th>
+                                        <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[8px] sm:text-xs font-bold text-neutral-400 uppercase tracking-widest">ID / Date</th>
+                                        <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[8px] sm:text-xs font-bold text-neutral-400 uppercase tracking-widest">Issue</th>
+                                        <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[8px] sm:text-xs font-bold text-neutral-400 uppercase tracking-widest text-center">Priority</th>
+                                        <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[8px] sm:text-xs font-bold text-neutral-400 uppercase tracking-widest text-center">Status</th>
+                                        <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[8px] sm:text-xs font-bold text-neutral-400 uppercase tracking-widest text-right">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-neutral-200/30 dark:divide-white/5">
                                     {isLoading ? (
                                         <tr><td colSpan={5} className="px-4 py-8 sm:py-20 text-center"><div className="w-4 h-4 sm:w-10 sm:h-10 mx-auto border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin"></div></td></tr>
                                     ) : paginatedRequests.length === 0 ? (
-                                        <tr><td colSpan={5} className="px-4 py-8 sm:py-20 text-center text-neutral-500 text-[6px] sm:text-sm">No requests found.</td></tr>
+                                        <tr><td colSpan={5} className="px-4 py-8 sm:py-20 text-center text-neutral-500 text-xs sm:text-sm">No requests found.</td></tr>
                                     ) : (
                                         paginatedRequests.map((r) => (
                                             <motion.tr key={r.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="group hover:bg-white/40 dark:hover:bg-white/[0.02] transition-all duration-300">
                                                 <td className="px-1.5 py-1.5 sm:px-4 sm:py-3 align-middle">
-                                                    <p className="font-bold text-[5px] sm:text-xs text-neutral-900 dark:text-white">#{r.id.toString().padStart(4, '0')}</p>
-                                                    <p className="text-[4px] sm:text-[10px] font-mono text-neutral-400 mt-0.5">{formatDate(r.created_at)}</p>
+                                                    <p className="font-bold text-[10px] sm:text-sm text-neutral-900 dark:text-white">#{r.id.toString().padStart(4, '0')}</p>
+                                                    <p className="text-[8px] sm:text-xs font-mono text-neutral-400 mt-0.5">{formatDate(r.created_at)}</p>
                                                 </td>
                                                 <td className="px-1.5 py-1.5 sm:px-4 sm:py-3 align-middle min-w-0">
-                                                    <p className="text-[5px] sm:text-sm font-bold truncate max-w-[60px] sm:max-w-[200px] text-neutral-900 dark:text-white" title={r.title}>{r.title}</p>
-                                                    <p className="text-[4px] sm:text-[10px] text-neutral-500 mt-0.5">{r.category}</p>
+                                                    <p className="text-xs sm:text-base font-bold truncate max-w-[60px] sm:max-w-[200px] text-neutral-900 dark:text-white" title={r.title}>{r.title}</p>
+                                                    <p className="text-[8px] sm:text-xs text-neutral-500 mt-0.5">{r.category}</p>
                                                 </td>
                                                 <td className="px-1.5 py-1.5 sm:px-4 sm:py-3 align-middle text-center">
-                                                    <span className={`text-[5px] sm:text-xs font-bold ${getPriorityColor(r.priority)}`}>{r.priority}</span>
+                                                    <span className={`text-[10px] sm:text-sm font-bold ${getPriorityColor(r.priority)}`}>{r.priority}</span>
                                                 </td>
                                                 <td className="px-1.5 py-1.5 sm:px-4 sm:py-3 align-middle text-center">
-                                                    <span className={`inline-flex items-center px-1 py-0.5 sm:px-2.5 sm:py-1 text-[4px] sm:text-[10px] font-bold uppercase tracking-widest rounded-full border ${getStatusColor(r.status)}`}>{r.status}</span>
+                                                    <span className={`inline-flex items-center px-1 py-0.5 sm:px-2.5 sm:py-1 text-[8px] sm:text-xs font-bold uppercase tracking-widest rounded-full border ${getStatusColor(r.status)}`}>{r.status}</span>
                                                 </td>
                                                 <td className="px-1.5 py-1.5 sm:px-4 sm:py-3 align-middle text-right">
                                                     <button onClick={() => setSelectedRequest(r)} className="p-0.5 sm:p-1.5 rounded bg-neutral-100 dark:bg-white/5 hover:text-indigo-600 transition-colors text-neutral-500" title="View Details">
@@ -364,10 +364,10 @@ export default function TenantMaintenance() {
 
                         {/* Pagination Footer */}
                         <div className="relative z-10 shrink-0 p-1 sm:p-3 border-t border-neutral-200/50 dark:border-white/10 bg-white/20 dark:bg-black/10 flex justify-between items-center">
-                            <span className="text-[5px] sm:text-[10px] font-bold text-neutral-500 uppercase tracking-widest ml-1 sm:ml-2">Page {currentPage} of {totalPages || 1}</span>
+                            <span className="text-[9px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest ml-1 sm:ml-2">Page {currentPage} of {totalPages || 1}</span>
                             <div className="flex gap-1 sm:gap-2">
-                                <button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1} className="px-1 py-0.5 sm:px-2 sm:py-1 bg-white dark:bg-white/5 rounded border border-neutral-200 dark:border-white/10 text-[5px] sm:text-[11px] disabled:opacity-50 text-neutral-900 dark:text-white">Prev</button>
-                                <button onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages || totalPages === 0} className="px-1 py-0.5 sm:px-2 sm:py-1 bg-white dark:bg-white/5 rounded border border-neutral-200 dark:border-white/10 text-[5px] sm:text-[11px] disabled:opacity-50 text-neutral-900 dark:text-white">Next</button>
+                                <button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1} className="px-1 py-0.5 sm:px-2 sm:py-1 bg-white dark:bg-white/5 rounded border border-neutral-200 dark:border-white/10 text-[10px] sm:text-xs disabled:opacity-50 text-neutral-900 dark:text-white">Prev</button>
+                                <button onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages || totalPages === 0} className="px-1 py-0.5 sm:px-2 sm:py-1 bg-white dark:bg-white/5 rounded border border-neutral-200 dark:border-white/10 text-[10px] sm:text-xs disabled:opacity-50 text-neutral-900 dark:text-white">Next</button>
                             </div>
                         </div>
                     </motion.div>
@@ -393,7 +393,7 @@ export default function TenantMaintenance() {
                                 <div className="p-4 sm:p-6 border-b border-neutral-100 dark:border-white/5 flex justify-between items-center bg-neutral-50/50 dark:bg-white/[0.02] shrink-0">
                                     <div>
                                         <h2 className="text-sm sm:text-lg font-bold flex items-center gap-2 text-neutral-900 dark:text-white">Request #{selectedRequest.id}</h2>
-                                        <span className={`inline-flex mt-1 px-1.5 py-0.5 sm:px-2.5 sm:py-1 text-[6px] sm:text-[8px] font-bold uppercase tracking-widest rounded-full border ${getStatusColor(selectedRequest.status)}`}>{selectedRequest.status}</span>
+                                        <span className={`inline-flex mt-1 px-1.5 py-0.5 sm:px-2.5 sm:py-1 text-[9px] sm:text-xs font-bold uppercase tracking-widest rounded-full border ${getStatusColor(selectedRequest.status)}`}>{selectedRequest.status}</span>
                                     </div>
                                     <button onClick={() => setSelectedRequest(null)} className="p-1.5 rounded-full hover:bg-neutral-200 dark:hover:bg-white/10 text-neutral-500 transition-colors">
                                         <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -403,12 +403,12 @@ export default function TenantMaintenance() {
                                     <div>
                                         <h3 className="text-base sm:text-xl font-bold text-neutral-900 dark:text-white">{selectedRequest.title}</h3>
                                         <div className="flex items-center gap-2 sm:gap-3 mt-1.5">
-                                            <span className="text-[8px] sm:text-[10px] font-bold text-neutral-500 bg-neutral-100 dark:bg-white/5 px-2 py-0.5 rounded">{selectedRequest.category}</span>
-                                            <span className={`text-[8px] sm:text-[10px] font-bold ${getPriorityColor(selectedRequest.priority)}`}>{selectedRequest.priority} Priority</span>
+                                            <span className="text-[10px] sm:text-xs font-bold text-neutral-500 bg-neutral-100 dark:bg-white/5 px-2 py-0.5 rounded">{selectedRequest.category}</span>
+                                            <span className={`text-[10px] sm:text-xs font-bold ${getPriorityColor(selectedRequest.priority)}`}>{selectedRequest.priority} Priority</span>
                                         </div>
                                     </div>
-                                    <div className="bg-neutral-50 dark:bg-black/20 p-3 sm:p-4 rounded-xl sm:rounded-2xl text-[10px] sm:text-sm leading-relaxed border border-neutral-100 dark:border-white/5 text-neutral-900 dark:text-white">
-                                        <p className="font-semibold text-neutral-500 text-[7px] sm:text-[10px] uppercase tracking-widest mb-1">Description</p>
+                                    <div className="bg-neutral-50 dark:bg-black/20 p-3 sm:p-4 rounded-xl sm:rounded-2xl text-xs sm:text-base leading-relaxed border border-neutral-100 dark:border-white/5 text-neutral-900 dark:text-white">
+                                        <p className="font-semibold text-neutral-500 text-[10px] sm:text-xs uppercase tracking-widest mb-1">Description</p>
                                         {selectedRequest.description}
                                     </div>
                                     
@@ -416,36 +416,36 @@ export default function TenantMaintenance() {
                                     <div className="border-l-2 border-indigo-500/30 ml-2 pl-3 sm:pl-4 py-1 space-y-3 sm:space-y-4">
                                         <div className="relative">
                                             <div className="absolute -left-[15px] sm:-left-[21px] top-1 w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-indigo-500"></div>
-                                            <p className="text-[7px] sm:text-[9px] font-bold text-neutral-400">{formatDate(selectedRequest.created_at)}</p>
-                                            <p className="text-[9px] sm:text-[10px] font-semibold text-neutral-900 dark:text-white">Request Submitted</p>
+                                            <p className="text-[10px] sm:text-xs font-bold text-neutral-400">{formatDate(selectedRequest.created_at)}</p>
+                                            <p className="text-xs sm:text-sm font-semibold text-neutral-900 dark:text-white">Request Submitted</p>
                                         </div>
                                         {selectedRequest.status !== 'Pending' && selectedRequest.status !== 'Cancelled' && (
                                             <div className="relative">
                                                 <div className="absolute -left-[15px] sm:-left-[21px] top-1 w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-blue-500"></div>
-                                                <p className="text-[7px] sm:text-[9px] font-bold text-neutral-400">Admin</p>
-                                                <p className="text-[9px] sm:text-[10px] font-semibold text-blue-500 dark:text-blue-400">In Progress</p>
-                                                {selectedRequest.admin_notes && <p className="text-[8px] sm:text-[9px] italic text-neutral-500 mt-0.5 sm:mt-1">"{selectedRequest.admin_notes}"</p>}
+                                                <p className="text-[10px] sm:text-xs font-bold text-neutral-400">Admin</p>
+                                                <p className="text-xs sm:text-sm font-semibold text-blue-500 dark:text-blue-400">In Progress</p>
+                                                {selectedRequest.admin_notes && <p className="text-[10px] sm:text-xs italic text-neutral-500 mt-0.5 sm:mt-1">"{selectedRequest.admin_notes}"</p>}
                                             </div>
                                         )}
                                         {selectedRequest.status === 'Resolved' && (
                                             <div className="relative">
                                                 <div className="absolute -left-[15px] sm:-left-[21px] top-1 w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-emerald-500"></div>
-                                                <p className="text-[7px] sm:text-[9px] font-bold text-neutral-400">Admin</p>
-                                                <p className="text-[9px] sm:text-[10px] font-semibold text-emerald-500">Resolved</p>
+                                                <p className="text-[10px] sm:text-xs font-bold text-neutral-400">Admin</p>
+                                                <p className="text-xs sm:text-sm font-semibold text-emerald-500">Resolved</p>
                                             </div>
                                         )}
                                     </div>
 
                                     {selectedRequest.image_url && (
                                         <div>
-                                            <p className="font-semibold text-neutral-500 text-[7px] sm:text-[10px] uppercase tracking-widest mb-1.5 sm:mb-2">Attached Image</p>
+                                            <p className="font-semibold text-neutral-500 text-[10px] sm:text-xs uppercase tracking-widest mb-1.5 sm:mb-2">Attached Image</p>
                                             <img onClick={() => setViewImageUrl(selectedRequest.image_url || null)} src={selectedRequest.image_url} alt="Proof" className="w-20 sm:w-32 h-20 sm:h-32 object-cover rounded-xl cursor-zoom-in border border-neutral-200 dark:border-white/10 hover:opacity-80 transition-opacity" />
                                         </div>
                                     )}
                                 </div>
                                 {selectedRequest.status === 'Pending' && (
                                     <div className="p-3 sm:p-5 border-t border-neutral-100 dark:border-white/5 shrink-0 bg-neutral-50/50 dark:bg-white/[0.02]">
-                                        <button onClick={() => handleCancelRequest(selectedRequest.id)} className="w-full py-2 sm:py-3 text-[9px] sm:text-xs font-bold uppercase tracking-widest rounded-lg sm:rounded-xl bg-red-500/10 text-red-600 hover:bg-red-500/20 transition-colors border border-red-500/20">
+                                        <button onClick={() => handleCancelRequest(selectedRequest.id)} className="w-full py-2 sm:py-3 text-xs sm:text-sm font-bold uppercase tracking-widest rounded-lg sm:rounded-xl bg-red-500/10 text-red-600 hover:bg-red-500/20 transition-colors border border-red-500/20">
                                             Cancel Request
                                         </button>
                                     </div>
