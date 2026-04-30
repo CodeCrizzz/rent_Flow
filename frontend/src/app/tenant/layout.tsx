@@ -113,10 +113,10 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
 
             <main className="flex-1 flex flex-col relative h-[100dvh] overflow-hidden">
                 {/* Mobile Theme Toggle */}
-                <div className="absolute top-4 right-4 z-50 md:hidden scale-90">
+                <div className="absolute top-3 right-4 z-50 md:hidden scale-90">
                     <ThemeToggle />
                 </div>
-                <div className={`flex-1 flex flex-col ${pathname === '/tenant/chat' ? 'overflow-hidden p-0 pb-20 md:pb-0' : 'overflow-y-auto p-0 pb-20 md:pb-0'} relative z-0 dark:bg-[#050505] scrollbar-track-transparent ${pathname === '/tenant/profile' ? 'no-scrollbar' : 'scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-bg-slate-100'}`}>
+                <div className={`flex-1 flex flex-col ${pathname === '/tenant/chat' ? 'overflow-hidden p-0 pb-20 md:pb-0' : 'overflow-y-auto p-0 pb-20 md:pb-0'} relative z-0 dark:bg-[#050505] scrollbar-track-transparent ${(pathname === '/tenant/profile' || pathname === '/tenant/requests') ? 'no-scrollbar' : 'scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-bg-slate-100'}`}>
                     {children}
                 </div>
 

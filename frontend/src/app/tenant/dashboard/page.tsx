@@ -96,7 +96,7 @@ export default function TenantDashboard() {
             <div className="absolute top-0 left-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-indigo-400/20 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none -z-10 mix-blend-multiply dark:hidden"></div>
             <div className="absolute bottom-0 right-1/4 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] bg-purple-400/20 rounded-full blur-[60px] sm:blur-[100px] pointer-events-none -z-10 mix-blend-multiply dark:hidden"></div>
             {/* Main Wrapper */}
-            <div className="max-w-8xl mx-auto w-full h-full flex flex-col gap-2.5 sm:gap-6 pt-6 px-3 sm:px-8 pb-3 sm:pb-6 relative z-10">  
+            <div className="max-w-8xl mx-auto w-full h-full flex flex-col gap-1.5 sm:gap-6 pt-3 px-3 sm:px-8 pb-3 sm:pb-6 relative z-10">  
                 {/* --- HEADER --- */}
                 <header className={`shrink-0 flex flex-row items-center justify-between h-10 px-1 sm:px-0 transition-all duration-300 ease-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
                     <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white drop-shadow-sm leading-none">
