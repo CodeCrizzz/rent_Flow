@@ -280,19 +280,19 @@ export default function TenantPayments() {
                     </div>
 
                     {/* Toolbar */}
-                    <div className="relative z-10 shrink-0 p-2 sm:p-4 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex flex-wrap sm:flex-nowrap items-center gap-1.5 sm:gap-3 overflow-x-auto">
-                        <div className="relative w-full sm:w-64 h-8 sm:h-12 shrink-0 flex items-center">
+                    <div className="relative z-10 shrink-0 p-2 sm:p-4 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex flex-nowrap items-center gap-1.5 sm:gap-3 overflow-x-auto [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                        <div className="relative w-32 sm:w-64 h-8 sm:h-12 shrink-0 flex items-center">
                             <svg className="absolute left-2.5 sm:left-4 w-3.5 h-3.5 sm:w-5 sm:h-5 text-neutral-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                             <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full h-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-lg sm:rounded-xl pl-8 sm:pl-12 pr-2.5 sm:pr-4 text-[10px] sm:text-sm outline-none focus:ring-2 focus:ring-indigo-500/50 text-neutral-900 dark:text-white m-0" />
                         </div>
-                        <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="w-full sm:w-auto h-8 sm:h-12 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-lg sm:rounded-xl px-1.5 sm:px-3 text-[10px] sm:text-sm outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
+                        <select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value)} className="w-24 sm:w-auto h-8 sm:h-12 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-lg sm:rounded-xl px-1.5 sm:px-3 text-[10px] sm:text-sm outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
                             <option value="All" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">All Status</option>
                             <option value="Paid" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Paid</option>
                             <option value="Pending" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Pending</option>
                             <option value="Rejected" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Rejected</option>
                         </select>
-                        <div className="ml-auto w-full sm:w-auto flex items-center gap-1.5 sm:gap-3 shrink-0">
-                            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="flex-1 sm:flex-none h-8 sm:h-12 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-lg sm:rounded-xl px-1.5 sm:px-3 text-[10px] sm:text-sm outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
+                        <div className="ml-0 sm:ml-auto w-auto flex items-center gap-1.5 sm:gap-3 shrink-0">
+                            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="w-24 sm:w-auto h-8 sm:h-12 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-lg sm:rounded-xl px-1.5 sm:px-3 text-[10px] sm:text-sm outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
                                 <option value="date_desc" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Newest</option>
                                 <option value="date_asc" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Oldest</option>
                                 <option value="amount_desc" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">High-Low</option>
