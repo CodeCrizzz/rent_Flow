@@ -64,7 +64,6 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
                         </div>
                         <span className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">Rent<span className="text-indigo-600 dark:text-indigo-400">Flow</span></span>
                     </div>
-                    <ThemeToggle />
                 </div>
 
                 <nav className="flex-1 px-4 space-y-3 mt-6 relative z-10">
@@ -103,6 +102,7 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
                                 Resident
                             </p>
                         </div>
+                        <ThemeToggle />
                     </div>
                     <button onClick={handleLogout} className="flex items-center justify-center gap-2 w-full px-4 py-4 rounded-xl text-xs font-black uppercase tracking-widest text-slate-600 dark:text-zinc-500 bg-slate-200/50 dark:bg-zinc-900/50 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 border border-transparent hover:border-red-200 dark:hover:border-red-500/20 transition-all duration-300 group">
                         Sign Out
