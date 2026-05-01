@@ -177,7 +177,7 @@ export default function TenantPayments() {
             {/* MAIN WRAPPER */}
             <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-8xl mx-auto w-full flex flex-col gap-1 sm:gap-3 pt-0 sm:pt-6 px-2 sm:px-8 pb-12 sm:pb-20 lg:pb-32 relative z-10 min-h-full">
                 {/* --- HEADER --- */}
-                <motion.header variants={itemVariants} className="sticky top-0 z-40 shrink-0 flex flex-row items-center justify-between h-14 bg-slate-50/80 dark:bg-[#050505]/80 backdrop-blur-xl -mx-2 px-4 sm:mx-0 sm:px-0 mb-1 sm:mb-2 transition-all">
+                <motion.header variants={itemVariants} className="sticky top-0 z-40 shrink-0 flex flex-row items-center justify-between h-14 bg-linear-to-b from-white/80 to-white/40 dark:from-[#050505]/80 dark:to-[#050505]/40 backdrop-blur-2xl -mx-2 px-4 sm:mx-0 sm:px-0 mb-1 sm:mb-2 transition-all">
                     <div className="flex flex-row items-center gap-3 sm:gap-4 h-full">
                         <h1 className="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white leading-none">
                             Payment Center
@@ -186,7 +186,7 @@ export default function TenantPayments() {
                 </motion.header>
 
                 {/* --- LAYER 1: CURRENT BILL --- */}
-                <motion.div variants={itemVariants} className="shrink-0 relative rounded-xl sm:rounded-[1.7rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col p-6 sm:p-8 lg:p-8">
+                <motion.div variants={itemVariants} className="shrink-0 relative rounded-xl sm:rounded-[1.7rem] bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col p-6 sm:p-8 lg:p-8">
                     <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                     {currentBill.status === 'Overdue' && <div className="absolute top-0 left-0 w-full h-1 bg-red-500 z-20 shadow-[0_0_20px_rgba(239,68,68,0.8)]"></div>}
 
@@ -239,7 +239,7 @@ export default function TenantPayments() {
                 <div className="shrink-0 grid grid-cols-2 gap-2 sm:gap-4">
                     
                     {/* BREAKDOWN CARD */}
-                    <motion.div variants={itemVariants} className="relative rounded-xl sm:rounded-[1.5rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-3 sm:p-6 lg:p-8 flex flex-col justify-center">
+                    <motion.div variants={itemVariants} className="relative rounded-xl sm:rounded-[1.5rem] bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-3 sm:p-6 lg:p-8 flex flex-col justify-center">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                         <h3 className="relative z-10 text-[10px] sm:text-base font-bold text-neutral-900 dark:text-white flex items-center gap-1 sm:gap-1.5 mb-1 sm:mb-4">
                             <svg className="w-3 h-3 sm:w-5 sm:h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2-2v14a2 2 0 002 2z"></path></svg> Breakdown
@@ -255,7 +255,7 @@ export default function TenantPayments() {
                         </div>
                     </motion.div>
                     {/* SUMMARY CARD */}
-                    <motion.div variants={itemVariants} className="relative rounded-xl sm:rounded-[1.5rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-3 sm:p-6 lg:p-8 flex flex-col justify-center">
+                    <motion.div variants={itemVariants} className="relative rounded-xl sm:rounded-[1.5rem] bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-3 sm:p-6 lg:p-8 flex flex-col justify-center">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                         <h3 className="relative z-10 text-[10px] sm:text-base font-bold text-neutral-900 dark:text-white flex items-center gap-1 sm:gap-1.5 mb-1 sm:mb-4">
                             <svg className="w-3 h-3 sm:w-5 sm:h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg> Summary
@@ -269,7 +269,7 @@ export default function TenantPayments() {
                 </div>            
 
                 {/* --- LAYER 3: FILTERS & TABLE SECTION --- */}
-                <motion.div variants={itemVariants} className="flex flex-col relative bg-white/60 dark:bg-[#121212]/60 rounded-xl sm:rounded-3xl border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden min-h-[400px] sm:min-h-[650px] mb-4">
+                <motion.div variants={itemVariants} className="flex flex-col relative bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent rounded-xl sm:rounded-3xl border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden min-h-[400px] sm:min-h-[650px] mb-4">
                     <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                     {/* Title */}
                     <div className="relative z-10 shrink-0 p-4 sm:p-6 pb-0 sm:pb-2 flex items-center justify-between">
@@ -280,7 +280,7 @@ export default function TenantPayments() {
                     </div>
 
                     {/* Toolbar */}
-                    <div className="relative z-10 shrink-0 p-2 sm:p-4 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex flex-nowrap items-center gap-1.5 sm:gap-3 overflow-x-auto [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                    <div className="relative z-10 shrink-0 p-2 sm:p-4 border-b border-neutral-200/50 dark:border-white/10 bg-linear-to-b from-white/40 to-white/10 dark:from-white/[0.04] dark:to-transparent backdrop-blur-2xl flex flex-nowrap items-center gap-1.5 sm:gap-3 overflow-x-auto [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                         <div className="relative w-32 sm:w-64 h-8 sm:h-12 shrink-0 flex items-center">
                             <svg className="absolute left-2.5 sm:left-4 w-3.5 h-3.5 sm:w-5 sm:h-5 text-neutral-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                             <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full h-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-lg sm:rounded-xl pl-8 sm:pl-12 pr-2.5 sm:pr-4 text-[10px] sm:text-sm outline-none focus:ring-2 focus:ring-indigo-500/50 text-neutral-900 dark:text-white m-0" />
@@ -307,7 +307,7 @@ export default function TenantPayments() {
                     {/* Table Body */}
                     <div className="relative z-10 w-full overflow-auto max-h-[300px] sm:max-h-none pr-1 pb-4 sm:pb-6 scrollbar-thin scrollbar-thumb-indigo-500/20">
                         <table className="w-full text-left border-collapse min-w-[350px] sm:min-w-[800px] mb-4">
-                            <thead className="sticky top-0 z-20 bg-neutral-50/95 dark:bg-[#18181B]/95 backdrop-blur-md shadow-sm">
+                            <thead className="sticky top-0 z-20 bg-linear-to-b from-white/90 to-white/70 dark:from-[#121212]/90 dark:to-[#0a0a0a]/90 backdrop-blur-2xl shadow-sm">
                                 <tr>
                                     <th className="px-1.5 py-1.5 sm:px-4 sm:py-4 text-[7px] sm:text-[12px] font-bold text-neutral-400 uppercase tracking-widest leading-none">Date / Ref</th>
                                     <th className="px-1.5 py-1.5 sm:px-4 sm:py-4 text-[7px] sm:text-[12px] font-bold text-neutral-400 uppercase tracking-widest leading-none">Method & Desc</th>

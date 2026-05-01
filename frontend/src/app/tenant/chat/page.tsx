@@ -145,7 +145,7 @@ export default function TenantChat() {
                 >
                     
                     {/* 1. CHAT HEADER */}
-                    <div className="relative z-10 flex items-center justify-between pt-3 pb-3 px-4 sm:px-8 border-b border-slate-200/50 dark:border-white/10 bg-white/50 dark:bg-[#09090b]/50 backdrop-blur-xl shrink-0">
+                    <div className="relative z-10 flex items-center justify-between pt-3 pb-3 px-4 sm:px-8 border-b border-slate-200/50 dark:border-white/10 bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shrink-0">
                         <div className="flex items-center gap-4">
                             <div className="relative">
                                 <div className="w-14 h-14 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-blue-600 flex items-center justify-center text-white font-black text-2xl sm:text-xl shadow-lg shadow-indigo-500/30">
@@ -253,7 +253,7 @@ export default function TenantChat() {
                     </div>
 
                     {/* 3. SEND MESSAGE SECTION */}
-                    <div className="relative z-10 p-4 sm:p-6 bg-white/60 dark:bg-[#09090b]/80 border-t border-slate-200/50 dark:border-white/5 backdrop-blur-2xl shrink-0">
+                    <div className="relative z-10 p-4 sm:p-6 bg-white/60 dark:bg-[#121212]/60 border-t border-slate-200/50 dark:border-white/5 backdrop-blur-2xl shrink-0">
                         <form onSubmit={handleSend} className="flex gap-2 sm:gap-3 items-end max-w-4xl mx-auto relative">
                             
                             {/* Upload Attachment Button */}

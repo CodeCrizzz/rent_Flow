@@ -98,7 +98,7 @@ export default function TenantDashboard() {
             {/* Main Wrapper */}
             <div className="max-w-8xl mx-auto w-full h-full flex flex-col gap-1.5 sm:gap-6 pt-0 px-3 sm:px-8 pb-3 sm:pb-6 relative z-10">  
                 {/* --- HEADER --- */}
-                <header className={`sticky top-0 z-40 shrink-0 flex flex-row items-center justify-between h-14 bg-slate-50/80 dark:bg-[#050505]/80 backdrop-blur-xl -mx-3 px-4 sm:mx-0 sm:px-0 mb-1 sm:mb-0 transition-all duration-300 ease-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+                <header className={`sticky top-0 z-40 shrink-0 flex flex-row items-center justify-between h-14 bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl -mx-3 px-4 sm:mx-0 sm:px-0 mb-1 sm:mb-0 transition-all duration-300 ease-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
                     <h1 className="text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white drop-shadow-sm leading-none">
                         Welcome, {userName.split(' ')[0] || 'Resident'}
                     </h1>
@@ -142,7 +142,7 @@ export default function TenantDashboard() {
                     {/* SIDE CARDS */}
                     <div className="col-span-5 lg:col-span-4 flex flex-col gap-2.5 sm:gap-6">
                         {/* Status Card */}
-                        <div className="relative bg-white/60 dark:bg-[#121212]/60 p-3 sm:p-6 rounded-2xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-xl shadow-xl shadow-indigo-500/5 flex-1 flex flex-col justify-center overflow-hidden">
+                        <div className="relative bg-white/60 dark:bg-[#121212]/60 p-3 sm:p-6 rounded-2xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 flex-1 flex flex-col justify-center overflow-hidden">
                             <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                             <div className="relative z-10 flex items-center justify-between mb-1.5 sm:mb-4">
                                 <div className="p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20">
@@ -162,7 +162,7 @@ export default function TenantDashboard() {
                         </div>
 
                         {/* Messages Card */}
-                        <div className="relative bg-white/60 dark:bg-[#121212]/60 p-3 sm:p-6 rounded-2xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-xl shadow-xl shadow-indigo-500/5 flex-1 flex flex-col justify-center hover:bg-white/80 dark:hover:bg-[#181818]/80 hover:border-indigo-200 dark:hover:border-indigo-500/30 cursor-pointer group transition-all duration-300 overflow-hidden">
+                        <div className="relative bg-white/60 dark:bg-[#121212]/60 p-3 sm:p-6 rounded-2xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 flex-1 flex flex-col justify-center hover:bg-white/80 dark:hover:bg-[#181818]/80 hover:border-indigo-200 dark:hover:border-indigo-500/30 cursor-pointer group transition-all duration-300 overflow-hidden">
                             <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                             <div className="relative z-10 flex items-center justify-between mb-1.5 sm:mb-4">
                                 <div className="p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
@@ -184,7 +184,7 @@ export default function TenantDashboard() {
                 <div className={`flex flex-col relative bg-white/60 dark:bg-[#121212]/60 rounded-2xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden transition-all duration-300 ease-out delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                     <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                     
-                    <div className="relative z-10 shrink-0 p-3.5 sm:p-6 lg:px-8 border-b border-neutral-200/50 dark:border-white/10 bg-white/40 dark:bg-[#121212]/40 backdrop-blur-md flex justify-between items-center">
+                    <div className="relative z-10 shrink-0 p-3.5 sm:p-6 lg:px-8 border-b border-neutral-200/50 dark:border-white/10 bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl flex justify-between items-center">
                         <div>
                             <h2 className="text-base sm:text-lg font-bold leading-none">Recent Payments</h2>
                             <p className="text-[9px] sm:text-xs font-medium text-neutral-500 dark:text-neutral-400 mt-1 sm:mt-1.5">Your latest transactions.</p>
