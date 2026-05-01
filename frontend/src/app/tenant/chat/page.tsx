@@ -145,7 +145,7 @@ export default function TenantChat() {
                 >
                     
                     {/* 1. CHAT HEADER */}
-                    <div className="relative z-10 flex items-center justify-between pt-3 pb-3 px-4 sm:px-8 border-b border-slate-200/50 dark:border-white/10 bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shrink-0">
+                    <div className="relative z-10 flex items-center justify-between pt-3 pb-3 px-4 sm:px-8 border-b border-slate-200/50 dark:border-white/10 bg-linear-to-b from-white/80 to-white/40 dark:from-[#050505]/80 dark:to-[#050505]/40 backdrop-blur-2xl shrink-0">
                         <div className="flex items-center gap-4">
                             <div className="relative">
                                 <div className="w-14 h-14 sm:w-12 sm:h-12 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-blue-600 flex items-center justify-center text-white font-black text-2xl sm:text-xl shadow-lg shadow-indigo-500/30">
@@ -223,7 +223,7 @@ export default function TenantChat() {
                                                 <div className={`px-5 py-4 sm:py-3.5 text-base sm:text-[15px] leading-relaxed shadow-sm ${
                                                     msg.sender_type === 'tenant' 
                                                         ? 'bg-gradient-to-br from-blue-600 to-indigo-600 text-white rounded-2xl rounded-br-[4px]' 
-                                                        : 'bg-white dark:bg-[#1a1a1a] text-slate-800 dark:text-white rounded-2xl rounded-bl-[4px] border border-slate-100 dark:border-white/5'
+                                                        : 'bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.1] dark:to-white/[0.02] text-slate-800 dark:text-white rounded-2xl rounded-bl-[4px] border border-slate-100 dark:border-white/5'
                                                 }`}>
                                                     {msg.message}
                                                 </div>
@@ -253,7 +253,7 @@ export default function TenantChat() {
                     </div>
 
                     {/* 3. SEND MESSAGE SECTION */}
-                    <div className="relative z-10 p-4 sm:p-6 bg-white/60 dark:bg-[#121212]/60 border-t border-slate-200/50 dark:border-white/5 backdrop-blur-2xl shrink-0">
+                    <div className="relative z-10 p-4 sm:p-6 bg-linear-to-t from-white/80 to-white/40 dark:from-[#050505]/80 dark:to-[#050505]/40 border-t border-slate-200/50 dark:border-white/5 backdrop-blur-2xl shrink-0">
                         <form onSubmit={handleSend} className="flex gap-2 sm:gap-3 items-end max-w-4xl mx-auto relative">
                             
                             {/* Upload Attachment Button */}

@@ -191,7 +191,7 @@ export default function TenantMaintenance() {
             <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-[1600px] mx-auto w-full h-full flex flex-col min-h-0 gap-1 sm:gap-5 pt-0 px-3 sm:px-8 pb-2 sm:pb-4 relative z-10">
                 
                 {/* --- HEADER --- */}
-                <motion.header variants={itemVariants} className="sticky top-0 z-40 shrink-0 flex flex-row items-center justify-between h-14 bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl -mx-3 px-4 sm:mx-0 sm:px-0 mb-1 sm:mb-0 transition-all">
+                <motion.header variants={itemVariants} className="sticky top-0 z-40 shrink-0 flex flex-row items-center justify-between h-14 bg-linear-to-b from-white/80 to-white/40 dark:from-[#050505]/80 dark:to-[#050505]/40 backdrop-blur-2xl -mx-3 px-4 sm:mx-0 sm:px-0 mb-1 sm:mb-0 transition-all">
                     <div className="flex flex-row items-center gap-2 sm:gap-4 h-full">
                         <h1 className="text-xl sm:text-4xl font-extrabold tracking-tight bg-clip-text text-transparent bg-linear-to-r from-neutral-900 via-indigo-800 to-neutral-900 dark:from-white dark:via-indigo-200 dark:to-white leading-none">
                             Facility Support
@@ -200,7 +200,7 @@ export default function TenantMaintenance() {
                 </motion.header>
 
                 {/* --- SUMMARY DASHBOARD --- */}
-                <motion.div variants={itemVariants} className="shrink-0 relative rounded-xl sm:rounded-2xl bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-2 sm:p-4 overflow-hidden">
+                <motion.div variants={itemVariants} className="shrink-0 relative rounded-xl sm:rounded-2xl bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-2 sm:p-4 overflow-hidden">
                     <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
                     <div className="relative z-10 grid grid-cols-4 divide-x divide-neutral-200/50 dark:divide-white/10">
                         <div className="px-1.5 sm:px-6 text-center sm:text-left"><p className="text-[9px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest">Total</p><p className="text-lg sm:text-3xl font-black font-mono leading-none mt-0.5 sm:mt-1">{summary.total}</p></div>
@@ -213,9 +213,9 @@ export default function TenantMaintenance() {
                 {/* MAIN CONTENT GRID */}
                 <div className="flex-1 flex flex-col sm:grid sm:grid-cols-12 gap-4 sm:gap-4">
                     {/* NEW REQUEST FORM */}
-                    <motion.div variants={itemVariants} className="col-span-5 sm:col-span-4 relative rounded-xl sm:rounded-[2rem] bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col h-fit">
+                    <motion.div variants={itemVariants} className="col-span-5 sm:col-span-4 relative rounded-xl sm:rounded-[2rem] bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col h-fit">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
-                        <div className="relative z-10 shrink-0 p-1 sm:p-5 border-b border-neutral-200/50 dark:border-white/10 bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl flex justify-between items-center">
+                        <div className="relative z-10 shrink-0 p-1 sm:p-5 border-b border-neutral-200/50 dark:border-white/10 bg-linear-to-b from-white/40 to-white/10 dark:from-white/[0.04] dark:to-transparent backdrop-blur-2xl flex justify-between items-center">
                             <h2 className="text-sm sm:text-lg font-bold flex items-center gap-1 sm:gap-1.5"><svg className="w-2.5 h-2.5 sm:w-4 sm:h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg> File Request</h2>
                             <button onClick={handleClearForm} className="text-[9px] sm:text-xs font-bold uppercase tracking-widest text-neutral-500 hover:text-red-500 transition-colors">Clear</button>
                         </div>
@@ -270,7 +270,7 @@ export default function TenantMaintenance() {
                             </form>
                         </div>
                         
-                        <div className="relative z-10 shrink-0 p-1.5 sm:p-5 border-t border-neutral-200/50 dark:border-white/10 bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl">
+                        <div className="relative z-10 shrink-0 p-1.5 sm:p-5 border-t border-neutral-200/50 dark:border-white/10 bg-linear-to-b from-white/40 to-white/10 dark:from-white/[0.04] dark:to-transparent backdrop-blur-2xl">
                             <button type="submit" form="maintenance-form" disabled={isSubmitting} className={`w-full py-1 sm:py-3 text-[10px] sm:text-sm font-bold uppercase tracking-widest rounded sm:rounded-xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 ${isSubmitting ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-400 cursor-wait' : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20 active:scale-95'}`}>
                                 {isSubmitting && <div className="w-2 h-2 sm:w-4 sm:h-4 border-2 border-current/30 border-t-current rounded-full animate-spin"></div>}
                                 {isSubmitting ? 'Submitting...' : 'Submit Request'}
@@ -279,11 +279,11 @@ export default function TenantMaintenance() {
                     </motion.div>
 
                     {/* HISTORY TABLE & FILTERS (Right Side) */}
-                    <motion.div variants={itemVariants} className="col-span-7 sm:col-span-8 relative bg-white/60 dark:bg-[#121212]/60 rounded-xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 flex flex-col min-h-[300px] sm:min-h-[500px] overflow-hidden">
+                    <motion.div variants={itemVariants} className="col-span-7 sm:col-span-8 relative bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent rounded-xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 flex flex-col min-h-[300px] sm:min-h-[500px] overflow-hidden">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
 
                         {/*-- Toolbar --*/}
-                        <div className="relative z-10 shrink-0 p-1.5 sm:p-4 border-b border-neutral-200/50 dark:border-white/10 bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl flex flex-nowrap items-center gap-1.5 sm:gap-2 overflow-x-auto [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                        <div className="relative z-10 shrink-0 p-1.5 sm:p-4 border-b border-neutral-200/50 dark:border-white/10 bg-linear-to-b from-white/40 to-white/10 dark:from-white/[0.04] dark:to-transparent backdrop-blur-2xl flex flex-nowrap items-center gap-1.5 sm:gap-2 overflow-x-auto [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                             
                             <div className="relative w-20 sm:w-48 h-6 sm:h-9 shrink-0 flex items-center">
                                 <svg className="absolute left-1.5 sm:left-2.5 w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-neutral-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -319,7 +319,7 @@ export default function TenantMaintenance() {
                         {/*-- Table Body --*/}
                         <div className="relative z-10 flex-1 overflow-y-auto overflow-x-auto overscroll-contain scrollbar-thin scrollbar-thumb-neutral-300 dark:scrollbar-thumb-neutral-700">
                             <table className="w-full text-left border-collapse min-w-[280px] sm:min-w-[700px]">
-                                <thead className="sticky top-0 z-20 bg-white/90 dark:bg-[#121212]/90 backdrop-blur-2xl shadow-sm">
+                                <thead className="sticky top-0 z-20 bg-linear-to-b from-white/90 to-white/70 dark:from-[#121212]/90 dark:to-[#0a0a0a]/90 backdrop-blur-2xl shadow-sm">
                                     <tr>
                                         <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[8px] sm:text-xs font-bold text-neutral-400 uppercase tracking-widest">ID / Date</th>
                                         <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[8px] sm:text-xs font-bold text-neutral-400 uppercase tracking-widest">Issue</th>
@@ -363,7 +363,7 @@ export default function TenantMaintenance() {
                         </div>
 
                         {/* Pagination Footer */}
-                        <div className="relative z-10 shrink-0 p-1 sm:p-3 border-t border-neutral-200/50 dark:border-white/10 bg-white/60 dark:bg-[#121212]/60 backdrop-blur-2xl flex justify-between items-center">
+                        <div className="relative z-10 shrink-0 p-1 sm:p-3 border-t border-neutral-200/50 dark:border-white/10 bg-linear-to-b from-white/40 to-white/10 dark:from-white/[0.04] dark:to-transparent backdrop-blur-2xl flex justify-between items-center">
                             <span className="text-[9px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest ml-1 sm:ml-2">Page {currentPage} of {totalPages || 1}</span>
                             <div className="flex gap-1 sm:gap-2">
                                 <button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1} className="px-1 py-0.5 sm:px-2 sm:py-1 bg-white dark:bg-white/5 rounded border border-neutral-200 dark:border-white/10 text-[10px] sm:text-xs disabled:opacity-50 text-neutral-900 dark:text-white">Prev</button>
