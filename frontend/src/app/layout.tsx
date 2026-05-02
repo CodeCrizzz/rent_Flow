@@ -22,10 +22,10 @@ export const metadata: Metadata = {
   description: "Boarding House Management System",
 };
 
-// --- Root Layout Component ---
+// --- Root Layout Component ---    
 export default function RootLayout({
   children,
-}: Readonly<{
+}: Readonly<{ 
   children: React.ReactNode;
 }>) {
   return (

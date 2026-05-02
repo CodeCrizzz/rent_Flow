@@ -73,8 +73,8 @@ export default function SignupPage() {
                     </div>
 
                     <div className="relative z-10 mt-auto">
-                        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-2 sm:mb-4 leading-tight">Start your stay<br className="hidden sm:block" /> with us.</h2>
-                        <p className="text-zinc-500 text-xs sm:text-sm leading-relaxed max-w-xs">Apply for residency today to access the premium tenant portal and manage your accommodations.</p>
+                        <h2 className="text-xl sm:text-3xl lg:text-4xl font-bold text-white mb-2 sm:mb-4 leading-tight">Start your stay<br className="hidden sm:block" /> with us.</h2>
+                        <p className="text-zinc-500 text-sm leading-relaxed max-w-xs">Apply for residency today to access the premium tenant portal and manage your accommodations.</p>
                     </div>
                 </div>
 
@@ -82,18 +82,21 @@ export default function SignupPage() {
                 <div className={`w-full md:w-7/12 p-6 sm:p-10 lg:p-14 bg-zinc-950 flex flex-col justify-center transition-all duration-1000 delay-500 ${isMounted ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
                     
                     {/* MOBILE BRANDING HEADER (Visible ONLY on Mobile) */}
-                    <div className="flex md:hidden items-center justify-center gap-2.5 mb-8">
-                        <div className="w-9 h-9 bg-blue-500 rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(59,130,246,0.3)]">
-                            <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                            </svg>
+                    <div className="flex md:hidden items-center justify-between mb-8">
+                        <div className="flex items-center gap-2.5">
+                            <div className="w-9 h-9 bg-blue-500 rounded-lg flex items-center justify-center shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+                                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                </svg>
+                            </div>
+                            <span className="text-2xl font-black tracking-tight text-white">Rent<span className="text-blue-500">Flow</span></span>
                         </div>
-                        <span className="text-2xl font-black tracking-tight text-white">Rent<span className="text-blue-500">Flow</span></span>
+                        <ThemeToggle />
                     </div>
 
                     <div className="mb-6 sm:mb-8 text-center md:text-left">
-                        <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-1 sm:mb-2">Create an account</h2>
-                        <p className="text-zinc-500 text-xs sm:text-sm">Please enter your details to apply for residency.</p>
+                        <h2 className="text-xl sm:text-3xl font-bold text-white tracking-tight mb-1 sm:mb-2">Create an account</h2>
+                        <p className="text-zinc-500 text-sm">Please enter your details to apply for residency.</p>
                     </div>
 
                     {/* Dark Mode Alerts */}
@@ -109,26 +112,26 @@ export default function SignupPage() {
                             
                             {/* Full Name Input */}
                             <div className="sm:col-span-2">
-                                <label className="block text-[10px] sm:text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1.5 sm:mb-2 ml-1">Full Name</label>
-                                <input type="text" placeholder="Enter Full name" className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 px-4 sm:px-5 py-3 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setName(e.target.value)} required />
+                                <label className="block text-xs font-bold text-zinc-500 uppercase tracking-widest mb-2 ml-1">Full Name</label>
+                                <input type="text" placeholder="Enter Full name" className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setName(e.target.value)} required />
                             </div>
 
                             {/* Email Input */}
                             <div className="sm:col-span-1">
-                                <label className="block text-[10px] sm:text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1.5 sm:mb-2 ml-1">Email Address</label>
-                                <input type="email" placeholder="Enter Email Address" className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 px-4 sm:px-5 py-3 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setEmail(e.target.value)} required />
+                                <label className="block text-xs font-bold text-zinc-500 uppercase tracking-widest mb-2 ml-1">Email Address</label>
+                                <input type="email" placeholder="Enter Email Address" className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setEmail(e.target.value)} required />
                             </div>
 
                             {/* Phone Input */}
                             <div className="sm:col-span-1">
-                                <label className="block text-[10px] sm:text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1.5 sm:mb-2 ml-1">Contact Number</label>
-                                <input type="tel" placeholder="09xxxxx8022" className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 px-4 sm:px-5 py-3 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setPhone(e.target.value)} required />
+                                <label className="block text-xs font-bold text-zinc-500 uppercase tracking-widest mb-2 ml-1">Contact Number</label>
+                                <input type="tel" placeholder="09xxxxx8022" className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setPhone(e.target.value)} required />
                             </div>
 
                             {/* Gender Input */}
                             <div className="sm:col-span-1">
-                                <label className="block text-[10px] sm:text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1.5 sm:mb-2 ml-1">Gender</label>
-                                <select value={gender} className="w-full bg-zinc-900/30 border border-white/5 text-zinc-400 focus:text-white px-4 sm:px-5 py-3 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium appearance-none" onChange={(e) => setGender(e.target.value)} required>
+                                <label className="block text-xs font-bold text-zinc-500 uppercase tracking-widest mb-2 ml-1">Gender</label>
+                                <select value={gender} className="w-full bg-zinc-900/30 border border-white/5 text-zinc-400 focus:text-white px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium appearance-none" onChange={(e) => setGender(e.target.value)} required>
                                     <option value="" disabled>Select Gender</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
@@ -138,18 +141,18 @@ export default function SignupPage() {
 
                             {/* Address Input */}
                             <div className="sm:col-span-1">
-                                <label className="block text-[10px] sm:text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1.5 sm:mb-2 ml-1">Home Address</label>
-                                <input type="text" placeholder="Enter Home Address" className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 px-4 sm:px-5 py-3 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setAddress(e.target.value)} />
+                                <label className="block text-xs font-bold text-zinc-500 uppercase tracking-widest mb-2 ml-1">Home Address</label>
+                                <input type="text" placeholder="Enter Home Address" className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setAddress(e.target.value)} />
                             </div>
 
                             {/* Password Input */}
                             <div className="sm:col-span-1">
-                                <label className="block text-[10px] sm:text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1.5 sm:mb-2 ml-1">Password</label>
+                                <label className="block text-xs font-bold text-zinc-500 uppercase tracking-widest mb-2 ml-1">Password</label>
                                 <div className="relative">
                                     <input
                                         type={showPassword ? "text" : "password"}
                                         placeholder="••••••••"
-                                        className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 pl-4 sm:pl-5 pr-12 py-3 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium"
+                                        className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 pl-4 sm:pl-5 pr-12 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium"
                                         onChange={(e) => setPassword(e.target.value)} required minLength={6}
                                     />
                                     <button 
@@ -168,12 +171,12 @@ export default function SignupPage() {
 
                             {/* Confirm Password Input */}
                             <div className="sm:col-span-1">
-                                <label className="block text-[10px] sm:text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1.5 sm:mb-2 ml-1">Confirm Password</label>
+                                <label className="block text-xs font-bold text-zinc-500 uppercase tracking-widest mb-2 ml-1">Confirm Password</label>
                                 <div className="relative">
                                     <input
                                         type={showConfirmPassword ? "text" : "password"}
                                         placeholder="••••••••"
-                                        className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 pl-4 sm:pl-5 pr-12 py-3 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium"
+                                        className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 pl-4 sm:pl-5 pr-12 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium"
                                         onChange={(e) => setConfirmPassword(e.target.value)} required minLength={6}
                                     />
                                     <button 
@@ -191,13 +194,13 @@ export default function SignupPage() {
                             </div>
                         </div>
 
-                        <div className="pt-4 sm:pt-6">
-                            <button type="submit" disabled={isLoading} className="w-full flex justify-center items-center py-3.5 sm:py-4 px-4 rounded-xl sm:rounded-2xl shadow-xl shadow-blue-900/20 text-[10px] sm:text-xs font-black uppercase tracking-[0.2em] text-white bg-blue-600 hover:bg-blue-500 hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-blue-500/30 transition-all duration-300 disabled:opacity-70 disabled:hover:translate-y-0 disabled:cursor-not-allowed">
+                        <div className="pt-6 sm:pt-8">
+                            <button type="submit" disabled={isLoading} className="w-full flex justify-center items-center py-4 px-4 rounded-xl sm:rounded-2xl shadow-xl shadow-blue-900/20 text-xs font-black uppercase tracking-[0.2em] text-white bg-blue-600 hover:bg-blue-500 hover:-translate-y-0.5 focus:outline-none focus:ring-4 focus:ring-blue-500/30 transition-all duration-300 disabled:opacity-70 disabled:hover:translate-y-0 disabled:cursor-not-allowed">
                                 {isLoading ? "Processing Application..." : "Sign Up"}
                             </button>
 
                             <div className="mt-6 sm:mt-8 text-center animate-in fade-in slide-in-from-bottom-2 duration-700 delay-300">
-                                <p className="text-zinc-500 text-xs sm:text-sm font-medium">
+                                <p className="text-zinc-500 text-sm font-medium">
                                     Already have an account?{' '}
                                     <Link href="/login" className="text-blue-500 hover:text-blue-400 font-bold transition-colors underline-offset-4 hover:underline">
                                         Log in here
@@ -262,7 +265,7 @@ export default function SignupPage() {
                                     setShowSuccessModal(false);
                                     router.push('/login?registered=true');
                                 }}
-                                className="w-full py-3.5 sm:py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl sm:rounded-2xl font-black text-[10px] sm:text-xs uppercase tracking-[0.2em] transition-all shadow-lg shadow-blue-500/20 hover:-translate-y-0.5"
+                                className="w-full py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl sm:rounded-2xl font-black text-xs uppercase tracking-[0.2em] transition-all shadow-lg shadow-blue-500/20 hover:-translate-y-0.5"
                             >
                                 Proceed to Login
                             </button>
