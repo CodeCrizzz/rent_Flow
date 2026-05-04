@@ -137,6 +137,18 @@ export default function AdminBilling() {
         }
     };
 
+    const handleGenerateBills = async () => {
+        if (!confirm("Are you sure you want to auto-generate bills for all active tenants for this month?")) return;
+        try {
+            const res = await api.post('/admin/bills/generate');
+            alert(res.data.message);
+            fetchData();
+        } catch (error) {
+            console.error("Generate bills failed:", error);
+            alert("Failed to auto-generate bills.");
+        }
+    };
+
     const handleEditSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!selectedBill) return;
@@ -235,13 +247,22 @@ export default function AdminBilling() {
                     <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Billing & Payments</h1>
                     <p className="text-slate-500 dark:text-zinc-400 font-medium mt-2">Manage tenant invoices, record payments, and track balances.</p>
                 </div>
-                <button 
-                    onClick={() => { setBillForm(initialBillForm); setIsCreateOpen(true); }}
-                    className="bg-[#5b21b6] text-white px-6 py-3.5 rounded-xl font-bold hover:bg-[#4c1d95] transition-all shadow-[0_0_20px_rgba(91,33,182,0.4)] flex items-center gap-2 group"
-                >
-                    <svg className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 4v16m8-8H4"></path></svg>
-                    Create Bill
-                </button>
+                <div className="flex flex-col sm:flex-row gap-3">
+                    <button 
+                        onClick={handleGenerateBills}
+                        className="bg-slate-800 text-white px-6 py-3.5 rounded-xl font-bold hover:bg-slate-700 transition-all shadow-[0_0_20px_rgba(30,41,59,0.4)] flex items-center gap-2 group"
+                    >
+                        <svg className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                        Auto-Generate
+                    </button>
+                    <button 
+                        onClick={() => { setBillForm(initialBillForm); setIsCreateOpen(true); }}
+                        className="bg-[#5b21b6] text-white px-6 py-3.5 rounded-xl font-bold hover:bg-[#4c1d95] transition-all shadow-[0_0_20px_rgba(91,33,182,0.4)] flex items-center gap-2 group"
+                    >
+                        <svg className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 4v16m8-8H4"></path></svg>
+                        Create Bill
+                    </button>
+                </div>
             </div>
 
             {/* Filters */}

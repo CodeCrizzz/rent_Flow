@@ -7,7 +7,8 @@ const {
     createBill, 
     updateBill, 
     deleteBill, 
-    payBill 
+    payBill,
+    generateMonthlyBills
 } = require('../controllers/billingController');
 
 const adminOnly = (req, res, next) => {
@@ -20,6 +21,8 @@ const adminOnly = (req, res, next) => {
 
 router.use(protect);
 router.use(adminOnly);
+
+router.post('/generate', generateMonthlyBills);
 
 router.route('/')
     .get(getAllBills)

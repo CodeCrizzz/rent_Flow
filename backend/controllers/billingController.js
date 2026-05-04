@@ -234,11 +234,75 @@ const payBill = async (req, res) => {
     }
 };
 
+// @desc    Manually trigger generation of monthly bills for all active tenants
+// @route   POST /api/admin/bills/generate
+// @access  Private/Admin
+const generateMonthlyBills = async (req, res) => {
+    try {
+        const activeTenantsQuery = `
+            SELECT u.id as tenant_id, u.room_id, r.price as rent_amount
+            FROM users u
+            JOIN rooms r ON u.room_id = r.id
+            WHERE u.role = 'tenant' AND u.status = 'Active' AND u.room_id IS NOT NULL
+        `;
+        const { rows: tenants } = await db.query(activeTenantsQuery);
+
+        if (tenants.length === 0) {
+            return res.json({ message: 'No active tenants found for automatic billing.' });
+        }
+
+        const currentDate = new Date();
+        const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        const currentMonthName = monthNames[currentDate.getMonth()];
+        const currentYear = currentDate.getFullYear();
+        const billingMonthStr = `${currentMonthName} ${currentYear}`;
+
+        const dueDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 5);
+        let billsGenerated = 0;
+
+        for (const tenant of tenants) {
+            const checkBillQuery = `
+                SELECT id FROM bills WHERE tenant_id = $1 AND billing_month = $2
+            `;
+            const { rows: existingBills } = await db.query(checkBillQuery, [tenant.tenant_id, billingMonthStr]);
+
+            if (existingBills.length === 0) {
+                const waterCharges = 0;
+                const electricityCharges = 0;
+                const otherFees = 0;
+                const totalAmount = tenant.rent_amount;
+                const balance = totalAmount;
+                const status = 'Unpaid';
+                const notes = 'Auto-generated bill';
+
+                const insertBillQuery = `
+                    INSERT INTO bills (tenant_id, room_id, billing_month, due_date, rent_amount, water_charges, electricity_charges, other_fees, total_amount, balance, status, notes)
+                    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+                `;
+                const values = [
+                    tenant.tenant_id, tenant.room_id, billingMonthStr, dueDate,
+                    tenant.rent_amount, waterCharges, electricityCharges, otherFees,
+                    totalAmount, balance, status, notes
+                ];
+
+                await db.query(insertBillQuery, values);
+                billsGenerated++;
+            }
+        }
+
+        res.json({ message: `Successfully generated ${billsGenerated} bills for ${billingMonthStr}.` });
+    } catch (error) {
+        console.error('Error generating monthly bills:', error);
+        res.status(500).json({ message: 'Server error generating monthly bills' });
+    }
+};
+
 module.exports = {
     getAllBills,
     getBillById,
     createBill,
     updateBill,
     deleteBill,
-    payBill
+    payBill,
+    generateMonthlyBills
 };

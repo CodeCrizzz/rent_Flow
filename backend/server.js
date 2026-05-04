@@ -15,6 +15,9 @@ const tenantRoutes = require('./routes/tenantRoutes');
 const billingRoutes = require('./routes/billingRoutes'); 
 const requestRoutes = require('./routes/requestRoutes'); 
 
+// Import Cron Jobs
+require('./cron/billingCron');
+
 // Mount Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin/bills', billingRoutes);              
