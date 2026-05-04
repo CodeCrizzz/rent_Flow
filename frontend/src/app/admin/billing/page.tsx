@@ -52,7 +52,6 @@ export default function AdminBilling() {
     const [statusFilter, setStatusFilter] = useState("All");
 
     // Modals state
-    const [isCreateOpen, setIsCreateOpen] = useState(false);
     const [isViewOpen, setIsViewOpen] = useState(false);
     const [isPayOpen, setIsPayOpen] = useState(false);
     const [isEditOpen, setIsEditOpen] = useState(false);
@@ -122,31 +121,6 @@ export default function AdminBilling() {
             room_id: tenant?.room_id || '',
             rent_amount: rooms.find(r => r.id === tenant?.room_id)?.price || 0
         });
-    };
-
-    const handleCreateSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            await api.post('/admin/bills', billForm);
-            setIsCreateOpen(false);
-            setBillForm(initialBillForm);
-            fetchData();
-        } catch (error) {
-            console.error("Create bill failed:", error);
-            alert("Failed to create bill.");
-        }
-    };
-
-    const handleGenerateBills = async () => {
-        if (!confirm("Are you sure you want to auto-generate bills for all active tenants for this month?")) return;
-        try {
-            const res = await api.post('/admin/bills/generate');
-            alert(res.data.message);
-            fetchData();
-        } catch (error) {
-            console.error("Generate bills failed:", error);
-            alert("Failed to auto-generate bills.");
-        }
     };
 
     const handleEditSubmit = async (e: React.FormEvent) => {
@@ -246,22 +220,6 @@ export default function AdminBilling() {
                 <div>
                     <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Billing & Payments</h1>
                     <p className="text-slate-500 dark:text-zinc-400 font-medium mt-2">Manage tenant invoices, record payments, and track balances.</p>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-3">
-                    <button 
-                        onClick={handleGenerateBills}
-                        className="bg-slate-800 text-white px-6 py-3.5 rounded-xl font-bold hover:bg-slate-700 transition-all shadow-[0_0_20px_rgba(30,41,59,0.4)] flex items-center gap-2 group"
-                    >
-                        <svg className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
-                        Auto-Generate
-                    </button>
-                    <button 
-                        onClick={() => { setBillForm(initialBillForm); setIsCreateOpen(true); }}
-                        className="bg-[#5b21b6] text-white px-6 py-3.5 rounded-xl font-bold hover:bg-[#4c1d95] transition-all shadow-[0_0_20px_rgba(91,33,182,0.4)] flex items-center gap-2 group"
-                    >
-                        <svg className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M12 4v16m8-8H4"></path></svg>
-                        Create Bill
-                    </button>
                 </div>
             </div>
 
@@ -370,17 +328,17 @@ export default function AdminBilling() {
                 </div>
             </div>
 
-            {/* Create/Edit Bill Modal */}
-            {(isCreateOpen || isEditOpen) && (
+            {/* Edit Bill Modal */}
+            {isEditOpen && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-60 flex items-center justify-center p-4 animate-in fade-in duration-300">
                     <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
                         <div className="px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
-                            <h2 className="text-2xl font-black text-slate-900 dark:text-white">{isEditOpen ? 'Edit Bill' : 'Create New Bill'}</h2>
-                            <button onClick={() => { setIsCreateOpen(false); setIsEditOpen(false); }} className="w-10 h-10 rounded-xl hover:bg-slate-200 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:hover:text-white transition-colors">
+                            <h2 className="text-2xl font-black text-slate-900 dark:text-white">Edit Bill</h2>
+                            <button onClick={() => setIsEditOpen(false)} className="w-10 h-10 rounded-xl hover:bg-slate-200 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:hover:text-white transition-colors">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
                         </div>
-                        <form onSubmit={isEditOpen ? handleEditSubmit : handleCreateSubmit} className="p-8 space-y-6">
+                        <form onSubmit={handleEditSubmit} className="p-8 space-y-6">
                             <div className="grid grid-cols-2 gap-6">
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Tenant</label>
@@ -421,7 +379,7 @@ export default function AdminBilling() {
                                 </div>
                             </div>
                             <div className="flex justify-end gap-3 pt-6 border-t border-slate-200 dark:border-zinc-800">
-                                <button type="button" onClick={() => { setIsCreateOpen(false); setIsEditOpen(false); }} className="px-6 py-3.5 font-bold text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white rounded-xl transition-colors">Cancel</button>
+                                <button type="button" onClick={() => setIsEditOpen(false)} className="px-6 py-3.5 font-bold text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white rounded-xl transition-colors">Cancel</button>
                                 <button type="submit" className="px-6 py-3.5 font-bold bg-[#5b21b6] text-white rounded-xl hover:bg-[#4c1d95] transition-colors shadow-lg">Save Bill</button>
                             </div>
                         </form>

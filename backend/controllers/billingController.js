@@ -5,6 +5,42 @@ const db = require('../config/db');
 // @access  Private/Admin
 const getAllBills = async (req, res) => {
     try {
+        // --- 1. AUTO-GENERATE BILLS FOR CURRENT MONTH ---
+        const activeTenantsQuery = `
+            SELECT u.id as tenant_id, u.room_id, r.price as rent_amount
+            FROM users u
+            JOIN rooms r ON u.room_id = r.id
+            WHERE u.role = 'tenant' AND u.status = 'Active' AND u.room_id IS NOT NULL
+        `;
+        const { rows: tenants } = await db.query(activeTenantsQuery);
+
+        if (tenants.length > 0) {
+            const currentDate = new Date();
+            const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            const currentMonthName = monthNames[currentDate.getMonth()];
+            const currentYear = currentDate.getFullYear();
+            const billingMonthStr = `${currentMonthName} ${currentYear}`;
+            const dueDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), 5);
+
+            for (const tenant of tenants) {
+                const checkBillQuery = `SELECT id FROM bills WHERE tenant_id = $1 AND billing_month = $2`;
+                const { rows: existingBills } = await db.query(checkBillQuery, [tenant.tenant_id, billingMonthStr]);
+
+                if (existingBills.length === 0) {
+                    const totalAmount = tenant.rent_amount;
+                    const insertBillQuery = `
+                        INSERT INTO bills (tenant_id, room_id, billing_month, due_date, rent_amount, water_charges, electricity_charges, other_fees, total_amount, balance, status, notes)
+                        VALUES ($1, $2, $3, $4, $5, 0, 0, 0, $6, $7, 'Unpaid', 'Auto-generated bill')
+                    `;
+                    await db.query(insertBillQuery, [
+                        tenant.tenant_id, tenant.room_id, billingMonthStr, dueDate,
+                        tenant.rent_amount, totalAmount, totalAmount
+                    ]);
+                }
+            }
+        }
+        // ------------------------------------------------
+
         const query = `
             SELECT b.*, u.name as tenant_name, r.room_number 
             FROM bills b
