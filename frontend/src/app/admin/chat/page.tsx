@@ -114,22 +114,22 @@ export default function AdminChat() {
     );
 
     return (
-        <div className="max-w-7xl mx-auto h-[calc(100vh-10rem)] flex flex-col relative">
+        <div className="max-w-7xl mx-auto h-full md:h-[calc(100vh-10rem)] flex flex-col relative p-4 md:p-0">
             
             <div className="absolute top-0 right-20 w-96 h-96 bg-[#5b21b6]/10 rounded-full blur-[100px] pointer-events-none -z-10"></div>
             <div className="absolute bottom-40 left-20 w-96 h-96 bg-blue-600/5 rounded-full blur-[100px] pointer-events-none -z-10"></div>
 
-            <div className="mb-8 flex items-center justify-between relative z-10">
+            <div className="mb-4 md:mb-8 flex items-center justify-between relative z-10 pt-2 md:pt-0">
                 <div>
-                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Messages</h1>
-                    <p className="text-slate-500 dark:text-zinc-400 font-medium mt-1">Direct communication with residents.</p>
+                    <h1 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight">Messages</h1>
+                    <p className="text-xs md:text-sm text-slate-500 dark:text-zinc-400 font-medium mt-1">Direct communication with residents.</p>
                 </div>
             </div>
 
             <div className="flex-1 bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden flex relative z-10">
 
                 {/* Sidebar Contacts */}
-                <div className="w-[340px] border-r border-slate-200 dark:border-zinc-800 flex flex-col bg-slate-50 dark:bg-zinc-950/40">
+                <div className={`w-full md:w-[340px] border-r border-slate-200 dark:border-zinc-800 flex flex-col bg-slate-50 dark:bg-zinc-950/40 ${selectedTenant ? 'hidden md:flex' : 'flex'}`}>
                     <div className="p-6 border-b border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-950/60">
                         <div className="relative group">
                             <input 
@@ -189,12 +189,15 @@ export default function AdminChat() {
                 </div>
 
                 {/* Chat Window */}
-                <div className="flex-1 flex flex-col bg-transparent relative">
+                <div className={`flex-1 flex flex-col bg-transparent relative ${!selectedTenant ? 'hidden md:flex' : 'flex'}`}>
                     {selectedTenant ? (
                         <>
-                            <div className="px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-xl sticky top-0 z-10 shadow-sm">
-                                <div className="flex items-center gap-4">
-                                    <div className="w-11 h-11 rounded-2xl bg-[#5b21b6] text-white flex items-center justify-center font-black shadow-[0_0_15px_rgba(91,33,182,0.3)]">
+                            <div className="px-4 md:px-8 py-4 md:py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-white/80 dark:bg-[#0a0a0a]/80 backdrop-blur-xl sticky top-0 z-10 shadow-sm">
+                                <div className="flex items-center gap-3 md:gap-4">
+                                    <button onClick={() => setSelectedTenant(null)} className="md:hidden p-1 -ml-1 text-slate-500 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white">
+                                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7"></path></svg>
+                                    </button>
+                                    <div className="w-10 h-10 md:w-11 md:h-11 rounded-2xl bg-[#5b21b6] text-white flex items-center justify-center font-black shadow-[0_0_15px_rgba(91,33,182,0.3)]">
                                         {selectedTenant.name.charAt(0)}
                                     </div>
                                     <div>
@@ -211,7 +214,7 @@ export default function AdminChat() {
                                 ref={scrollRef} 
                                 className="flex-1 overflow-y-auto custom-scrollbar scroll-smooth relative z-0"
                             >
-                                <div className="min-h-full flex flex-col justify-end p-8 space-y-6">
+                                <div className="min-h-full flex flex-col justify-end p-4 md:p-8 space-y-4 md:space-y-6">
                                 {messages.length === 0 ? (
                                     <div className="h-full flex items-center justify-center flex-col gap-3 opacity-50">
                                         <div className="w-16 h-16 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-2xl flex items-center justify-center text-3xl shadow-inner">
@@ -232,7 +235,7 @@ export default function AdminChat() {
                                         return (
                                             <div key={index} className={`flex ${isFromAdmin ? 'justify-end' : 'justify-start'} animate-in fade-in slide-in-from-${isFromAdmin ? 'right' : 'left'}-4 duration-500`}>
                                                 <div className="relative max-w-[75%]">
-                                                    <div className={`${isFromAdmin ? 'bg-[#5b21b6] text-white rounded-2xl rounded-tr-none shadow-lg' : 'bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-zinc-100 rounded-2xl rounded-tl-none shadow-sm'} px-5 py-3 text-sm font-medium leading-relaxed`}>
+                                                    <div className={`${isFromAdmin ? 'bg-[#5b21b6] text-white rounded-2xl rounded-tr-none shadow-lg' : 'bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-zinc-100 rounded-2xl rounded-tl-none shadow-sm'} px-4 py-2.5 md:px-5 md:py-3 text-xs md:text-sm font-medium leading-relaxed`}>
                                                         {msg.message}
                                                     </div>
                                                     <div className={`flex items-center gap-2 mt-1.5 ${isFromAdmin ? 'justify-end mr-1' : 'ml-1'}`}>
@@ -256,7 +259,7 @@ export default function AdminChat() {
                                 </div>
                             </div>
 
-                            <form onSubmit={handleSend} className="p-6 bg-white dark:bg-[#0a0a0a] backdrop-blur-xl border-t border-slate-200 dark:border-zinc-800 relative z-10">
+                            <form onSubmit={handleSend} className="p-4 md:p-6 bg-white dark:bg-[#0a0a0a] backdrop-blur-xl border-t border-slate-200 dark:border-zinc-800 relative z-10">
                                 <div className="flex gap-3 items-center bg-slate-50 dark:bg-zinc-900/50 p-2 rounded-2xl border border-slate-200 dark:border-zinc-800 focus-within:border-[#5b21b6]/40 focus-within:bg-white dark:focus-within:bg-zinc-900/80 focus-within:shadow-xl transition-all duration-300">
                                     <input 
                                         type="text" 
@@ -272,7 +275,7 @@ export default function AdminChat() {
                                         className="px-6 py-3 bg-[#5b21b6] text-white font-black text-xs uppercase tracking-widest rounded-xl hover:bg-[#4c1d95] transition-all shadow-lg active:scale-95 disabled:opacity-50 disabled:active:scale-100 disabled:shadow-none flex items-center gap-2"
                                     >
                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
-                                        Send
+                                        <span className="hidden sm:inline">Send</span>
                                     </button>
                                 </div>
                             </form>
