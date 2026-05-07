@@ -61,7 +61,16 @@ const getTenantPayments = async (req, res) => {
     const tenantId = req.user.id;
     try {
         const result = await db.query(
-            "SELECT id, TO_CHAR(due_date, 'YYYY-MM-DD') AS date, billing_month || ' Bill' AS description, total_amount AS amount, LOWER(status) AS status FROM bills WHERE tenant_id = $1 ORDER BY due_date DESC",
+            `SELECT p.id, TO_CHAR(p.payment_date, 'YYYY-MM-DD') AS date, 
+                    'Payment for ' || b.billing_month AS description, 
+                    p.amount_paid AS amount, 
+                    p.status, 
+                    p.payment_method AS method, 
+                    p.id::text AS "referenceNumber"
+             FROM payments p
+             JOIN bills b ON p.bill_id = b.id
+             WHERE b.tenant_id = $1
+             ORDER BY p.payment_date DESC`,
             [tenantId]
         );
         res.status(200).json(result.rows);
@@ -227,15 +236,61 @@ const submitTenantPayment = async (req, res) => {
     const tenantId = req.user.id;
     const { bill_id, amount_paid, payment_method, notes } = req.body;
     const proof_url = req.file ? `/uploads/${req.file.filename}` : null;
+    
+    if (!bill_id || !amount_paid || !payment_method) {
+        return res.status(400).json({ message: 'Missing required payment details' });
+    }
+
     try {
-        const query = `
+        await db.query('BEGIN');
+
+        const insertPaymentQuery = `
             INSERT INTO payments (bill_id, amount_paid, payment_date, payment_method, notes, proof_url, status) 
             VALUES ($1, $2, CURRENT_TIMESTAMP, $3, $4, $5, 'Pending Verification') 
             RETURNING *
         `;
-        const result = await db.query(query, [bill_id, amount_paid, payment_method, notes, proof_url]);
-        res.status(201).json({ message: 'Payment proof submitted for verification', payment: result.rows[0] });
+        const paymentResult = await db.query(insertPaymentQuery, [bill_id, amount_paid, payment_method, notes, proof_url]);
+        
+        const updateBillQuery = `
+            UPDATE bills
+            SET status = 'Pending Verification'
+            WHERE id = $1 AND tenant_id = $2
+            RETURNING id, billing_month, total_amount, amount_paid, balance, due_date, status
+        `;
+        const billResult = await db.query(updateBillQuery, [bill_id, tenantId]);
+
+        await db.query('COMMIT');
+
+        const newPaymentRaw = paymentResult.rows[0];
+        const updatedBillRaw = billResult.rows[0];
+
+        const newPayment = {
+            id: newPaymentRaw.id,
+            date: newPaymentRaw.payment_date,
+            description: `Payment for ${updatedBillRaw ? updatedBillRaw.billing_month : 'Bill'}`,
+            amount: newPaymentRaw.amount_paid,
+            status: newPaymentRaw.status,
+            method: newPaymentRaw.payment_method,
+            referenceNumber: newPaymentRaw.id.toString()
+        };
+
+        const updatedBill = updatedBillRaw ? {
+            id: updatedBillRaw.id,
+            month: updatedBillRaw.billing_month,
+            totalAmount: parseFloat(updatedBillRaw.total_amount),
+            amountPaid: parseFloat(updatedBillRaw.amount_paid),
+            remainingBalance: parseFloat(updatedBillRaw.balance),
+            dueDate: updatedBillRaw.due_date,
+            status: updatedBillRaw.status
+        } : null;
+
+        res.status(201).json({ 
+            message: 'Payment proof submitted for verification', 
+            newPayment,
+            updatedBill
+        });
     } catch (error) {
+        await db.query('ROLLBACK');
         console.error('Submit Payment Error:', error);
         res.status(500).json({ message: 'Server error submitting payment proof' });
     }
