@@ -1,10 +1,10 @@
 "use client";
-import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import { motion, AnimatePresence, Variants } from 'framer-motion';
-import PageTransition from '@/components/PageTransition';
-import api from '@/lib/api';
+        import Link from 'next/link';
+        import { usePathname, useRouter } from 'next/navigation';
+        import { useEffect, useState } from 'react';
+        import { motion, AnimatePresence, Variants } from 'framer-motion';
+        import PageTransition from '@/components/PageTransition';
+        import api from '@/lib/api';
 import { ThemeToggle } from "@/components/theme-toggle";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

@@ -4,6 +4,7 @@ import api from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ThemeToggle } from "@/components/theme-toggle";
+import { motion } from 'framer-motion';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -64,7 +65,12 @@ export default function LoginPage() {
     const buttonColor = selectedRole === 'tenant' ? 'bg-blue-600 shadow-blue-900/20 hover:bg-blue-500' : 'bg-purple-600 shadow-purple-900/20 hover:bg-purple-500';
 
     return (
-        <div className="min-h-dvh flex flex-col items-center justify-center p-4 py-10 sm:p-6 lg:p-8 bg-[#0a0a0a] relative overflow-x-hidden font-sans">
+        <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1 }}
+            className="min-h-dvh flex flex-col items-center justify-center p-4 py-10 sm:p-6 lg:p-8 bg-[#0a0a0a] relative overflow-x-hidden font-sans"
+        >
             
             {/* Ambient Background Glow */}
             <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[300px] sm:h-[500px] blur-[100px] rounded-full pointer-events-none transition-all duration-1000 ${isMounted ? 'opacity-100' : 'opacity-0 scale-50'} ${selectedRole === 'tenant' ? 'bg-blue-600/10' : 'bg-purple-600/10'}`}></div>
@@ -199,6 +205,6 @@ export default function LoginPage() {
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 }

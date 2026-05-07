@@ -330,7 +330,7 @@ export default function TenantPayments() {
                                             </td>
                                             <td className="px-1.5 py-1.5 sm:px-4 sm:py-4 align-middle flex items-center gap-1.5 sm:gap-4 min-w-0">
                                                 <div className="w-5 h-5 sm:w-10 sm:h-10 rounded-md sm:rounded-xl bg-white/50 dark:bg-black/30 border border-neutral-200/50 dark:border-white/5 flex items-center justify-center shrink-0">
-                                                    {p.method.includes('GCash') ? <span className="text-[8px] sm:text-sm font-black text-blue-500">G</span> : <svg className="w-3 h-3 sm:w-5 sm:h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>}
+                                                    {p.method?.includes('GCash') ? <span className="text-[8px] sm:text-sm font-black text-blue-500">G</span> : <svg className="w-3 h-3 sm:w-5 sm:h-5 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>}
                                                 </div>
                                                 <div className="min-w-0">
                                                     <p className="text-[7px] sm:text-sm font-bold truncate max-w-[90px] sm:max-w-[250px] text-neutral-900 dark:text-white leading-tight">{p.description}</p>
