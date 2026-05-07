@@ -112,8 +112,9 @@ export default function TenantPayments() {
         setIsSubmitting(true);
         try {
             const formData = new FormData();
-            formData.append('amount', payAmount);
-            formData.append('method', payMethod);
+            formData.append('bill_id', currentBill?.id?.toString() || "");
+            formData.append('amount_paid', payAmount);
+            formData.append('payment_method', payMethod);
             formData.append('notes', payNotes); 
             if (proofFile) formData.append('proofOfPayment', proofFile);
 
@@ -206,7 +207,7 @@ export default function TenantPayments() {
                             <p className={`text-2xl sm:text-4xl font-black tracking-tighter font-mono leading-none ${currentBill.status === 'Overdue' ? 'text-red-500' : 'text-indigo-600 dark:text-indigo-400'}`}>
                                 ₱{currentBill.remainingBalance.toLocaleString()}
                             </p>
-                        </div>
+                        </div>  
                         <div>
                             <p className="text-xs sm:text-sm font-semibold text-neutral-500 mb-1">Paid</p>
                             <p className="text-lg sm:text-2xl font-bold tracking-tight text-neutral-900 dark:text-white font-mono leading-none mt-1 sm:mt-1.5">
