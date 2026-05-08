@@ -191,7 +191,7 @@ export default function AdminTenants() {
     };
 
     return (
-        <div className="max-w-7xl mx-auto space-y-10 relative pb-20">
+        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-10 pb-10 px-4 sm:px-6 lg:px-8 relative w-full">
             
             {/* Ambient Background Glows */}
             <div className="absolute top-0 right-10 w-96 h-96 bg-[#5b21b6]/10 rounded-full blur-[100px] pointer-events-none -z-10"></div>
@@ -256,7 +256,7 @@ export default function AdminTenants() {
                                 <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Full Name</label>
                                 <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="e.g. John Doe" />
                             </div>
-                            <div className="grid grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Email Address</label>
                                     <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="john@example.com" />
@@ -266,7 +266,7 @@ export default function AdminTenants() {
                                     <input type="text" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="+63 000 000 0000" />
                                 </div>
                             </div>
-                            <div className="grid grid-cols-2 gap-6 mt-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-4">
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Gender</label>
                                     <select value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none appearance-none">
@@ -296,7 +296,7 @@ export default function AdminTenants() {
                                 <h3 className="text-xs font-black text-slate-500 dark:text-zinc-400 uppercase tracking-widest">Rental Details</h3>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Assigned Unit</label>
                                     <select 
@@ -316,7 +316,7 @@ export default function AdminTenants() {
                                 </div>
                             </div>
                             
-                            <div className="grid grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Move-in Date</label>
                                     <input type="date" value={formData.date_moved_in} onChange={e => setFormData({...formData, date_moved_in: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />

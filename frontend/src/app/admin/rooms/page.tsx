@@ -158,7 +158,7 @@ export default function AdminRooms() {
     };
 
     return (
-        <div className="max-w-7xl mx-auto space-y-10 relative pb-20">
+        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-10 pb-10 px-4 sm:px-6 lg:px-8 relative w-full">
             
             {/* Ambient Background Glows */}
             <div className="absolute top-0 left-20 w-96 h-96 bg-[#5b21b6]/10 rounded-full blur-[100px] pointer-events-none -z-10"></div>
@@ -305,7 +305,7 @@ export default function AdminRooms() {
                             </button>
                         </div>
                         <form onSubmit={handleSubmit} className="p-8 space-y-6">
-                            <div className="grid grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Room Number</label>
                                     <input required type="text" value={formData.room_number} onChange={e => setFormData({...formData, room_number: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="e.g. 101" />
@@ -319,7 +319,7 @@ export default function AdminRooms() {
                                     </select>
                                 </div>
                             </div>
-                            <div className="grid grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Capacity</label>
                                     <input required type="number" min="1" value={formData.capacity} onChange={e => setFormData({...formData, capacity: parseInt(e.target.value) || 1})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
@@ -329,7 +329,7 @@ export default function AdminRooms() {
                                     <input required type="number" value={formData.price} onChange={e => setFormData({...formData, price: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="0.00" />
                                 </div>
                             </div>
-                            <div className="grid grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Floor (Optional)</label>
                                     <input type="text" value={formData.floor} onChange={e => setFormData({...formData, floor: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="e.g. 1st Floor" />
@@ -374,7 +374,7 @@ export default function AdminRooms() {
                         </div>
                         
                         <div className="p-8 overflow-y-auto custom-scrollbar w-full">
-                            <div className="grid grid-cols-3 gap-6 mb-8">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-8">
                                 <div className="bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 p-5 rounded-2xl">
                                     <p className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-2">Monthly Rent</p>
                                     <p className="text-2xl font-black text-emerald-400">₱{Number(viewingRoom.price).toLocaleString()}</p>
