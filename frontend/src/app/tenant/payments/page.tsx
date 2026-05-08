@@ -27,14 +27,14 @@ export default function TenantPayments() {
     const [currentBill, setCurrentBill] = useState<any>(defaultBill);
     const [summary, setSummary] = useState({ monthTotal: 0, yearTotal: 0, txCount: 0 });
     const [isLoading, setIsLoading] = useState(true);
-    
+
     const [searchQuery, setSearchQuery] = useState("");
     const [filterStatus, setFilterStatus] = useState("All");
     const [sortBy, setSortBy] = useState("date_desc");
 
     const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
     const [viewReceiptUrl, setViewReceiptUrl] = useState<string | null>(null);
-    
+
     const [payAmount, setPayAmount] = useState("");
     const [payMethod, setPayMethod] = useState<'GCash' | 'Bank Transfer' | 'Cash'>('GCash');
     const [payNotes, setPayNotes] = useState("");
@@ -51,7 +51,7 @@ export default function TenantPayments() {
                     api.get('/tenant/bill/current').catch(() => ({ data: null })),
                     api.get('/tenant/payments').catch(() => ({ data: [] }))
                 ]);
-                
+
                 if (billResponse.data) setCurrentBill(billResponse.data);
 
                 const fetchedPayments = paymentsResponse.data || [];
@@ -88,8 +88,8 @@ export default function TenantPayments() {
         return payments.filter(p => {
             const refNum = p.referenceNumber || p.id?.toString() || "";
             const desc = p.description || "";
-            const matchesSearch = refNum.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                                  desc.toLowerCase().includes(searchQuery.toLowerCase());
+            const matchesSearch = refNum.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                desc.toLowerCase().includes(searchQuery.toLowerCase());
             const matchesStatus = filterStatus === "All" || p.status === filterStatus;
             return matchesSearch && matchesStatus;
         }).sort((a, b) => {
@@ -108,20 +108,20 @@ export default function TenantPayments() {
         setFileError("");
         if (Number(payAmount) <= 0) return setFileError("Amount must be greater than zero.");
         if (proofFile && proofFile.size > 5 * 1024 * 1024) return setFileError("File exceeds 5MB limit.");
-        
+
         setIsSubmitting(true);
         try {
             const formData = new FormData();
             formData.append('bill_id', currentBill?.id?.toString() || "");
             formData.append('amount_paid', payAmount);
             formData.append('payment_method', payMethod);
-            formData.append('notes', payNotes); 
+            formData.append('notes', payNotes);
             if (proofFile) formData.append('proofOfPayment', proofFile);
 
             const { data } = await api.post('/tenant/payments', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
-            
+
             if (data.newPayment) {
                 setPayments(prev => [data.newPayment, ...prev]);
                 setSummary(prev => ({ ...prev, txCount: prev.txCount + 1 }));
@@ -157,7 +157,7 @@ export default function TenantPayments() {
     };
 
     const getStatusColor = (status: string) => {
-        switch(status) {
+        switch (status) {
             case 'Paid': case 'Approved': return 'text-emerald-500 bg-emerald-500/10 border-emerald-500/20';
             case 'Pending': case 'Pending Verification': return 'text-blue-500 bg-blue-500/10 border-blue-500/20';
             case 'Overdue': case 'Rejected': return 'text-red-500 bg-red-500/10 border-red-500/20';
@@ -170,7 +170,7 @@ export default function TenantPayments() {
         <div className="flex-1 flex flex-col w-full min-h-full text-neutral-900 dark:text-neutral-100 font-sans bg-transparent">
             {/* Page Transition Overlay */}
             <motion.div initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ duration: 0.5, ease: "easeInOut" }} className="absolute inset-0 z-[9999] bg-slate-50 dark:bg-[#050505] pointer-events-none" />
-            
+
             {/* Ambient Background Glows */}
             <div className="fixed top-0 left-1/4 w-[300px] sm:w-[500px] h-[300px] sm:h-[500px] bg-indigo-400/20 rounded-full blur-[80px] sm:blur-[120px] pointer-events-none -z-10 dark:hidden"></div>
             <div className="fixed bottom-0 right-1/4 w-[250px] sm:w-[400px] h-[250px] sm:h-[400px] bg-purple-400/20 rounded-full blur-[60px] sm:blur-[100px] pointer-events-none -z-10 dark:hidden"></div>
@@ -207,7 +207,7 @@ export default function TenantPayments() {
                             <p className={`text-2xl sm:text-4xl font-black tracking-tighter font-mono leading-none ${currentBill.status === 'Overdue' ? 'text-red-500' : 'text-indigo-600 dark:text-indigo-400'}`}>
                                 ₱{currentBill.remainingBalance.toLocaleString()}
                             </p>
-                        </div>  
+                        </div>
                         <div>
                             <p className="text-xs sm:text-sm font-semibold text-neutral-500 mb-1">Paid</p>
                             <p className="text-lg sm:text-2xl font-bold tracking-tight text-neutral-900 dark:text-white font-mono leading-none mt-1 sm:mt-1.5">
@@ -223,22 +223,21 @@ export default function TenantPayments() {
                                 {formatDate(currentBill.dueDate, { month: 'short', day: 'numeric' })}
                             </p>
                         </div>
-                        <button 
+                        <button
                             onClick={() => setIsPaymentModalOpen(true)}
                             disabled={currentBill.remainingBalance <= 0 || currentBill.status === 'Pending Verification'}
-                            className={`px-6 sm:px-8 py-2.5 sm:py-3 font-bold rounded-xl flex items-center justify-center gap-1 text-xs sm:text-sm shrink-0 transition-transform active:scale-95 ${
-                                currentBill.remainingBalance <= 0 || currentBill.status === 'Pending Verification'
-                                ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-400 cursor-not-allowed border border-neutral-200 dark:border-white/5' 
-                                : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20 border border-indigo-500'
-                            }`}
+                            className={`px-6 sm:px-8 py-2.5 sm:py-3 font-bold rounded-xl flex items-center justify-center gap-1 text-xs sm:text-sm shrink-0 transition-transform active:scale-95 ${currentBill.remainingBalance <= 0 || currentBill.status === 'Pending Verification'
+                                    ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-400 cursor-not-allowed border border-neutral-200 dark:border-white/5'
+                                    : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20 border border-indigo-500'
+                                }`}
                         >
                             Pay Now
                         </button>
                     </div>
-                </motion.div>                
+                </motion.div>
                 {/* --- LAYER 2: BREAKDOWN & SUMMARY --- */}
                 <div className="shrink-0 grid grid-cols-2 gap-2 sm:gap-4">
-                    
+
                     {/* BREAKDOWN CARD */}
                     <motion.div variants={itemVariants} className="relative rounded-xl sm:rounded-[1.5rem] bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-3 sm:p-6 lg:p-8 flex flex-col justify-center">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
@@ -267,7 +266,7 @@ export default function TenantPayments() {
                             <div className="flex justify-between text-[9px] sm:text-sm font-semibold border-t border-neutral-200/50 dark:border-white/10 pt-1.5 sm:pt-3 mt-0.5 sm:mt-0"><span className="text-neutral-500">Transactions</span><span className="font-mono font-bold text-neutral-900 dark:text-white">{summary.txCount}</span></div>
                         </div>
                     </motion.div>
-                </div>            
+                </div>
 
                 {/* --- LAYER 3: FILTERS & TABLE SECTION --- */}
                 <motion.div variants={itemVariants} className="flex flex-col relative bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent rounded-xl sm:rounded-3xl border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden min-h-[400px] sm:min-h-[650px] mb-4">
