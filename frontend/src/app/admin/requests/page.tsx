@@ -126,7 +126,7 @@ export default function AdminRequests() {
     };
 
     return (
-        <div className="max-w-7xl mx-auto space-y-10 relative pb-20">
+        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-10 pb-10 px-4 sm:px-6 lg:px-8 relative w-full">
             
             {/* Ambient Background Glows */}
             <div className="absolute top-0 right-20 w-96 h-96 bg-[#5b21b6]/10 rounded-full blur-[100px] pointer-events-none -z-10"></div>
@@ -290,7 +290,7 @@ export default function AdminRequests() {
                             </button>
                         </div>
                         <div className="p-8 space-y-6 overflow-y-auto custom-scrollbar w-full">
-                            <div className="grid grid-cols-2 text-sm gap-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 text-sm gap-4 sm:gap-6">
                                 <div className="bg-slate-50 dark:bg-zinc-900/50 p-5 rounded-2xl border border-slate-200 dark:border-zinc-800">
                                     <div className="text-slate-500 dark:text-zinc-500 font-black uppercase tracking-widest text-[10px] mb-2 flex items-center gap-2">
                                         <svg className="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
@@ -307,7 +307,7 @@ export default function AdminRequests() {
                                 </div>
                             </div>
                             
-                            <div className="grid grid-cols-3 text-sm gap-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 text-sm gap-4 sm:gap-6">
                                 <div className="bg-slate-50 dark:bg-zinc-900/50 p-5 rounded-2xl border border-slate-200 dark:border-zinc-800">
                                     <div className="text-slate-500 dark:text-zinc-500 font-black uppercase tracking-widest text-[10px] mb-2">Date Reported</div>
                                     <div className="font-bold text-slate-900 dark:text-white text-sm">{new Date(viewModalReq.created_at).toLocaleDateString()}</div>
@@ -387,7 +387,7 @@ export default function AdminRequests() {
                         </div>
                         <form onSubmit={handleUpdateSubmit} className="p-8 flex flex-col gap-6">
                             
-                            <div className="grid grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Status</label>
                                     <select 
@@ -429,7 +429,7 @@ export default function AdminRequests() {
                                 />
                             </div>
 
-                            <div className="grid grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Scheduled Date</label>
                                     <input 

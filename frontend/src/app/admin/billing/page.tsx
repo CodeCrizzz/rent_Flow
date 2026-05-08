@@ -371,7 +371,7 @@ export default function AdminBilling() {
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Other Fees (₱)</label>
                                     <input required type="number" step="0.01" value={billForm.other_fees} onChange={e => setBillForm({...billForm, other_fees: parseFloat(e.target.value) || 0})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
                                 </div>
-                                <div className="space-y-2 col-span-2">
+                                <div className="space-y-2 sm:col-span-2">
                                     <div className="bg-indigo-50 dark:bg-[#5b21b6]/10 p-5 rounded-2xl border border-indigo-100 dark:border-[#5b21b6]/20 flex justify-between items-center">
                                         <span className="font-bold text-[#5b21b6] dark:text-[#a78bfa] text-xs uppercase tracking-widest">Total Calculated Amount</span>
                                         <span className="text-3xl font-black text-slate-900 dark:text-white">₱ {Number((Number(billForm.rent_amount) || 0) + (Number(billForm.water_charges) || 0) + (Number(billForm.electricity_charges) || 0) + (Number(billForm.other_fees) || 0)).toLocaleString()}</span>
