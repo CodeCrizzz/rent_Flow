@@ -209,7 +209,7 @@ export default function AdminBilling() {
     };
 
     return (
-        <div className="max-w-7xl mx-auto space-y-8 pb-20 relative">
+        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8 pb-10 px-4 sm:px-6 lg:px-8 relative w-full">
             
             {/* Ambient Background Glows */}
             <div className="absolute top-0 right-10 w-96 h-96 bg-[#5b21b6]/10 rounded-full blur-[100px] pointer-events-none -z-10"></div>
@@ -339,7 +339,7 @@ export default function AdminBilling() {
                             </button>
                         </div>
                         <form onSubmit={handleEditSubmit} className="p-8 space-y-6">
-                            <div className="grid grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 <div className="space-y-2">
                                     <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Tenant</label>
                                     <select required disabled={isEditOpen} value={billForm.tenant_id} onChange={(e) => handleTenantChange(e.target.value)} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent disabled:opacity-50 appearance-none outline-none">
