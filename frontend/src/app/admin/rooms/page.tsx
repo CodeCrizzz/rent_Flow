@@ -158,13 +158,7 @@ export default function AdminRooms() {
     };
 
     return (
-        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-10 pb-10 px-4 sm:px-6 lg:px-8 relative w-full">
-            
-            {/* Ambient Background Glows */}
-            <div className="absolute top-0 left-20 w-96 h-96 bg-[#5b21b6]/10 rounded-full blur-[100px] pointer-events-none -z-10"></div>
-            <div className="absolute top-40 right-20 w-96 h-96 bg-blue-600/5 rounded-full blur-[100px] pointer-events-none -z-10"></div>
-
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 relative z-10">
+        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-10 pb-10 px-4 sm:px-6 lg:px-8 relative w-full"><div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 relative z-10">
                 <div>
                     <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Room Management</h1>
                     <p className="text-slate-500 dark:text-zinc-400 font-medium mt-2">Manage properties, capacities, and monitor availability.</p>
@@ -224,7 +218,7 @@ export default function AdminRooms() {
             </div>
 
             {/* Data Table */}
-            <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-xl dark:shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
+            <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl shadow-xl dark:shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
                 <div className="overflow-x-auto custom-scrollbar">
                     <table className="w-full text-left border-collapse whitespace-nowrap">
                         <thead className="bg-slate-50 dark:bg-[#0d0d0d]/60">
@@ -297,7 +291,7 @@ export default function AdminRooms() {
             {/* Add/Edit Room Modal */}
             {isModalOpen && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-60 flex items-center justify-center p-4 animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
+                    <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
                         <div className="px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
                             <h2 className="text-2xl font-black text-slate-900 dark:text-white">{editingRoom ? 'Edit Room' : 'Add New Room'}</h2>
                             <button onClick={() => setIsModalOpen(false)} className="w-10 h-10 rounded-xl hover:bg-slate-200 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:hover:text-white transition-colors">
@@ -362,7 +356,7 @@ export default function AdminRooms() {
             {/* View Details Modal */}
             {isViewModalOpen && viewingRoom && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-60 flex items-center justify-center p-4 animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 w-full max-w-3xl overflow-hidden animate-in zoom-in-95 duration-300 flex flex-col max-h-[90vh]">
+                    <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 w-full max-w-3xl overflow-hidden animate-in zoom-in-95 duration-300 flex flex-col max-h-[90vh]">
                         <div className="p-8 border-b border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50 flex justify-between items-start">
                             <div>
                                 <h2 className="text-3xl font-black text-slate-900 dark:text-white">Room {viewingRoom.room_number}</h2>

@@ -126,13 +126,7 @@ export default function AdminRequests() {
     };
 
     return (
-        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-10 pb-10 px-4 sm:px-6 lg:px-8 relative w-full">
-            
-            {/* Ambient Background Glows */}
-            <div className="absolute top-0 right-20 w-96 h-96 bg-[#5b21b6]/10 rounded-full blur-[100px] pointer-events-none -z-10"></div>
-            <div className="absolute top-40 left-20 w-96 h-96 bg-blue-600/5 rounded-full blur-[100px] pointer-events-none -z-10"></div>
-
-            {/* Header Area */}
+        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-10 pb-10 px-4 sm:px-6 lg:px-8 relative w-full">{/* Header Area */}
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
                 <div>
                     <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Maintenance Requests</h1>
@@ -194,7 +188,7 @@ export default function AdminRequests() {
             </div>
 
             {/* Main Table */}
-            <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-xl dark:shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10 min-h-[400px]">
+            <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl shadow-xl dark:shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10 min-h-[400px]">
                 {isLoading ? (
                     <div className="flex flex-col items-center justify-center p-20 gap-4">
                         <div className="w-8 h-8 border-4 border-[#5b21b6]/20 border-t-[#5b21b6] rounded-full animate-spin"></div>
@@ -275,7 +269,7 @@ export default function AdminRequests() {
             {/* View Modal */}
             {viewModalReq && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
+                    <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
                         <div className="p-8 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
                             <div>
                                 <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-4">
@@ -378,7 +372,7 @@ export default function AdminRequests() {
             {/* Update Modal */}
             {updateModalReq && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
+                    <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
                         <div className="p-8 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
                             <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Update Request</h3>
                             <button onClick={() => setUpdateModalReq(null)} className="w-10 h-10 rounded-xl hover:bg-slate-200 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:hover:text-white transition-colors">

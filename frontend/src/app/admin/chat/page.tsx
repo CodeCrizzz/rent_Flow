@@ -114,19 +114,14 @@ export default function AdminChat() {
     );
 
     return (
-        <div className="max-w-7xl mx-auto h-full md:h-[calc(100vh-10rem)] flex flex-col relative p-4 md:p-0">
-            
-            <div className="absolute top-0 right-20 w-96 h-96 bg-[#5b21b6]/10 rounded-full blur-[100px] pointer-events-none -z-10"></div>
-            <div className="absolute bottom-40 left-20 w-96 h-96 bg-blue-600/5 rounded-full blur-[100px] pointer-events-none -z-10"></div>
-
-            <div className="mb-4 md:mb-8 flex items-center justify-between relative z-10 pt-2 md:pt-0">
+        <div className="max-w-7xl mx-auto h-full md:h-[calc(100vh-10rem)] flex flex-col relative p-4 md:p-0"><div className="mb-4 md:mb-8 flex items-center justify-between relative z-10 pt-2 md:pt-0">
                 <div>
                     <h1 className="text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight">Messages</h1>
                     <p className="text-xs md:text-sm text-slate-500 dark:text-zinc-400 font-medium mt-1">Direct communication with residents.</p>
                 </div>
             </div>
 
-            <div className="flex-1 bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden flex relative z-10">
+            <div className="flex-1 bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden flex relative z-10">
 
                 {/* Sidebar Contacts */}
                 <div className={`w-full md:w-[340px] border-r border-slate-200 dark:border-zinc-800 flex flex-col bg-slate-50 dark:bg-zinc-950/40 ${selectedTenant ? 'hidden md:flex' : 'flex'}`}>
@@ -259,7 +254,7 @@ export default function AdminChat() {
                                 </div>
                             </div>
 
-                            <form onSubmit={handleSend} className="p-4 md:p-6 bg-white dark:bg-[#0a0a0a] backdrop-blur-xl border-t border-slate-200 dark:border-zinc-800 relative z-10">
+                            <form onSubmit={handleSend} className="p-4 md:p-6 bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl backdrop-blur-xl border-t border-slate-200 dark:border-zinc-800 relative z-10">
                                 <div className="flex gap-3 items-center bg-slate-50 dark:bg-zinc-900/50 p-2 rounded-2xl border border-slate-200 dark:border-zinc-800 focus-within:border-[#5b21b6]/40 focus-within:bg-white dark:focus-within:bg-zinc-900/80 focus-within:shadow-xl transition-all duration-300">
                                     <input 
                                         type="text" 

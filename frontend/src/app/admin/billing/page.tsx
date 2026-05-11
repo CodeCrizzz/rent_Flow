@@ -209,13 +209,7 @@ export default function AdminBilling() {
     };
 
     return (
-        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8 pb-10 px-4 sm:px-6 lg:px-8 relative w-full">
-            
-            {/* Ambient Background Glows */}
-            <div className="absolute top-0 right-10 w-96 h-96 bg-[#5b21b6]/10 rounded-full blur-[100px] pointer-events-none -z-10"></div>
-            <div className="absolute top-40 left-10 w-96 h-96 bg-blue-600/5 rounded-full blur-[100px] pointer-events-none -z-10"></div>
-
-            {/* Header */}
+        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8 pb-10 px-4 sm:px-6 lg:px-8 relative w-full">{/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
                     <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Billing & Payments</h1>
@@ -251,7 +245,7 @@ export default function AdminBilling() {
             </div>
 
             {/* Table */}
-            <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl shadow-xl dark:shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
+            <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl shadow-xl dark:shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
                 <div className="overflow-x-auto custom-scrollbar">
                     <table className="w-full text-left border-collapse whitespace-nowrap">
                         <thead className="bg-slate-50 dark:bg-zinc-900/50">
@@ -331,7 +325,7 @@ export default function AdminBilling() {
             {/* Edit Bill Modal */}
             {isEditOpen && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-60 flex items-center justify-center p-4 animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
+                    <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
                         <div className="px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
                             <h2 className="text-2xl font-black text-slate-900 dark:text-white">Edit Bill</h2>
                             <button onClick={() => setIsEditOpen(false)} className="w-10 h-10 rounded-xl hover:bg-slate-200 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:hover:text-white transition-colors">
@@ -390,7 +384,7 @@ export default function AdminBilling() {
             {/* Pay Bill Modal */}
             {isPayOpen && selectedBill && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-60 flex items-center justify-center p-4 animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-md overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
+                    <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl w-full max-w-md overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
                         <div className="px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
                             <h2 className="text-2xl font-black text-slate-900 dark:text-white">Record Payment</h2>
                             <button onClick={() => setIsPayOpen(false)} className="w-10 h-10 rounded-xl hover:bg-slate-200 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:hover:text-white transition-colors">
@@ -431,7 +425,7 @@ export default function AdminBilling() {
             {/* View Details Modal */}
             {isViewOpen && selectedBill && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-60 flex items-center justify-center p-4 animate-in fade-in duration-300">
-                    <div className="bg-white dark:bg-[#0a0a0a] rounded-3xl w-full max-w-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
+                    <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl w-full max-w-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
                         <div className="px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
                             <div>
                                 <h2 className="text-2xl font-black text-slate-900 dark:text-white">Billing Details</h2>

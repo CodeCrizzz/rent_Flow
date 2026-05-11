@@ -42,12 +42,7 @@ export default function AdminDashboard() {
 
     return (
         /* Added px-4 sm:px-6 lg:px-8 for perfect mobile edge spacing */
-        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-10 pb-10 px-4 sm:px-6 lg:px-8 relative w-full overflow-hidden sm:overflow-visible">
-            {/* Ambient Backgrounds */}
-            <div className="absolute top-0 left-0 sm:left-10 w-64 h-64 sm:w-96 sm:h-96 bg-[#5b21b6]/5 dark:bg-[#5b21b6]/10 rounded-full blur-[80px] sm:blur-[100px] pointer-events-none -z-10"></div>
-            <div className="absolute top-40 right-0 sm:right-10 w-64 h-64 sm:w-96 sm:h-96 bg-blue-600/5 dark:bg-blue-600/10 rounded-full blur-[80px] sm:blur-[100px] pointer-events-none -z-10"></div>
-
-            {/* Header */}
+        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-10 pb-10 px-4 sm:px-6 lg:px-8 relative w-full overflow-hidden sm:overflow-visible">{/* Header */}
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:gap-6 pt-4 sm:pt-0">
                 <div>
                     <h1 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight transition-colors duration-500">System Overview</h1>
@@ -79,7 +74,7 @@ export default function AdminDashboard() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
                         {/* Billing Overview */}
                         {/* Adjusted padding and border radius for mobile */}
-                        <div className="bg-white dark:bg-[#0a0a0a] p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700 transition-colors duration-500 shadow-xl dark:shadow-2xl relative overflow-hidden group">
+                        <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700 transition-colors duration-500 shadow-xl dark:shadow-2xl relative overflow-hidden group">
                             <div className="absolute inset-0 bg-linear-to-br from-emerald-500/10 dark:from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             
                             <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mb-5 sm:mb-6 flex items-center gap-3 relative z-10 transition-colors duration-500">
@@ -105,7 +100,7 @@ export default function AdminDashboard() {
                         </div>
 
                         {/* Room Status */}
-                        <div className="bg-white dark:bg-[#0a0a0a] p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700 transition-colors duration-500 shadow-xl dark:shadow-2xl relative overflow-hidden group">
+                        <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700 transition-colors duration-500 shadow-xl dark:shadow-2xl relative overflow-hidden group">
                             <div className="absolute inset-0 bg-linear-to-br from-blue-500/10 dark:from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             
                             <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mb-5 sm:mb-6 flex items-center gap-3 relative z-10 transition-colors duration-500">
@@ -125,15 +120,15 @@ export default function AdminDashboard() {
                                 </div>
                                 {/* Reduced gap and padding for mobile grid */}
                                 <div className="grid grid-cols-3 gap-2 sm:gap-3 text-center">
-                                    <div className="bg-slate-50 dark:bg-[#0d0d0d]/40 border border-slate-200 dark:border-zinc-800 p-2 sm:p-3 rounded-xl sm:rounded-2xl transition-colors duration-500">
+                                    <div className="bg-linear-to-br from-slate-50/80 to-white/50 dark:from-[#0d0d0d]/60 dark:to-transparent backdrop-blur-xl border border-white/60 dark:border-white/10 border border-slate-200 dark:border-zinc-800 p-2 sm:p-3 rounded-xl sm:rounded-2xl transition-colors duration-500">
                                         <p className="text-blue-600 dark:text-blue-400 font-black text-lg sm:text-xl">{stats.rooms.occupiedRooms}</p>
                                         <p className="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest text-slate-500 dark:text-zinc-500 mt-1 transition-colors duration-500">Occupied</p>
                                     </div>
-                                    <div className="bg-slate-50 dark:bg-[#0d0d0d]/40 border border-slate-200 dark:border-zinc-800 p-2 sm:p-3 rounded-xl sm:rounded-2xl transition-colors duration-500">
+                                    <div className="bg-linear-to-br from-slate-50/80 to-white/50 dark:from-[#0d0d0d]/60 dark:to-transparent backdrop-blur-xl border border-white/60 dark:border-white/10 border border-slate-200 dark:border-zinc-800 p-2 sm:p-3 rounded-xl sm:rounded-2xl transition-colors duration-500">
                                         <p className="text-emerald-600 dark:text-emerald-400 font-black text-lg sm:text-xl">{stats.rooms.availableRooms}</p>
                                         <p className="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest text-slate-500 dark:text-zinc-500 mt-1 transition-colors duration-500">Available</p>
                                     </div>
-                                    <div className="bg-slate-50 dark:bg-[#0d0d0d]/40 border border-slate-200 dark:border-zinc-800 p-2 sm:p-3 rounded-xl sm:rounded-2xl transition-colors duration-500">
+                                    <div className="bg-linear-to-br from-slate-50/80 to-white/50 dark:from-[#0d0d0d]/60 dark:to-transparent backdrop-blur-xl border border-white/60 dark:border-white/10 border border-slate-200 dark:border-zinc-800 p-2 sm:p-3 rounded-xl sm:rounded-2xl transition-colors duration-500">
                                         <p className="text-rose-600 dark:text-rose-400 font-black text-lg sm:text-xl">{stats.rooms.maintenanceRooms}</p>
                                         <p className="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest text-slate-500 dark:text-zinc-500 mt-1 transition-colors duration-500">Repair</p>
                                     </div>
@@ -145,7 +140,7 @@ export default function AdminDashboard() {
                     {/* Tenant & Maintenance Row */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
                         {/* Tenant Overview */}
-                        <div className="bg-white dark:bg-[#0a0a0a] p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700 transition-colors duration-500 shadow-xl dark:shadow-2xl flex flex-col justify-center relative overflow-hidden group">
+                        <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700 transition-colors duration-500 shadow-xl dark:shadow-2xl flex flex-col justify-center relative overflow-hidden group">
                             <div className="absolute inset-0 bg-linear-to-br from-indigo-500/10 dark:from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             
                             <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mb-5 sm:mb-6 flex items-center gap-3 relative z-10 transition-colors duration-500">
@@ -163,7 +158,7 @@ export default function AdminDashboard() {
                                     <span className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white transition-colors duration-500">{stats.tenants.activeTenants}</span>
                                 </div>
                                 <div className="space-y-3 flex-1 w-full">
-                                    <div className="flex justify-between items-center bg-slate-50 dark:bg-[#0d0d0d]/40 border border-slate-200 dark:border-zinc-800 px-4 sm:px-5 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl transition-colors duration-500">
+                                    <div className="flex justify-between items-center bg-linear-to-br from-slate-50/80 to-white/50 dark:from-[#0d0d0d]/60 dark:to-transparent backdrop-blur-xl border border-white/60 dark:border-white/10 border border-slate-200 dark:border-zinc-800 px-4 sm:px-5 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl transition-colors duration-500">
                                         <span className="text-[10px] sm:text-xs font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-widest transition-colors duration-500">Active</span>
                                         <span className="font-black text-slate-900 dark:text-white text-base sm:text-lg transition-colors duration-500">{stats.tenants.activeTenants}</span>
                                     </div>
@@ -176,7 +171,7 @@ export default function AdminDashboard() {
                         </div>
 
                         {/* Maintenance Summary */}
-                        <div className="bg-white dark:bg-[#0a0a0a] p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700 transition-colors duration-500 shadow-xl dark:shadow-2xl relative overflow-hidden group">
+                        <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700 transition-colors duration-500 shadow-xl dark:shadow-2xl relative overflow-hidden group">
                             <div className="absolute inset-0 bg-linear-to-br from-orange-500/10 dark:from-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                             
                             <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mb-5 sm:mb-6 flex items-center gap-3 relative z-10 transition-colors duration-500">
@@ -184,7 +179,7 @@ export default function AdminDashboard() {
                                 Maintenance Summary
                             </h3>
                             <div className="space-y-2 sm:space-y-3 relative z-10">
-                                <div className="flex justify-between items-center bg-slate-50 dark:bg-[#0d0d0d]/40 border border-slate-200 dark:border-zinc-800 p-3 sm:p-4 rounded-xl sm:rounded-2xl mb-3 sm:mb-4 transition-colors duration-500">
+                                <div className="flex justify-between items-center bg-linear-to-br from-slate-50/80 to-white/50 dark:from-[#0d0d0d]/60 dark:to-transparent backdrop-blur-xl border border-white/60 dark:border-white/10 border border-slate-200 dark:border-zinc-800 p-3 sm:p-4 rounded-xl sm:rounded-2xl mb-3 sm:mb-4 transition-colors duration-500">
                                     <span className="text-[10px] sm:text-xs font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-widest transition-colors duration-500">Total Requests</span>
                                     <span className="font-black text-slate-900 dark:text-white text-base sm:text-lg transition-colors duration-500">{stats.maintenance.totalRequests}</span>
                                 </div>
@@ -215,7 +210,7 @@ export default function AdminDashboard() {
                 </div>
 
                 {/* Right Column: Recent Activities */}
-                <div className="bg-white dark:bg-[#0a0a0a] p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 shadow-xl dark:shadow-2xl h-full flex flex-col relative overflow-hidden group transition-colors duration-500">
+                <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 shadow-xl dark:shadow-2xl h-full flex flex-col relative overflow-hidden group transition-colors duration-500">
                     <div className="absolute inset-0 bg-linear-to-b from-purple-500/10 dark:from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
                     
                     <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mb-6 sm:mb-8 flex items-center gap-3 relative z-10 transition-colors duration-500">
