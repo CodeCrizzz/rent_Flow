@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from 'next/navigation';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { ThemeToggle } from "@/components/theme-toggle";
 
@@ -87,6 +87,9 @@ export default function LandingPage() {
     const mouseTarget = useRef({ x: 0, y: 0 });
     const mouseCurrent = useRef({ x: 0, y: 0 });
     const rafId = useRef<number | null>(null);
+    const isEnteringRef = useRef(false);
+    const isAnimatingRef = useRef(false);
+    const isHoverableRef = useRef(true);
 
     const statuses = ["Loading...", "Connecting...", "Entering portal..."];
 
@@ -105,39 +108,75 @@ export default function LandingPage() {
         };
     }, [isMounted, isEntering]);
 
+    const animate = useCallback(() => {
+        if (isEnteringRef.current || !isHoverableRef.current) {
+            isAnimatingRef.current = false;
+            return;
+        }
+
+        const dx = mouseTarget.current.x - mouseCurrent.current.x;
+        const dy = mouseTarget.current.y - mouseCurrent.current.y;
+
+        // Stop loop if coordinates settled (tolerance of 0.1px)
+        if (Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1) {
+            isAnimatingRef.current = false;
+            return;
+        }
+
+        const lerp = (start: number, end: number, factor: number) => start + (end - start) * factor;
+        mouseCurrent.current.x = lerp(mouseCurrent.current.x, mouseTarget.current.x, 0.08);
+        mouseCurrent.current.y = lerp(mouseCurrent.current.y, mouseTarget.current.y, 0.08);
+
+        if (containerRef.current) {
+            containerRef.current.style.setProperty("--mouse-x", `${mouseCurrent.current.x}px`);
+            containerRef.current.style.setProperty("--mouse-y", `${mouseCurrent.current.y}px`);
+        }
+
+        rafId.current = requestAnimationFrame(animate);
+    }, []);
+
     useEffect(() => {
         const mountTimer = setTimeout(() => setIsMounted(true), 100);
 
-        mouseTarget.current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-        mouseCurrent.current = { ...mouseTarget.current };
+        // Check if device supports hover
+        const hoverable = typeof window !== 'undefined' && window.matchMedia("(any-hover: hover)").matches;
+        isHoverableRef.current = hoverable;
 
-        const lerp = (start: number, end: number, factor: number) => start + (end - start) * factor;
-        const animate = () => {
-            mouseCurrent.current.x = lerp(mouseCurrent.current.x, mouseTarget.current.x, 0.08);
-            mouseCurrent.current.y = lerp(mouseCurrent.current.y, mouseTarget.current.y, 0.08);
-
+        if (!hoverable) {
+            // Mobile/tablet static coordinates (center of screen)
             if (containerRef.current) {
-                containerRef.current.style.setProperty("--mouse-x", `${mouseCurrent.current.x}px`);
-                containerRef.current.style.setProperty("--mouse-y", `${mouseCurrent.current.y}px`);
+                containerRef.current.style.setProperty("--mouse-x", `${window.innerWidth / 2}px`);
+                containerRef.current.style.setProperty("--mouse-y", `${window.innerHeight / 2}px`);
             }
+        } else {
+            // Desktop: initial coordinates
+            mouseTarget.current = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+            mouseCurrent.current = { ...mouseTarget.current };
+            
+            isAnimatingRef.current = true;
             rafId.current = requestAnimationFrame(animate);
-        };
+        }
 
-        rafId.current = requestAnimationFrame(animate);
-        return () => { 
+        return () => {
             clearTimeout(mountTimer);
-            if (rafId.current) cancelAnimationFrame(rafId.current); 
+            if (rafId.current) cancelAnimationFrame(rafId.current);
         };
-    }, []);
+    }, [animate]);
 
     const handleMouseMove = (e: React.MouseEvent) => {
-        if (!containerRef.current) return;
+        if (!containerRef.current || isEnteringRef.current || !isHoverableRef.current) return;
         mouseTarget.current.x = e.clientX;
         mouseTarget.current.y = e.clientY;
+        
+        if (!isAnimatingRef.current) {
+            isAnimatingRef.current = true;
+            rafId.current = requestAnimationFrame(animate);
+        }
     };
 
     const handleEnterPortal = () => {
         setIsEntering(true);
+        isEnteringRef.current = true;
         const step1 = setTimeout(() => setLoadingStep(1), 1200);
         const step2 = setTimeout(() => setLoadingStep(2), 3200);
         setTimeout(() => {
@@ -163,10 +202,15 @@ export default function LandingPage() {
                 html::-webkit-scrollbar, body::-webkit-scrollbar {
                     display: none !important;
                 }
-                @keyframes progress-smooth { 
-                    0% { width: 0%; opacity: 0; } 
+                @keyframes progress-smooth-bar { 
+                    0% { transform: scaleX(0); opacity: 0; } 
                     10% { opacity: 1; } 
-                    100% { width: 100%; opacity: 1; } 
+                    100% { transform: scaleX(1); opacity: 1; } 
+                }
+                @keyframes progress-smooth-bubble {
+                    0% { left: 0%; opacity: 0; }
+                    10% { opacity: 1; }
+                    100% { left: 100%; opacity: 1; }
                 }
                 @keyframes breathe { 
                     0%, 100% { transform: scale(1); opacity: 0.8; box-shadow: 0 0 30px rgba(6,182,212,0.15); } 
@@ -185,7 +229,8 @@ export default function LandingPage() {
                     50% { transform: translateY(-4px); filter: drop-shadow(0 0 12px rgba(34,211,238,0.8)); }
                 }
 
-                .animate-progress-smooth { animation: progress-smooth 2.8s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+                .animate-progress-smooth-bar { animation: progress-smooth-bar 2.8s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
+                .animate-progress-smooth-bubble { animation: progress-smooth-bubble 2.8s cubic-bezier(0.65, 0, 0.35, 1) forwards; }
                 .animate-breathe { animation: breathe 5s ease-in-out infinite; }
                 .animate-float-icon { animation: float-icon 2.5s ease-in-out infinite; }
             `}</style>
@@ -320,14 +365,10 @@ export default function LandingPage() {
                                     <stop offset="0%" stopColor="#06b6d4" />
                                     <stop offset="100%" stopColor="#3b82f6" />
                                 </linearGradient>
-                                <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                                    <feGaussianBlur stdDeviation="2" result="blur" />
-                                    <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                                </filter>
                             </defs>
                             
                             <motion.circle cx="32" cy="32" r="16" fill="url(#cyan-glow)" initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: [0, 0.15, 0], scale: [0.5, 1.5, 2] }} transition={{ duration: 2.5, repeat: Infinity, ease: "easeOut" }} />
-                            <motion.path stroke="url(#cyan-glow)" filter="url(#glow)" initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ duration: 1, ease: "easeOut" }} d="M8 56h48" />
+                            <motion.path stroke="url(#cyan-glow)" style={{ filter: "drop-shadow(0 0 4px rgba(6, 182, 212, 0.6))" }} initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ duration: 1, ease: "easeOut" }} d="M8 56h48" />
                             <motion.path stroke="url(#cyan-glow)" initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 1 }} transition={{ duration: 1.5, delay: 0.3, ease: "easeInOut" }} d="M16 56V32L32 16l16 16v24" />
                             <motion.path stroke="currentColor" className="text-cyan-600 dark:text-cyan-500" opacity="0.6" initial={{ pathLength: 0, opacity: 0 }} animate={{ pathLength: 1, opacity: 0.6 }} transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }} d="M40 24V12h6v18" />
                             <motion.path stroke="currentColor" className="text-cyan-600 dark:text-cyan-400" opacity="0.8" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 1, delay: 1 }} d="M28 56V46a4 4 0 0 1 8 0v10" />
@@ -350,9 +391,13 @@ export default function LandingPage() {
                     {/* Simple Clean Progress Interface */}
                     <div className="relative flex flex-col items-center w-full max-w-[200px] md:max-w-[260px] mt-4">
                         
-                        <div className="relative w-full h-1.5 md:h-2 bg-slate-200 dark:bg-slate-800 rounded-full mb-6 border border-slate-300/50 dark:border-slate-700/50">
-                            <div className="absolute top-0 left-0 h-full bg-cyan-500 dark:bg-cyan-400 animate-progress-smooth rounded-full flex justify-end items-center shadow-[0_0_10px_rgba(6,182,212,0.4)]">
-                                <div className="absolute right-0 translate-x-1/2 w-6 h-6 md:w-8 md:h-8 bg-white dark:bg-[#020617] border-2 border-cyan-500 dark:border-cyan-400 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.4)] z-20">
+                        <div className="relative w-full h-1.5 md:h-2 bg-slate-200 dark:bg-slate-800 rounded-full mb-6 border border-slate-300/50 dark:border-slate-700/50 overflow-visible">
+                            {/* Optimised Progress Fill using GPU-accelerated scaleX */}
+                            <div className="absolute top-0 left-0 w-full h-full bg-cyan-500 dark:bg-cyan-400 animate-progress-smooth-bar rounded-full origin-left shadow-[0_0_10px_rgba(6,182,212,0.4)]" />
+                            
+                            {/* Bubble Container - moves using hardware-accelerated left animation relative to dynamic progress */}
+                            <div className="absolute top-1/2 -translate-y-1/2 left-0 h-0 overflow-visible pointer-events-none z-20 animate-progress-smooth-bubble">
+                                <div className="absolute left-0 -translate-x-1/2 -translate-y-1/2 w-6 h-6 md:w-8 md:h-8 bg-white dark:bg-[#020617] border-2 border-cyan-500 dark:border-cyan-400 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(6,182,212,0.4)] pointer-events-auto">
                                     <svg className="w-3 h-3 md:w-4 md:h-4 text-cyan-600 dark:text-cyan-400 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                     </svg>
