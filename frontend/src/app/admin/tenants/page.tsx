@@ -191,23 +191,24 @@ export default function AdminTenants() {
     };
 
     return (
-        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-10 pb-10 px-4 sm:px-6 lg:px-8 relative w-full"><div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 relative z-10">
+        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-10 pb-10 px-4 sm:px-6 lg:px-8 relative w-full">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
                 <div>
-                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-4">
+                    <h1 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-4">
                         Tenants Directory
                         {tenants.filter(t => t.status === 'Pending').length > 0 && (
-                            <span className="inline-flex items-center px-4 py-1.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-sm font-black animate-pulse">
+                            <span className="inline-flex items-center px-4 py-1.5 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-600 dark:text-amber-400 text-xs font-black animate-pulse">
                                 {tenants.filter(t => t.status === 'Pending').length} Pending
                             </span>
                         )}
                     </h1>
                     <p className="text-slate-500 dark:text-zinc-400 font-medium mt-2">Manage all active residents and pending applications.</p>
                 </div>
-                <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+                <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto">
                     <select 
                         value={statusFilter} 
                         onChange={(e) => setStatusFilter(e.target.value)} 
-                        className="py-3.5 px-4 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent shadow-sm appearance-none outline-none w-full sm:w-40"
+                        className="py-3.5 px-4 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-xs font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent shadow-sm appearance-none outline-none w-full sm:w-40"
                     >
                         <option value="All">All Statuses</option>
                         <option value="Pending">Pending</option>
@@ -221,7 +222,7 @@ export default function AdminTenants() {
                             value={searchQuery} 
                             onChange={(e) => setSearchQuery(e.target.value)} 
                             placeholder="Search residents..." 
-                            className="pl-12 pr-6 py-3.5 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-medium text-slate-900 dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent w-full shadow-sm transition-all outline-none" 
+                            className="pl-12 pr-6 py-3.5 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-xs font-medium text-slate-900 dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent w-full shadow-sm transition-all outline-none" 
                         />
                         <svg className="w-5 h-5 text-slate-500 dark:text-zinc-500 absolute left-4 top-3.5 group-focus-within:text-[#5b21b6] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     </div>
@@ -229,7 +230,7 @@ export default function AdminTenants() {
             </div>
 
             {error && (
-                <div className="p-4 bg-rose-500/10 border border-rose-500/20 rounded-2xl text-rose-400 font-bold text-sm flex items-center gap-3 relative z-10">
+                <div className="p-4 bg-rose-500/10 border border-rose-500/20 rounded-2xl text-rose-400 font-bold text-xs flex items-center gap-3 relative z-10">
                     <div className="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></div>
                     {error}
                 </div>
@@ -247,23 +248,23 @@ export default function AdminTenants() {
                         </div>
                         <form onSubmit={handleSubmit} className="p-8 space-y-6 overflow-y-auto max-h-[70vh] custom-scrollbar">
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Full Name</label>
-                                <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="e.g. John Doe" />
+                                <label className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Full Name</label>
+                                <input required type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-xs font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="e.g. John Doe" />
                             </div>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Email Address</label>
-                                    <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="john@example.com" />
+                                    <label className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Email Address</label>
+                                    <input required type="email" value={formData.email} onChange={e => setFormData({...formData, email: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-xs font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="john@example.com" />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Phone Number</label>
-                                    <input type="text" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="+63 000 000 0000" />
+                                    <label className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Phone Number</label>
+                                    <input type="text" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-xs font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="+63 000 000 0000" />
                                 </div>
                             </div>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mt-4">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Gender</label>
-                                    <select value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none appearance-none">
+                                    <label className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Gender</label>
+                                    <select value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-xs font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none appearance-none">
                                         <option value="">Not Specified</option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
@@ -271,8 +272,8 @@ export default function AdminTenants() {
                                     </select>
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Tenant Status</label>
-                                    <select value={formData.status} onChange={e => setFormData({...formData, status: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none appearance-none">
+                                    <label className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Tenant Status</label>
+                                    <select value={formData.status} onChange={e => setFormData({...formData, status: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-xs font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none appearance-none">
                                         <option value="Pending">Pending</option>
                                         <option value="Active">Active</option>
                                         <option value="Declined">Declined</option>
@@ -282,8 +283,8 @@ export default function AdminTenants() {
                             </div>
 
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Home Address</label>
-                                <input type="text" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="123 Main St..." />
+                                <label className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Home Address</label>
+                                <input type="text" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-xs font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="123 Main St..." />
                             </div>
 
                             <div className="pt-4 pb-2 border-t border-slate-200 dark:border-zinc-800 flex items-center justify-between">
@@ -292,11 +293,11 @@ export default function AdminTenants() {
 
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Assigned Unit</label>
+                                    <label className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Assigned Unit</label>
                                     <select 
                                         value={formData.room_id?.toString() || ''} 
                                         onChange={e => setFormData({...formData, room_id: e.target.value})} 
-                                        className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none appearance-none"
+                                        className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-xs font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none appearance-none"
                                     >
                                         <option value="">Unassigned / Pending</option>
                                         {rooms.map(room => (
@@ -305,25 +306,25 @@ export default function AdminTenants() {
                                     </select>
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Monthly Rent (₱)</label>
-                                    <input type="number" min="0" step="0.01" value={formData.monthly_rent} onChange={e => setFormData({...formData, monthly_rent: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="e.g. 5000" />
+                                    <label className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Monthly Rent (₱)</label>
+                                    <input type="number" min="0" step="0.01" value={formData.monthly_rent} onChange={e => setFormData({...formData, monthly_rent: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-xs font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" placeholder="e.g. 5000" />
                                 </div>
                             </div>
                             
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Move-in Date</label>
-                                    <input type="date" value={formData.date_moved_in} onChange={e => setFormData({...formData, date_moved_in: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
+                                    <label className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Move-in Date</label>
+                                    <input type="date" value={formData.date_moved_in} onChange={e => setFormData({...formData, date_moved_in: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-xs font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Contract End Date</label>
-                                    <input type="date" value={formData.contract_end_date} onChange={e => setFormData({...formData, contract_end_date: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-sm font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
+                                    <label className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Contract End Date</label>
+                                    <input type="date" value={formData.contract_end_date} onChange={e => setFormData({...formData, contract_end_date: e.target.value})} className="w-full bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white px-5 py-3.5 rounded-xl text-xs font-bold focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
                                 </div>
                             </div>
                             
                             <div className="flex justify-end gap-3 pt-6 border-t border-slate-200 dark:border-zinc-800">
-                                <button type="button" onClick={() => setIsModalOpen(false)} className="px-6 py-3.5 font-bold text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white rounded-xl transition-colors">Cancel</button>
-                                <button type="submit" disabled={isSubmitting} className="px-6 py-3.5 font-bold bg-[#5b21b6] text-white rounded-xl hover:bg-[#4c1d95] transition-colors shadow-lg flex items-center justify-center gap-2">
+                                <button type="button" onClick={() => setIsModalOpen(false)} className="px-6 py-3.5 font-bold text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white rounded-xl transition-colors text-xs">Cancel</button>
+                                <button type="submit" disabled={isSubmitting} className="px-6 py-3.5 font-bold bg-[#5b21b6] text-white rounded-xl hover:bg-[#4c1d95] transition-colors shadow-lg flex items-center justify-center gap-2 text-xs">
                                     {isSubmitting ? (
                                         <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
                                     ) : (
@@ -336,16 +337,17 @@ export default function AdminTenants() {
                 </div>
             )}
 
-            <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl shadow-xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
+            {/* Desktop Directory Table */}
+            <div className="hidden lg:block bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl shadow-xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
                 <div className="overflow-x-auto custom-scrollbar">
                     <table className="w-full text-left border-collapse whitespace-nowrap">
                         <thead className="bg-slate-50 dark:bg-zinc-900/50">
                             <tr className="border-b border-slate-200 dark:border-zinc-800">
-                                <th className="px-8 py-5 text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Resident Profile</th>
-                                <th className="px-8 py-5 text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Rental Info</th>
-                                <th className="px-8 py-5 text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Financials</th>
-                                <th className="px-8 py-5 text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Status</th>
-                                <th className="px-8 py-5 text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest text-right">Actions</th>
+                                <th className="px-8 py-5 text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Resident Profile</th>
+                                <th className="px-8 py-5 text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Rental Info</th>
+                                <th className="px-8 py-5 text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Financials</th>
+                                <th className="px-8 py-5 text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Status</th>
+                                <th className="px-8 py-5 text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-zinc-800/50">
@@ -353,7 +355,7 @@ export default function AdminTenants() {
                                 <tr>
                                     <td colSpan={5} className="px-8 py-20 text-center">
                                         <div className="w-6 h-6 border-2 border-[#5b21b6]/20 border-t-[#5b21b6] rounded-full animate-spin mx-auto mb-4"></div>
-                                        <p className="text-[10px] font-bold text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Fetching residents...</p>
+                                        <p className="text-xs font-bold text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Fetching residents...</p>
                                     </td>
                                 </tr>
                             ) : filteredTenants.length === 0 ? (
@@ -374,8 +376,8 @@ export default function AdminTenants() {
                                                 </div>
                                                 <div>
                                                     <p className="font-bold text-slate-900 dark:text-white">{tenant.name}</p>
-                                                    <p className="text-[11px] text-slate-500 dark:text-zinc-400 font-medium mt-0.5">{tenant.email} • {tenant.phone}</p>
-                                                    <p className="text-[10px] text-slate-500 dark:text-zinc-500 font-bold uppercase tracking-widest mt-1">Gender: {tenant.gender} • ID: {tenant.id_document}</p>
+                                                    <p className="text-xs text-slate-500 dark:text-zinc-400 font-medium mt-0.5">{tenant.email} • {tenant.phone}</p>
+                                                    <p className="text-xs text-slate-500 dark:text-zinc-500 font-bold uppercase tracking-widest mt-1">Gender: {tenant.gender} • ID: {tenant.id_document}</p>
                                                 </div>
                                             </div>
                                         </td>
@@ -387,8 +389,8 @@ export default function AdminTenants() {
                                                     {tenant.room_number ? `Room ${tenant.room_number}` : 'Unassigned'} 
                                                     {tenant.bed_space !== 'N/A' && ` • Bed ${tenant.bed_space}`}
                                                 </p>
-                                                <p className="text-[11px] text-slate-500 dark:text-zinc-400 font-medium mt-0.5">Rent: ₱{tenant.monthly_rent ? Number(tenant.monthly_rent).toLocaleString() : '0'}</p>
-                                                <p className="text-[10px] text-slate-500 dark:text-zinc-500 font-bold uppercase tracking-widest mt-1">
+                                                <p className="text-xs text-slate-500 dark:text-zinc-400 font-medium mt-0.5">Rent: ₱{tenant.monthly_rent ? Number(tenant.monthly_rent).toLocaleString() : '0'}</p>
+                                                <p className="text-xs text-slate-500 dark:text-zinc-500 font-bold uppercase tracking-widest mt-1">
                                                     In: {tenant.date_moved_in ? new Date(tenant.date_moved_in).toLocaleDateString() : 'N/A'} • 
                                                     Out: {tenant.contract_end_date ? new Date(tenant.contract_end_date).toLocaleDateString() : 'N/A'}
                                                 </p>
@@ -401,8 +403,8 @@ export default function AdminTenants() {
                                                 <p className="font-bold text-slate-900 dark:text-white text-sm">
                                                     Balance: <span className={tenant.balance! > 0 ? 'text-rose-400' : 'text-emerald-400'}>₱{tenant.balance?.toLocaleString()}</span>
                                                 </p>
-                                                <p className="text-[11px] text-slate-500 dark:text-zinc-400 font-medium mt-0.5">Last Paid: {tenant.last_payment_date}</p>
-                                                <span className={`mt-1.5 inline-block px-2 py-0.5 text-[9px] font-black uppercase tracking-widest rounded-md border ${
+                                                <p className="text-xs text-slate-500 dark:text-zinc-400 font-medium mt-0.5">Last Paid: {tenant.last_payment_date}</p>
+                                                <span className={`mt-1.5 inline-block px-2 py-0.5 text-xs font-black uppercase tracking-widest rounded-md border ${
                                                     tenant.payment_status === 'Paid' ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/20' : 
                                                     tenant.payment_status === 'Overdue' ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-500/20' : 'bg-slate-50 dark:bg-zinc-500/10 text-slate-600 dark:text-zinc-400 border-slate-200 dark:border-zinc-500/20'
                                                 }`}>
@@ -413,7 +415,7 @@ export default function AdminTenants() {
 
                                         {/* 4. Status */}
                                         <td className="px-8 py-5">
-                                            <span className={`inline-flex px-3 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-xl border ${getTenantStatusStyles(tenant.status)}`}>
+                                            <span className={`inline-flex px-3 py-1.5 text-xs font-black uppercase tracking-widest rounded-xl border ${getTenantStatusStyles(tenant.status)}`}>
                                                 {tenant.status}
                                             </span>
                                         </td>
@@ -426,12 +428,12 @@ export default function AdminTenants() {
                                                         <button 
                                                             onClick={() => handleUpdateStatus(tenant.id, 'Active')} 
                                                             disabled={isStatusUpdating === tenant.id} 
-                                                            className="px-3 py-1.5 text-emerald-400 font-black text-[10px] uppercase tracking-widest hover:bg-emerald-400/10 rounded-lg transition-colors disabled:opacity-50"
+                                                            className="px-3 py-1.5 text-emerald-400 font-black text-xs uppercase tracking-widest hover:bg-emerald-400/10 rounded-lg transition-colors disabled:opacity-50"
                                                         >
                                                             {isStatusUpdating === tenant.id ? '...' : 'Approve'}
                                                         </button>
                                                         
-                                                        <button onClick={() => handleUpdateStatus(tenant.id, 'Declined')} disabled={isStatusUpdating === tenant.id} className="px-3 py-1.5 text-amber-400 font-black text-[10px] uppercase tracking-widest hover:bg-amber-400/10 rounded-lg transition-colors disabled:opacity-50">
+                                                        <button onClick={() => handleUpdateStatus(tenant.id, 'Declined')} disabled={isStatusUpdating === tenant.id} className="px-3 py-1.5 text-amber-400 font-black text-xs uppercase tracking-widest hover:bg-amber-400/10 rounded-lg transition-colors disabled:opacity-50">
                                                             {isStatusUpdating === tenant.id ? '...' : 'Decline'}
                                                         </button>
                                                     </>
@@ -447,7 +449,7 @@ export default function AdminTenants() {
                                                     title="Delete Tenant"
                                                 >
                                                     {isDeleting === tenant.id ? (
-                                                        <span className="text-[10px] font-black uppercase tracking-widest text-rose-500">...</span>
+                                                        <span className="text-xs font-black uppercase tracking-widest text-rose-500">...</span>
                                                     ) : (
                                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
                                                     )}
@@ -460,6 +462,115 @@ export default function AdminTenants() {
                         </tbody>
                     </table>
                 </div>
+            </div>
+
+            {/* Mobile Cards View */}
+            <div className="block lg:hidden space-y-4 relative z-10">
+                {isLoading ? (
+                    <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl shadow-xl border border-slate-200 dark:border-zinc-800 p-8 text-center">
+                        <div className="w-6 h-6 border-2 border-[#5b21b6]/20 border-t-[#5b21b6] rounded-full animate-spin mx-auto mb-4"></div>
+                        <p className="text-xs font-bold text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Fetching residents...</p>
+                    </div>
+                ) : filteredTenants.length === 0 ? (
+                    <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl shadow-xl border border-slate-200 dark:border-zinc-800 p-8 text-center text-slate-500 dark:text-zinc-500 font-bold text-sm">
+                        {searchQuery ? "No residents match your search." : "No residents found."}
+                    </div>
+                ) : (
+                    filteredTenants.map((tenant) => (
+                        <div key={tenant.id} className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-2xl p-5 border border-slate-200 dark:border-zinc-800 relative overflow-hidden group">
+                            {/* Accent line on left */}
+                            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#5b21b6]"></div>
+                            
+                            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-4 mb-4">
+                                <div className="flex items-center gap-4">
+                                    <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-zinc-800 border border-slate-300 dark:border-zinc-700 flex items-center justify-center text-slate-500 dark:text-zinc-400 font-bold text-sm group-hover:bg-[#5b21b6] group-hover:text-white group-hover:border-[#5b21b6] transition-all duration-300 shrink-0">
+                                        {tenant.name.charAt(0)}
+                                    </div>
+                                    <div>
+                                        <p className="font-bold text-slate-900 dark:text-white text-base">{tenant.name}</p>
+                                        <p className="text-xs text-slate-500 dark:text-zinc-400 font-medium mt-0.5">{tenant.email} • {tenant.phone}</p>
+                                        <p className="text-xs text-slate-500 dark:text-zinc-500 font-bold uppercase tracking-widest mt-1">Gender: {tenant.gender} • ID: {tenant.id_document}</p>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-2 self-start sm:self-center">
+                                    <span className={`inline-flex px-2.5 py-1 text-xs font-black uppercase tracking-widest rounded-lg border ${getTenantStatusStyles(tenant.status)}`}>
+                                        {tenant.status}
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 py-3 border-t border-b border-slate-100 dark:border-zinc-800/50 mb-4">
+                                <div>
+                                    <p className="text-xs text-slate-500 dark:text-zinc-500 font-bold uppercase tracking-widest mb-1">Rental Info</p>
+                                    <p className="font-bold text-slate-900 dark:text-white text-sm">
+                                        {tenant.room_number ? `Room ${tenant.room_number}` : 'Unassigned'} 
+                                        {tenant.bed_space !== 'N/A' && ` • Bed ${tenant.bed_space}`}
+                                    </p>
+                                    <p className="text-xs text-slate-500 dark:text-zinc-400 font-medium mt-0.5">Rent: ₱{tenant.monthly_rent ? Number(tenant.monthly_rent).toLocaleString() : '0'}</p>
+                                    <p className="text-xs text-slate-500 dark:text-zinc-500 mt-1">
+                                        In: {tenant.date_moved_in ? new Date(tenant.date_moved_in).toLocaleDateString() : 'N/A'} • 
+                                        Out: {tenant.contract_end_date ? new Date(tenant.contract_end_date).toLocaleDateString() : 'N/A'}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p className="text-xs text-slate-500 dark:text-zinc-500 font-bold uppercase tracking-widest mb-1">Financials</p>
+                                    <p className="font-bold text-slate-900 dark:text-white text-sm">
+                                        Balance: <span className={tenant.balance! > 0 ? 'text-rose-400' : 'text-emerald-400'}>₱{tenant.balance?.toLocaleString()}</span>
+                                    </p>
+                                    <p className="text-xs text-slate-500 dark:text-zinc-400 font-medium mt-0.5">Last Paid: {tenant.last_payment_date}</p>
+                                    <span className={`mt-1.5 inline-block px-2 py-0.5 text-xs font-black uppercase tracking-widest rounded-md border ${
+                                        tenant.payment_status === 'Paid' ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/20' : 
+                                        tenant.payment_status === 'Overdue' ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-500/20' : 'bg-slate-50 dark:bg-zinc-500/10 text-slate-600 dark:text-zinc-400 border-slate-200 dark:border-zinc-500/20'
+                                    }`}>
+                                        {tenant.payment_status}
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div className="flex items-center justify-end gap-2">
+                                {tenant.status === 'Pending' ? (
+                                    <>
+                                        <button 
+                                            onClick={() => handleUpdateStatus(tenant.id, 'Active')} 
+                                            disabled={isStatusUpdating === tenant.id} 
+                                            className="px-3 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 rounded-xl text-xs font-bold transition-all disabled:opacity-50"
+                                        >
+                                            {isStatusUpdating === tenant.id ? '...' : 'Approve'}
+                                        </button>
+                                        
+                                        <button 
+                                            onClick={() => handleUpdateStatus(tenant.id, 'Declined')} 
+                                            disabled={isStatusUpdating === tenant.id} 
+                                            className="px-3 py-2 bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/20 rounded-xl text-xs font-bold transition-all disabled:opacity-50"
+                                        >
+                                            {isStatusUpdating === tenant.id ? '...' : 'Decline'}
+                                        </button>
+                                    </>
+                                ) : (
+                                    <button onClick={() => handleOpenModal(tenant, 'edit')} className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-slate-600 dark:text-zinc-400 hover:text-[#5b21b6] bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl transition-all" title="Edit Tenant">
+                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                        Edit
+                                    </button>
+                                )}
+                                <button 
+                                    onClick={() => handleDeleteTenant(tenant.id)} 
+                                    disabled={isDeleting === tenant.id}
+                                    className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-rose-500 disabled:opacity-50 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl transition-all"
+                                    title="Delete Tenant"
+                                >
+                                    {isDeleting === tenant.id ? (
+                                        <span className="text-xs font-bold">...</span>
+                                    ) : (
+                                        <>
+                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                            Delete
+                                        </>
+                                    )}
+                                </button>
+                            </div>
+                        </div>
+                    ))
+                )}
             </div>
         </div>
     );

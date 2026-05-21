@@ -212,27 +212,27 @@ export default function TenantMaintenance() {
                 </motion.div>
 
                 {/* MAIN CONTENT GRID */}
-                <div className="flex-1 flex flex-col sm:grid sm:grid-cols-12 gap-4 sm:gap-4">
+                <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
                     {/* NEW REQUEST FORM */}
-                    <motion.div variants={itemVariants} className="col-span-5 sm:col-span-4 relative rounded-xl sm:rounded-[2rem] bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col h-fit">
+                    <motion.div variants={itemVariants} className="col-span-1 lg:col-span-4 relative rounded-xl sm:rounded-[2rem] bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col h-fit">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
-                        <div className="relative z-10 shrink-0 p-1 sm:p-5 border-b border-neutral-200/50 dark:border-white/10 bg-linear-to-b from-white/40 to-white/10 dark:from-white/[0.04] dark:to-transparent backdrop-blur-2xl flex justify-between items-center">
-                            <h2 className="text-sm sm:text-lg font-bold flex items-center gap-1 sm:gap-1.5"><svg className="w-2.5 h-2.5 sm:w-4 sm:h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg> File Request</h2>
-                            <button onClick={handleClearForm} className="text-[9px] sm:text-xs font-bold uppercase tracking-widest text-neutral-500 hover:text-red-500 transition-colors">Clear</button>
+                        <div className="relative z-10 shrink-0 p-4 sm:p-5 border-b border-neutral-200/50 dark:border-white/10 bg-linear-to-b from-white/40 to-white/10 dark:from-white/[0.04] dark:to-transparent backdrop-blur-2xl flex justify-between items-center">
+                            <h2 className="text-base sm:text-lg font-bold flex items-center gap-1.5 sm:gap-2"><svg className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg> File Request</h2>
+                            <button onClick={handleClearForm} className="text-xs font-bold uppercase tracking-widest text-neutral-500 hover:text-red-500 transition-colors">Clear</button>
                         </div>
 
-                        <div className="relative z-10 flex-1 overflow-y-auto p-1.5 sm:p-5 [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden overscroll-contain">
-                            <form id="maintenance-form" onSubmit={handleSubmit} className="flex flex-col gap-1.5 sm:gap-4">
-                                {formError && <div className="p-1 sm:p-2.5 bg-red-500/10 rounded text-red-500 text-[10px] sm:text-sm font-bold">{formError}</div>}
+                        <div className="relative z-10 flex-1 overflow-y-auto p-4 sm:p-5 [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden overscroll-contain">
+                            <form id="maintenance-form" onSubmit={handleSubmit} className="flex flex-col gap-3 sm:gap-4">
+                                {formError && <div className="p-2.5 sm:p-3 bg-red-500/10 rounded-xl text-red-500 text-xs sm:text-sm font-bold">{formError}</div>}
                                 
                                 <div>
-                                    <label className="block text-[8px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest mb-0.5 sm:mb-1 ml-1">Issue Title</label>
-                                    <input type="text" required placeholder="E.g. Leaking Faucet" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1.5 sm:px-3 py-1 sm:py-2.5 text-xs sm:text-sm font-bold focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm text-neutral-900 dark:text-white" />
+                                    <label className="block text-xs font-bold text-neutral-500 uppercase tracking-widest mb-1.5 ml-1">Issue Title</label>
+                                    <input type="text" required placeholder="E.g. Leaking Faucet" value={title} onChange={(e) => setTitle(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-bold focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm text-neutral-900 dark:text-white" />
                                 </div>
-                                <div className="grid grid-cols-2 gap-1.5 sm:gap-4">
+                                <div className="grid grid-cols-2 gap-3 sm:gap-4">
                                     <div>
-                                        <label className="block text-[8px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest mb-0.5 sm:mb-1 ml-1">Category</label>
-                                        <select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-3 py-1 sm:py-2.5 text-xs sm:text-sm font-bold focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm cursor-pointer text-neutral-900 dark:text-white">
+                                        <label className="block text-xs font-bold text-neutral-500 uppercase tracking-widest mb-1.5 ml-1">Category</label>
+                                        <select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-bold focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm cursor-pointer text-neutral-900 dark:text-white">
                                             <option value="Plumbing" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Plumbing</option>
                                             <option value="Electrical" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Electrical</option>
                                             <option value="Furniture" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Furniture</option>
@@ -241,8 +241,8 @@ export default function TenantMaintenance() {
                                         </select>
                                     </div>
                                     <div>
-                                        <label className="block text-[8px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest mb-0.5 sm:mb-1 ml-1">Priority</label>
-                                        <select value={priority} onChange={(e) => setPriority(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-3 py-1 sm:py-2.5 text-xs sm:text-sm font-bold focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm cursor-pointer text-neutral-900 dark:text-white">
+                                        <label className="block text-xs font-bold text-neutral-500 uppercase tracking-widest mb-1.5 ml-1">Priority</label>
+                                        <select value={priority} onChange={(e) => setPriority(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-bold focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm cursor-pointer text-neutral-900 dark:text-white">
                                             <option value="Low" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Low</option>
                                             <option value="Medium" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Medium</option>
                                             <option value="High" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">High</option>
@@ -251,19 +251,19 @@ export default function TenantMaintenance() {
                                     </div>
                                 </div>
                                 <div>
-                                    <label className="block text-[8px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest mb-0.5 sm:mb-1 ml-1">Description</label>
-                                    <textarea required rows={2} placeholder="Explain the issue..." value={description} onChange={(e) => setDescription(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1.5 sm:px-3 py-1 sm:py-2.5 text-xs sm:text-sm font-medium focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm resize-none text-neutral-900 dark:text-white" />
+                                    <label className="block text-xs font-bold text-neutral-500 uppercase tracking-widest mb-1.5 ml-1">Description</label>
+                                    <textarea required rows={3} placeholder="Explain the issue..." value={description} onChange={(e) => setDescription(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm font-medium focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm resize-none text-neutral-900 dark:text-white" />
                                 </div>
                                 <div>
-                                    <label className="block text-[8px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest mb-0.5 sm:mb-1 ml-1">Pref. Schedule <span className="normal-case opacity-70">(Opt)</span></label>
-                                    <input type="text" placeholder="E.g. Tomorrow morning" value={schedule} onChange={(e) => setSchedule(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1.5 sm:px-3 py-1 sm:py-2.5 text-xs sm:text-sm font-medium focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm text-neutral-900 dark:text-white" />
+                                    <label className="block text-xs font-bold text-neutral-500 uppercase tracking-widest mb-1.5 ml-1">Pref. Schedule <span className="normal-case opacity-70">(Opt)</span></label>
+                                    <input type="text" placeholder="E.g. Tomorrow morning" value={schedule} onChange={(e) => setSchedule(e.target.value)} className="w-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-medium focus:ring-2 focus:ring-indigo-500/50 outline-none transition-all shadow-sm text-neutral-900 dark:text-white" />
                                 </div>
-                                <div className="mt-0.5 sm:mt-1">
-                                    <div className="w-full border-2 border-dashed border-neutral-200 dark:border-white/10 hover:border-indigo-400 rounded sm:rounded-xl p-1.5 sm:p-4 flex flex-col items-center cursor-pointer bg-neutral-50/50 dark:bg-white/[0.02] transition-colors" onClick={() => fileInputRef.current?.click()}>
+                                <div className="mt-1">
+                                    <div className="w-full border-2 border-dashed border-neutral-200 dark:border-white/10 hover:border-indigo-400 rounded-xl p-3 sm:p-5 flex flex-col items-center cursor-pointer bg-neutral-50/50 dark:bg-white/[0.02] transition-colors" onClick={() => fileInputRef.current?.click()}>
                                         {imageFile ? (
-                                            <span className="text-[9px] sm:text-xs font-bold text-indigo-500 truncate px-1">{imageFile.name}</span>
+                                            <span className="text-xs font-bold text-indigo-500 truncate px-2">{imageFile.name}</span>
                                         ) : (
-                                            <span className="text-[9px] sm:text-xs font-bold text-neutral-400 flex items-center gap-1 sm:gap-1.5"><svg className="w-2.5 h-2.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg> Attach Image (Max 5MB)</span>
+                                            <span className="text-xs font-bold text-neutral-400 flex items-center gap-1.5 sm:gap-2"><svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg> Attach Image (Max 5MB)</span>
                                         )}
                                         <input ref={fileInputRef} type="file" className="hidden" accept="image/*" onChange={handleFileChange} />
                                     </div>
@@ -271,27 +271,27 @@ export default function TenantMaintenance() {
                             </form>
                         </div>
                         
-                        <div className="relative z-10 shrink-0 p-1.5 sm:p-5 border-t border-neutral-200/50 dark:border-white/10 bg-linear-to-b from-white/40 to-white/10 dark:from-white/[0.04] dark:to-transparent backdrop-blur-2xl">
-                            <button type="submit" form="maintenance-form" disabled={isSubmitting} className={`w-full py-1 sm:py-3 text-[10px] sm:text-sm font-bold uppercase tracking-widest rounded sm:rounded-xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 ${isSubmitting ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-400 cursor-wait' : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20 active:scale-95'}`}>
-                                {isSubmitting && <div className="w-2 h-2 sm:w-4 sm:h-4 border-2 border-current/30 border-t-current rounded-full animate-spin"></div>}
+                        <div className="relative z-10 shrink-0 p-4 sm:p-5 border-t border-neutral-200/50 dark:border-white/10 bg-linear-to-b from-white/40 to-white/10 dark:from-white/[0.04] dark:to-transparent backdrop-blur-2xl">
+                            <button type="submit" form="maintenance-form" disabled={isSubmitting} className={`w-full py-2.5 sm:py-3.5 text-xs sm:text-sm font-bold uppercase tracking-widest rounded-xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 ${isSubmitting ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-400 cursor-wait' : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20 active:scale-95'}`}>
+                                {isSubmitting && <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 border-2 border-current/30 border-t-current rounded-full animate-spin"></div>}
                                 {isSubmitting ? 'Submitting...' : 'Submit Request'}
                             </button>
                         </div>
                     </motion.div>
 
                     {/* HISTORY TABLE & FILTERS (Right Side) */}
-                    <motion.div variants={itemVariants} className="col-span-7 sm:col-span-8 relative bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent rounded-xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 flex flex-col min-h-[300px] sm:min-h-[500px] overflow-hidden">
+                    <motion.div variants={itemVariants} className="col-span-1 lg:col-span-8 relative bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent rounded-xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 flex flex-col min-h-[400px] sm:min-h-[650px] overflow-hidden">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
 
                         {/*-- Toolbar --*/}
-                        <div className="relative z-10 shrink-0 p-1.5 sm:p-4 border-b border-neutral-200/50 dark:border-white/10 bg-linear-to-b from-white/40 to-white/10 dark:from-white/[0.04] dark:to-transparent backdrop-blur-2xl flex flex-nowrap items-center gap-1.5 sm:gap-2 overflow-x-auto [ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                        <div className="relative z-10 shrink-0 p-3 sm:p-4 border-b border-neutral-200/50 dark:border-white/10 bg-linear-to-b from-white/40 to-white/10 dark:from-white/[0.04] dark:to-transparent backdrop-blur-2xl flex flex-wrap lg:flex-nowrap items-center gap-2 sm:gap-3 justify-between">
                             
-                            <div className="relative w-20 sm:w-48 h-6 sm:h-9 shrink-0 flex items-center">
-                                <svg className="absolute left-1.5 sm:left-2.5 w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-neutral-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                                <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full h-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl pl-5 sm:pl-8 pr-1.5 sm:pr-2 text-[10px] sm:text-sm outline-none focus:ring-2 focus:ring-indigo-500/50 text-neutral-900 dark:text-white m-0" />
+                            <div className="relative flex-1 min-w-[130px] lg:flex-none lg:w-48 h-9 sm:h-10 flex items-center">
+                                <svg className="absolute left-2.5 sm:left-3.5 w-3 h-3 sm:w-4 sm:h-4 text-neutral-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                                <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full h-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-lg sm:rounded-xl pl-8 sm:pl-10 pr-2 sm:pr-3 text-xs sm:text-sm outline-none focus:ring-2 focus:ring-indigo-500/50 text-neutral-900 dark:text-white m-0" />
                             </div>
                             
-                            <select value={filterStatus} onChange={(e) => { setFilterStatus(e.target.value); setCurrentPage(1); }} className="h-6 sm:h-9 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-2 text-[10px] sm:text-sm outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
+                            <select value={filterStatus} onChange={(e) => { setFilterStatus(e.target.value); setCurrentPage(1); }} className="flex-1 min-w-[90px] lg:flex-none h-9 sm:h-10 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-lg sm:rounded-xl px-2 sm:px-3 text-xs sm:text-sm outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
                                 <option value="All" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Status</option>
                                 <option value="Pending" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Pending</option>
                                 <option value="In Progress" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">In Progress</option>
@@ -299,7 +299,7 @@ export default function TenantMaintenance() {
                                 <option value="Cancelled" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Cancelled</option>
                             </select>
                             
-                            <select value={filterCategory} onChange={(e) => { setFilterCategory(e.target.value); setCurrentPage(1); }} className="h-6 sm:h-9 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-2 text-[10px] sm:text-sm outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
+                            <select value={filterCategory} onChange={(e) => { setFilterCategory(e.target.value); setCurrentPage(1); }} className="flex-1 min-w-[100px] lg:flex-none h-9 sm:h-10 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-lg sm:rounded-xl px-2 sm:px-3 text-xs sm:text-sm outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
                                 <option value="All" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Category</option>
                                 <option value="Plumbing" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Plumbing</option>
                                 <option value="Electrical" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Electrical</option>
@@ -308,8 +308,8 @@ export default function TenantMaintenance() {
                                 <option value="Other" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Other</option>
                             </select>
 
-                            <div className="ml-auto flex items-center shrink-0">
-                                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="h-6 sm:h-9 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded sm:rounded-xl px-1 sm:px-2 text-[10px] sm:text-sm outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
+                            <div className="w-full lg:w-auto flex items-center justify-between lg:justify-end lg:ml-auto gap-2 sm:gap-3 shrink-0">
+                                <select value={sortBy} onChange={(e) => setSortBy(e.target.value)} className="flex-1 lg:flex-none h-9 sm:h-10 bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-lg sm:rounded-xl px-2 sm:px-3 text-xs sm:text-sm outline-none cursor-pointer text-neutral-900 dark:text-white shrink-0 m-0">
                                     <option value="date_desc" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Newest</option>
                                     <option value="date_asc" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Oldest</option>
                                     <option value="priority_desc" className="bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white">Priority</option>
@@ -317,43 +317,44 @@ export default function TenantMaintenance() {
                             </div>
                         </div>
 
-                        {/*-- Table Body --*/}
+                        {/*-- Table / Mobile Cards Body --*/}
                         <div className="relative z-10 flex-1 overflow-y-auto overflow-x-auto overscroll-contain scrollbar-thin scrollbar-thumb-neutral-300 dark:scrollbar-thumb-neutral-700">
-                            <table className="w-full text-left border-collapse min-w-[280px] sm:min-w-[700px]">
+                            {/* Desktop Table View */}
+                            <table className="hidden lg:table w-full text-left border-collapse min-w-[700px]">
                                 <thead className="sticky top-0 z-20 bg-linear-to-b from-white/90 to-white/70 dark:from-[#121212]/90 dark:to-[#0a0a0a]/90 backdrop-blur-2xl shadow-sm">
                                     <tr>
-                                        <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[8px] sm:text-xs font-bold text-neutral-400 uppercase tracking-widest">ID / Date</th>
-                                        <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[8px] sm:text-xs font-bold text-neutral-400 uppercase tracking-widest">Issue</th>
-                                        <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[8px] sm:text-xs font-bold text-neutral-400 uppercase tracking-widest text-center">Priority</th>
-                                        <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[8px] sm:text-xs font-bold text-neutral-400 uppercase tracking-widest text-center">Status</th>
-                                        <th className="px-1.5 py-1 sm:px-4 sm:py-4 text-[8px] sm:text-xs font-bold text-neutral-400 uppercase tracking-widest text-right">Action</th>
+                                        <th className="px-4 py-4 text-xs font-bold text-neutral-400 uppercase tracking-widest">ID / Date</th>
+                                        <th className="px-4 py-4 text-xs font-bold text-neutral-400 uppercase tracking-widest">Issue</th>
+                                        <th className="px-4 py-4 text-xs font-bold text-neutral-400 uppercase tracking-widest text-center">Priority</th>
+                                        <th className="px-4 py-4 text-xs font-bold text-neutral-400 uppercase tracking-widest text-center">Status</th>
+                                        <th className="px-4 py-4 text-xs font-bold text-neutral-400 uppercase tracking-widest text-right">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody className="divide-y divide-neutral-200/30 dark:divide-white/5">
                                     {isLoading ? (
-                                        <tr><td colSpan={5} className="px-4 py-8 sm:py-20 text-center"><div className="w-4 h-4 sm:w-10 sm:h-10 mx-auto border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin"></div></td></tr>
+                                        <tr><td colSpan={5} className="px-4 py-20 text-center"><div className="w-10 h-10 mx-auto border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin"></div></td></tr>
                                     ) : paginatedRequests.length === 0 ? (
-                                        <tr><td colSpan={5} className="px-4 py-8 sm:py-20 text-center text-neutral-500 text-xs sm:text-sm">No requests found.</td></tr>
+                                        <tr><td colSpan={5} className="px-4 py-20 text-center text-neutral-500 text-sm">No requests found.</td></tr>
                                     ) : (
                                         paginatedRequests.map((r) => (
                                             <motion.tr key={r.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="group hover:bg-white/40 dark:hover:bg-white/[0.02] transition-all duration-300">
-                                                <td className="px-1.5 py-1.5 sm:px-4 sm:py-3 align-middle">
-                                                    <p className="font-bold text-[10px] sm:text-sm text-neutral-900 dark:text-white">#{r.id.toString().padStart(4, '0')}</p>
-                                                    <p className="text-[8px] sm:text-xs font-mono text-neutral-400 mt-0.5">{formatDate(r.created_at)}</p>
+                                                <td className="px-4 py-3 align-middle">
+                                                    <p className="font-bold text-sm text-neutral-900 dark:text-white">#{r.id.toString().padStart(4, '0')}</p>
+                                                    <p className="text-xs font-mono text-neutral-400 mt-0.5">{formatDate(r.created_at)}</p>
                                                 </td>
-                                                <td className="px-1.5 py-1.5 sm:px-4 sm:py-3 align-middle min-w-0">
-                                                    <p className="text-xs sm:text-base font-bold truncate max-w-[60px] sm:max-w-[200px] text-neutral-900 dark:text-white" title={r.title}>{r.title}</p>
-                                                    <p className="text-[8px] sm:text-xs text-neutral-500 mt-0.5">{r.category}</p>
+                                                <td className="px-4 py-3 align-middle min-w-0">
+                                                    <p className="text-base font-bold truncate max-w-[200px] text-neutral-900 dark:text-white" title={r.title}>{r.title}</p>
+                                                    <p className="text-xs text-neutral-500 mt-0.5">{r.category}</p>
                                                 </td>
-                                                <td className="px-1.5 py-1.5 sm:px-4 sm:py-3 align-middle text-center">
-                                                    <span className={`text-[10px] sm:text-sm font-bold ${getPriorityColor(r.priority)}`}>{r.priority}</span>
+                                                <td className="px-4 py-3 align-middle text-center">
+                                                    <span className={`text-sm font-bold ${getPriorityColor(r.priority)}`}>{r.priority}</span>
                                                 </td>
-                                                <td className="px-1.5 py-1.5 sm:px-4 sm:py-3 align-middle text-center">
-                                                    <span className={`inline-flex items-center px-1 py-0.5 sm:px-2.5 sm:py-1 text-[8px] sm:text-xs font-bold uppercase tracking-widest rounded-full border ${getStatusColor(r.status)}`}>{r.status}</span>
+                                                <td className="px-4 py-3 align-middle text-center">
+                                                    <span className={`inline-flex items-center px-2.5 py-1 text-xs font-bold uppercase tracking-widest rounded-full border ${getStatusColor(r.status)}`}>{r.status}</span>
                                                 </td>
-                                                <td className="px-1.5 py-1.5 sm:px-4 sm:py-3 align-middle text-right">
-                                                    <button onClick={() => setSelectedRequest(r)} className="p-0.5 sm:p-1.5 rounded bg-neutral-100 dark:bg-white/5 hover:text-indigo-600 transition-colors text-neutral-500" title="View Details">
-                                                        <svg className="w-2.5 h-2.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                                <td className="px-4 py-3 align-middle text-right">
+                                                    <button onClick={() => setSelectedRequest(r)} className="p-1.5 rounded bg-neutral-100 dark:bg-white/5 hover:text-indigo-600 transition-colors text-neutral-500" title="View Details">
+                                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                                                     </button>
                                                 </td>
                                             </motion.tr>
@@ -361,14 +362,50 @@ export default function TenantMaintenance() {
                                     )}
                                 </tbody>
                             </table>
+
+                            {/* Responsive Mobile Cards View */}
+                            <div className="block lg:hidden space-y-3 px-3 py-2">
+                                {isLoading ? (
+                                    <div className="py-12 text-center"><div className="w-8 h-8 mx-auto border-4 border-indigo-500/20 border-t-indigo-500 rounded-full animate-spin"></div></div>
+                                ) : paginatedRequests.length === 0 ? (
+                                    <div className="py-12 text-center text-neutral-500 text-xs">No requests found.</div>
+                                ) : (
+                                    paginatedRequests.map((r) => (
+                                        <motion.div key={r.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="p-4 rounded-2xl bg-white/40 dark:bg-white/[0.02] border border-white/40 dark:border-white/5 flex flex-col gap-3 relative overflow-hidden">
+                                            <div className="absolute left-0 top-0 bottom-0 w-1 bg-indigo-500 rounded-r-full"></div>
+                                            <div className="flex justify-between items-start pl-1">
+                                                <div>
+                                                    <p className="font-bold text-xs text-neutral-900 dark:text-white">#{r.id.toString().padStart(4, '0')}</p>
+                                                    <p className="text-[10px] font-mono text-neutral-400 mt-0.5">{formatDate(r.created_at)}</p>
+                                                </div>
+                                                <span className={`inline-flex items-center px-2 py-0.5 text-[9px] font-bold uppercase tracking-widest rounded-full border ${getStatusColor(r.status)}`}>
+                                                    {r.status}
+                                                </span>
+                                            </div>
+                                            <div className="pl-1">
+                                                <h4 className="text-sm font-bold text-neutral-900 dark:text-white truncate" title={r.title}>{r.title}</h4>
+                                                <p className="text-[10px] text-neutral-500 mt-0.5">{r.category}</p>
+                                            </div>
+                                            <div className="flex justify-between items-center border-t border-neutral-200/30 dark:border-white/5 pt-2.5 pl-1">
+                                                <div>
+                                                    <span className={`text-[10px] font-bold ${getPriorityColor(r.priority)}`}>{r.priority} Priority</span>
+                                                </div>
+                                                <button onClick={() => setSelectedRequest(r)} className="px-3 py-1.5 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 font-bold text-xs border border-indigo-200/50 dark:border-indigo-500/20 hover:bg-indigo-100 dark:hover:bg-indigo-500/30 transition-colors">
+                                                    View Details
+                                                </button>
+                                            </div>
+                                        </motion.div>
+                                    ))
+                                )}
+                            </div>
                         </div>
 
                         {/* Pagination Footer */}
-                        <div className="relative z-10 shrink-0 p-1 sm:p-3 border-t border-neutral-200/50 dark:border-white/10 bg-linear-to-b from-white/40 to-white/10 dark:from-white/[0.04] dark:to-transparent backdrop-blur-2xl flex justify-between items-center">
-                            <span className="text-[9px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest ml-1 sm:ml-2">Page {currentPage} of {totalPages || 1}</span>
-                            <div className="flex gap-1 sm:gap-2">
-                                <button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1} className="px-1 py-0.5 sm:px-2 sm:py-1 bg-white dark:bg-white/5 rounded border border-neutral-200 dark:border-white/10 text-[10px] sm:text-xs disabled:opacity-50 text-neutral-900 dark:text-white">Prev</button>
-                                <button onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages || totalPages === 0} className="px-1 py-0.5 sm:px-2 sm:py-1 bg-white dark:bg-white/5 rounded border border-neutral-200 dark:border-white/10 text-[10px] sm:text-xs disabled:opacity-50 text-neutral-900 dark:text-white">Next</button>
+                        <div className="relative z-10 shrink-0 p-3 sm:p-4 border-t border-neutral-200/50 dark:border-white/10 bg-linear-to-b from-white/40 to-white/10 dark:from-white/[0.04] dark:to-transparent backdrop-blur-2xl flex justify-between items-center">
+                            <span className="text-xs font-bold text-neutral-500 uppercase tracking-widest ml-2">Page {currentPage} of {totalPages || 1}</span>
+                            <div className="flex gap-2">
+                                <button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1} className="px-2.5 py-1.5 bg-white dark:bg-white/5 rounded-xl border border-neutral-200 dark:border-white/10 text-xs disabled:opacity-50 text-neutral-900 dark:text-white">Prev</button>
+                                <button onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))} disabled={currentPage === totalPages || totalPages === 0} className="px-2.5 py-1.5 bg-white dark:bg-white/5 rounded-xl border border-neutral-200 dark:border-white/10 text-xs disabled:opacity-50 text-neutral-900 dark:text-white">Next</button>
                             </div>
                         </div>
                     </motion.div>
