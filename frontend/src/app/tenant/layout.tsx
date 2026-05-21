@@ -72,7 +72,7 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
                         const isActive = pathname === item.path;
                         return (
                             <Link key={item.name} href={item.path} className="block">
-                                <motion.div 
+                                <motion.div
                                     whileHover={{ x: 5, scale: 1.02 }}
                                     whileTap={{ scale: 0.98 }}
                                     className={`flex items-center gap-3 px-4 py-4 rounded-2xl text-sm font-bold transition-colors duration-300 relative ${isActive ? 'bg-linear-to-r from-indigo-600 to-blue-600 text-white shadow-[0_0_15px_rgba(79,70,229,0.2)] dark:shadow-[0_0_20px_rgba(79,70,229,0.3)]' : 'text-slate-600 dark:text-zinc-500 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white'}`}
@@ -123,7 +123,7 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
                 </div>
 
                 {/* Mobile Bottom Navigation */}
-                <nav className="md:hidden flex items-center justify-around bg-white/90 dark:bg-[#0a0a0c]/90 backdrop-blur-2xl border-t border-slate-200 dark:border-white/5 pb-safe pt-2 px-2 z-50 absolute bottom-0 left-0 right-0">
+                <nav className="md:hidden flex items-center justify-around bg-white/90 dark:bg-[#0a0a0c]/90 backdrop-blur-2xl border-t border-slate-200 dark:border-white/5 pb-safe pt-2 px-2 z-50 fixed bottom-0 left-0 right-0">
                     {navItems.map((item) => {
                         const isActive = pathname === item.path;
                         return (
@@ -136,7 +136,7 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
                                         </span>
                                     )}
                                 </div>
-                                <span className={`text-[10px] mt-1 font-bold ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-zinc-500'}`}>
+                                <span className={`text-[10px] sm:text-xs mt-1 font-bold ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-zinc-500'}`}>
                                     {item.name.replace('My ', '')}
                                 </span>
                             </Link>

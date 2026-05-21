@@ -168,7 +168,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 </div>
 
                 {/* Mobile Bottom Navigation */}
-                <nav className="md:hidden flex items-center justify-around bg-white/90 dark:bg-[#0a0a0c]/90 backdrop-blur-2xl border-t border-slate-200 dark:border-white/5 pb-safe pt-2 px-1 z-50 absolute bottom-0 left-0 right-0">
+                <nav className="md:hidden flex items-center justify-around bg-white/90 dark:bg-[#0a0a0c]/90 backdrop-blur-2xl border-t border-slate-200 dark:border-white/5 pb-safe pt-2 px-1 z-50 fixed bottom-0 left-0 right-0">
                     {navItems.map((item) => {
                         const isActive = pathname === item.path;
                         const displayCount = pendingTenantsCount; 
@@ -190,7 +190,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                                         </span>
                                     )}
                                 </div>
-                                <span className={`text-[8px] sm:text-[9px] mt-1 font-bold ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-zinc-500'} text-center whitespace-nowrap overflow-hidden text-ellipsis w-full px-0.5`}>
+                                <span className={`text-[9px] sm:text-xs mt-1 font-bold ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-zinc-500'} text-center whitespace-nowrap overflow-hidden text-ellipsis w-full px-0.5`}>
                                     {item.name === 'Communications' ? 'Chat' : item.name.replace('Manage ', '')}
                                 </span>
                             </Link>
