@@ -112,7 +112,7 @@ export default function TenantDashboard() {
                         <div className="absolute top-0 right-0 -mr-10 sm:-mr-20 -mt-10 sm:-mt-20 w-32 sm:w-72 h-32 sm:h-72 bg-indigo-50 dark:bg-indigo-500/5 rounded-full blur-xl sm:blur-3xl pointer-events-none z-0"></div>
 
                         <div className="relative z-10">
-                            <h3 className="text-[10px] sm:text-xs font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest mb-1.5 sm:mb-2">Total Outstanding</h3>
+                            <h3 className="text-xs font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest mb-1.5 sm:mb-2">Total Outstanding</h3>
                             <div className="flex items-baseline gap-0.5 sm:gap-1">
                                 <span className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tighter text-neutral-900 dark:text-white font-mono break-all leading-none">
                                     ₱{displayBalance.toLocaleString()}
@@ -148,7 +148,7 @@ export default function TenantDashboard() {
                                 <div className="p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20">
                                     <svg className="w-3.5 h-3.5 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                                 </div>
-                                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-neutral-400">Unit Status</span>
+                                <span className="text-xs font-bold uppercase tracking-widest text-neutral-400">Unit Status</span>
                             </div>
                             <div className="relative z-10">
                                 <div className="flex items-center gap-1.5 sm:gap-2 mb-0.5 sm:mb-1">
@@ -168,7 +168,7 @@ export default function TenantDashboard() {
                                 <div className="p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
                                     <svg className="w-3.5 h-3.5 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
                                 </div>
-                                <span className="text-[10px] sm:text-xs font-bold uppercase tracking-widest text-neutral-400">Messages</span>
+                                <span className="text-xs font-bold uppercase tracking-widest text-neutral-400">Messages</span>
                             </div>
                             <div className="relative z-10">
                                 <p className="text-base sm:text-2xl font-bold mb-1 leading-none">{tenantData.unreadCount || 0} Unread</p>

@@ -193,10 +193,10 @@ export default function TenantPayments() {
 
                     <div className="relative z-10 flex justify-between items-start mb-2 sm:mb-4">
                         <div>
-                            <h3 className="text-xs sm:text-sm font-bold text-neutral-500 uppercase tracking-widest mb-1">Current Bill</h3>
+                            <h3 className="text-xs font-bold text-neutral-500 uppercase tracking-widest mb-1">Current Bill</h3>
                             <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-neutral-900 dark:text-white leading-none">{currentBill.month}</p>
                         </div>
-                        <span className={`px-2 py-1 sm:px-3 sm:py-1.5 text-[10px] sm:text-xs font-black uppercase tracking-widest rounded-full border backdrop-blur-sm ${getStatusColor(currentBill.status)}`}>
+                        <span className={`px-2 py-1 sm:px-3 sm:py-1.5 text-xs font-black uppercase tracking-widest rounded-full border backdrop-blur-sm ${getStatusColor(currentBill.status)}`}>
                             {currentBill.status}
                         </span>
                     </div>
@@ -218,7 +218,7 @@ export default function TenantPayments() {
 
                     <div className="relative z-10 flex flex-row items-center justify-between border-t border-neutral-200/50 dark:border-white/10 pt-3 sm:pt-4 mt-auto gap-4">
                         <div className="flex flex-col justify-center">
-                            <p className="text-[10px] sm:text-xs font-medium text-neutral-500 uppercase tracking-widest mb-1">Due Date</p>
+                            <p className="text-xs font-medium text-neutral-500 uppercase tracking-widest mb-1">Due Date</p>
                             <p className={`text-sm sm:text-base font-bold leading-none ${currentBill.status === 'Overdue' ? 'text-red-500 animate-pulse' : 'text-neutral-900 dark:text-white'}`}>
                                 {formatDate(currentBill.dueDate, { month: 'short', day: 'numeric' })}
                             </p>
@@ -236,34 +236,34 @@ export default function TenantPayments() {
                     </div>
                 </motion.div>
                 {/* --- LAYER 2: BREAKDOWN & SUMMARY --- */}
-                <div className="shrink-0 grid grid-cols-2 gap-2 sm:gap-4">
+                <div className="shrink-0 grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
 
                     {/* BREAKDOWN CARD */}
-                    <motion.div variants={itemVariants} className="relative rounded-xl sm:rounded-[1.5rem] bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-3 sm:p-6 lg:p-8 flex flex-col justify-center">
+                    <motion.div variants={itemVariants} className="relative rounded-xl sm:rounded-[1.5rem] bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
-                        <h3 className="relative z-10 text-[10px] sm:text-base font-bold text-neutral-900 dark:text-white flex items-center gap-1 sm:gap-1.5 mb-1 sm:mb-4">
-                            <svg className="w-3 h-3 sm:w-5 sm:h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2-2v14a2 2 0 002 2z"></path></svg> Breakdown
+                        <h3 className="relative z-10 text-xs sm:text-base font-bold text-neutral-900 dark:text-white flex items-center gap-1 sm:gap-1.5 mb-2 sm:mb-4">
+                            <svg className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2-2v14a2 2 0 002 2z"></path></svg> Breakdown
                         </h3>
-                        <div className="relative z-10 flex-1 space-y-1 sm:space-y-3">
-                            <div className="flex justify-between text-[9px] sm:text-sm font-semibold"><span className="text-neutral-500">Rent</span><span className="font-mono">₱{(currentBill.breakdown?.rent || 0).toLocaleString()}</span></div>
-                            <div className="flex justify-between text-[9px] sm:text-sm font-semibold"><span className="text-neutral-500">Water</span><span className="font-mono">₱{(currentBill.breakdown?.water || 0).toLocaleString()}</span></div>
-                            <div className="flex justify-between text-[9px] sm:text-sm font-semibold"><span className="text-neutral-500">Power</span><span className="font-mono">₱{(currentBill.breakdown?.electricity || 0).toLocaleString()}</span></div>
+                        <div className="relative z-10 flex-1 space-y-2 sm:space-y-3">
+                            <div className="flex justify-between text-xs sm:text-sm font-semibold"><span className="text-neutral-500">Rent</span><span className="font-mono">₱{(currentBill.breakdown?.rent || 0).toLocaleString()}</span></div>
+                            <div className="flex justify-between text-xs sm:text-sm font-semibold"><span className="text-neutral-500">Water</span><span className="font-mono">₱{(currentBill.breakdown?.water || 0).toLocaleString()}</span></div>
+                            <div className="flex justify-between text-xs sm:text-sm font-semibold"><span className="text-neutral-500">Power</span><span className="font-mono">₱{(currentBill.breakdown?.electricity || 0).toLocaleString()}</span></div>
                             {currentBill.breakdown?.penalty > 0 && (
-                                <div className="flex justify-between text-[9px] sm:text-sm font-semibold text-red-500"><span className="flex items-center gap-0.5 sm:gap-1"><svg className="w-2.5 h-2.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg> Penalty</span><span className="font-mono">₱{currentBill.breakdown.penalty.toLocaleString()}</span></div>
+                                <div className="flex justify-between text-xs sm:text-sm font-semibold text-red-500"><span className="flex items-center gap-0.5 sm:gap-1"><svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg> Penalty</span><span className="font-mono">₱{currentBill.breakdown.penalty.toLocaleString()}</span></div>
                             )}
-                            <div className="flex justify-between text-[10px] sm:text-base font-bold pt-1.5 sm:pt-3 border-t border-neutral-200/50 dark:border-white/10 mt-0.5 sm:mt-0"><span className="text-neutral-900 dark:text-white">Total</span><span className="text-indigo-600 dark:text-indigo-400 font-mono">₱{(currentBill.totalAmount || 0).toLocaleString()}</span></div>
+                            <div className="flex justify-between text-xs sm:text-base font-bold pt-2 sm:pt-3 border-t border-neutral-200/50 dark:border-white/10 mt-1 sm:mt-0"><span className="text-neutral-900 dark:text-white">Total</span><span className="text-indigo-600 dark:text-indigo-400 font-mono">₱{(currentBill.totalAmount || 0).toLocaleString()}</span></div>
                         </div>
                     </motion.div>
                     {/* SUMMARY CARD */}
-                    <motion.div variants={itemVariants} className="relative rounded-xl sm:rounded-[1.5rem] bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-3 sm:p-6 lg:p-8 flex flex-col justify-center">
+                    <motion.div variants={itemVariants} className="relative rounded-xl sm:rounded-[1.5rem] bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
                         <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
-                        <h3 className="relative z-10 text-[10px] sm:text-base font-bold text-neutral-900 dark:text-white flex items-center gap-1 sm:gap-1.5 mb-1 sm:mb-4">
-                            <svg className="w-3 h-3 sm:w-5 sm:h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg> Summary
+                        <h3 className="relative z-10 text-xs sm:text-base font-bold text-neutral-900 dark:text-white flex items-center gap-1 sm:gap-1.5 mb-2 sm:mb-4">
+                            <svg className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg> Summary
                         </h3>
-                        <div className="relative z-10 flex-1 space-y-1 sm:space-y-3">
-                            <div className="flex justify-between text-[9px] sm:text-sm font-semibold"><span className="text-neutral-500">Month</span><span className="font-mono text-emerald-600 dark:text-emerald-400">₱{summary.monthTotal.toLocaleString()}</span></div>
-                            <div className="flex justify-between text-[9px] sm:text-sm font-semibold"><span className="text-neutral-500">Year</span><span className="font-mono text-emerald-600 dark:text-emerald-400">₱{summary.yearTotal.toLocaleString()}</span></div>
-                            <div className="flex justify-between text-[9px] sm:text-sm font-semibold border-t border-neutral-200/50 dark:border-white/10 pt-1.5 sm:pt-3 mt-0.5 sm:mt-0"><span className="text-neutral-500">Transactions</span><span className="font-mono font-bold text-neutral-900 dark:text-white">{summary.txCount}</span></div>
+                        <div className="relative z-10 flex-1 space-y-2 sm:space-y-3">
+                            <div className="flex justify-between text-xs sm:text-sm font-semibold"><span className="text-neutral-500">Month</span><span className="font-mono text-emerald-600 dark:text-emerald-400">₱{summary.monthTotal.toLocaleString()}</span></div>
+                            <div className="flex justify-between text-xs sm:text-sm font-semibold"><span className="text-neutral-500">Year</span><span className="font-mono text-emerald-600 dark:text-emerald-400">₱{summary.yearTotal.toLocaleString()}</span></div>
+                            <div className="flex justify-between text-xs sm:text-sm font-semibold border-t border-neutral-200/50 dark:border-white/10 pt-2 sm:pt-3 mt-1 sm:mt-0"><span className="text-neutral-500">Transactions</span><span className="font-mono font-bold text-neutral-900 dark:text-white">{summary.txCount}</span></div>
                         </div>
                     </motion.div>
                 </div>
