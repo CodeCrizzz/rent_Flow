@@ -47,7 +47,6 @@ const loginUser = async (req, res) => {
         // 1. Find the user by email
         const result = await db.query('SELECT * FROM users WHERE email = $1', [email]);
         
-        // --- CRITICAL FIX: Change 401 to 404 here ---
         if (result.rows.length === 0) {
             return res.status(404).json({ message: 'Account does not exist' });
         }

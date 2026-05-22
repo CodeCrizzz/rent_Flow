@@ -98,3 +98,60 @@ CREATE TABLE IF NOT EXISTS messages (
 DELETE FROM users WHERE email = 'admin@rentflow.com';
 INSERT INTO users (name, email, password, role, status) 
 VALUES ('Admin User', 'admin@rentflow.com', '$2b$10$EqGLqdbJ3BgErTE7kN0/MO4xuhy28T484S90Pf6s/ioR9lFHNilzC', 'admin', 'Active');
+
+
+-- Enable RLS for all your tables
+ALTER TABLE "rentFlow_schema".users ENABLE ROW LEVEL SECURITY;
+ALTER TABLE "rentFlow_schema".bills ENABLE ROW LEVEL SECURITY;
+ALTER TABLE "rentFlow_schema".payments ENABLE ROW LEVEL SECURITY;
+ALTER TABLE "rentFlow_schema".requests ENABLE ROW LEVEL SECURITY;
+ALTER TABLE "rentFlow_schema".messages ENABLE ROW LEVEL SECURITY;
+
+-- Create a policy for 'users' so authenticated users can read their own profile
+CREATE POLICY "Users can read own profile" 
+ON "rentFlow_schema".users
+FOR SELECT
+USING (auth.uid()::text = id::text); -- Assuming your ID is the auth.uid
+
+-- Create a policy for 'bills' so tenants can read their own bills
+CREATE POLICY "Tenants can read own bills" 
+ON "rentFlow_schema".bills
+FOR SELECT
+USING (tenant_id::text = auth.uid()::text);
+
+
+-- 1. Create the function that will be triggered
+CREATE OR REPLACE FUNCTION "rentFlow_schema".handle_new_user()
+RETURNS trigger AS $$
+BEGIN
+  INSERT INTO "rentFlow_schema".users (id, email, name, role)
+  VALUES (
+    NEW.id, 
+    NEW.email, 
+    COALESCE(NEW.raw_user_meta_data->>'name', 'New Tenant'), 
+    'tenant' -- Default role
+  );
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- 2. Create the trigger to execute the function on every auth sign-up
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE PROCEDURE "rentFlow_schema".handle_new_user();
+
+
+  -- 1. Drop the existing foreign key references to the users table first (if any)
+ALTER TABLE "rentFlow_schema".bills DROP CONSTRAINT IF EXISTS bills_tenant_id_fkey;
+ALTER TABLE "rentFlow_schema".requests DROP CONSTRAINT IF EXISTS requests_tenant_id_fkey;
+ALTER TABLE "rentFlow_schema".messages DROP CONSTRAINT IF EXISTS messages_sender_id_fkey;
+ALTER TABLE "rentFlow_schema".messages DROP CONSTRAINT IF EXISTS messages_receiver_id_fkey;
+
+-- 2. Change the ID type to UUID
+ALTER TABLE "rentFlow_schema".users ALTER COLUMN id SET DATA TYPE UUID USING (gen_random_uuid());
+ALTER TABLE "rentFlow_schema".users ALTER COLUMN id SET DEFAULT gen_random_uuid();
+
+-- 3. Re-add foreign key constraints
+ALTER TABLE "rentFlow_schema".bills ADD CONSTRAINT bills_tenant_id_fkey FOREIGN KEY (tenant_id) REFERENCES "rentFlow_schema".users(id) ON DELETE CASCADE;
+ALTER TABLE "rentFlow_schema".requests ADD CONSTRAINT requests_tenant_id_fkey FOREIGN KEY (tenant_id) REFERENCES "rentFlow_schema".users(id) ON DELETE CASCADE;
+-- (Repeat for other tables)
