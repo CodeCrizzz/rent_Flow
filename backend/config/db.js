@@ -3,7 +3,7 @@ const { Pool } = require('pg');
 const isProduction = process.env.NODE_ENV === 'production' || !!process.env.DATABASE_URL;
 
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || 'postgresql://postgres:codecrizzz@localhost:5432/rentFlow_db',
+    connectionString: process.env.DATABASE_URL,
     ssl: isProduction ? { rejectUnauthorized: false } : false,
 });
 
