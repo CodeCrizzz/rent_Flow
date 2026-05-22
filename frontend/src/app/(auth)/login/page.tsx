@@ -40,14 +40,24 @@ export default function LoginPage() {
     setIsLoading(true);
     setErrorMsg('');
     
+    console.log("1. Starting login...");
     const supabase = createClient();
 
     try {
-        // Add these logs
-        const { data: authData, error: authError } = await supabase.auth.signInWithPassword({ email, password });
-        console.log("Auth Result:", { authData, authError });
+        // Use a timeout wrapper to prevent infinite "Authenticating..."
+        const loginPromise = supabase.auth.signInWithPassword({ email, password });
+        const timeoutPromise = new Promise((_, reject) => 
+            setTimeout(() => reject(new Error("Request timed out - check your environment variables")), 10000)
+        );
+
+        const { data: authData, error: authError } = await Promise.race([loginPromise, timeoutPromise]) as any;
+
+        console.log("2. Auth result received:", { authData, authError });
 
         if (authError) throw authError;
+        if (!authData.user) throw new Error("No user returned");
+
+        console.log("3. Fetching profile for:", authData.user.id);
 
         const { data: profile, error: profileError } = await supabase
             .from('users')
@@ -55,19 +65,15 @@ export default function LoginPage() {
             .eq('auth_id', authData.user.id)
             .single();
 
-        console.log("Profile Result:", { profile, profileError });
-
-        if (profileError) throw new Error("Could not find user profile.");
-
-        // 3. Redirect based on role
-        if (profile.role === 'admin') {
-            router.push('/admin/dashboard');
-        } else {
-            router.push('/tenant/dashboard');
+        if (profileError) {
+            console.error("4. Profile fetch failed:", profileError);
+            throw new Error("User found, but profile data missing in DB.");
         }
+
+        router.push(profile.role === 'admin' ? '/admin/dashboard' : '/tenant/dashboard');
     } catch (err: any) {
         console.error("Auth error:", err);
-        setErrorMsg(err.message || "Login failed. Please check your credentials.");
+        setErrorMsg(err.message || "Login failed. Please check console.");
     } finally {
         setIsLoading(false);
     }
