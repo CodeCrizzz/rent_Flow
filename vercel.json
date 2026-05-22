@@ -2,16 +2,10 @@
   "version": 2,
   "services": {
     "frontend": {
-      "root": "frontend",
-      "routes": [
-        { "src": "/(.*)", "dest": "/$1" }
-      ]
+      "root": "frontend"
     },
     "backend": {
-      "root": "backend",
-      "routes": [
-        { "src": "/api/(.*)", "dest": "/$1" }
-      ]
+      "root": "backend"
     }
   }
 }
