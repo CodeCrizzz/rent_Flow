@@ -1,16 +1,16 @@
 "use client";
 import { useState, useEffect } from 'react';
-import api from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ThemeToggle } from "@/components/theme-toggle";
 import { motion } from 'framer-motion';
+import { createClient } from '@/utils/supabase/client';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [selectedRole, setSelectedRole] = useState<'tenant' | 'admin'>('tenant');
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(false); 
     const [errorMsg, setErrorMsg] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
@@ -35,30 +35,44 @@ export default function LoginPage() {
         }, 200); 
     };
 
-    const handleLogin = async (e: React.ChangeEvent) => {
-        e.preventDefault();
-        setIsLoading(true);
-        setErrorMsg('');
-        try {
-            const { data } = await api.post('/auth/login', { email, password, role: selectedRole });
-            
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('user', JSON.stringify(data.user));
-            
-            if (data.user.role === 'admin') router.push('/admin/dashboard');
-            else router.push('/tenant/dashboard');
-        } catch (err: any) {
-            if (err.response?.status === 404) {
-                setErrorMsg("Account does not exist.");
-            } else if (err.response?.status === 401) {
-                setErrorMsg("Incorrect password. Please try again.");
-            } else {
-                setErrorMsg(err.response?.data?.message || "Login Failed. Please try again.");
-            }
-        } finally {
-            setIsLoading(false);
+    const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setErrorMsg('');
+    
+    const supabase = createClient();
+
+    try {
+        // 1. Sign in with Supabase Auth
+        const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
+            email,
+            password,
+        });
+
+        if (authError) throw authError;
+
+        // 2. Fetch the user's role from your rentFlow_schema.users table
+        const { data: profile, error: profileError } = await supabase
+            .from('users')
+            .select('*')
+            .eq('auth_id', authData.user.id) // Using the new auth_id column
+            .single();
+
+        if (profileError) throw new Error("Could not find user profile.");
+
+        // 3. Redirect based on role
+        if (profile.role === 'admin') {
+            router.push('/admin/dashboard');
+        } else {
+            router.push('/tenant/dashboard');
         }
-    };
+    } catch (err: any) {
+        console.error("Auth error:", err);
+        setErrorMsg(err.message || "Login failed. Please check your credentials.");
+    } finally {
+        setIsLoading(false);
+    }
+};
 
     const primaryGlow = selectedRole === 'tenant' ? 'bg-blue-600' : 'bg-purple-600';
     const secondaryGlow = selectedRole === 'tenant' ? 'bg-indigo-600' : 'bg-fuchsia-600';

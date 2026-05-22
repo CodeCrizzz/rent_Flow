@@ -1,9 +1,10 @@
 const jwt = require('jsonwebtoken');
+const db = require('../config/db');
 
 // Support environment variables with a fallback secret key
 const JWT_SECRET = process.env.JWT_SECRET || 'rentflow_super_secret_key_2026';
 
-const protect = (req, res, next) => {
+const protect = async (req, res, next) => {
     let token;
 
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
@@ -14,8 +15,24 @@ const protect = (req, res, next) => {
             // Verify the token
             const decoded = jwt.verify(token, JWT_SECRET);
 
+            const userId = decoded.id || decoded.sub;
+
+            // Fetch user's role from the database if not explicitly present or if it is a Supabase JWT
+            let role = decoded.role;
+            if (!role || role === 'authenticated') {
+                const userResult = await db.query('SELECT role FROM users WHERE id = $1', [userId]);
+                if (userResult.rows.length > 0) {
+                    role = userResult.rows[0].role;
+                } else {
+                    role = 'tenant';
+                }
+            }
+
             // Attach the user ID and role to the request object
-            req.user = decoded;
+            req.user = {
+                id: userId,
+                role: role
+            };
             next();
         } catch (error) {
             console.error('JWT Verification Failed:', error.message);
