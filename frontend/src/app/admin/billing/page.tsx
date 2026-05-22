@@ -209,16 +209,17 @@ export default function AdminBilling() {
     };
 
     return (
-        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8 pb-10 px-4 sm:px-6 lg:px-8 relative w-full">{/* Header */}
+        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-8 pb-10 px-4 sm:px-6 lg:px-8 relative w-full">
+            {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div>
-                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Billing & Payments</h1>
+                    <h1 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">Billing & Payments</h1>
                     <p className="text-slate-500 dark:text-zinc-400 font-medium mt-2">Manage tenant invoices, record payments, and track balances.</p>
                 </div>
             </div>
 
             {/* Filters */}
-            <div className="flex flex-col sm:flex-row gap-4 relative z-10">
+            <div className="flex flex-col md:flex-row gap-4 relative z-10">
                 <div className="relative flex-1">
                     <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 dark:text-zinc-500">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -226,13 +227,13 @@ export default function AdminBilling() {
                     <input 
                         type="text" 
                         placeholder="Search by Tenant Name..." 
-                        className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all"
+                        className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all text-xs"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                     />
                 </div>
                 <select 
-                    className="px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none sm:w-48"
+                    className="w-full md:w-48 px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none text-xs"
                     value={statusFilter}
                     onChange={(e) => setStatusFilter(e.target.value)}
                 >
@@ -244,19 +245,19 @@ export default function AdminBilling() {
                 </select>
             </div>
 
-            {/* Table */}
-            <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl shadow-xl dark:shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
+            {/* Desktop Table */}
+            <div className="hidden md:block bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl shadow-xl dark:shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10">
                 <div className="overflow-x-auto custom-scrollbar">
                     <table className="w-full text-left border-collapse whitespace-nowrap">
                         <thead className="bg-slate-50 dark:bg-zinc-900/50">
                             <tr className="border-b border-slate-200 dark:border-zinc-800">
-                                <th className="px-8 py-5 text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Resident / Unit</th>
-                                <th className="px-8 py-5 text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Billing Month</th>
-                                <th className="px-8 py-5 text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Due Date</th>
-                                <th className="px-8 py-5 text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Total</th>
-                                <th className="px-8 py-5 text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Balance</th>
-                                <th className="px-8 py-5 text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Status</th>
-                                <th className="px-8 py-5 text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest text-right">Actions</th>
+                                <th className="px-8 py-5 text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Resident / Unit</th>
+                                <th className="px-8 py-5 text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Billing Month</th>
+                                <th className="px-8 py-5 text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Due Date</th>
+                                <th className="px-8 py-5 text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Total</th>
+                                <th className="px-8 py-5 text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Balance</th>
+                                <th className="px-8 py-5 text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Status</th>
+                                <th className="px-8 py-5 text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-zinc-800/50">
@@ -264,7 +265,7 @@ export default function AdminBilling() {
                                 <tr>
                                     <td colSpan={7} className="px-8 py-20 text-center">
                                         <div className="w-6 h-6 border-2 border-[#5b21b6]/20 border-t-[#5b21b6] rounded-full animate-spin mx-auto mb-4"></div>
-                                        <p className="text-[10px] font-bold text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Loading Records...</p>
+                                        <p className="text-xs font-bold text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Loading Records...</p>
                                     </td>
                                 </tr>
                             ) : filteredBills.length === 0 ? (
@@ -279,7 +280,7 @@ export default function AdminBilling() {
                                                 </div>
                                                 <div>
                                                     <p className="font-bold text-slate-900 dark:text-white">{b.tenant_name}</p>
-                                                    <p className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mt-0.5">Rm {b.room_number || 'N/A'}</p>
+                                                    <p className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mt-0.5">Rm {b.room_number || 'N/A'}</p>
                                                 </div>
                                             </div>
                                         </td>
@@ -292,7 +293,7 @@ export default function AdminBilling() {
                                             </span>
                                         </td>
                                         <td className="px-8 py-5">
-                                            <span className={`inline-flex items-center px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-md border ${getStatusStyles(b.status)}`}>
+                                            <span className={`inline-flex items-center px-3 py-1 text-xs font-black uppercase tracking-widest rounded-md border ${getStatusStyles(b.status)}`}>
                                                 {b.status}
                                             </span>
                                         </td>
@@ -322,59 +323,131 @@ export default function AdminBilling() {
                 </div>
             </div>
 
+            {/* Mobile Card List */}
+            <div className="block md:hidden space-y-4 relative z-10">
+                {isLoading ? (
+                    <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl shadow-xl border border-slate-200 dark:border-zinc-800 p-8 text-center">
+                        <div className="w-6 h-6 border-2 border-[#5b21b6]/20 border-t-[#5b21b6] rounded-full animate-spin mx-auto mb-4"></div>
+                        <p className="text-xs font-bold text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Loading Records...</p>
+                    </div>
+                ) : filteredBills.length === 0 ? (
+                    <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl shadow-xl border border-slate-200 dark:border-zinc-800 p-8 text-center text-slate-500 dark:text-zinc-500 font-bold text-sm">
+                        No billing records found.
+                    </div>
+                ) : (
+                    filteredBills.map((b) => (
+                        <div key={b.id} className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-2xl p-5 border border-slate-200 dark:border-zinc-800 relative overflow-hidden group">
+                            {/* Accent line on left */}
+                            <div className={`absolute left-0 top-0 bottom-0 w-1 ${b.status === 'Paid' ? 'bg-emerald-500' : b.status === 'Overdue' ? 'bg-rose-500' : b.status === 'Partial' ? 'bg-amber-500' : 'bg-[#5b21b6]'}`}></div>
+                            
+                            <div className="flex items-start justify-between gap-3 mb-4">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-zinc-800 border border-slate-300 dark:border-zinc-700 flex items-center justify-center text-slate-500 dark:text-zinc-400 font-bold text-sm shrink-0">
+                                        {b.tenant_name.charAt(0)}
+                                    </div>
+                                    <div>
+                                        <p className="font-bold text-slate-900 dark:text-white text-base">{b.tenant_name}</p>
+                                        <p className="text-xs text-slate-500 dark:text-zinc-500 font-bold uppercase tracking-widest mt-0.5">Rm {b.room_number || 'N/A'} • {b.billing_month}</p>
+                                    </div>
+                                </div>
+                                <span className={`inline-flex items-center px-2.5 py-1 text-xs font-black uppercase tracking-widest rounded-lg border shrink-0 ${getStatusStyles(b.status)}`}>
+                                    {b.status}
+                                </span>
+                            </div>
+                            
+                            <div className="grid grid-cols-3 gap-3 py-3 border-t border-b border-slate-100 dark:border-zinc-800/50 mb-4">
+                                <div>
+                                    <p className="text-xs text-slate-500 dark:text-zinc-500 font-bold uppercase tracking-widest mb-0.5">Due</p>
+                                    <p className="font-bold text-slate-900 dark:text-white text-sm">{new Date(b.due_date).toLocaleDateString()}</p>
+                                </div>
+                                <div>
+                                    <p className="text-xs text-slate-500 dark:text-zinc-500 font-bold uppercase tracking-widest mb-0.5">Total</p>
+                                    <p className="font-bold text-slate-900 dark:text-white text-sm">₱ {Number(b.total_amount).toLocaleString()}</p>
+                                </div>
+                                <div>
+                                    <p className="text-xs text-slate-500 dark:text-zinc-500 font-bold uppercase tracking-widest mb-0.5">Balance</p>
+                                    <p className={`font-bold text-sm ${Number(b.balance) > 0 ? 'text-rose-400' : 'text-emerald-400'}`}>₱ {Number(b.balance).toLocaleString()}</p>
+                                </div>
+                            </div>
+                            
+                            <div className="flex items-center justify-end gap-2">
+                                <button onClick={() => openViewModal(b)} className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-slate-600 dark:text-zinc-400 hover:text-blue-400 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl transition-all" title="View Details">
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                    View
+                                </button>
+                                {b.status !== 'Paid' && (
+                                    <button onClick={() => openPayModal(b)} className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-xl transition-all" title="Record Payment">
+                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                                        Pay
+                                    </button>
+                                )}
+                                <button onClick={() => openEditModal(b)} className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-slate-600 dark:text-zinc-400 hover:text-[#5b21b6] bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl transition-all" title="Edit Bill">
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                    Edit
+                                </button>
+                                <button onClick={() => handleDeleteBill(b.id)} className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-rose-500 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl transition-all" title="Delete Bill">
+                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    ))
+                )}
+            </div>
+
             {/* Edit Bill Modal */}
             {isEditOpen && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-60 flex items-center justify-center p-4 animate-in fade-in duration-300">
-                    <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
-                        <div className="px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
-                            <h2 className="text-2xl font-black text-slate-900 dark:text-white">Edit Bill</h2>
+                    <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl w-full max-w-2xl overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
+                        <div className="px-6 sm:px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
+                            <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">Edit Bill</h2>
                             <button onClick={() => setIsEditOpen(false)} className="w-10 h-10 rounded-xl hover:bg-slate-200 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:hover:text-white transition-colors">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
                         </div>
-                        <form onSubmit={handleEditSubmit} className="p-8 space-y-6">
+                        <form onSubmit={handleEditSubmit} className="p-6 sm:p-8 space-y-6 overflow-y-auto custom-scrollbar">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Tenant</label>
-                                    <select required disabled={isEditOpen} value={billForm.tenant_id} onChange={(e) => handleTenantChange(e.target.value)} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent disabled:opacity-50 appearance-none outline-none">
+                                    <label className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Tenant</label>
+                                    <select required disabled={isEditOpen} value={billForm.tenant_id} onChange={(e) => handleTenantChange(e.target.value)} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent disabled:opacity-50 appearance-none outline-none text-sm">
                                         <option value="" disabled>Select Tenant</option>
                                         {tenants.map(t => <option key={t.id} value={t.id}>{t.name} (Rm {rooms.find(r=>r.id===t.room_id)?.room_number})</option>)}
                                     </select>
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Billing Month</label>
-                                    <input required type="text" placeholder="e.g. March 2026" value={billForm.billing_month} onChange={e => setBillForm({...billForm, billing_month: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
+                                    <label className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Billing Month</label>
+                                    <input required type="text" placeholder="e.g. March 2026" value={billForm.billing_month} onChange={e => setBillForm({...billForm, billing_month: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none text-sm" />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Due Date</label>
-                                    <input required type="date" value={billForm.due_date} onChange={e => setBillForm({...billForm, due_date: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
+                                    <label className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Due Date</label>
+                                    <input required type="date" value={billForm.due_date} onChange={e => setBillForm({...billForm, due_date: e.target.value})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none text-sm" />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Rent Amount (₱)</label>
-                                    <input required type="number" step="0.01" value={billForm.rent_amount} onChange={e => setBillForm({...billForm, rent_amount: parseFloat(e.target.value) || 0})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
+                                    <label className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Rent Amount (₱)</label>
+                                    <input required type="number" step="0.01" value={billForm.rent_amount} onChange={e => setBillForm({...billForm, rent_amount: parseFloat(e.target.value) || 0})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none text-sm" />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Water Charges (₱)</label>
-                                    <input required type="number" step="0.01" value={billForm.water_charges} onChange={e => setBillForm({...billForm, water_charges: parseFloat(e.target.value) || 0})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
+                                    <label className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Water Charges (₱)</label>
+                                    <input required type="number" step="0.01" value={billForm.water_charges} onChange={e => setBillForm({...billForm, water_charges: parseFloat(e.target.value) || 0})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none text-sm" />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Electricity Charges (₱)</label>
-                                    <input required type="number" step="0.01" value={billForm.electricity_charges} onChange={e => setBillForm({...billForm, electricity_charges: parseFloat(e.target.value) || 0})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
+                                    <label className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Electricity Charges (₱)</label>
+                                    <input required type="number" step="0.01" value={billForm.electricity_charges} onChange={e => setBillForm({...billForm, electricity_charges: parseFloat(e.target.value) || 0})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none text-sm" />
                                 </div>
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Other Fees (₱)</label>
-                                    <input required type="number" step="0.01" value={billForm.other_fees} onChange={e => setBillForm({...billForm, other_fees: parseFloat(e.target.value) || 0})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none" />
+                                    <label className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Other Fees (₱)</label>
+                                    <input required type="number" step="0.01" value={billForm.other_fees} onChange={e => setBillForm({...billForm, other_fees: parseFloat(e.target.value) || 0})} className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent outline-none text-sm" />
                                 </div>
                                 <div className="space-y-2 sm:col-span-2">
-                                    <div className="bg-indigo-50 dark:bg-[#5b21b6]/10 p-5 rounded-2xl border border-indigo-100 dark:border-[#5b21b6]/20 flex justify-between items-center">
+                                    <div className="bg-indigo-50 dark:bg-[#5b21b6]/10 p-5 rounded-2xl border border-indigo-100 dark:border-[#5b21b6]/20 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                                         <span className="font-bold text-[#5b21b6] dark:text-[#a78bfa] text-xs uppercase tracking-widest">Total Calculated Amount</span>
-                                        <span className="text-3xl font-black text-slate-900 dark:text-white">₱ {Number((Number(billForm.rent_amount) || 0) + (Number(billForm.water_charges) || 0) + (Number(billForm.electricity_charges) || 0) + (Number(billForm.other_fees) || 0)).toLocaleString()}</span>
+                                        <span className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">₱ {Number((Number(billForm.rent_amount) || 0) + (Number(billForm.water_charges) || 0) + (Number(billForm.electricity_charges) || 0) + (Number(billForm.other_fees) || 0)).toLocaleString()}</span>
                                     </div>
                                 </div>
                             </div>
                             <div className="flex justify-end gap-3 pt-6 border-t border-slate-200 dark:border-zinc-800">
-                                <button type="button" onClick={() => setIsEditOpen(false)} className="px-6 py-3.5 font-bold text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white rounded-xl transition-colors">Cancel</button>
-                                <button type="submit" className="px-6 py-3.5 font-bold bg-[#5b21b6] text-white rounded-xl hover:bg-[#4c1d95] transition-colors shadow-lg">Save Bill</button>
+                                <button type="button" onClick={() => setIsEditOpen(false)} className="px-6 py-3.5 font-bold text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white rounded-xl transition-colors text-sm">Cancel</button>
+                                <button type="submit" className="px-6 py-3.5 font-bold bg-[#5b21b6] text-white rounded-xl hover:bg-[#4c1d95] transition-colors shadow-lg text-sm">Save Bill</button>
                             </div>
                         </form>
                     </div>
@@ -385,24 +458,24 @@ export default function AdminBilling() {
             {isPayOpen && selectedBill && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-60 flex items-center justify-center p-4 animate-in fade-in duration-300">
                     <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl w-full max-w-md overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
-                        <div className="px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
-                            <h2 className="text-2xl font-black text-slate-900 dark:text-white">Record Payment</h2>
+                        <div className="px-6 sm:px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
+                            <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">Record Payment</h2>
                             <button onClick={() => setIsPayOpen(false)} className="w-10 h-10 rounded-xl hover:bg-slate-200 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:hover:text-white transition-colors">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
                         </div>
-                        <form onSubmit={handlePaySubmit} className="p-8 space-y-5">
+                        <form onSubmit={handlePaySubmit} className="p-6 sm:p-8 space-y-5">
                             <div className="bg-amber-500/10 rounded-2xl p-5 border border-amber-500/20 mb-6">
-                                <p className="text-[10px] font-black text-amber-500 uppercase tracking-widest mb-1">Remaining Balance</p>
-                                <p className="text-3xl font-black text-amber-400">₱ {Number(selectedBill.balance).toLocaleString()}</p>
+                                <p className="text-xs font-black text-amber-500 uppercase tracking-widest mb-1">Remaining Balance</p>
+                                <p className="text-2xl sm:text-3xl font-black text-amber-400">₱ {Number(selectedBill.balance).toLocaleString()}</p>
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Amount Paid (₱)</label>
+                                <label className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Amount Paid (₱)</label>
                                 <input required type="number" step="0.01" max={Number(selectedBill.balance)} value={paymentForm.amount_paid} onChange={e => setPaymentForm({...paymentForm, amount_paid: e.target.value === '' ? '' : parseFloat(e.target.value)})} className="w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-emerald-400 focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent font-black text-lg outline-none" />
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Payment Method</label>
-                                <select required value={paymentForm.payment_method} onChange={e => setPaymentForm({...paymentForm, payment_method: e.target.value})} className="w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent font-medium appearance-none outline-none">
+                                <label className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Payment Method</label>
+                                <select required value={paymentForm.payment_method} onChange={e => setPaymentForm({...paymentForm, payment_method: e.target.value})} className="w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent font-medium appearance-none outline-none text-sm">
                                     <option value="Cash">Cash</option>
                                     <option value="GCash">GCash</option>
                                     <option value="Bank Transfer">Bank Transfer</option>
@@ -410,12 +483,12 @@ export default function AdminBilling() {
                                 </select>
                             </div>
                             <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Payment Date</label>
-                                <input required type="date" value={paymentForm.payment_date} onChange={e => setPaymentForm({...paymentForm, payment_date: e.target.value})} className="w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent font-medium outline-none" />
+                                <label className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Payment Date</label>
+                                <input required type="date" value={paymentForm.payment_date} onChange={e => setPaymentForm({...paymentForm, payment_date: e.target.value})} className="w-full px-4 py-3.5 rounded-xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-emerald-500/50 focus:border-transparent font-medium outline-none text-sm" />
                             </div>
                             <div className="flex justify-end gap-3 pt-6 border-t border-slate-200 dark:border-zinc-800">
-                                <button type="button" onClick={() => setIsPayOpen(false)} className="px-6 py-3.5 font-bold text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white rounded-xl transition-colors">Cancel</button>
-                                <button type="submit" className="px-6 py-3.5 font-bold bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-colors shadow-lg">Confirm Payment</button>
+                                <button type="button" onClick={() => setIsPayOpen(false)} className="px-6 py-3.5 font-bold text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white rounded-xl transition-colors text-sm">Cancel</button>
+                                <button type="submit" className="px-6 py-3.5 font-bold bg-emerald-600 text-white rounded-xl hover:bg-emerald-500 transition-colors shadow-lg text-sm">Confirm Payment</button>
                             </div>
                         </form>
                     </div>
@@ -426,44 +499,44 @@ export default function AdminBilling() {
             {isViewOpen && selectedBill && (
                 <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-60 flex items-center justify-center p-4 animate-in fade-in duration-300">
                     <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl w-full max-w-3xl overflow-hidden shadow-2xl border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
-                        <div className="px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
+                        <div className="px-6 sm:px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50 gap-4">
                             <div>
-                                <h2 className="text-2xl font-black text-slate-900 dark:text-white">Billing Details</h2>
-                                <p className="text-slate-500 dark:text-zinc-500 font-medium mt-1">Invoice for {selectedBill.billing_month}</p>
+                                <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">Billing Details</h2>
+                                <p className="text-slate-500 dark:text-zinc-500 font-medium mt-1 text-xs sm:text-sm">Invoice for {selectedBill.billing_month}</p>
                             </div>
-                            <button onClick={() => setIsViewOpen(false)} className="w-10 h-10 rounded-xl hover:bg-slate-200 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:hover:text-white transition-colors">
+                            <button onClick={() => setIsViewOpen(false)} className="w-10 h-10 rounded-xl hover:bg-slate-200 dark:hover:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:hover:text-white transition-colors shrink-0">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
                         </div>
                         
-                        <div className="p-8 overflow-y-auto custom-scrollbar">
+                        <div className="p-6 sm:p-8 overflow-y-auto custom-scrollbar">
                             {!billDetails ? (
                                 <div className="py-20 text-center"><p className="text-slate-500 dark:text-zinc-500 font-bold">Loading details...</p></div>
                             ) : (
                                 <div className="space-y-8">
                                     {/* Top Summary */}
-                                    <div className="flex justify-between items-start">
+                                    <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
                                         <div>
-                                            <p className="font-black text-2xl text-slate-900 dark:text-white">{billDetails.tenant_name}</p>
-                                            <p className="text-slate-500 dark:text-zinc-400 font-medium">Room {billDetails.room_number || 'N/A'}</p>
+                                            <p className="font-black text-xl sm:text-2xl text-slate-900 dark:text-white">{billDetails.tenant_name}</p>
+                                            <p className="text-slate-500 dark:text-zinc-400 font-medium text-sm">Room {billDetails.room_number || 'N/A'}</p>
                                             <p className="text-sm text-slate-500 dark:text-zinc-500 mt-2 font-bold tracking-wide">Due: {new Date(billDetails.due_date).toLocaleDateString()}</p>
                                         </div>
-                                        <div className="text-right">
-                                            <span className={`px-4 py-1.5 text-[10px] font-black uppercase tracking-widest rounded-xl border inline-block mb-3 ${getStatusStyles(billDetails.status)}`}>
+                                        <div className="text-left sm:text-right">
+                                            <span className={`px-4 py-1.5 text-xs font-black uppercase tracking-widest rounded-xl border inline-block mb-3 ${getStatusStyles(billDetails.status)}`}>
                                                 {billDetails.status}
                                             </span>
-                                            <p className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Total Amount</p>
-                                            <p className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">₱ {Number(billDetails.total_amount).toLocaleString()}</p>
+                                            <p className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Total Amount</p>
+                                            <p className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight">₱ {Number(billDetails.total_amount).toLocaleString()}</p>
                                         </div>
                                     </div>
 
                                     {/* Breakdown */}
                                     <div>
-                                        <h3 className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                        <h3 className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-4 flex items-center gap-2">
                                             <svg className="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
                                             Charges Breakdown
                                         </h3>
-                                        <div className="bg-slate-50 dark:bg-zinc-900/50 rounded-2xl p-6 border border-slate-200 dark:border-zinc-800 space-y-4">
+                                        <div className="bg-slate-50 dark:bg-zinc-900/50 rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-zinc-800 space-y-4">
                                             <div className="flex justify-between text-sm font-medium text-slate-500 dark:text-zinc-400"><span>Rent</span><span className="text-slate-900 dark:text-white">₱ {Number(billDetails.rent_amount).toLocaleString()}</span></div>
                                             <div className="flex justify-between text-sm font-medium text-slate-500 dark:text-zinc-400"><span>Electricity</span><span className="text-slate-900 dark:text-white">₱ {Number(billDetails.electricity_charges).toLocaleString()}</span></div>
                                             <div className="flex justify-between text-sm font-medium text-slate-500 dark:text-zinc-400"><span>Water</span><span className="text-slate-900 dark:text-white">₱ {Number(billDetails.water_charges).toLocaleString()}</span></div>
@@ -474,32 +547,32 @@ export default function AdminBilling() {
 
                                     {/* Payment History */}
                                     <div>
-                                        <h3 className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-4 flex items-center gap-2">
+                                        <h3 className="text-xs font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-4 flex items-center gap-2">
                                             <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                             Payment History
                                         </h3>
                                         {billDetails.payments && billDetails.payments.length > 0 ? (
                                             <div className="border border-slate-200 dark:border-zinc-800 rounded-2xl overflow-hidden divide-y divide-slate-100 dark:divide-zinc-800">
                                                 {billDetails.payments.map((p: any) => (
-                                                    <div key={p.id} className="p-5 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/30 hover:bg-indigo-50/50 dark:hover:bg-zinc-800/50 transition-colors">
+                                                    <div key={p.id} className="p-4 sm:p-5 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/30 hover:bg-indigo-50/50 dark:hover:bg-zinc-800/50 transition-colors">
                                                         <div>
-                                                            <p className="font-bold text-slate-900 dark:text-white">{new Date(p.payment_date).toLocaleDateString()}</p>
-                                                            <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 dark:text-zinc-500 mt-1">{p.payment_method}</p>
+                                                            <p className="font-bold text-slate-900 dark:text-white text-sm">{new Date(p.payment_date).toLocaleDateString()}</p>
+                                                            <p className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-zinc-500 mt-1">{p.payment_method}</p>
                                                         </div>
-                                                        <p className="font-black text-emerald-400 text-lg">₱ {Number(p.amount_paid).toLocaleString()}</p>
+                                                        <p className="font-black text-emerald-400 text-base sm:text-lg">₱ {Number(p.amount_paid).toLocaleString()}</p>
                                                     </div>
                                                 ))}
-                                                <div className="p-5 bg-slate-50 dark:bg-zinc-900/80 flex justify-between items-center border-t border-slate-200 dark:border-zinc-800">
-                                                    <p className="font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-widest text-[10px]">Total Paid</p>
-                                                    <p className="font-black text-slate-900 dark:text-white text-xl">₱ {Number(billDetails.amount_paid).toLocaleString()}</p>
+                                                <div className="p-4 sm:p-5 bg-slate-50 dark:bg-zinc-900/80 flex justify-between items-center border-t border-slate-200 dark:border-zinc-800">
+                                                    <p className="font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-widest text-xs">Total Paid</p>
+                                                    <p className="font-black text-slate-900 dark:text-white text-lg sm:text-xl">₱ {Number(billDetails.amount_paid).toLocaleString()}</p>
                                                 </div>
-                                                <div className="p-5 bg-amber-500/5 flex justify-between items-center border-t border-amber-500/10">
-                                                    <p className="font-bold text-amber-500 uppercase tracking-widest text-[10px]">Remaining Balance</p>
-                                                    <p className="font-black text-amber-400 text-xl">₱ {Number(billDetails.balance).toLocaleString()}</p>
+                                                <div className="p-4 sm:p-5 bg-amber-500/5 flex justify-between items-center border-t border-amber-500/10">
+                                                    <p className="font-bold text-amber-500 uppercase tracking-widest text-xs">Remaining Balance</p>
+                                                    <p className="font-black text-amber-400 text-lg sm:text-xl">₱ {Number(billDetails.balance).toLocaleString()}</p>
                                                 </div>
                                             </div>
                                         ) : (
-                                            <div className="bg-slate-50 dark:bg-zinc-900/30 rounded-2xl p-6 text-center border border-slate-200 dark:border-zinc-800 border-dashed text-slate-500 dark:text-zinc-500 font-medium">
+                                            <div className="bg-slate-50 dark:bg-zinc-900/30 rounded-2xl p-6 text-center border border-slate-200 dark:border-zinc-800 border-dashed text-slate-500 dark:text-zinc-500 font-medium text-sm">
                                                 No payments have been made for this bill yet.
                                             </div>
                                         )}
@@ -508,7 +581,7 @@ export default function AdminBilling() {
                             )}
                         </div>
                         <div className="p-6 border-t border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50 flex justify-end">
-                            <button onClick={() => setIsViewOpen(false)} className="px-6 py-3.5 font-bold text-slate-900 dark:text-white bg-slate-200 dark:bg-zinc-800 hover:bg-slate-300 dark:hover:bg-zinc-700 rounded-xl transition-colors shadow-sm">Close Panel</button>
+                            <button onClick={() => setIsViewOpen(false)} className="px-6 py-3.5 font-bold text-slate-900 dark:text-white bg-slate-200 dark:bg-zinc-800 hover:bg-slate-300 dark:hover:bg-zinc-700 rounded-xl transition-colors shadow-sm text-sm">Close Panel</button>
                         </div>
                     </div>
                 </div>
