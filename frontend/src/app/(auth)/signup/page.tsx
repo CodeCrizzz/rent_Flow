@@ -45,13 +45,11 @@ export default function SignupPage() {
     };
 
     return (
-        /* Added py-10 so the card doesn't clip on small vertical screens */
         <div className="min-h-dvh flex flex-col items-center justify-center px-4 py-10 sm:p-6 lg:p-8 bg-[#0a0a0a] relative overflow-x-hidden font-sans">
-            
             {/* Ambient Background Glow */}
             <div className={`fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[300px] sm:h-[500px] bg-linear-to-b from-blue-600/10 to-transparent blur-[60px] sm:blur-[100px] rounded-full pointer-events-none transition-all duration-1000 ${isMounted ? 'opacity-100' : 'opacity-0 scale-50'}`}></div>
             
-            {/* Main Wrapper - Uses my-auto to gracefully handle scrolling on short screens */}
+            {/* Main Wrapper */}
             <div className={`w-full max-w-5xl my-auto bg-zinc-950 rounded-3xl sm:rounded-[2.5rem] shadow-2xl shadow-black/50 overflow-hidden flex flex-col md:flex-row relative z-10 border border-white/5 transition-all duration-1000 transform ${isMounted ? 'opacity-100 translate-y-0 scale-100 blur-0' : 'opacity-0 translate-y-12 scale-95 blur-md'}`}>
                 
                 {/* --- LEFT PANEL: Branding (HIDDEN ON MOBILE) --- */}

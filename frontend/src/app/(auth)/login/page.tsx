@@ -144,7 +144,7 @@ export default function LoginPage() {
                         <ThemeToggle />
                     </div>
                     
-                    {/* Responsive Role Switcher */}
+                    {/* Role Switcher */}
                     <div className="flex bg-zinc-900/50 p-1.5 rounded-2xl mb-8 border border-white/5 relative z-20 overflow-hidden">
                         {/* Sliding Background Indicator */}
                         <div className={`absolute top-1.5 bottom-1.5 w-[calc(50%-6px)] bg-zinc-800 rounded-xl shadow-md border border-white/10 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${selectedRole === 'admin' ? 'translate-x-full' : 'translate-x-0'}`}></div>
@@ -165,7 +165,7 @@ export default function LoginPage() {
                         </button>
                     </div>
 
-                    {/* Form Container with Blur/Fade Transition */}
+                    {/* Form Container */}
                     <div className={`transition-all duration-300 ${isSwitching ? 'opacity-0 scale-[0.98] blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
                         <div className="mb-6 sm:mb-8 text-center md:text-left">
                             <h2 className="text-xl sm:text-3xl font-bold text-white tracking-tight mb-1 sm:mb-2">{selectedRole === 'tenant' ? 'Welcome to RentFlow' : 'Admin Access'}</h2>
