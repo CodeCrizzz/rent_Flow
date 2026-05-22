@@ -97,3 +97,7 @@ CREATE TABLE messages (
     status VARCHAR(50) DEFAULT 'unread',
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Insert Default Admin Account
+-- password is admin@123
+INSERT INTO "rentFlow_schema".users (name, email, password, role, status, phone, gender, address) VALUES ('System Admin', 'admin@rentflow.com', '$2b$10$uY342Jn3h8O6T.ZEL84DwOeA0B8ano3.4FzSfDoD6ccJePJBqCJF.', 'admin', 'Active', '09157453066', 'Male', 'Sicayab Dipolog City Zamboanga Del Norte');
