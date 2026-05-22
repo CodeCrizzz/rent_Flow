@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const bcrypt = require('bcryptjs');
 
 // Get Tenant Dashboard Data
 const getTenantDashboard = async (req, res) => {
@@ -167,9 +168,14 @@ const updateTenantPassword = async (req, res) => {
         const userResult = await db.query("SELECT password FROM users WHERE id = $1", [tenantId]);
         const user = userResult.rows[0];
 
-        // Direct compare
-        if (currentPassword !== user.password) return res.status(401).json({ message: 'Incorrect current password' });
-        const hashedPassword = newPassword; // plain text
+        // Bcrypt compare
+        const isMatch = await bcrypt.compare(currentPassword, user.password);
+        if (!isMatch) return res.status(401).json({ message: 'Incorrect current password' });
+        
+        // Hash the new password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+        
         await db.query("UPDATE users SET password = $1 WHERE id = $2", [hashedPassword, tenantId]);
         res.status(200).json({ message: 'Password updated successfully' });
     } catch (error) {

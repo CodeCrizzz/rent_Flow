@@ -97,4 +97,4 @@ CREATE TABLE IF NOT EXISTS messages (
 -- PASSWORD: admin123
 DELETE FROM users WHERE email = 'admin@rentflow.com';
 INSERT INTO users (name, email, password, role, status) 
-VALUES ('Admin User', 'admin@rentflow.com', 'admin123', 'admin', 'Active');
+VALUES ('Admin User', 'admin@rentflow.com', '$2b$10$EqGLqdbJ3BgErTE7kN0/MO4xuhy28T484S90Pf6s/ioR9lFHNilzC', 'admin', 'Active');

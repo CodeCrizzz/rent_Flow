@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 const db = require('../config/db');
 const { JWT_SECRET } = require('../middleware/authMiddleware');
 
@@ -14,8 +15,9 @@ const registerUser = async (req, res) => {
             return res.status(400).json({ message: 'User with this email already exists' });
         }
 
-        // No hashing - storing plain text for now as requested
-        const hashedPassword = password; 
+        // Hash password before storing
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt); 
 
         // Insert user into database
         const roleToSet = role || 'tenant';
@@ -52,8 +54,8 @@ const loginUser = async (req, res) => {
 
         const user = result.rows[0];
 
-        // 2. Direct plain text compare
-        const isMatch = (password === user.password);
+        // 2. Bcrypt password compare
+        const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
             return res.status(401).json({ message: 'Incorrect password' });
         }
