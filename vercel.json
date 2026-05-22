@@ -1,8 +1,5 @@
 {
   "version": 2,
-  "serviceDefaults": {
-    "nodeVersion": "20.x"
-  },
   "services": [
     {
       "name": "frontend",
