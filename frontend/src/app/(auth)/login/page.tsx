@@ -43,20 +43,19 @@ export default function LoginPage() {
     const supabase = createClient();
 
     try {
-        // 1. Sign in with Supabase Auth
-        const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        });
+        // Add these logs
+        const { data: authData, error: authError } = await supabase.auth.signInWithPassword({ email, password });
+        console.log("Auth Result:", { authData, authError });
 
         if (authError) throw authError;
 
-        // 2. Fetch the user's role from your rentFlow_schema.users table
         const { data: profile, error: profileError } = await supabase
             .from('users')
             .select('*')
-            .eq('auth_id', authData.user.id) // Using the new auth_id column
+            .eq('auth_id', authData.user.id)
             .single();
+
+        console.log("Profile Result:", { profile, profileError });
 
         if (profileError) throw new Error("Could not find user profile.");
 
