@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "serviceDefaults": {
+    "nodeVersion": "20.x"
+  },
+  "services": [
+    {
+      "name": "frontend",
+      "root": "frontend",
+      "routes": [
+        { "src": "/(.*)", "dest": "/$1" }
+      ]
+    },
+    {
+      "name": "backend",
+      "root": "backend",
+      "routes": [
+        { "src": "/api/(.*)", "dest": "/$1" }
+      ]
+    }
+  ]
+}
