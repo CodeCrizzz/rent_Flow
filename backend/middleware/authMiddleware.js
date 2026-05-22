@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 
-// Hardcoding the secret key
-const JWT_SECRET = 'rentflow_super_secret_key_2026';
+// Support environment variables with a fallback secret key
+const JWT_SECRET = process.env.JWT_SECRET || 'rentflow_super_secret_key_2026';
 
 const protect = (req, res, next) => {
     let token;

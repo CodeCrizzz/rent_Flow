@@ -1,15 +1,15 @@
 const { Pool } = require('pg');
 
+const isProduction = process.env.NODE_ENV === 'production' || !!process.env.DATABASE_URL;
+
 const pool = new Pool({
-    user: 'postgres',            
-    host: 'localhost',
-    database: 'rentFlow_db',          
-    password: 'codecrizzz',   
-    port: 5432,
-    options: '-c search_path="rentFlow_schema"' 
+    connectionString: process.env.DATABASE_URL || 'postgresql://postgres:codecrizzz@localhost:5432/rentFlow_db',
+    ssl: isProduction ? { rejectUnauthorized: false } : false,
 });
 
-pool.on('connect', () => {
+pool.on('connect', (client) => {
+    client.query('SET search_path TO "rentFlow_schema", public;')
+        .catch(err => console.error('Error setting search_path:', err));
     console.log('Connected to PostgreSQL Database (Schema: rentFlow_schema)');
 });
 

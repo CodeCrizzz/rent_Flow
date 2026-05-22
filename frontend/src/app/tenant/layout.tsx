@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { ThemeToggle } from "@/components/theme-toggle";
+import api from '@/lib/api';
 
 export default function TenantLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
@@ -14,16 +15,8 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
 
     const fetchUnreadCount = async () => {
         try {
-            const token = localStorage.getItem('token');
-            if (!token) return;
-            const baseUrl = typeof window !== 'undefined' ? `http://${window.location.hostname}:5000/api` : 'http://localhost:5000/api';
-            const res = await fetch(`${baseUrl}/tenant/chat/unread`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            if (res.ok) {
-                const data = await res.json();
-                setUnreadCount(data.unreadCount);
-            }
+            const { data } = await api.get('/tenant/chat/unread');
+            setUnreadCount(data.unreadCount);
         } catch (error) {
             console.error('Failed to fetch unread count', error);
         }
