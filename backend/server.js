@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 require('./config/db'); 
@@ -14,16 +15,15 @@ const adminRoutes = require('./routes/adminRoutes');
 const tenantRoutes = require('./routes/tenantRoutes');   
 const billingRoutes = require('./routes/billingRoutes'); 
 const requestRoutes = require('./routes/requestRoutes'); 
-
-// Import Cron Jobs
-require('./cron/billingCron');
+const cronRoutes = require('./routes/cronRoutes');
 
 // Mount Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admin/bills', billingRoutes);              
 app.use('/api/admin', adminRoutes);                     
 app.use('/api/tenant', tenantRoutes);                   
-app.use('/api/requests', requestRoutes);                 
+app.use('/api/requests', requestRoutes);
+app.use('/api/cron', cronRoutes);
 
 app.get('/', (req, res) => {
     res.send('Welcome to the RentFlow API');
@@ -33,9 +33,11 @@ app.get('/api/health', (req, res) => {
     res.status(200).json({ status: 'success', message: 'RentFlow API is running!' });
 });
 
-const PORT = 5000;
-app.listen(PORT, () => {
-    console.log(`Server running on port: http://localhost:${PORT}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = process.env.PORT || 5000;
+    app.listen(PORT, () => {
+        console.log(`Server running on port: http://localhost:${PORT}`);
+    });
+}
 
 module.exports = app;

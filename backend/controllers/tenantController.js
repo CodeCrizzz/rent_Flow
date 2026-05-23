@@ -311,13 +311,36 @@ const getCurrentBill = async (req, res) => {
 const submitTenantPayment = async (req, res) => {
     const tenantId = req.user.id;
     const { bill_id, amount_paid, payment_method, notes } = req.body;
-    const proof_url = req.file ? `/uploads/${req.file.filename}` : null;
-    
+    let proof_url = null;
+
     if (!bill_id || !amount_paid || !payment_method) {
         return res.status(400).json({ message: 'Missing required payment details' });
     }
 
     try {
+        if (req.file && req.file.buffer) {
+            const supabase = require('../config/supabase');
+            const fileExt = req.file.originalname.split('.').pop();
+            const fileName = `${Date.now()}-${tenantId}.${fileExt}`;
+            
+            const { data, error } = await supabase.storage
+                .from('uploads')
+                .upload(`payments/${fileName}`, req.file.buffer, {
+                    contentType: req.file.mimetype
+                });
+                
+            if (error) {
+                console.error('Supabase upload error:', error);
+                return res.status(500).json({ message: 'Failed to upload proof of payment' });
+            }
+            
+            const { data: publicUrlData } = supabase.storage
+                .from('uploads')
+                .getPublicUrl(`payments/${fileName}`);
+                
+            proof_url = publicUrlData.publicUrl;
+        }
+
         await db.query('BEGIN');
 
         const insertPaymentQuery = `

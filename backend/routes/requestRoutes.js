@@ -10,7 +10,8 @@ const {
 } = require('../controllers/requestController');
 
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 // All request routes require authentication
 router.use(protect);
