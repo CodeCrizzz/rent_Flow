@@ -1,6 +1,11 @@
+-- 0. Enable required extensions (Supabase defaults to the 'extensions' schema)
+CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA extensions;
+
 -- 1. Create the new schema and switch to it
 CREATE SCHEMA IF NOT EXISTS "rentFlow_schema";
-SET search_path TO "rentFlow_schema";
+
+-- Include 'extensions' in the search path so pgcrypto functions work smoothly
+SET search_path TO "rentFlow_schema", public, extensions;
 
 -- 2. Drop existing tables if they exist (Order matters due to foreign keys)
 DROP TABLE IF EXISTS messages CASCADE;
@@ -99,15 +104,12 @@ CREATE TABLE messages (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- 8. Enable the PostgreSQL encryption extension for the password
-CREATE EXTENSION IF NOT EXISTS pgcrypto;
-
 -- 9. Insert the Admin user with a securely hashed password
 INSERT INTO users (name, email, password, role, status) 
 VALUES (
-    'Master Admin', 
+    'Admin', 
     'admin@rentflow.com', 
-    crypt('admin123', gen_salt('bf')),
+    extensions.crypt('admin123', extensions.gen_salt('bf')), 
     'admin',
     'Active'
 );
