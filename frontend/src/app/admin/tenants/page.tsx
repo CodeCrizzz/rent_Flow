@@ -20,7 +20,7 @@ interface Tenant {
     date_moved_in?: string;
     contract_end_date?: string;
     monthly_rent?: number;
-    payment_status?: 'Paid' | 'Unpaid' | 'Overdue';
+    payment_status?: 'Paid' | 'Unpaid' | 'Overdue' | 'No Bills Yet' | 'N/A';
     last_payment_date?: string;
     balance?: number;
     status: 'Active' | 'Inactive' | 'Moved Out' | 'Pending' | 'Declined';
@@ -523,7 +523,7 @@ export default function AdminTenants() {
                                         tenant.payment_status === 'Paid' ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/20' : 
                                         tenant.payment_status === 'Overdue' ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-500/20' :
                                         tenant.payment_status === 'N/A' ? 'bg-neutral-50 dark:bg-neutral-500/10 text-neutral-500 dark:text-neutral-400 border-neutral-200 dark:border-neutral-500/20' : 'bg-slate-50 dark:bg-zinc-500/10 text-slate-600 dark:text-zinc-400 border-slate-200 dark:border-zinc-500/20'
-                                    }`}>
+                                        }`}>
                                         {tenant.payment_status}
                                     </span>
                                 </div>
