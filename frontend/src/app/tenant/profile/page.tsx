@@ -66,6 +66,18 @@ export default function TenantProfile() {
                 
                 const enrichedData = {
                     ...data,
+                    account: {
+                        username: data.email,
+                        status: data.status,
+                        registered_at: data.created_at
+                    },
+                    room: data.room_number ? {
+                        number: data.room_number,
+                        type: data.type || 'Single',
+                        move_in: data.date_moved_in,
+                        rent: data.price,
+                        contract_end: data.contract_end_date
+                    } : null,
                     payment: data.payment || { balance: 1500, status: 'Partial', last_payment: '2026-03-28' },
                     maintenance: data.maintenance || { total: 3, pending: 1, recent_status: 'In Progress' }
                 };

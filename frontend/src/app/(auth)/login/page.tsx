@@ -51,7 +51,6 @@ export default function LoginPage() {
                 throw new Error("No token returned");
             }
         } catch (err: any) {
-            console.error("Auth error:", err);
             setErrorMsg(err.response?.data?.message || err.message || "Login failed. Please check credentials.");
         } finally {
             setIsLoading(false);

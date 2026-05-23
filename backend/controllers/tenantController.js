@@ -41,7 +41,7 @@ const getTenantProfile = async (req, res) => {
     const tenantId = req.user.id;
     try {
         const result = await db.query(
-            `SELECT u.name, u.email, u.phone, r.room_number, r.capacity, r.price 
+            `SELECT u.name, u.email, u.phone, u.status, u.created_at, u.date_moved_in, u.contract_end_date, r.room_number, r.capacity, r.price, r.type 
              FROM users u 
              LEFT JOIN rooms r ON u.room_id = r.id 
              WHERE u.id = $1`,
@@ -50,8 +50,70 @@ const getTenantProfile = async (req, res) => {
         if (result.rows.length === 0) {
             return res.status(404).json({ message: 'Tenant not found' });
         }
-        res.status(200).json(result.rows[0]);
+
+        // Fetch maintenance stats for this tenant
+        const maintResult = await db.query(
+            `SELECT 
+                COUNT(*) as total,
+                SUM(CASE WHEN status = 'Pending' THEN 1 ELSE 0 END) as pending_count,
+                SUM(CASE WHEN status = 'In Progress' THEN 1 ELSE 0 END) as in_progress_count,
+                SUM(CASE WHEN status = 'Resolved' THEN 1 ELSE 0 END) as resolved_count,
+                SUM(CASE WHEN status = 'Cancelled' THEN 1 ELSE 0 END) as cancelled_count
+             FROM requests 
+             WHERE tenant_id = $1`,
+            [tenantId]
+        );
+        
+        const stats = maintResult.rows[0];
+        const totalReq = parseInt(stats.total || 0);
+        const resolvedReq = parseInt(stats.resolved_count || 0);
+        const cancelledReq = parseInt(stats.cancelled_count || 0);
+        const pendingReq = parseInt(stats.pending_count || 0);
+        const unresolved = totalReq - resolvedReq - cancelledReq;
+
+        let recentStatus = 'None';
+        if (totalReq > 0) {
+            if (unresolved === 0) {
+                recentStatus = 'Resolved';
+            } else {
+                recentStatus = 'Pending';
+            }
+        }
+
+        // Fetch payment stats
+        const paymentResult = await db.query(
+            `SELECT 
+                SUM(balance) as total_balance,
+                MAX(payment_date) as last_payment_date
+             FROM bills b
+             LEFT JOIN payments p ON b.id = p.bill_id
+             WHERE b.tenant_id = $1`,
+            [tenantId]
+        );
+        const payStats = paymentResult.rows[0];
+        const balance = parseFloat(payStats.total_balance || 0);
+        
+        let paymentStatus = 'Up to date';
+        if (balance > 0) {
+            paymentStatus = 'Pending';
+        }
+
+        const profileData = result.rows[0];
+        profileData.maintenance = {
+            total: totalReq,
+            pending: unresolved, // Unresolved includes Pending and In Progress
+            recent_status: recentStatus
+        };
+        
+        profileData.payment = {
+            balance: balance,
+            status: paymentStatus,
+            last_payment: payStats.last_payment_date
+        };
+
+        res.status(200).json(profileData);
     } catch (error) {
+        console.error('Profile Error:', error);
         res.status(500).json({ message: 'Server error fetching profile' });
     }
 };
@@ -194,7 +256,7 @@ const getCurrentBill = async (req, res) => {
         const createdAt = user?.created_at || null;
 
         const result = await db.query(
-            "SELECT id, billing_month, total_amount, amount_paid, balance, TO_CHAR(due_date, 'YYYY-MM-DD') AS due_date, status FROM bills WHERE tenant_id = $1 AND status != 'Paid' ORDER BY due_date ASC LIMIT 1",
+            "SELECT id, billing_month, total_amount, amount_paid, balance, rent_amount, water_charges, electricity_charges, other_fees, TO_CHAR(due_date, 'YYYY-MM-DD') AS due_date, status FROM bills WHERE tenant_id = $1 AND status != 'Paid' ORDER BY due_date ASC LIMIT 1",
             [tenantId]
         );
 
@@ -209,7 +271,14 @@ const getCurrentBill = async (req, res) => {
                 remainingBalance: 0,
                 status: "Clear",
                 createdAt,
-                creationDay
+                creationDay,
+                breakdown: { 
+                    rent: 0, 
+                    water: 0, 
+                    electricity: 0, 
+                    other: 0,
+                    penalty: 0
+                }
             });
         }
 
@@ -225,10 +294,11 @@ const getCurrentBill = async (req, res) => {
             createdAt,
             creationDay,
             breakdown: { 
-                rent: parseFloat(bill.total_amount), 
-                water: 0, 
-                electricity: 0, 
-                other: 0 
+                rent: parseFloat(bill.rent_amount || 0), 
+                water: parseFloat(bill.water_charges || 0), 
+                electricity: parseFloat(bill.electricity_charges || 0), 
+                other: parseFloat(bill.other_fees || 0),
+                penalty: 0 // Optional logic if you track penalties later
             }
         });
     } catch (error) {
@@ -302,8 +372,77 @@ const submitTenantPayment = async (req, res) => {
     }
 };
 
+// Get Available Rooms for Tenant View
+const getTenantRooms = async (req, res) => {
+    try {
+        const query = `
+            SELECT 
+                r.id, r.room_number, r.capacity, r.price, r.status,
+                r.type, r.floor, r.description,
+                CAST(COUNT(u.id) AS INTEGER) as current_occupants,
+                CAST((r.capacity - COUNT(u.id)) AS INTEGER) as available_slots
+            FROM rooms r
+            LEFT JOIN users u ON r.id = u.room_id AND u.role = 'tenant' AND u.status != 'Moved Out'
+            GROUP BY r.id
+            ORDER BY r.room_number ASC
+        `;
+        const rooms = await db.query(query);
+        res.status(200).json(rooms.rows);
+    } catch (error) {
+        console.error("Get Tenant Rooms Error:", error); 
+        res.status(500).json({ message: 'Server error fetching rooms' });
+    }
+};
+
+// Choose a Room
+const chooseRoom = async (req, res) => {
+    const tenantId = req.user.id;
+    const { room_id } = req.body;
+
+    if (!room_id) return res.status(400).json({ message: 'Room ID is required' });
+
+    try {
+        // 1. Check if room exists and has available slots
+        const roomQuery = `
+            SELECT r.capacity, CAST(COUNT(u.id) AS INTEGER) as current_occupants
+            FROM rooms r
+            LEFT JOIN users u ON r.id = u.room_id AND u.role = 'tenant' AND u.status != 'Moved Out'
+            WHERE r.id = $1
+            GROUP BY r.capacity
+        `;
+        const roomResult = await db.query(roomQuery, [room_id]);
+        
+        if (roomResult.rows.length === 0) {
+            return res.status(404).json({ message: 'Room not found' });
+        }
+
+        const { capacity, current_occupants } = roomResult.rows[0];
+        if (current_occupants >= capacity) {
+            return res.status(400).json({ message: 'This room is fully occupied' });
+        }
+
+        // 2. Update tenant profile to Active and assign room
+        const updateQuery = `
+            UPDATE users 
+            SET room_id = $1, status = 'Active', date_moved_in = CURRENT_DATE 
+            WHERE id = $2 AND role = 'tenant'
+            RETURNING id, name, room_id, status
+        `;
+        const updatedUser = await db.query(updateQuery, [room_id, tenantId]);
+
+        res.status(200).json({ 
+            message: 'Room selected successfully! You are now an Active tenant.',
+            user: updatedUser.rows[0]
+        });
+    } catch (error) {
+        console.error("Choose Room Error:", error);
+        res.status(500).json({ message: 'Server error choosing room' });
+    }
+};
+
 module.exports = { 
     getTenantDashboard, getTenantProfile, updateTenantProfile, updateTenantPassword, 
     getTenantPayments, getCurrentBill, submitTenantPayment,
-    getTenantMessages, sendTenantMessage, getUnreadCount 
+    getTenantMessages, sendTenantMessage, getUnreadCount,
+    getTenantRooms, chooseRoom
 };

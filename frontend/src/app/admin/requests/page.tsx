@@ -148,43 +148,44 @@ export default function AdminRequests() {
                         onChange={e => setSearchTerm(e.target.value)}
                     />
                 </div>
-                
-                <select 
-                    className="py-3.5 px-4 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none outline-none sm:w-40"
-                    value={statusFilter}
-                    onChange={e => setStatusFilter(e.target.value)}
-                >
-                    <option value="All">All Statuses</option>
-                    <option value="Pending">Pending</option>
-                    <option value="In Progress">In Progress</option>
-                    <option value="Resolved">Resolved</option>
-                    <option value="Cancelled">Cancelled</option>
-                </select>
+                <div className="grid grid-cols-3 gap-2 md:flex md:gap-4 shrink-0">
+                    <select 
+                        className="w-full py-3.5 px-2 sm:px-4 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-[10px] sm:text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none outline-none sm:w-40"
+                        value={statusFilter}
+                        onChange={e => setStatusFilter(e.target.value)}
+                    >
+                        <option value="All">All Statuses</option>
+                        <option value="Pending">Pending</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Resolved">Resolved</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
 
-                <select 
-                    className="py-3.5 px-4 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none outline-none sm:w-40"
-                    value={priorityFilter}
-                    onChange={e => setPriorityFilter(e.target.value)}
-                >
-                    <option value="All">All Priorities</option>
-                    <option value="Urgent">Urgent</option>
-                    <option value="High">High</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Low">Low</option>
-                    <option value="Normal">Normal</option>
-                </select>
+                    <select 
+                        className="w-full py-3.5 px-2 sm:px-4 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-[10px] sm:text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none outline-none sm:w-40"
+                        value={priorityFilter}
+                        onChange={e => setPriorityFilter(e.target.value)}
+                    >
+                        <option value="All">All Priorities</option>
+                        <option value="Urgent">Urgent</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                        <option value="Normal">Normal</option>
+                    </select>
 
-                <select 
-                    className="py-3.5 px-4 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none outline-none sm:w-40"
-                    value={categoryFilter}
-                    onChange={e => setCategoryFilter(e.target.value)}
-                >
-                    <option value="All">All Categories</option>
-                    <option value="Plumbing">Plumbing</option>
-                    <option value="Electrical">Electrical</option>
-                    <option value="Furniture">Furniture</option>
-                    <option value="Other">Other</option>
-                </select>
+                    <select 
+                        className="w-full py-3.5 px-2 sm:px-4 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-[10px] sm:text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none outline-none sm:w-40"
+                        value={categoryFilter}
+                        onChange={e => setCategoryFilter(e.target.value)}
+                    >
+                        <option value="All">All Categories</option>
+                        <option value="Plumbing">Plumbing</option>
+                        <option value="Electrical">Electrical</option>
+                        <option value="Furniture">Furniture</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
             </div>
 
             {/* Main Table */}

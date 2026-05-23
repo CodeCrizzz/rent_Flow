@@ -157,7 +157,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     </div>
                 </div>
 
-                <div className={`flex-1 flex flex-col ${pathname === '/admin/chat' ? 'overflow-hidden p-0 pb-20 md:pb-0' : 'overflow-y-auto p-4 md:p-10 lg:p-14 pb-24 md:pb-10'} relative z-0 scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-bg-slate-100 dark:bg-[#050505] scrollbar-track-transparent`}>
+                <div className={`flex-1 flex flex-col ${pathname === '/admin/chat' ? 'overflow-hidden p-0 pb-20 md:pb-0' : 'overflow-y-auto px-0 py-2 sm:p-4 md:p-10 lg:p-14 pb-24 md:pb-10'} relative z-0 scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-bg-slate-100 dark:bg-[#050505] scrollbar-track-transparent`}>
                     <AnimatePresence mode="wait">
                         <PageTransition key={pathname}>
                             {children}

@@ -74,7 +74,7 @@ export default function AdminTenants() {
                 date_moved_in: t.date_moved_in ? new Date(t.date_moved_in).toISOString().split('T')[0] : '', 
                 contract_end_date: t.contract_end_date ? new Date(t.contract_end_date).toISOString().split('T')[0] : '', 
                 monthly_rent: t.monthly_rent || 0,
-                payment_status: t.balance > 0 ? 'Overdue' : 'Paid',
+                payment_status: t.balance == null ? 'No Bills Yet' : t.balance > 0 ? 'Overdue' : 'Paid',
                 last_payment_date: t.last_payment_date || 'N/A',
                 balance: t.balance || 0,
                 status: t.status || (t.room_number ? 'Active' : 'Pending')
@@ -406,7 +406,8 @@ export default function AdminTenants() {
                                                 <p className="text-xs text-slate-500 dark:text-zinc-400 font-medium mt-0.5">Last Paid: {tenant.last_payment_date}</p>
                                                 <span className={`mt-1.5 inline-block px-2 py-0.5 text-xs font-black uppercase tracking-widest rounded-md border ${
                                                     tenant.payment_status === 'Paid' ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/20' : 
-                                                    tenant.payment_status === 'Overdue' ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-500/20' : 'bg-slate-50 dark:bg-zinc-500/10 text-slate-600 dark:text-zinc-400 border-slate-200 dark:border-zinc-500/20'
+                                                    tenant.payment_status === 'Overdue' ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-500/20' :
+                                                    tenant.payment_status === 'No Bills Yet' ? 'bg-neutral-50 dark:bg-neutral-500/10 text-neutral-500 dark:text-neutral-400 border-neutral-200 dark:border-neutral-500/20' : 'bg-slate-50 dark:bg-zinc-500/10 text-slate-600 dark:text-zinc-400 border-slate-200 dark:border-zinc-500/20'
                                                 }`}>
                                                     {tenant.payment_status}
                                                 </span>
@@ -520,7 +521,8 @@ export default function AdminTenants() {
                                     <p className="text-xs text-slate-500 dark:text-zinc-400 font-medium mt-0.5">Last Paid: {tenant.last_payment_date}</p>
                                     <span className={`mt-1.5 inline-block px-2 py-0.5 text-xs font-black uppercase tracking-widest rounded-md border ${
                                         tenant.payment_status === 'Paid' ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/20' : 
-                                        tenant.payment_status === 'Overdue' ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-500/20' : 'bg-slate-50 dark:bg-zinc-500/10 text-slate-600 dark:text-zinc-400 border-slate-200 dark:border-zinc-500/20'
+                                        tenant.payment_status === 'Overdue' ? 'bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-500/20' :
+                                        tenant.payment_status === 'N/A' ? 'bg-neutral-50 dark:bg-neutral-500/10 text-neutral-500 dark:text-neutral-400 border-neutral-200 dark:border-neutral-500/20' : 'bg-slate-50 dark:bg-zinc-500/10 text-slate-600 dark:text-zinc-400 border-slate-200 dark:border-zinc-500/20'
                                     }`}>
                                         {tenant.payment_status}
                                     </span>
