@@ -164,10 +164,7 @@ export default function TenantProfile() {
                 }
             `}</style>
 
-            {/* Ambient Background Glows */}
-            <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-indigo-400/20 dark:bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none -z-10 mix-blend-multiply dark:mix-blend-screen"></div>
-            <div className="fixed bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-400/20 dark:bg-purple-500/10 rounded-full blur-[100px] pointer-events-none -z-10 mix-blend-multiply dark:mix-blend-screen"></div>
-            {/* --- MAIN WRAPPER --- */}
+                                                {/* --- MAIN WRAPPER --- */}
             <div className="flex w-full flex-col items-center justify-start pt-0 px-3 sm:px-8 pb-6">
                 <motion.div initial="hidden" animate="visible" variants={containerVariants} className="w-full max-w-8xl flex flex-col gap-2 sm:gap-6 relative z-10">
                     
@@ -184,7 +181,7 @@ export default function TenantProfile() {
                     <motion.div 
                         variants={itemVariants} 
                         whileHover={{ scale: 1.01, translateY: -4 }}
-                        className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-2xl sm:rounded-[2.5rem] p-5 sm:p-10 shadow-xl hover:shadow-2xl hover:border-blue-500/30 dark:hover:border-blue-500/30 backdrop-blur-2xl overflow-hidden transition-colors duration-300 group/card"
+                        className="relative bg-white dark:bg-[#121212] border border-neutral-200/50 dark:border-white/5 rounded-2xl sm:rounded-[2.5rem] p-5 sm:p-10 shadow-xl hover:shadow-2xl hover:border-blue-500/30 dark:hover:border-blue-500/30 backdrop-blur-2xl overflow-hidden transition-colors duration-300 group/card"
                     >
                         <div className="absolute inset-0 glass-noise"></div>
                         <div className="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-8 text-center md:text-left">
@@ -222,7 +219,7 @@ export default function TenantProfile() {
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
                                     Edit Profile
                                 </button>
-                                <button onClick={() => setIsPassModalOpen(true)} className="flex-1 md:flex-none px-6 py-3.5 bg-white/50 dark:bg-white/5 border border-white/40 dark:border-white/10 rounded-xl text-neutral-700 dark:text-neutral-300 hover:bg-white/80 dark:hover:bg-white/10 transition-all font-black text-xs uppercase tracking-widest flex justify-center items-center gap-2 backdrop-blur-md">
+                                <button onClick={() => setIsPassModalOpen(true)} className="flex-1 md:flex-none px-6 py-3.5 bg-white/50 dark:bg-white/5 border border-neutral-200/50 dark:border-white/5 rounded-xl text-neutral-700 dark:text-neutral-300 hover:bg-white/80 dark:hover:bg-white/10 transition-all font-black text-xs uppercase tracking-widest flex justify-center items-center gap-2 backdrop-blur-md">
                                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
                                     Password
                                 </button>
@@ -237,7 +234,7 @@ export default function TenantProfile() {
                         <motion.div 
                             variants={itemVariants} 
                             whileHover={{ scale: 1.02, translateY: -5 }}
-                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-3xl md:rounded-4xl p-4 sm:p-6 md:p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-blue-500/30 transition-colors duration-300 group/bento"
+                            className="relative bg-white dark:bg-[#121212] border border-neutral-200/50 dark:border-white/5 rounded-3xl md:rounded-4xl p-4 sm:p-6 md:p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-blue-500/30 transition-colors duration-300 group/bento"
                         >
                             <div className="absolute inset-0 glass-noise"></div>
                             <div className="absolute top-3 right-3 sm:top-4 sm:right-4 text-xs font-black uppercase tracking-widest text-rose-500 bg-rose-500/10 px-1.5 sm:px-2 py-0.5 sm:py-1 rounded border border-rose-500/20 hidden sm:block">Admin Only</div>
@@ -258,7 +255,7 @@ export default function TenantProfile() {
                         <motion.div 
                             variants={itemVariants} 
                             whileHover={{ scale: 1.02, translateY: -5 }}
-                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-3xl md:rounded-4xl p-4 sm:p-6 md:p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-emerald-500/30 transition-colors duration-300 group/bento"
+                            className="relative bg-white dark:bg-[#121212] border border-neutral-200/50 dark:border-white/5 rounded-3xl md:rounded-4xl p-4 sm:p-6 md:p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-emerald-500/30 transition-colors duration-300 group/bento"
                         >
                             <div className="absolute inset-0 glass-noise"></div>
                             <h3 className="relative z-10 text-xs sm:text-sm font-black text-neutral-400 uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-1.5 sm:gap-2 group-hover/bento:text-emerald-500 transition-colors">
@@ -280,7 +277,7 @@ export default function TenantProfile() {
                         <motion.div 
                             variants={itemVariants} 
                             whileHover={{ scale: 1.02, translateY: -5 }}
-                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-3xl md:rounded-4xl p-4 sm:p-6 md:p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-rose-500/30 transition-colors duration-300 group/bento"
+                            className="relative bg-white dark:bg-[#121212] border border-neutral-200/50 dark:border-white/5 rounded-3xl md:rounded-4xl p-4 sm:p-6 md:p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-rose-500/30 transition-colors duration-300 group/bento"
                         >
                             <div className="absolute inset-0 glass-noise"></div>
                             <h3 className="relative z-10 text-xs sm:text-sm font-black text-neutral-400 uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-1.5 sm:gap-2 group-hover/bento:text-rose-500 transition-colors">
@@ -297,7 +294,7 @@ export default function TenantProfile() {
                         <motion.div 
                             variants={itemVariants} 
                             whileHover={{ scale: 1.02, translateY: -5 }}
-                            className="relative bg-white/60 dark:bg-[#0a0a0a]/60 border border-white/40 dark:border-white/10 rounded-3xl md:rounded-4xl p-4 sm:p-6 md:p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-amber-500/30 transition-colors duration-300 group/bento"
+                            className="relative bg-white dark:bg-[#121212] border border-neutral-200/50 dark:border-white/5 rounded-3xl md:rounded-4xl p-4 sm:p-6 md:p-8 flex flex-col overflow-hidden backdrop-blur-2xl shadow-xl hover:shadow-2xl hover:border-amber-500/30 transition-colors duration-300 group/bento"
                         >
                             <div className="absolute inset-0 glass-noise"></div>
                             <h3 className="relative z-10 text-xs sm:text-sm font-black text-neutral-400 uppercase tracking-widest mb-4 sm:mb-6 flex items-center gap-1.5 sm:gap-2 group-hover/bento:text-amber-500 transition-colors">

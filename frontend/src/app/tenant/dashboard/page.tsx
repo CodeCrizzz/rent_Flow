@@ -92,10 +92,7 @@ export default function TenantDashboard() {
         <div className="flex-1 flex flex-col w-full text-neutral-900 dark:text-neutral-100 font-sans bg-transparent">
             {/* Page Transition Overlay */}
             <motion.div initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ duration: 0.5, ease: "easeInOut" }} className="absolute inset-0 z-[9999] bg-slate-50 dark:bg-[#050505] pointer-events-none" />
-            {/* Ambient Background Glows */}
-            <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-indigo-400/20 dark:bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none -z-10 mix-blend-multiply dark:mix-blend-screen"></div>
-            <div className="fixed bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-400/20 dark:bg-purple-500/10 rounded-full blur-[100px] pointer-events-none -z-10 mix-blend-multiply dark:mix-blend-screen"></div>
-            {/* Main Wrapper */}
+                                                {/* Main Wrapper */}
             <div className="max-w-8xl mx-auto w-full h-full flex flex-col gap-1.5 sm:gap-6 pt-0 px-3 sm:px-8 pb-3 sm:pb-6 relative z-10">  
                 {/* --- HEADER --- */}
                 <header className={`sticky top-0 z-40 shrink-0 flex flex-row items-center justify-between h-14 bg-linear-to-b from-white/80 to-white/40 dark:from-[#050505]/80 dark:to-[#050505]/40 backdrop-blur-2xl -mx-3 px-4 sm:mx-0 sm:px-0 mb-1 sm:mb-0 transition-all duration-300 ease-out transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
@@ -107,9 +104,8 @@ export default function TenantDashboard() {
                 {/* --- BENTO GRID LAYOUT --- */}
                 <div className={`shrink-0 grid grid-cols-12 gap-2.5 sm:gap-6 transition-all duration-300 ease-out delay-150 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
                     {/* HERO CARD: Billing & Balance */}
-                    <div className="col-span-12 md:col-span-7 lg:col-span-8 relative rounded-2xl sm:rounded-[2rem] bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col justify-between p-4 sm:p-8 lg:p-10 min-h-0">
-                        <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
-                        <div className="absolute top-0 right-0 -mr-10 sm:-mr-20 -mt-10 sm:-mt-20 w-32 sm:w-72 h-32 sm:h-72 bg-indigo-50 dark:bg-indigo-500/5 rounded-full blur-xl sm:blur-3xl pointer-events-none z-0"></div>
+                    <div className="col-span-12 md:col-span-7 lg:col-span-8 relative rounded-2xl sm:rounded-[2rem] bg-white dark:bg-[#121212] backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-neutral-200/50 dark:border-white/5 overflow-hidden flex flex-col justify-between p-4 sm:p-8 lg:p-10 min-h-0">
+                                                <div className="absolute top-0 right-0 -mr-10 sm:-mr-20 -mt-10 sm:-mt-20 w-32 sm:w-72 h-32 sm:h-72 bg-indigo-50 dark:bg-indigo-500/5 rounded-full blur-xl sm:blur-3xl pointer-events-none z-0"></div>
 
                         <div className="relative z-10">
                             <h3 className="text-xs font-bold text-neutral-400 dark:text-neutral-500 uppercase tracking-widest mb-1.5 sm:mb-2">Total Outstanding</h3>
@@ -142,9 +138,8 @@ export default function TenantDashboard() {
                     {/* SIDE CARDS */}
                     <div className="col-span-12 md:col-span-5 lg:col-span-4 flex flex-col gap-2.5 sm:gap-6">
                         {/* Status Card */}
-                        <div className="relative bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent p-3 sm:p-6 rounded-2xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 flex-1 flex flex-col justify-center overflow-hidden">
-                            <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
-                            <div className="relative z-10 flex items-center justify-between mb-1.5 sm:mb-4">
+                        <div className="relative bg-white dark:bg-[#121212] p-3 sm:p-6 rounded-2xl sm:rounded-[2rem] border border-neutral-200/50 dark:border-white/5 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 flex-1 flex flex-col justify-center overflow-hidden">
+                                                        <div className="relative z-10 flex items-center justify-between mb-1.5 sm:mb-4">
                                 <div className="p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl bg-orange-500/10 text-orange-600 dark:text-orange-400 border border-orange-500/20">
                                     <svg className="w-3.5 h-3.5 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
                                 </div>
@@ -162,9 +157,8 @@ export default function TenantDashboard() {
                         </div>
 
                         {/* Messages Card */}
-                        <div className="relative bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent p-3 sm:p-6 rounded-2xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 flex-1 flex flex-col justify-center hover:bg-white/80 dark:hover:bg-[#181818]/80 hover:border-indigo-200 dark:hover:border-indigo-500/30 cursor-pointer group transition-all duration-300 overflow-hidden">
-                            <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
-                            <div className="relative z-10 flex items-center justify-between mb-1.5 sm:mb-4">
+                        <div className="relative bg-white dark:bg-[#121212] p-3 sm:p-6 rounded-2xl sm:rounded-[2rem] border border-neutral-200/50 dark:border-white/5 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 flex-1 flex flex-col justify-center hover:bg-white/80 dark:hover:bg-[#181818]/80 hover:border-indigo-200 dark:hover:border-indigo-500/30 cursor-pointer group transition-all duration-300 overflow-hidden">
+                                                        <div className="relative z-10 flex items-center justify-between mb-1.5 sm:mb-4">
                                 <div className="p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-300">
                                     <svg className="w-3.5 h-3.5 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
                                 </div>
@@ -181,10 +175,9 @@ export default function TenantDashboard() {
                 </div>
 
                 {/* --- TRANSACTIONS SECTION --- */}
-                <div className={`flex flex-col relative bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent rounded-2xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden transition-all duration-300 ease-out delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                    <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
-                    
-                    <div className="relative z-10 shrink-0 p-3.5 sm:p-6 lg:px-8 border-b border-neutral-200/50 dark:border-white/10 bg-linear-to-b from-white/40 to-white/10 dark:from-white/[0.04] dark:to-transparent backdrop-blur-2xl flex justify-between items-center">
+                <div className={`flex flex-col relative bg-white dark:bg-[#121212] rounded-2xl sm:rounded-[2rem] border border-neutral-200/50 dark:border-white/5 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden transition-all duration-300 ease-out delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                                        
+                    <div className="relative z-10 shrink-0 p-3.5 sm:p-6 lg:px-8 border-b border-neutral-200/50 dark:border-white/10 bg-neutral-50/50 dark:bg-[#18181a] backdrop-blur-2xl flex justify-between items-center">
                         <div>
                             <h2 className="text-base sm:text-lg font-bold leading-none">Recent Payments</h2>
                             <p className="text-xs font-medium text-neutral-500 dark:text-neutral-400 mt-1 sm:mt-1.5">Your latest transactions.</p>

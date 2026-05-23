@@ -4,8 +4,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ThemeToggle } from "@/components/theme-toggle";
 import { motion } from 'framer-motion';
-import { createClient } from '@/utils/supabase/client';
-
+import api from '@/lib/api';
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -36,48 +35,28 @@ export default function LoginPage() {
     };
 
     const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setErrorMsg('');
-    
-    console.log("1. Starting login...");
-    const supabase = createClient();
-
-    try {
-        // Use a timeout wrapper to prevent infinite "Authenticating..."
-        const loginPromise = supabase.auth.signInWithPassword({ email, password });
-        const timeoutPromise = new Promise((_, reject) => 
-            setTimeout(() => reject(new Error("Request timed out - check your environment variables")), 10000)
-        );
-
-        const { data: authData, error: authError } = await Promise.race([loginPromise, timeoutPromise]) as any;
-
-        console.log("2. Auth result received:", { authData, authError });
-
-        if (authError) throw authError;
-        if (!authData.user) throw new Error("No user returned");
-
-        console.log("3. Fetching profile for:", authData.user.id);
-
-        const { data: profile, error: profileError } = await supabase
-            .from('users')
-            .select('*')
-            .eq('auth_id', authData.user.id)
-            .single();
-
-        if (profileError) {
-            console.error("4. Profile fetch failed:", profileError);
-            throw new Error("User found, but profile data missing in DB.");
+        e.preventDefault();
+        setIsLoading(true);
+        setErrorMsg('');
+        
+        try {
+            const response = await api.post('/auth/login', { email, password, role: selectedRole });
+            
+            if (response.data.token) {
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('user', JSON.stringify(response.data.user));
+                
+                router.push(response.data.user.role === 'admin' ? '/admin/dashboard' : '/tenant/dashboard');
+            } else {
+                throw new Error("No token returned");
+            }
+        } catch (err: any) {
+            console.error("Auth error:", err);
+            setErrorMsg(err.response?.data?.message || err.message || "Login failed. Please check credentials.");
+        } finally {
+            setIsLoading(false);
         }
-
-        router.push(profile.role === 'admin' ? '/admin/dashboard' : '/tenant/dashboard');
-    } catch (err: any) {
-        console.error("Auth error:", err);
-        setErrorMsg(err.message || "Login failed. Please check console.");
-    } finally {
-        setIsLoading(false);
-    }
-};
+    };
 
     const primaryGlow = selectedRole === 'tenant' ? 'bg-blue-600' : 'bg-purple-600';
     const secondaryGlow = selectedRole === 'tenant' ? 'bg-indigo-600' : 'bg-fuchsia-600';

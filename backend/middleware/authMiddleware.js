@@ -1,8 +1,8 @@
 const jwt = require('jsonwebtoken');
 const db = require('../config/db');
 
-// Use environment variables for secret key
-const JWT_SECRET = process.env.JWT_SECRET;
+// Hardcoded secret key
+const JWT_SECRET = '5321e75095e9352dbb158b89d10e75bac1c50ea5df2efbcd0ff4e03c3e5e9fc959f7cb4b556c08d011f88f03391c7f2b7b6552dbe396de149a8ac53b07bfc5ef';
 
 const protect = async (req, res, next) => {
     let token;

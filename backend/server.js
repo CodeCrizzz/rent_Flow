@@ -33,11 +33,9 @@ app.get('/api/health', (req, res) => {
     res.status(200).json({ status: 'success', message: 'RentFlow API is running!' });
 });
 
-const PORT = process.env.PORT || 5000;
-if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
-    app.listen(PORT, () => {
-        console.log(`Server running on port: http://localhost:${PORT}`);
-    });
-}
+const PORT = 5000;
+app.listen(PORT, () => {
+    console.log(`Server running on port: http://localhost:${PORT}`);
+});
 
 module.exports = app;

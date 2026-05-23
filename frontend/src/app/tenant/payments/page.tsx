@@ -171,9 +171,7 @@ export default function TenantPayments() {
             {/* Page Transition Overlay */}
             <motion.div initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ duration: 0.5, ease: "easeInOut" }} className="absolute inset-0 z-[9999] bg-slate-50 dark:bg-[#050505] pointer-events-none" />
 
-            {/* Ambient Background Glows */}
-            <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-indigo-400/20 dark:bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none -z-10 mix-blend-multiply dark:mix-blend-screen"></div>
-            <div className="fixed bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-400/20 dark:bg-purple-500/10 rounded-full blur-[100px] pointer-events-none -z-10 mix-blend-multiply dark:mix-blend-screen"></div>
+
 
             {/* MAIN WRAPPER */}
             <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-8xl mx-auto w-full flex flex-col gap-1 sm:gap-3 pt-0 sm:pt-6 px-2 sm:px-8 pb-12 sm:pb-20 lg:pb-32 relative z-10 min-h-full">
@@ -187,9 +185,8 @@ export default function TenantPayments() {
                 </motion.header>
 
                 {/* --- LAYER 1: CURRENT BILL --- */}
-                <motion.div variants={itemVariants} className="shrink-0 relative rounded-xl sm:rounded-[1.7rem] bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col p-6 sm:p-8 lg:p-8">
-                    <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
-                    {currentBill.status === 'Overdue' && <div className="absolute top-0 left-0 w-full h-1 bg-red-500 z-20 shadow-[0_0_20px_rgba(239,68,68,0.8)]"></div>}
+                <motion.div variants={itemVariants} className="shrink-0 relative rounded-xl sm:rounded-[1.7rem] bg-white dark:bg-[#121212] backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-neutral-200/50 dark:border-white/5 overflow-hidden flex flex-col p-6 sm:p-8 lg:p-8">
+                                        {currentBill.status === 'Overdue' && <div className="absolute top-0 left-0 w-full h-1 bg-red-500 z-20 shadow-[0_0_20px_rgba(239,68,68,0.8)]"></div>}
 
                     <div className="relative z-10 flex justify-between items-start mb-2 sm:mb-4">
                         <div>
@@ -239,9 +236,8 @@ export default function TenantPayments() {
                 <div className="shrink-0 grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
 
                     {/* BREAKDOWN CARD */}
-                    <motion.div variants={itemVariants} className="relative rounded-xl sm:rounded-[1.5rem] bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
-                        <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
-                        <h3 className="relative z-10 text-xs sm:text-base font-bold text-neutral-900 dark:text-white flex items-center gap-1 sm:gap-1.5 mb-2 sm:mb-4">
+                    <motion.div variants={itemVariants} className="relative rounded-xl sm:rounded-[1.5rem] bg-white dark:bg-[#121212] backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-neutral-200/50 dark:border-white/5 p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
+                                                <h3 className="relative z-10 text-xs sm:text-base font-bold text-neutral-900 dark:text-white flex items-center gap-1 sm:gap-1.5 mb-2 sm:mb-4">
                             <svg className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2-2v14a2 2 0 002 2z"></path></svg> Breakdown
                         </h3>
                         <div className="relative z-10 flex-1 space-y-2 sm:space-y-3">
@@ -255,9 +251,8 @@ export default function TenantPayments() {
                         </div>
                     </motion.div>
                     {/* SUMMARY CARD */}
-                    <motion.div variants={itemVariants} className="relative rounded-xl sm:rounded-[1.5rem] bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
-                        <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
-                        <h3 className="relative z-10 text-xs sm:text-base font-bold text-neutral-900 dark:text-white flex items-center gap-1 sm:gap-1.5 mb-2 sm:mb-4">
+                    <motion.div variants={itemVariants} className="relative rounded-xl sm:rounded-[1.5rem] bg-white dark:bg-[#121212] backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-neutral-200/50 dark:border-white/5 p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
+                                                <h3 className="relative z-10 text-xs sm:text-base font-bold text-neutral-900 dark:text-white flex items-center gap-1 sm:gap-1.5 mb-2 sm:mb-4">
                             <svg className="w-3.5 h-3.5 sm:w-5 sm:h-5 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg> Summary
                         </h3>
                         <div className="relative z-10 flex-1 space-y-2 sm:space-y-3">
@@ -269,9 +264,8 @@ export default function TenantPayments() {
                 </div>
 
                 {/* --- LAYER 3: FILTERS & TABLE SECTION --- */}
-                <motion.div variants={itemVariants} className="flex flex-col relative bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent rounded-xl sm:rounded-3xl border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden min-h-[400px] sm:min-h-[650px] mb-4">
-                    <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
-                    {/* Title */}
+                <motion.div variants={itemVariants} className="flex flex-col relative bg-white dark:bg-[#121212] rounded-xl sm:rounded-3xl border border-neutral-200/50 dark:border-white/5 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden min-h-[400px] sm:min-h-[650px] mb-4">
+                                        {/* Title */}
                     <div className="relative z-10 shrink-0 p-4 sm:p-6 pb-0 sm:pb-2 flex items-center justify-between">
                         <h2 className="text-base sm:text-xl font-bold text-neutral-900 dark:text-white flex items-center gap-2">
                             <svg className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -280,7 +274,7 @@ export default function TenantPayments() {
                     </div>
 
                     {/* Toolbar */}
-                    <div className="relative z-10 shrink-0 p-3 sm:p-4 border-b border-neutral-200/50 dark:border-white/10 bg-linear-to-b from-white/40 to-white/10 dark:from-white/[0.04] dark:to-transparent backdrop-blur-2xl flex flex-wrap md:flex-nowrap items-center gap-2 sm:gap-3 justify-between">
+                    <div className="relative z-10 shrink-0 p-3 sm:p-4 border-b border-neutral-200/50 dark:border-white/10 bg-neutral-50/50 dark:bg-[#18181a] backdrop-blur-2xl flex flex-wrap md:flex-nowrap items-center gap-2 sm:gap-3 justify-between">
                         <div className="relative flex-1 min-w-[130px] md:flex-none md:w-64 h-9 sm:h-12 flex items-center">
                             <svg className="absolute left-2.5 sm:left-4 w-3.5 h-3.5 sm:w-5 sm:h-5 text-neutral-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                             <input type="text" placeholder="Search..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full h-full bg-white dark:bg-black/20 border border-neutral-200 dark:border-white/10 rounded-lg sm:rounded-xl pl-8 sm:pl-12 pr-2.5 sm:pr-4 text-xs sm:text-sm outline-none focus:ring-2 focus:ring-indigo-500/50 text-neutral-900 dark:text-white m-0" />
@@ -365,7 +359,7 @@ export default function TenantPayments() {
                                 <p className="text-center text-neutral-500 text-xs py-6">No transactions match your filters.</p>
                             ) : (
                                 filteredPayments.map((p) => (
-                                    <motion.div key={p.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="p-4 rounded-2xl bg-white/40 dark:bg-white/[0.02] border border-white/40 dark:border-white/5 flex flex-col gap-3 relative overflow-hidden">
+                                    <motion.div key={p.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="p-4 rounded-2xl bg-white dark:bg-[#121212] border border-white/40 dark:border-white/5 flex flex-col gap-3 relative overflow-hidden">
                                         <div className="absolute left-0 top-0 bottom-0 w-1 bg-indigo-500 rounded-r-full"></div>
                                         <div className="flex justify-between items-start pl-1">
                                             <div className="flex items-center gap-2.5">

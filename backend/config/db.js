@@ -1,10 +1,12 @@
 const { Pool } = require('pg');
 
-const isProduction = process.env.NODE_ENV === 'production' || !!process.env.DATABASE_URL;
-
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: isProduction ? { rejectUnauthorized: false } : false,
+    user: 'postgres',
+    host: 'localhost',
+    database: 'rentFlow_db',
+    password: 'codecrizzz',
+    port: 5432,
+    options: '-c search_path="rentFlow_schema",public',
 });
 
 pool.on('connect', (client) => {

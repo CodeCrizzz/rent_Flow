@@ -235,7 +235,7 @@ export default function AdminRequests() {
                                             {new Date(req.created_at).toLocaleDateString()}
                                         </td>
                                         <td className="px-8 py-5">
-                                            <div className="flex items-center justify-end gap-1 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+                                            <div className="flex items-center justify-end gap-1 opacity-100 transition-opacity">
                                                 <button 
                                                     onClick={() => setViewModalReq(req)}
                                                     className="p-2 text-slate-500 dark:text-zinc-400 hover:text-blue-400 hover:bg-blue-400/10 rounded-lg transition-colors" title="View Details"

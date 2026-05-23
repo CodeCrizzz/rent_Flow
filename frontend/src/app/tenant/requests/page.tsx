@@ -130,7 +130,7 @@ export default function TenantMaintenance() {
             formData.append('category', category);
             formData.append('priority', priority);
             if (schedule) formData.append('schedule', schedule); 
-            if (imageFile) formData.append('image', imageFile);
+            if (imageFile) formData.append('attachment', imageFile);
 
             await api.post('/requests', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
@@ -186,10 +186,7 @@ export default function TenantMaintenance() {
         <div className="flex-1 flex flex-col w-full text-neutral-900 dark:text-neutral-100 font-sans bg-transparent pb-16">
             {/* Page Transition Overlay */}
             <motion.div initial={{ opacity: 1 }} animate={{ opacity: 0 }} transition={{ duration: 0.5, ease: "easeInOut" }} className="absolute inset-0 z-[9999] bg-slate-50 dark:bg-[#050505] pointer-events-none" />
-            {/* Ambient Background Glows */}
-            <div className="fixed top-0 left-1/4 w-[500px] h-[500px] bg-indigo-400/20 dark:bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none -z-10 mix-blend-multiply dark:mix-blend-screen"></div>
-            <div className="fixed bottom-0 right-1/4 w-[400px] h-[400px] bg-purple-400/20 dark:bg-purple-500/10 rounded-full blur-[100px] pointer-events-none -z-10 mix-blend-multiply dark:mix-blend-screen"></div>
-            <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-[1600px] mx-auto w-full h-full flex flex-col min-h-0 gap-1 sm:gap-5 pt-0 px-3 sm:px-8 pb-2 sm:pb-4 relative z-10">
+                                                <motion.div initial="hidden" animate="visible" variants={containerVariants} className="max-w-[1600px] mx-auto w-full h-full flex flex-col min-h-0 gap-1 sm:gap-5 pt-0 px-3 sm:px-8 pb-2 sm:pb-4 relative z-10">
                 
                 {/* --- HEADER --- */}
                 <motion.header variants={itemVariants} className="sticky top-0 z-40 shrink-0 flex flex-row items-center justify-between h-14 bg-linear-to-b from-white/80 to-white/40 dark:from-[#050505]/80 dark:to-[#050505]/40 backdrop-blur-2xl -mx-3 px-4 sm:mx-0 sm:px-0 mb-1 sm:mb-0 transition-all">
@@ -201,9 +198,8 @@ export default function TenantMaintenance() {
                 </motion.header>
 
                 {/* --- SUMMARY DASHBOARD --- */}
-                <motion.div variants={itemVariants} className="shrink-0 relative rounded-xl sm:rounded-2xl bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 p-2 sm:p-4 overflow-hidden">
-                    <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
-                    <div className="relative z-10 grid grid-cols-4 divide-x divide-neutral-200/50 dark:divide-white/10">
+                <motion.div variants={itemVariants} className="shrink-0 relative rounded-xl sm:rounded-2xl bg-white dark:bg-[#121212] backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-neutral-200/50 dark:border-white/5 p-2 sm:p-4 overflow-hidden">
+                                        <div className="relative z-10 grid grid-cols-4 divide-x divide-neutral-200/50 dark:divide-white/10">
                         <div className="px-1.5 sm:px-6 text-center sm:text-left"><p className="text-[9px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest">Total</p><p className="text-lg sm:text-3xl font-black font-mono leading-none mt-0.5 sm:mt-1">{summary.total}</p></div>
                         <div className="px-1.5 sm:px-6 text-center sm:text-left"><p className="text-[9px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest">Pending</p><p className="text-lg sm:text-3xl font-black font-mono text-amber-500 leading-none mt-0.5 sm:mt-1">{summary.pending}</p></div>
                         <div className="px-1.5 sm:px-6 text-center sm:text-left"><p className="text-[9px] sm:text-xs font-bold text-neutral-500 uppercase tracking-widest">In Progress</p><p className="text-lg sm:text-3xl font-black font-mono text-blue-500 leading-none mt-0.5 sm:mt-1">{summary.progress}</p></div>
@@ -214,9 +210,8 @@ export default function TenantMaintenance() {
                 {/* MAIN CONTENT GRID */}
                 <div className="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6">
                     {/* NEW REQUEST FORM */}
-                    <motion.div variants={itemVariants} className="col-span-1 lg:col-span-4 relative rounded-xl sm:rounded-[2rem] bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-white/40 dark:border-white/10 overflow-hidden flex flex-col h-fit">
-                        <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
-                        <div className="relative z-10 shrink-0 p-4 sm:p-5 border-b border-neutral-200/50 dark:border-white/10 bg-linear-to-b from-white/40 to-white/10 dark:from-white/[0.04] dark:to-transparent backdrop-blur-2xl flex justify-between items-center">
+                    <motion.div variants={itemVariants} className="col-span-1 lg:col-span-4 relative rounded-xl sm:rounded-[2rem] bg-white dark:bg-[#121212] backdrop-blur-2xl shadow-xl shadow-indigo-500/5 border border-neutral-200/50 dark:border-white/5 overflow-hidden flex flex-col h-fit">
+                                                <div className="relative z-10 shrink-0 p-4 sm:p-5 border-b border-neutral-200/50 dark:border-white/10 bg-neutral-50/50 dark:bg-[#18181a] backdrop-blur-2xl flex justify-between items-center">
                             <h2 className="text-base sm:text-lg font-bold flex items-center gap-1.5 sm:gap-2"><svg className="w-4 h-4 sm:w-5 sm:h-5 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg> File Request</h2>
                             <button onClick={handleClearForm} className="text-xs font-bold uppercase tracking-widest text-neutral-500 hover:text-red-500 transition-colors">Clear</button>
                         </div>
@@ -271,7 +266,7 @@ export default function TenantMaintenance() {
                             </form>
                         </div>
                         
-                        <div className="relative z-10 shrink-0 p-4 sm:p-5 border-t border-neutral-200/50 dark:border-white/10 bg-linear-to-b from-white/40 to-white/10 dark:from-white/[0.04] dark:to-transparent backdrop-blur-2xl">
+                        <div className="relative z-10 shrink-0 p-4 sm:p-5 border-t border-neutral-200/50 dark:border-white/10 bg-neutral-50/50 dark:bg-[#18181a] backdrop-blur-2xl">
                             <button type="submit" form="maintenance-form" disabled={isSubmitting} className={`w-full py-2.5 sm:py-3.5 text-xs sm:text-sm font-bold uppercase tracking-widest rounded-xl transition-all flex items-center justify-center gap-1.5 sm:gap-2 ${isSubmitting ? 'bg-neutral-100 dark:bg-neutral-800 text-neutral-400 cursor-wait' : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/20 active:scale-95'}`}>
                                 {isSubmitting && <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 border-2 border-current/30 border-t-current rounded-full animate-spin"></div>}
                                 {isSubmitting ? 'Submitting...' : 'Submit Request'}
@@ -280,11 +275,10 @@ export default function TenantMaintenance() {
                     </motion.div>
 
                     {/* HISTORY TABLE & FILTERS (Right Side) */}
-                    <motion.div variants={itemVariants} className="col-span-1 lg:col-span-8 relative bg-linear-to-br from-white/80 to-neutral-50/50 dark:from-white/[0.08] dark:to-transparent rounded-xl sm:rounded-[2rem] border border-white/40 dark:border-white/10 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 flex flex-col min-h-[400px] sm:min-h-[650px] overflow-hidden">
-                        <div className="absolute inset-0 glass-noise z-0 pointer-events-none"></div>
-
+                    <motion.div variants={itemVariants} className="col-span-1 lg:col-span-8 relative bg-white dark:bg-[#121212] rounded-xl sm:rounded-[2rem] border border-neutral-200/50 dark:border-white/5 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 flex flex-col min-h-[400px] sm:min-h-[650px] overflow-hidden">
+                        
                         {/*-- Toolbar --*/}
-                        <div className="relative z-10 shrink-0 p-3 sm:p-4 border-b border-neutral-200/50 dark:border-white/10 bg-linear-to-b from-white/40 to-white/10 dark:from-white/[0.04] dark:to-transparent backdrop-blur-2xl flex flex-wrap lg:flex-nowrap items-center gap-2 sm:gap-3 justify-between">
+                        <div className="relative z-10 shrink-0 p-3 sm:p-4 border-b border-neutral-200/50 dark:border-white/10 bg-neutral-50/50 dark:bg-[#18181a] backdrop-blur-2xl flex flex-wrap lg:flex-nowrap items-center gap-2 sm:gap-3 justify-between">
                             
                             <div className="relative flex-1 min-w-[130px] lg:flex-none lg:w-48 h-9 sm:h-10 flex items-center">
                                 <svg className="absolute left-2.5 sm:left-3.5 w-3 h-3 sm:w-4 sm:h-4 text-neutral-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -371,7 +365,7 @@ export default function TenantMaintenance() {
                                     <div className="py-12 text-center text-neutral-500 text-xs">No requests found.</div>
                                 ) : (
                                     paginatedRequests.map((r) => (
-                                        <motion.div key={r.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="p-4 rounded-2xl bg-white/40 dark:bg-white/[0.02] border border-white/40 dark:border-white/5 flex flex-col gap-3 relative overflow-hidden">
+                                        <motion.div key={r.id} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="p-4 rounded-2xl bg-white dark:bg-[#121212] border border-white/40 dark:border-white/5 flex flex-col gap-3 relative overflow-hidden">
                                             <div className="absolute left-0 top-0 bottom-0 w-1 bg-indigo-500 rounded-r-full"></div>
                                             <div className="flex justify-between items-start pl-1">
                                                 <div>
@@ -401,7 +395,7 @@ export default function TenantMaintenance() {
                         </div>
 
                         {/* Pagination Footer */}
-                        <div className="relative z-10 shrink-0 p-3 sm:p-4 border-t border-neutral-200/50 dark:border-white/10 bg-linear-to-b from-white/40 to-white/10 dark:from-white/[0.04] dark:to-transparent backdrop-blur-2xl flex justify-between items-center">
+                        <div className="relative z-10 shrink-0 p-3 sm:p-4 border-t border-neutral-200/50 dark:border-white/10 bg-neutral-50/50 dark:bg-[#18181a] backdrop-blur-2xl flex justify-between items-center">
                             <span className="text-xs font-bold text-neutral-500 uppercase tracking-widest ml-2">Page {currentPage} of {totalPages || 1}</span>
                             <div className="flex gap-2">
                                 <button onClick={() => setCurrentPage(p => Math.max(1, p - 1))} disabled={currentPage === 1} className="px-2.5 py-1.5 bg-white dark:bg-white/5 rounded-xl border border-neutral-200 dark:border-white/10 text-xs disabled:opacity-50 text-neutral-900 dark:text-white">Prev</button>
