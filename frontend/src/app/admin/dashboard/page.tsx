@@ -94,7 +94,7 @@ export default function AdminDashboard() {
             variants={containerVariants} 
             initial="hidden" 
             animate="show" 
-            className="max-w-[1600px] mx-auto pb-10"
+            className="max-w-[1600px] mx-auto pb-24"
         >
             {/* Ambient Background Blob */}
             <div className="fixed top-0 left-[20%] w-[800px] h-[600px] bg-indigo-500/10 dark:bg-indigo-600/5 blur-[120px] rounded-full pointer-events-none -z-10 mix-blend-screen dark:mix-blend-lighten"></div>
@@ -126,7 +126,7 @@ export default function AdminDashboard() {
                 {/* 1. Primary Stat: Revenue + Collection Rate (Spans 4 columns) */}
                 <motion.div variants={itemVariants} className="md:col-span-3 lg:col-span-4 relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent">
                     <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/30 to-emerald-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
-                    <div className="h-full w-full bg-white dark:bg-black backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
+                    <div className="h-full w-full bg-white dark:bg-zinc-900 backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 dark:bg-emerald-500/20 rounded-bl-full pointer-events-none"></div>
                         <div className="flex items-center justify-between mb-4 relative z-10">
                             <span className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 text-white flex items-center justify-center shadow-[0_4px_20px_rgba(16,185,129,0.3)]">
@@ -171,7 +171,7 @@ export default function AdminDashboard() {
                 {/* 2. Primary Stat: Tenants (Spans 4 columns) */}
                 <motion.div variants={itemVariants} className="md:col-span-3 lg:col-span-4 relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent">
                     <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/30 to-indigo-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
-                    <div className="h-full w-full bg-white dark:bg-black backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
+                    <div className="h-full w-full bg-white dark:bg-zinc-900 backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 dark:bg-indigo-500/20 rounded-bl-full pointer-events-none"></div>
                         <div className="flex items-center justify-between mb-4 relative z-10">
                             <span className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-400 to-indigo-600 text-white flex items-center justify-center shadow-[0_4px_20px_rgba(99,102,241,0.3)]">
@@ -192,7 +192,7 @@ export default function AdminDashboard() {
                 {/* 3. Primary Stat: Rooms (Spans 4 columns) */}
                 <motion.div variants={itemVariants} className="md:col-span-6 lg:col-span-4 relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent">
                     <div className="absolute inset-0 bg-gradient-to-br from-blue-500/30 to-blue-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
-                    <div className="h-full w-full bg-white dark:bg-black backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
+                    <div className="h-full w-full bg-white dark:bg-zinc-900 backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 dark:bg-blue-500/20 rounded-bl-full pointer-events-none"></div>
                         <div className="flex items-center justify-between mb-4 relative z-10">
                             <span className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 text-white flex items-center justify-center shadow-[0_4px_20px_rgba(59,130,246,0.3)]">
@@ -223,7 +223,7 @@ export default function AdminDashboard() {
 
                 {/* 4. Large Chart (Spans 8 columns) */}
                 <motion.div variants={itemVariants} className="md:col-span-6 lg:col-span-8 relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent min-h-[360px]">
-                    <div className="h-full w-full bg-white dark:bg-black backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col relative">
+                    <div className="h-full w-full bg-white dark:bg-zinc-900 backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col relative">
                         <div className="flex items-center justify-between mb-6">
                             <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-3">
                                 <span className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shadow-[0_0_15px_rgba(99,102,241,0.2)]">
@@ -292,7 +292,7 @@ export default function AdminDashboard() {
                 {/* 5. Live Activity Feed (Spans 4 columns) */}
                 <motion.div variants={itemVariants} className="md:col-span-6 lg:col-span-4 relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent row-span-2">
                     <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-purple-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
-                    <div className="h-full w-full bg-white dark:bg-black backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col relative">
+                    <div className="h-full w-full bg-white dark:bg-zinc-900 backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col relative">
                         <div className="flex items-center justify-between mb-8">
                             <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-3">
                                 <span className="w-8 h-8 rounded-lg bg-purple-50 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.2)]">
@@ -338,7 +338,7 @@ export default function AdminDashboard() {
                 {/* 6. Maintenance Summary (Spans 4 columns) */}
                 <motion.div variants={itemVariants} className="md:col-span-6 lg:col-span-4 relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent h-full">
                     <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-orange-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
-                    <div className="h-full w-full bg-white dark:bg-black backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col relative">
+                    <div className="h-full w-full bg-white dark:bg-zinc-900 backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col relative">
                         <div className="flex items-center justify-between mb-6">
                             <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-3">
                                 <span className="w-8 h-8 rounded-lg bg-orange-50 dark:bg-orange-500/10 border border-orange-200 dark:border-orange-500/20 text-orange-600 dark:text-orange-400 flex items-center justify-center shadow-[0_0_15px_rgba(249,115,22,0.2)]">
@@ -378,7 +378,7 @@ export default function AdminDashboard() {
                 {/* 7. Expiring Contracts (Spans 4 columns) */}
                 <motion.div variants={itemVariants} className="md:col-span-6 lg:col-span-4 relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent h-full">
                     <div className="absolute inset-0 bg-gradient-to-br from-rose-500/20 to-rose-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
-                    <div className="h-full w-full bg-white dark:bg-black backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col relative">
+                    <div className="h-full w-full bg-white dark:bg-zinc-900 backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col relative">
                         <div className="flex items-center justify-between mb-6">
                             <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-3">
                                 <span className="w-8 h-8 rounded-lg bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center shadow-[0_0_15px_rgba(244,63,94,0.2)]">
