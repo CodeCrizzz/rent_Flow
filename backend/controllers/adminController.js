@@ -7,7 +7,8 @@ const getDashboardStats = async (req, res) => {
             roomsResult, roomStatusResult, 
             tenantsResult, tenantStatusResult, recentTenantsResult,
             incomeResult, duesResult,
-            requestsResult, recentPaymentsResult, recentRequestsResult
+            requestsResult, recentPaymentsResult, recentRequestsResult,
+            expiringContractsResult, totalBilledResult
         ] = await Promise.all([
             // Rooms Overview
             db.query('SELECT COUNT(*) FROM rooms'),
@@ -39,6 +40,22 @@ const getDashboardStats = async (req, res) => {
                 JOIN users u ON r.tenant_id = u.id 
                 ORDER BY r.created_at DESC LIMIT 5
             `),
+
+            // Expiring Contracts (within next 30 days)
+            db.query(`
+                SELECT u.id, u.name, u.contract_end_date, r.room_number
+                FROM users u
+                LEFT JOIN rooms r ON u.room_id = r.id
+                WHERE u.role = 'tenant' 
+                  AND u.status = 'Active'
+                  AND u.contract_end_date IS NOT NULL
+                  AND u.contract_end_date <= CURRENT_DATE + INTERVAL '30 days'
+                ORDER BY u.contract_end_date ASC
+                LIMIT 5
+            `),
+
+            // Total billed this month (for collection rate)
+            db.query("SELECT SUM(amount) FROM bills WHERE EXTRACT(MONTH FROM due_date) = EXTRACT(MONTH FROM CURRENT_DATE) AND EXTRACT(YEAR FROM due_date) = EXTRACT(YEAR FROM CURRENT_DATE)"),
         ]);
 
         // --- Process Room Stats ---
@@ -116,13 +133,27 @@ const getDashboardStats = async (req, res) => {
         activities.sort((a, b) => new Date(b.date) - new Date(a.date));
         activities = activities.slice(0, 10);
 
+        // --- Process Expiring Contracts ---
+        const expiringContracts = expiringContractsResult.rows.map(t => ({
+            id: t.id,
+            name: t.name,
+            room_number: t.room_number,
+            contract_end_date: t.contract_end_date,
+            days_left: Math.max(0, Math.ceil((new Date(t.contract_end_date) - new Date()) / (1000 * 60 * 60 * 24)))
+        }));
+
+        // --- Collection Rate ---
+        const totalBilled = parseFloat(totalBilledResult.rows[0].sum) || 0;
+        const collectionRate = totalBilled > 0 ? Math.round((monthlyIncome / totalBilled) * 100) : 0;
+
         // --- Final Response Object ---
         res.status(200).json({
             rooms: { totalRooms, occupiedRooms, availableRooms, maintenanceRooms },
             tenants: { totalTenants, activeTenants, pendingTenants },
-            billing: { monthlyIncome, pendingDues, overduePayments },
+            billing: { monthlyIncome, pendingDues, overduePayments, totalBilled, collectionRate },
             maintenance: { totalRequests, pendingRequests, inProgressRequests, resolvedRequests },
-            recentActivities: activities
+            recentActivities: activities,
+            expiringContracts
         });
 
     } catch (error) {

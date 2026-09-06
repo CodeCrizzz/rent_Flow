@@ -4,12 +4,21 @@ import api from '@/lib/api';
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tooltip } from "recharts";
 import { motion, Variants } from "framer-motion";
 
+interface ExpiringContract {
+    id: number;
+    name: string;
+    room_number: string | null;
+    contract_end_date: string;
+    days_left: number;
+}
+
 interface DashboardStats {
     rooms: { totalRooms: number; occupiedRooms: number; availableRooms: number; maintenanceRooms: number };
     tenants: { totalTenants: number; activeTenants: number; pendingTenants: number };
-    billing: { monthlyIncome: number; pendingDues: number; overduePayments: number };
+    billing: { monthlyIncome: number; pendingDues: number; overduePayments: number; totalBilled: number; collectionRate: number };
     maintenance: { totalRequests: number; pendingRequests: number; inProgressRequests: number; resolvedRequests: number };
     recentActivities: { id: string; type: string; title: string; description: string; date: string }[];
+    expiringContracts: ExpiringContract[];
 }
 
 // Framer Motion Variants
@@ -100,21 +109,45 @@ export default function AdminDashboard() {
             {/* BENTO GRID */}
             <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-6 auto-rows-[minmax(180px,auto)]">
                 
-                {/* 1. Primary Stat: Revenue (Spans 4 columns) */}
+                {/* 1. Primary Stat: Revenue + Collection Rate (Spans 4 columns) */}
                 <motion.div variants={itemVariants} className="md:col-span-3 lg:col-span-4 relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent">
                     <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/30 to-emerald-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
                     <div className="h-full w-full bg-white/80 dark:bg-[#0a0a0a]/90 backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 dark:bg-emerald-500/20 rounded-bl-full pointer-events-none"></div>
                         <div className="flex items-center justify-between mb-4 relative z-10">
                             <span className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 text-white flex items-center justify-center text-xl shadow-[0_4px_20px_rgba(16,185,129,0.3)]">💰</span>
-                            <span className="text-[10px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-[0.2em]">Collected this Mo.</span>
+                            <div className="flex items-center gap-3">
+                                {/* Collection Rate Ring */}
+                                <div className="relative w-11 h-11" title={`${stats.billing.collectionRate}% collected`}>
+                                    <svg className="w-11 h-11 -rotate-90" viewBox="0 0 36 36">
+                                        <circle cx="18" cy="18" r="15.5" fill="none" stroke="currentColor" strokeWidth="3" className="text-slate-200 dark:text-zinc-800" />
+                                        <motion.circle 
+                                            cx="18" cy="18" r="15.5" fill="none" 
+                                            strokeWidth="3" strokeLinecap="round"
+                                            className={stats.billing.collectionRate >= 75 ? 'text-emerald-500' : stats.billing.collectionRate >= 40 ? 'text-amber-500' : 'text-rose-500'}
+                                            stroke="currentColor"
+                                            strokeDasharray={`${15.5 * 2 * Math.PI}`}
+                                            initial={{ strokeDashoffset: 15.5 * 2 * Math.PI }}
+                                            animate={{ strokeDashoffset: 15.5 * 2 * Math.PI * (1 - stats.billing.collectionRate / 100) }}
+                                            transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
+                                        />
+                                    </svg>
+                                    <span className="absolute inset-0 flex items-center justify-center text-[9px] font-black text-slate-700 dark:text-zinc-300">{stats.billing.collectionRate}%</span>
+                                </div>
+                                <span className="text-[10px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-[0.2em] hidden sm:block">Collected</span>
+                            </div>
                         </div>
                         <div className="relative z-10">
                             <h2 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tighter">₱{Number(stats.billing.monthlyIncome).toLocaleString()}</h2>
-                            <p className="text-xs font-bold text-amber-500 mt-2 flex items-center gap-1.5">
-                                <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
-                                ₱{Number(stats.billing.pendingDues).toLocaleString()} Unpaid
-                            </p>
+                            <div className="flex items-center gap-3 mt-2">
+                                <p className="text-xs font-bold text-amber-500 flex items-center gap-1.5">
+                                    <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                                    ₱{Number(stats.billing.pendingDues).toLocaleString()} Unpaid
+                                </p>
+                                {stats.billing.totalBilled > 0 && (
+                                    <span className="text-[10px] font-bold text-slate-400 dark:text-zinc-600">/ ₱{Number(stats.billing.totalBilled).toLocaleString()} billed</span>
+                                )}
+                            </div>
                         </div>
                     </div>
                 </motion.div>
@@ -283,32 +316,61 @@ export default function AdminDashboard() {
                     </div>
                 </motion.div>
 
-                {/* 7. Quick Actions (Spans 4 columns) */}
+                {/* 7. Expiring Contracts (Spans 4 columns) */}
                 <motion.div variants={itemVariants} className="md:col-span-6 lg:col-span-4 relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent h-full">
+                    <div className="absolute inset-0 bg-gradient-to-br from-rose-500/20 to-rose-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
                     <div className="h-full w-full bg-white/80 dark:bg-[#0a0a0a]/90 backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col relative">
-                        <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-3 mb-6">
-                            <span className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-400 flex items-center justify-center text-sm shadow-sm">⚡</span>
-                            Quick Actions
-                        </h3>
-                        
-                        <div className="grid grid-cols-2 gap-3 mt-auto h-full">
-                            <a href="/admin/rooms" className="bg-slate-50 dark:bg-zinc-900/50 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 border border-slate-200 dark:border-zinc-800 hover:border-indigo-200 dark:hover:border-indigo-500/30 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 text-center transition-all group/btn">
-                                <span className="text-2xl group-hover/btn:scale-110 transition-transform">🏢</span>
-                                <span className="text-xs font-bold text-slate-700 dark:text-zinc-300">Manage Rooms</span>
-                            </a>
-                            <a href="/admin/tenants" className="bg-slate-50 dark:bg-zinc-900/50 hover:bg-blue-50 dark:hover:bg-blue-500/10 border border-slate-200 dark:border-zinc-800 hover:border-blue-200 dark:hover:border-blue-500/30 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 text-center transition-all group/btn">
-                                <span className="text-2xl group-hover/btn:scale-110 transition-transform">👥</span>
-                                <span className="text-xs font-bold text-slate-700 dark:text-zinc-300">View Tenants</span>
-                            </a>
-                            <a href="/admin/billing" className="bg-slate-50 dark:bg-zinc-900/50 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 border border-slate-200 dark:border-zinc-800 hover:border-emerald-200 dark:hover:border-emerald-500/30 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 text-center transition-all group/btn">
-                                <span className="text-2xl group-hover/btn:scale-110 transition-transform">💳</span>
-                                <span className="text-xs font-bold text-slate-700 dark:text-zinc-300">Billing Log</span>
-                            </a>
-                            <a href="/admin/requests" className="bg-slate-50 dark:bg-zinc-900/50 hover:bg-orange-50 dark:hover:bg-orange-500/10 border border-slate-200 dark:border-zinc-800 hover:border-orange-200 dark:hover:border-orange-500/30 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 text-center transition-all group/btn">
-                                <span className="text-2xl group-hover/btn:scale-110 transition-transform">🛠️</span>
-                                <span className="text-xs font-bold text-slate-700 dark:text-zinc-300">Fix Issues</span>
-                            </a>
+                        <div className="flex items-center justify-between mb-6">
+                            <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-3">
+                                <span className="w-8 h-8 rounded-lg bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center text-sm shadow-[0_0_15px_rgba(244,63,94,0.2)]">📋</span>
+                                Expiring Soon
+                            </h3>
+                            {stats.expiringContracts.length > 0 && (
+                                <span className="px-2.5 py-1 rounded-full bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 text-[10px] font-black text-rose-600 dark:text-rose-400 uppercase tracking-widest">
+                                    {stats.expiringContracts.length} tenant{stats.expiringContracts.length !== 1 ? 's' : ''}
+                                </span>
+                            )}
                         </div>
+                        
+                        {stats.expiringContracts.length === 0 ? (
+                            <div className="flex-1 flex flex-col items-center justify-center text-center opacity-50 relative z-10">
+                                <div className="w-16 h-16 rounded-2xl bg-slate-50 dark:bg-zinc-900 flex items-center justify-center text-3xl mb-4 border border-slate-200 dark:border-zinc-800">✅</div>
+                                <p className="font-bold text-slate-500 dark:text-zinc-500 text-sm">No contracts expiring within 30 days.</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-3 mt-auto flex-1 overflow-y-auto custom-scrollbar">
+                                {stats.expiringContracts.map((tenant) => {
+                                    const isUrgent = tenant.days_left <= 7;
+                                    const isExpired = tenant.days_left === 0;
+                                    
+                                    return (
+                                        <div key={tenant.id} className={`flex items-center justify-between p-4 rounded-2xl border transition-colors ${
+                                            isExpired 
+                                                ? 'bg-rose-50 dark:bg-rose-500/10 border-rose-200 dark:border-rose-500/20' 
+                                                : isUrgent 
+                                                    ? 'bg-amber-50 dark:bg-amber-500/10 border-amber-200 dark:border-amber-500/20' 
+                                                    : 'bg-slate-50 dark:bg-zinc-900/50 border-slate-200 dark:border-zinc-800'
+                                        }`}>
+                                            <div className="min-w-0 flex-1">
+                                                <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{tenant.name}</p>
+                                                <p className="text-[10px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-widest mt-0.5">
+                                                    Room {tenant.room_number || 'N/A'} • {new Date(tenant.contract_end_date).toLocaleDateString([], { month: 'short', day: 'numeric' })}
+                                                </p>
+                                            </div>
+                                            <span className={`shrink-0 ml-3 px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-widest border ${
+                                                isExpired 
+                                                    ? 'bg-rose-500 text-white border-rose-600 shadow-[0_0_10px_rgba(244,63,94,0.4)]' 
+                                                    : isUrgent 
+                                                        ? 'bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-300 dark:border-amber-500/30' 
+                                                        : 'bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 border-slate-200 dark:border-zinc-700'
+                                            }`}>
+                                                {isExpired ? 'Expired' : `${tenant.days_left}d left`}
+                                            </span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
                     </div>
                 </motion.div>
 
