@@ -319,7 +319,7 @@ export default function AdminTenants() {
                         const style = getTenantStatusStyles(tenant.status);
                         
                         return (
-                            <motion.div key={tenant.id} variants={itemVariants} className="relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent hover:shadow-[0_0_40px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_0_40px_rgba(255,255,255,0.05)] transition-all duration-500">
+                            <motion.div key={tenant.id} variants={itemVariants} className="relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent hover:shadow-[0_0_40px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_0_40px_rgba(255,255,255,0.05)] transition-shadow duration-500">
                                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
                                 <div className="h-full w-full bg-white/80 dark:bg-[#0a0a0a]/90 backdrop-blur-3xl rounded-[23px] p-6 flex flex-col relative overflow-hidden transition-transform duration-500 group-hover:scale-[0.99]">
                                     
