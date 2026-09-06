@@ -8,31 +8,14 @@ import api from '@/lib/api';
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [selectedRole, setSelectedRole] = useState<'tenant' | 'admin'>('tenant');
     const [isLoading, setIsLoading] = useState(false); 
     const [errorMsg, setErrorMsg] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
-    const [isSwitching, setIsSwitching] = useState(false);
     
     const router = useRouter();
 
     useEffect(() => { setIsMounted(true); }, []);
-    useEffect(() => {
-        setErrorMsg('');
-        setEmail('');
-        setPassword('');
-    }, [selectedRole]);
-
-    // Custom handler to trigger the transition before swapping roles
-    const handleRoleChange = (role: 'tenant' | 'admin') => {
-        if (role === selectedRole) return;
-        setIsSwitching(true); 
-        setTimeout(() => {
-            setSelectedRole(role); 
-            setIsSwitching(false); 
-        }, 200); 
-    };
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -40,7 +23,7 @@ export default function LoginPage() {
         setErrorMsg('');
         
         try {
-            const response = await api.post('/auth/login', { email, password, role: selectedRole });
+            const response = await api.post('/auth/login', { email, password });
             
             if (response.data.token) {
                 localStorage.setItem('token', response.data.token);
@@ -57,10 +40,6 @@ export default function LoginPage() {
         }
     };
 
-    const primaryGlow = selectedRole === 'tenant' ? 'bg-blue-600' : 'bg-purple-600';
-    const secondaryGlow = selectedRole === 'tenant' ? 'bg-indigo-600' : 'bg-fuchsia-600';
-    const buttonColor = selectedRole === 'tenant' ? 'bg-blue-600 shadow-blue-900/20 hover:bg-blue-500' : 'bg-purple-600 shadow-purple-900/20 hover:bg-purple-500';
-
     return (
         <motion.div 
             initial={{ opacity: 0, y: 10 }}
@@ -70,7 +49,7 @@ export default function LoginPage() {
         >
             
             {/* Ambient Background Glow */}
-            <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[300px] sm:h-[500px] blur-[100px] rounded-full pointer-events-none transition-all duration-1000 ${isMounted ? 'opacity-100' : 'opacity-0 scale-50'} ${selectedRole === 'tenant' ? 'bg-blue-600/10' : 'bg-purple-600/10'}`}></div>
+            <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[300px] sm:h-[500px] blur-[100px] rounded-full pointer-events-none transition-all duration-1000 bg-blue-600/10 ${isMounted ? 'opacity-100' : 'opacity-0 scale-50'}`}></div>
 
             {/* Main Wrapper */}
             <div className={`w-full max-w-5xl my-auto bg-zinc-950 rounded-3xl sm:rounded-[2.5rem] shadow-2xl shadow-black/50 overflow-hidden flex flex-col md:flex-row relative z-10 border border-white/5 transition-all duration-1000 transform ${isMounted ? 'opacity-100 translate-y-0 scale-100 blur-0' : 'opacity-0 translate-y-12 scale-95 blur-md'}`}>
@@ -78,29 +57,25 @@ export default function LoginPage() {
                 {/* --- LEFT PANEL --- */}
                 <div className={`hidden md:flex w-full md:w-5/12 bg-[#0a0a0a] p-8 sm:p-10 lg:p-14 flex-col justify-between relative overflow-hidden border-r border-white/5 transition-all duration-1000 delay-300 ${isMounted ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}`}>
                     
-                    <div className={`absolute top-[-20%] left-[-20%] w-48 h-48 sm:w-64 sm:h-64 rounded-full mix-blend-screen filter blur-[60px] sm:blur-[80px] opacity-30 animate-pulse-slow transition-colors duration-1000 ${primaryGlow}`}></div>
-                    <div className={`absolute bottom-[-20%] right-[-20%] w-48 h-48 sm:w-64 sm:h-64 rounded-full mix-blend-screen filter blur-[60px] sm:blur-[80px] opacity-30 transition-colors duration-1000 ${secondaryGlow}`}></div>
+                    <div className="absolute top-[-20%] left-[-20%] w-48 h-48 sm:w-64 sm:h-64 rounded-full mix-blend-screen filter blur-[60px] sm:blur-[80px] opacity-30 animate-pulse-slow transition-colors duration-1000 bg-blue-600"></div>
+                    <div className="absolute bottom-[-20%] right-[-20%] w-48 h-48 sm:w-64 sm:h-64 rounded-full mix-blend-screen filter blur-[60px] sm:blur-[80px] opacity-30 transition-colors duration-1000 bg-indigo-600"></div>
 
                     <div className="relative z-10 mb-8 md:mb-12 flex items-center justify-between">
                         <Link href="/" className="inline-flex items-center gap-3 group">
-                            <div className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center transition-all duration-500 shadow-lg group-hover:scale-110 group-hover:rotate-3 ${
-                                selectedRole === 'tenant' 
-                                    ? 'bg-blue-500 group-hover:shadow-[0_0_25px_rgba(59,130,246,0.6)]' 
-                                    : 'bg-purple-500 group-hover:shadow-[0_0_25px_rgba(168,85,247,0.6)]'
-                            }`}>
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center transition-all duration-500 shadow-lg group-hover:scale-110 group-hover:rotate-3 bg-blue-500 group-hover:shadow-[0_0_25px_rgba(59,130,246,0.6)]">
                                 <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                             </div>
                             
                             <span className="text-2xl sm:text-3xl font-black tracking-tight text-white transition-colors">
-                                Rent<span className={selectedRole === 'tenant' ? 'text-blue-500' : 'text-purple-500'}>Flow</span>
+                                Rent<span className="text-blue-500">Flow</span>
                             </span>
                         </Link>
                         <ThemeToggle />
                     </div>
 
                     <div className="relative z-10 mt-auto">
-                        <div className={`transition-all duration-300 ${isSwitching ? 'opacity-0 translate-y-2' : 'opacity-100 translate-y-0'}`}>
-                            <h2 className="text-xl sm:text-2xl lg:text-4xl font-bold text-white mb-2 sm:mb-4 leading-tight">{selectedRole === 'tenant' ? "Manage your stay" : "Manage your property"}<br className="hidden sm:block" /> with ease.</h2>
+                        <div className="transition-all duration-300 opacity-100 translate-y-0">
+                            <h2 className="text-xl sm:text-2xl lg:text-4xl font-bold text-white mb-2 sm:mb-4 leading-tight">Welcome back to <br className="hidden sm:block" /> RentFlow.</h2>
                         </div>
                         <p className="text-zinc-500 text-sm leading-relaxed max-w-xs">Secure access to the RentFlow ecosystem.</p>
                     </div>
@@ -112,48 +87,23 @@ export default function LoginPage() {
                     {/* MOBILE BRANDING HEADER (Visible ONLY on Mobile) */}
                     <div className="flex md:hidden items-center justify-between mb-8">
                         <div className="flex items-center gap-2.5">
-                            <div className={`w-9 h-9 rounded-lg flex items-center justify-center shadow-lg transition-colors duration-500 ${
-                                selectedRole === 'tenant' 
-                                    ? 'bg-blue-500 shadow-blue-500/20' 
-                                    : 'bg-purple-500 shadow-purple-500/20'
-                            }`}>
+                            <div className="w-9 h-9 rounded-lg flex items-center justify-center shadow-lg transition-colors duration-500 bg-blue-500 shadow-blue-500/20">
                                 <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
                                 </svg>
                             </div>
                             <span className="text-2xl font-black tracking-tight text-white">
-                                Rent<span className={selectedRole === 'tenant' ? 'text-blue-500' : 'text-purple-500'}>Flow</span>
+                                Rent<span className="text-blue-500">Flow</span>
                             </span>
                         </div>
                         <ThemeToggle />
                     </div>
-                    
-                    {/* Role Switcher */}
-                    <div className="flex bg-zinc-900/50 p-1.5 rounded-2xl mb-8 border border-white/5 relative z-20 overflow-hidden">
-                        {/* Sliding Background Indicator */}
-                        <div className={`absolute top-1.5 bottom-1.5 w-[calc(50%-6px)] bg-zinc-800 rounded-xl shadow-md border border-white/10 transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${selectedRole === 'admin' ? 'translate-x-full' : 'translate-x-0'}`}></div>
-
-                        <button 
-                            type="button" 
-                            onClick={() => handleRoleChange('tenant')} 
-                            className={`flex-1 py-3.5 rounded-xl text-sm font-bold relative z-10 transition-colors duration-300 ${selectedRole === 'tenant' ? 'text-white' : 'text-zinc-500 hover:text-zinc-300'}`}
-                        >
-                            Tenant Portal
-                        </button>
-                        <button 
-                            type="button" 
-                            onClick={() => handleRoleChange('admin')} 
-                            className={`flex-1 py-3.5 rounded-xl text-sm font-bold relative z-10 transition-colors duration-300 ${selectedRole === 'admin' ? 'text-white' : 'text-zinc-500 hover:text-zinc-300'}`}
-                        >
-                            Admin Portal
-                        </button>
-                    </div>
 
                     {/* Form Container */}
-                    <div className={`transition-all duration-300 ${isSwitching ? 'opacity-0 scale-[0.98] blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
+                    <div className="transition-all duration-300 opacity-100 scale-100 blur-0">
                         <div className="mb-6 sm:mb-8 text-center md:text-left">
-                            <h2 className="text-xl sm:text-3xl font-bold text-white tracking-tight mb-1 sm:mb-2">{selectedRole === 'tenant' ? 'Welcome to RentFlow' : 'Admin Access'}</h2>
-                            <p className="text-zinc-500 text-sm">Please enter your account credentials.</p>
+                            <h2 className="text-xl sm:text-3xl font-bold text-white tracking-tight mb-1 sm:mb-2">Login to your account</h2>
+                            <p className="text-zinc-500 text-sm">Please enter your credentials to continue.</p>
                         </div>
 
                         {errorMsg && (
@@ -166,7 +116,7 @@ export default function LoginPage() {
                         <form onSubmit={handleLogin} className="space-y-5 sm:space-y-6">
                             <div>
                                 <label className="block text-xs font-bold text-zinc-500 uppercase tracking-widest mb-2 ml-1">Email Address</label>
-                                <input type="email" value={email} placeholder={selectedRole === 'tenant' ? "name@example.com" : "admin@rentflow.com"} className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setEmail(e.target.value)} required />
+                                <input type="email" value={email} placeholder="name@example.com" className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setEmail(e.target.value)} required />
                             </div>
 
                             <div>
@@ -183,20 +133,18 @@ export default function LoginPage() {
                             </div>
 
                             <div className="pt-6 sm:pt-8">
-                                <button type="submit" disabled={isLoading} className={`w-full flex justify-center items-center py-4 rounded-xl sm:rounded-2xl shadow-xl text-xs font-black uppercase tracking-[0.2em] text-white transition-all duration-300 hover:scale-[1.02] active:scale-95 disabled:opacity-50 ${buttonColor}`}>
+                                <button type="submit" disabled={isLoading} className="w-full flex justify-center items-center py-4 rounded-xl sm:rounded-2xl shadow-xl text-xs font-black uppercase tracking-[0.2em] text-white transition-all duration-300 hover:scale-[1.02] active:scale-95 disabled:opacity-50 bg-blue-600 shadow-blue-900/20 hover:bg-blue-500">
                                     {isLoading ? "Authenticating..." : "Login"}
                                 </button>
                                 
-                                {selectedRole === 'tenant' && (
-                                    <div className="mt-6 text-center animate-in fade-in slide-in-from-bottom-2 duration-700 delay-300">
-                                        <p className="text-zinc-500 text-sm font-medium">
-                                            Don't have an account?{' '}
-                                            <Link href="/signup" className="text-blue-500 hover:text-blue-400 font-bold transition-colors underline-offset-4 hover:underline">
-                                                Apply now
-                                            </Link>
-                                        </p>
-                                    </div>
-                                )}
+                                <div className="mt-6 text-center animate-in fade-in slide-in-from-bottom-2 duration-700 delay-300">
+                                    <p className="text-zinc-500 text-sm font-medium">
+                                        Don't have an account?{' '}
+                                        <Link href="/signup" className="text-blue-500 hover:text-blue-400 font-bold transition-colors underline-offset-4 hover:underline">
+                                            Apply now
+                                        </Link>
+                                    </p>
+                                </div>
                             </div>
                         </form>
                     </div>
