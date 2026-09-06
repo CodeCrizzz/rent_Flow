@@ -197,7 +197,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                     </header>
 
                     {/* Main Content Area */}
-                    <div className="flex-1 flex flex-col overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-zinc-700">
+                    <div className="flex-1 flex flex-col overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-zinc-700">
                         {/* Sub-header background gradient extension */}
                         <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-indigo-50/50 dark:from-indigo-900/10 to-transparent pointer-events-none -z-10"></div>
                         
