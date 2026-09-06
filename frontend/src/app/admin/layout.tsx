@@ -85,7 +85,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <SidebarProvider>
             <div className="flex h-screen w-full bg-slate-50 dark:bg-zinc-950 text-slate-900 dark:text-zinc-50 overflow-hidden selection:bg-indigo-500/30">
                 {/* --- SHADCN SIDEBAR --- */}
-                <Sidebar variant="sidebar" collapsible="icon" className="border-r border-slate-200 dark:border-white/10 bg-white dark:bg-zinc-950">
+                <Sidebar variant="inset" collapsible="icon" className="border-r border-slate-200 dark:border-white/10 bg-white dark:bg-zinc-950">
                     <SidebarHeader className="p-4 flex items-center justify-between">
                         <Link href="/admin/dashboard" className="flex items-center gap-3 overflow-hidden">
                             <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 bg-indigo-600 shadow-lg shadow-indigo-500/20 text-white">
