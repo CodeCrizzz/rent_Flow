@@ -53,7 +53,7 @@ export default function PageTransition({ children }: PageTransitionProps) {
             bounce: 0.2
         }}
         
-        className="w-full h-full"
+        className="w-full"
         style={{ perspective: "1200px" }} 
       >
         {children}
