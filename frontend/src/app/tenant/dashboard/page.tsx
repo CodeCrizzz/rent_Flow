@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import api from '@/lib/api';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
 export default function TenantDashboard() {
     const [tenantData, setTenantData] = useState<{
@@ -174,63 +176,102 @@ export default function TenantDashboard() {
                     </div>
                 </div>
 
-                {/* --- TRANSACTIONS SECTION --- */}
-                <div className={`flex flex-col relative bg-white dark:bg-[#121212] rounded-2xl sm:rounded-[2rem] border border-neutral-200/50 dark:border-white/5 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden transition-all duration-300 ease-out delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-                                        
-                    <div className="relative z-10 shrink-0 p-3.5 sm:p-6 lg:px-8 border-b border-neutral-200/50 dark:border-white/10 bg-neutral-50/50 dark:bg-[#18181a] backdrop-blur-2xl flex justify-between items-center">
-                        <div>
-                            <h2 className="text-base sm:text-lg font-bold leading-none">Recent Payments</h2>
-                            <p className="text-xs font-medium text-neutral-500 dark:text-neutral-400 mt-1 sm:mt-1.5">Your latest transactions.</p>
+                {/* --- BOTTOM ROW --- */}
+                <div className={`grid grid-cols-1 lg:grid-cols-2 gap-2.5 sm:gap-6 transition-all duration-300 ease-out delay-300 transform ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+                    
+                    {/* TRANSACTIONS SECTION */}
+                    <div className="flex flex-col relative bg-white dark:bg-[#121212] rounded-2xl sm:rounded-[2rem] border border-neutral-200/50 dark:border-white/5 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden">
+                        <div className="relative z-10 shrink-0 p-3.5 sm:p-6 lg:px-8 border-b border-neutral-200/50 dark:border-white/10 bg-neutral-50/50 dark:bg-[#18181a] backdrop-blur-2xl flex justify-between items-center">
+                            <div>
+                                <h2 className="text-base sm:text-lg font-bold leading-none">Recent Payments</h2>
+                                <p className="text-xs font-medium text-neutral-500 dark:text-neutral-400 mt-1 sm:mt-1.5">Your latest transactions.</p>
+                            </div>
+                            <Link href="/tenant/payments" className="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 flex items-center gap-1 transition-colors">
+                                View Full History <span aria-hidden="true">&rarr;</span>
+                            </Link>
                         </div>
-                        <Link href="/tenant/payments" className="text-xs font-bold text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 flex items-center gap-1 transition-colors">
-                            View Full History <span aria-hidden="true">&rarr;</span>
-                        </Link>
+
+                        <div className="relative z-10 p-2 sm:p-4">
+                            {tenantData.recentTransactions && tenantData.recentTransactions.length > 0 ? (
+                                <div className="space-y-1.5 pb-4">
+                                    {tenantData.recentTransactions.slice(0, 3).map((tx: any, i) => (
+                                        <div key={i} className="group relative flex items-center justify-between p-3 sm:p-4 rounded-xl sm:rounded-2xl hover:bg-white/40 dark:hover:bg-white/5 transition-all duration-300 cursor-default gap-2">
+                                            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-0 bg-indigo-500 rounded-r-full transition-all duration-300 group-hover:h-3/4 opacity-0 group-hover:opacity-100"></div>
+
+                                            <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
+                                                <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-sm ${
+                                                    tx.type === 'payment' ? 'bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200/50 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-400 group-hover:border-emerald-500/40' : 
+                                                    tx.type === 'charge' ? 'bg-red-50 dark:bg-red-500/10 border border-red-200/50 dark:border-red-500/20 text-red-600 dark:text-red-400 group-hover:border-red-500/40' : 
+                                                    'bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200/50 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400 group-hover:border-indigo-500/40'
+                                                }`}>
+                                                    {tx.type === 'payment' && <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>}
+                                                    {tx.type === 'charge' && <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>}
+                                                </div>
+                                                <div className="flex-1 min-w-0">
+                                                    <p className="text-xs sm:text-sm font-bold text-neutral-900 dark:text-neutral-100 truncate">{tx.description}</p>
+                                                    <p className="text-xs font-medium text-neutral-500 dark:text-neutral-500 mt-0.5">{tx.date}</p>
+                                                </div>
+                                            </div>
+                                            <div className="text-right shrink-0">
+                                                <p className={`text-xs sm:text-base font-black tracking-tight font-mono ${tx.type === 'payment' ? 'text-emerald-600 dark:text-emerald-400' : 'text-neutral-900 dark:text-neutral-100'}`}>
+                                                    {tx.type === 'payment' ? '-' : ''}₱{tx.amount.toLocaleString()}
+                                                </p>
+                                                <p className={`text-xs font-bold uppercase tracking-widest mt-1 ${
+                                                    tx.status === 'Paid' ? 'text-emerald-500' : 
+                                                    tx.status === 'Pending' ? 'text-orange-500' : 'text-indigo-500'
+                                                }`}>{tx.status}</p>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="flex flex-col items-center justify-center py-10 h-full px-4 text-center">
+                                    <div className="w-14 h-14 sm:w-20 sm:h-20 bg-white/50 dark:bg-white/5 rounded-2xl sm:rounded-4xl flex items-center justify-center text-neutral-400 dark:text-neutral-500 mx-auto mb-4 sm:mb-6 shadow-inner border border-neutral-200/50 dark:border-white/5 backdrop-blur-md">
+                                        <svg className="w-7 h-7 sm:w-10 sm:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                    </div>
+                                    <h3 className="text-sm sm:text-lg font-bold text-neutral-900 dark:text-white">No Transactions Yet</h3>
+                                    <p className="text-xs sm:text-sm font-medium text-neutral-500 mt-1.5 sm:mt-2 max-w-xs mx-auto leading-relaxed">Payments and invoices will appear here once they are processed.</p>
+                                </div>
+                            )}
+                        </div>
                     </div>
 
-                    <div className="relative z-10 p-2 sm:p-4">
-                        {tenantData.recentTransactions && tenantData.recentTransactions.length > 0 ? (
-                            <div className="space-y-1.5 pb-4">
-                                {tenantData.recentTransactions.slice(0, 3).map((tx: any, i) => (
-                                    <div key={i} className="group relative flex items-center justify-between p-3 sm:p-4 rounded-xl sm:rounded-2xl hover:bg-white/40 dark:hover:bg-white/5 transition-all duration-300 cursor-default gap-2">
-                                        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-0 bg-indigo-500 rounded-r-full transition-all duration-300 group-hover:h-3/4 opacity-0 group-hover:opacity-100"></div>
-
-                                        <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
-                                            <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-sm ${
-                                                tx.type === 'payment' ? 'bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200/50 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-400 group-hover:border-emerald-500/40' : 
-                                                tx.type === 'charge' ? 'bg-red-50 dark:bg-red-500/10 border border-red-200/50 dark:border-red-500/20 text-red-600 dark:text-red-400 group-hover:border-red-500/40' : 
-                                                'bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200/50 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400 group-hover:border-indigo-500/40'
-                                            }`}>
-                                                {tx.type === 'payment' && <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg>}
-                                                {tx.type === 'charge' && <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>}
-                                            </div>
-                                            <div className="flex-1 min-w-0">
-                                                <p className="text-xs sm:text-sm font-bold text-neutral-900 dark:text-neutral-100 truncate">{tx.description}</p>
-                                                <p className="text-xs font-medium text-neutral-500 dark:text-neutral-500 mt-0.5">{tx.date}</p>
-                                            </div>
-                                        </div>
-                                        <div className="text-right shrink-0">
-                                            <p className={`text-xs sm:text-base font-black tracking-tight font-mono ${tx.type === 'payment' ? 'text-emerald-600 dark:text-emerald-400' : 'text-neutral-900 dark:text-neutral-100'}`}>
-                                                {tx.type === 'payment' ? '-' : ''}₱{tx.amount.toLocaleString()}
-                                            </p>
-                                            <p className={`text-xs font-bold uppercase tracking-widest mt-1 ${
-                                                tx.status === 'Paid' ? 'text-emerald-500' : 
-                                                tx.status === 'Pending' ? 'text-orange-500' : 'text-indigo-500'
-                                            }`}>{tx.status}</p>
-                                        </div>
-                                    </div>
-                                ))}
+                    {/* CHART SECTION */}
+                    <div className="flex flex-col relative bg-white dark:bg-[#121212] rounded-2xl sm:rounded-[2rem] border border-neutral-200/50 dark:border-white/5 backdrop-blur-2xl shadow-xl shadow-indigo-500/5 overflow-hidden">
+                        <div className="relative z-10 shrink-0 p-3.5 sm:p-6 lg:px-8 border-b border-neutral-200/50 dark:border-white/10 bg-neutral-50/50 dark:bg-[#18181a] backdrop-blur-2xl flex justify-between items-center">
+                            <div>
+                                <h2 className="text-base sm:text-lg font-bold leading-none">Utility Expenses</h2>
+                                <p className="text-xs font-medium text-neutral-500 dark:text-neutral-400 mt-1 sm:mt-1.5">Last 6 months breakdown.</p>
                             </div>
-                        ) : (
-                            <div className="flex flex-col items-center justify-center py-10 h-full px-4 text-center">
-                                <div className="w-14 h-14 sm:w-20 sm:h-20 bg-white/50 dark:bg-white/5 rounded-2xl sm:rounded-4xl flex items-center justify-center text-neutral-400 dark:text-neutral-500 mx-auto mb-4 sm:mb-6 shadow-inner border border-neutral-200/50 dark:border-white/5 backdrop-blur-md">
-                                    <svg className="w-7 h-7 sm:w-10 sm:h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                                </div>
-                                <h3 className="text-sm sm:text-lg font-bold text-neutral-900 dark:text-white">No Transactions Yet</h3>
-                                <p className="text-xs sm:text-sm font-medium text-neutral-500 mt-1.5 sm:mt-2 max-w-xs mx-auto leading-relaxed">Payments and invoices will appear here once they are processed.</p>
-                            </div>
-                        )}
+                        </div>
+                        <div className="relative z-10 p-4 sm:p-6 lg:p-8 flex-1 min-h-[300px]">
+                            <ChartContainer 
+                                config={{
+                                    water: { label: "Water", color: "var(--color-blue-500)" },
+                                    electricity: { label: "Electricity", color: "var(--color-amber-500)" }
+                                }}
+                                className="h-full w-full"
+                            >
+                                <BarChart data={[
+                                    { month: 'Jan', water: 450, electricity: 1200 },
+                                    { month: 'Feb', water: 420, electricity: 1100 },
+                                    { month: 'Mar', water: 480, electricity: 1350 },
+                                    { month: 'Apr', water: 500, electricity: 1800 },
+                                    { month: 'May', water: 550, electricity: 2100 },
+                                    { month: 'Jun', water: 490, electricity: 1950 },
+                                ]}>
+                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" className="opacity-10 dark:opacity-20" />
+                                    <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={10} className="text-xs font-bold text-neutral-500" />
+                                    <YAxis tickFormatter={(val) => `₱${val}`} tickLine={false} axisLine={false} tickMargin={10} className="text-xs font-bold text-neutral-500" />
+                                    <ChartTooltip content={<ChartTooltipContent />} />
+                                    <Bar dataKey="electricity" fill="var(--color-amber-500)" radius={[4, 4, 0, 0]} />
+                                    <Bar dataKey="water" fill="var(--color-blue-500)" radius={[4, 4, 0, 0]} />
+                                </BarChart>
+                            </ChartContainer>
+                        </div>
                     </div>
                 </div>
+
 
             </div>
         </div>

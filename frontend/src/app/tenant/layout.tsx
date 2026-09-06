@@ -2,10 +2,25 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-
-import { motion, AnimatePresence } from 'framer-motion';
 import { ThemeToggle } from "@/components/theme-toggle";
 import api from '@/lib/api';
+
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarMenuBadge,
+  SidebarProvider,
+  SidebarTrigger,
+  SidebarInset,
+} from "@/components/ui/sidebar";
 
 export default function TenantLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
@@ -47,97 +62,96 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
     ];
 
     return (
-        <div className="flex h-screen bg-slate-50 dark:bg-[#050505] text-slate-900 dark:text-white overflow-hidden selection:bg-indigo-500/30 transition-colors duration-300">
-            <aside className="w-[280px] bg-white/80 dark:bg-[#0a0a0c]/90 backdrop-blur-3xl flex-col hidden md:flex border-r border-slate-200 dark:border-white/5 z-20 relative transition-colors duration-300 text-left">
-                <div className="absolute top-0 left-0 w-full h-64 bg-indigo-600/10 dark:bg-indigo-600/5 blur-[80px] pointer-events-none"></div>
+        <SidebarProvider>
+            <div className="flex h-screen w-full bg-slate-50 dark:bg-zinc-950 text-slate-900 dark:text-zinc-50 overflow-hidden selection:bg-blue-500/30">
+                {/* --- SHADCN SIDEBAR --- */}
+                <Sidebar variant="sidebar" collapsible="icon" className="border-r border-slate-200 dark:border-white/10 bg-white dark:bg-zinc-950">
+                    <SidebarHeader className="p-4 flex items-center justify-between">
+                        <Link href="/tenant/dashboard" className="flex items-center gap-3 overflow-hidden">
+                            <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 bg-blue-600 shadow-lg shadow-blue-500/20 text-white">
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                            </div>
+                            <span className="text-xl font-black tracking-tight whitespace-nowrap group-data-[collapsible=icon]:hidden">
+                                Rent<span className="text-blue-600">Flow</span>
+                            </span>
+                        </Link>
+                    </SidebarHeader>
 
-                <div className="p-8 relative z-10 flex items-center justify-between">
-                    <div className="inline-flex items-center gap-3 transition-opacity group cursor-default">
-                        <div className="w-10 h-10 bg-linear-to-br from-indigo-500 to-blue-600 rounded-xl flex items-center justify-center shadow-[0_0_20px_rgba(79,70,229,0.3)] transition-all duration-500">
-                            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                    <SidebarContent>
+                        <SidebarGroup>
+                            <SidebarGroupLabel>Navigation</SidebarGroupLabel>
+                            <SidebarGroupContent>
+                                <SidebarMenu>
+                                    {navItems.map((item) => {
+                                        const isActive = pathname === item.path;
+                                        return (
+                                            <SidebarMenuItem key={item.name}>
+                                                <SidebarMenuButton 
+                                                    render={<Link href={item.path} className="flex items-center gap-3" />}
+                                                    isActive={isActive}
+                                                    tooltip={item.name}
+                                                >
+                                                    <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={item.icon}></path>
+                                                    </svg>
+                                                    <span>{item.name}</span>
+                                                </SidebarMenuButton>
+                                                {item.name === 'Messages' && unreadCount > 0 && (
+                                                    <SidebarMenuBadge className="bg-red-500 text-white shadow-sm px-1.5 py-0.5 rounded-full text-[10px]">
+                                                        {unreadCount}
+                                                    </SidebarMenuBadge>
+                                                )}
+                                            </SidebarMenuItem>
+                                        );
+                                    })}
+                                </SidebarMenu>
+                            </SidebarGroupContent>
+                        </SidebarGroup>
+                    </SidebarContent>
+
+                    <SidebarFooter className="p-4 border-t border-slate-200 dark:border-white/10 group-data-[collapsible=icon]:p-2 group-data-[collapsible=icon]:items-center">
+                        <div className="flex items-center gap-3 mb-4 group-data-[collapsible=icon]:hidden">
+                            <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center shrink-0 text-sm font-black text-blue-600 border border-blue-500/20">
+                                {tenantName.charAt(0).toUpperCase()}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                                <p className="text-sm font-bold truncate">{tenantName}</p>
+                                <p className="text-[10px] font-black text-green-600 uppercase tracking-widest truncate flex items-center gap-1.5">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                                    Resident
+                                </p>
+                            </div>
                         </div>
-                        <span className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">Rent<span className="text-indigo-600 dark:text-indigo-400">Flow</span></span>
-                    </div>
-                </div>
+                        <SidebarMenu>
+                            <SidebarMenuItem>
+                                <SidebarMenuButton render={<button className="flex w-full items-center gap-2" />} tooltip="Sign Out" onClick={handleLogout} className="text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10">
+                                    <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                                    <span className="font-bold">Sign Out</span>
+                                </SidebarMenuButton>
+                            </SidebarMenuItem>
+                        </SidebarMenu>
+                    </SidebarFooter>
+                </Sidebar>
 
-                <nav className="flex-1 px-4 space-y-3 mt-6 relative z-10">
-                    <div className="px-4 mb-6 text-[10px] font-black text-slate-500 dark:text-zinc-600 uppercase tracking-[0.2em]">Navigation</div>
-                    {navItems.map((item) => {
-                        const isActive = pathname === item.path;
-                        return (
-                            <Link key={item.name} href={item.path} className="block">
-                                <motion.div
-                                    whileHover={{ x: 5, scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    className={`flex items-center gap-3 px-4 py-4 rounded-2xl text-sm font-bold transition-colors duration-300 relative ${isActive ? 'bg-linear-to-r from-indigo-600 to-blue-600 text-white shadow-[0_0_15px_rgba(79,70,229,0.2)] dark:shadow-[0_0_20px_rgba(79,70,229,0.3)]' : 'text-slate-600 dark:text-zinc-500 hover:bg-slate-100 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white'}`}
-                                >
-                                    <svg className={`w-5 h-5 ${isActive ? 'text-slate-900 dark:text-white' : 'text-slate-400 dark:text-zinc-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={item.icon}></path></svg>
-                                    <span className="flex-1">{item.name}</span>
-                                    {item.name === 'Messages' && unreadCount > 0 && (
-                                        <span className="flex h-5 items-center justify-center rounded-full bg-red-500 px-2 text-[10px] font-black text-slate-900 dark:text-white shadow-[0_0_10px_rgba(239,68,68,0.5)]">
-                                            {unreadCount}
-                                        </span>
-                                    )}
-                                </motion.div>
-                            </Link>
-                        );
-                    })}
-                </nav>
-
-                <div className="p-5 border-t border-slate-200 dark:border-white/5 bg-slate-100/50 dark:bg-black/20 relative z-10 transition-colors duration-300">
-                    <div className="flex items-center gap-3 px-3 py-2 mb-4">
-                        <div className="w-10 h-10 rounded-xl bg-indigo-500/10 flex items-center justify-center text-sm font-black text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 shadow-inner">
-                            {tenantName.charAt(0).toUpperCase()}
-                        </div>
-                        <div className="flex-1 min-w-0">
-                            <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{tenantName}</p>
-                            <p className="text-[10px] font-black text-emerald-600 dark:text-emerald-500 uppercase tracking-widest truncate flex items-center gap-1.5 mt-0.5">
-                                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
-                                Resident
-                            </p>
+                <SidebarInset className="flex-1 flex flex-col relative w-full h-[100dvh] overflow-hidden bg-transparent">
+                    {/* Header with SidebarTrigger & Theme Toggle */}
+                    <header className="flex h-16 shrink-0 items-center justify-between gap-2 border-b border-slate-200 dark:border-white/10 bg-white/50 dark:bg-zinc-950/50 backdrop-blur-xl px-4 sticky top-0 z-10">
+                        <div className="flex items-center gap-2">
+                            <SidebarTrigger className="-ml-1" />
+                            <div className="h-4 w-px bg-slate-200 dark:bg-zinc-800" />
+                            <h1 className="text-sm font-bold capitalize text-slate-800 dark:text-zinc-200 ml-2">
+                                {pathname.split('/').pop()?.replace('-', ' ')}
+                            </h1>
                         </div>
                         <ThemeToggle />
-                    </div>
-                    <button onClick={handleLogout} className="flex items-center justify-center gap-2 w-full px-4 py-4 rounded-xl text-xs font-black uppercase tracking-widest text-slate-600 dark:text-zinc-500 bg-slate-200/50 dark:bg-zinc-900/50 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 border border-transparent hover:border-red-200 dark:hover:border-red-500/20 transition-all duration-300 group">
-                        Sign Out
-                        <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
-                    </button>
-                </div>
-            </aside>
+                    </header>
 
-            <main className="flex-1 flex flex-col relative h-[100dvh] overflow-hidden">
-                {/* Mobile Theme Toggle */}
-                <div className="fixed top-0 right-0 z-[100] md:hidden w-14 h-14 flex items-center justify-center pointer-events-none">
-                    <div className="pointer-events-auto scale-90 translate-x-[-4px]">
-                        <ThemeToggle />
+                    {/* Main Content Area */}
+                    <div className="flex-1 flex flex-col overflow-y-auto scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-zinc-700 p-4 md:p-6 lg:p-8">
+                        {children}
                     </div>
-                </div>
-                <div className={`flex-1 flex flex-col ${pathname === '/tenant/chat' ? 'overflow-hidden p-0 pb-20 md:pb-0' : 'overflow-y-auto p-0 pb-20 md:pb-0'} relative z-0 dark:bg-[#050505] scrollbar-track-transparent ${(pathname === '/tenant/profile' || pathname === '/tenant/requests') ? 'no-scrollbar' : 'scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-bg-slate-100'}`}>
-                    {children}
-                </div>
-
-                {/* Mobile Bottom Navigation */}
-                <nav className="md:hidden flex items-center justify-around bg-white/90 dark:bg-[#0a0a0c]/90 backdrop-blur-2xl border-t border-slate-200 dark:border-white/5 pb-safe pt-2 px-2 z-50 fixed bottom-0 left-0 right-0">
-                    {navItems.map((item) => {
-                        const isActive = pathname === item.path;
-                        return (
-                            <Link key={item.name} href={item.path} className="flex-1 flex flex-col items-center justify-center py-2 relative group">
-                                <div className={`p-1.5 rounded-xl transition-all duration-300 relative ${isActive ? 'bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-zinc-500 group-hover:text-slate-600 dark:group-hover:text-zinc-300'}`}>
-                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d={item.icon}></path></svg>
-                                    {item.name === 'Messages' && unreadCount > 0 && (
-                                        <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[9px] font-black text-white border-2 border-white dark:border-[#0a0a0c]">
-                                            {unreadCount}
-                                        </span>
-                                    )}
-                                </div>
-                                <span className={`text-[10px] sm:text-xs mt-1 font-bold ${isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-slate-400 dark:text-zinc-500'}`}>
-                                    {item.name.replace('My ', '')}
-                                </span>
-                            </Link>
-                        );
-                    })}
-                </nav>
-            </main>
-        </div>
+                </SidebarInset>
+            </div>
+        </SidebarProvider>
     );
 }
