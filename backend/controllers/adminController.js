@@ -55,7 +55,7 @@ const getDashboardStats = async (req, res) => {
             `),
 
             // Total billed this month (for collection rate)
-            db.query("SELECT SUM(amount) FROM bills WHERE EXTRACT(MONTH FROM due_date) = EXTRACT(MONTH FROM CURRENT_DATE) AND EXTRACT(YEAR FROM due_date) = EXTRACT(YEAR FROM CURRENT_DATE)"),
+            db.query("SELECT SUM(total_amount) FROM bills WHERE EXTRACT(MONTH FROM due_date) = EXTRACT(MONTH FROM CURRENT_DATE) AND EXTRACT(YEAR FROM due_date) = EXTRACT(YEAR FROM CURRENT_DATE)"),
         ]);
 
         // --- Process Room Stats ---
