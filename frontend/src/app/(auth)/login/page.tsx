@@ -5,12 +5,19 @@ import Link from 'next/link';
 import { ThemeToggle } from "@/components/theme-toggle";
 import { motion } from 'framer-motion';
 import api from '@/lib/api';
+
+// shadcn UI components
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Loader2 } from "lucide-react";
+
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false); 
     const [errorMsg, setErrorMsg] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
     const [isMounted, setIsMounted] = useState(false);
     
     const router = useRouter();
@@ -45,28 +52,24 @@ export default function LoginPage() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1 }}
-            className="min-h-dvh flex flex-col items-center justify-center p-4 py-10 sm:p-6 lg:p-8 bg-[#0a0a0a] relative overflow-x-hidden font-sans"
+            className="min-h-dvh flex flex-col items-center justify-center p-4 py-10 sm:p-6 lg:p-8 bg-zinc-950 relative overflow-x-hidden font-sans"
         >
-            
             {/* Ambient Background Glow */}
             <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[300px] sm:h-[500px] blur-[100px] rounded-full pointer-events-none transition-all duration-1000 bg-blue-600/10 ${isMounted ? 'opacity-100' : 'opacity-0 scale-50'}`}></div>
 
-            {/* Main Wrapper */}
-            <div className={`w-full max-w-5xl my-auto bg-zinc-950 rounded-3xl sm:rounded-[2.5rem] shadow-2xl shadow-black/50 overflow-hidden flex flex-col md:flex-row relative z-10 border border-white/5 transition-all duration-1000 transform ${isMounted ? 'opacity-100 translate-y-0 scale-100 blur-0' : 'opacity-0 translate-y-12 scale-95 blur-md'}`}>
+            <div className={`w-full max-w-5xl my-auto grid md:grid-cols-2 bg-zinc-950 rounded-3xl overflow-hidden shadow-2xl border border-white/10 relative z-10 transition-all duration-1000 ${isMounted ? 'opacity-100 translate-y-0 scale-100 blur-0' : 'opacity-0 translate-y-12 scale-95 blur-md'}`}>
                 
                 {/* --- LEFT PANEL --- */}
-                <div className={`hidden md:flex w-full md:w-5/12 bg-[#0a0a0a] p-8 sm:p-10 lg:p-14 flex-col justify-between relative overflow-hidden border-r border-white/5 transition-all duration-1000 delay-300 ${isMounted ? 'translate-x-0 opacity-100' : '-translate-x-full opacity-0'}`}>
-                    
-                    <div className="absolute top-[-20%] left-[-20%] w-48 h-48 sm:w-64 sm:h-64 rounded-full mix-blend-screen filter blur-[60px] sm:blur-[80px] opacity-30 animate-pulse-slow transition-colors duration-1000 bg-blue-600"></div>
-                    <div className="absolute bottom-[-20%] right-[-20%] w-48 h-48 sm:w-64 sm:h-64 rounded-full mix-blend-screen filter blur-[60px] sm:blur-[80px] opacity-30 transition-colors duration-1000 bg-indigo-600"></div>
+                <div className="hidden md:flex flex-col justify-between p-10 lg:p-14 relative overflow-hidden bg-black/40 border-r border-white/5">
+                    <div className="absolute top-[-20%] left-[-20%] w-64 h-64 rounded-full mix-blend-screen filter blur-[80px] opacity-30 animate-pulse-slow transition-colors duration-1000 bg-blue-600"></div>
+                    <div className="absolute bottom-[-20%] right-[-20%] w-64 h-64 rounded-full mix-blend-screen filter blur-[80px] opacity-30 transition-colors duration-1000 bg-indigo-600"></div>
 
-                    <div className="relative z-10 mb-8 md:mb-12 flex items-center justify-between">
+                    <div className="relative z-10 flex items-center justify-between">
                         <Link href="/" className="inline-flex items-center gap-3 group">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center transition-all duration-500 shadow-lg group-hover:scale-110 group-hover:rotate-3 bg-blue-500 group-hover:shadow-[0_0_25px_rgba(59,130,246,0.6)]">
-                                <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-600 text-white shadow-lg">
+                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                             </div>
-                            
-                            <span className="text-2xl sm:text-3xl font-black tracking-tight text-white transition-colors">
+                            <span className="text-2xl font-black tracking-tight text-white">
                                 Rent<span className="text-blue-500">Flow</span>
                             </span>
                         </Link>
@@ -74,80 +77,92 @@ export default function LoginPage() {
                     </div>
 
                     <div className="relative z-10 mt-auto">
-                        <div className="transition-all duration-300 opacity-100 translate-y-0">
-                            <h2 className="text-xl sm:text-2xl lg:text-4xl font-bold text-white mb-2 sm:mb-4 leading-tight">Welcome back to <br className="hidden sm:block" /> RentFlow.</h2>
-                        </div>
-                        <p className="text-zinc-500 text-sm leading-relaxed max-w-xs">Secure access to the RentFlow ecosystem.</p>
+                        <h2 className="text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">Welcome back to <br/> RentFlow.</h2>
+                        <p className="text-zinc-400 text-sm leading-relaxed max-w-sm">Secure access to the ultimate property management ecosystem.</p>
                     </div>
                 </div>
 
                 {/* --- RIGHT PANEL (FORM) --- */}
-                <div className={`w-full md:w-7/12 p-6 sm:p-10 lg:p-14 bg-zinc-950 flex flex-col justify-center transition-all duration-1000 delay-500 ${isMounted ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
+                <div className="p-6 sm:p-10 lg:p-14 flex items-center justify-center">
                     
-                    {/* MOBILE BRANDING HEADER (Visible ONLY on Mobile) */}
-                    <div className="flex md:hidden items-center justify-between mb-8">
-                        <div className="flex items-center gap-2.5">
-                            <div className="w-9 h-9 rounded-lg flex items-center justify-center shadow-lg transition-colors duration-500 bg-blue-500 shadow-blue-500/20">
-                                <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-                                </svg>
+                    <Card className="w-full max-w-md bg-transparent border-none shadow-none">
+                        {/* MOBILE BRANDING HEADER (Visible ONLY on Mobile) */}
+                        <div className="flex md:hidden items-center justify-between mb-8">
+                            <div className="flex items-center gap-2">
+                                <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-blue-600 text-white shadow-lg">
+                                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                                    </svg>
+                                </div>
+                                <span className="text-xl font-black tracking-tight text-white">
+                                    Rent<span className="text-blue-500">Flow</span>
+                                </span>
                             </div>
-                            <span className="text-2xl font-black tracking-tight text-white">
-                                Rent<span className="text-blue-500">Flow</span>
-                            </span>
-                        </div>
-                        <ThemeToggle />
-                    </div>
-
-                    {/* Form Container */}
-                    <div className="transition-all duration-300 opacity-100 scale-100 blur-0">
-                        <div className="mb-6 sm:mb-8 text-center md:text-left">
-                            <h2 className="text-xl sm:text-3xl font-bold text-white tracking-tight mb-1 sm:mb-2">Login to your account</h2>
-                            <p className="text-zinc-500 text-sm">Please enter your credentials to continue.</p>
+                            <ThemeToggle />
                         </div>
 
-                        {errorMsg && (
-                            <div className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-400 text-xs sm:text-sm font-semibold flex items-start animate-pulse">
-                                <svg className="w-5 h-5 mr-2 shrink-0 mt-0.5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                                <span>{errorMsg}</span>
-                            </div>
-                        )}
-
-                        <form onSubmit={handleLogin} className="space-y-5 sm:space-y-6">
-                            <div>
-                                <label className="block text-xs font-bold text-zinc-500 uppercase tracking-widest mb-2 ml-1">Email Address</label>
-                                <input type="email" value={email} placeholder="name@example.com" className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 px-4 sm:px-5 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setEmail(e.target.value)} required />
-                            </div>
-
-                            <div>
-                                <div className="flex justify-between items-center mb-2 ml-1 pr-1">
-                                    <label className="block text-xs font-bold text-zinc-500 uppercase tracking-widest">Password</label>
-                                    <Link href="#" className="text-xs font-bold text-zinc-500 hover:text-white transition-colors">Forgot?</Link>
+                        <CardHeader className="px-0 pt-0 text-center md:text-left">
+                            <CardTitle className="text-2xl sm:text-3xl font-bold text-white">Login</CardTitle>
+                            <CardDescription className="text-zinc-400">Enter your email below to login to your account.</CardDescription>
+                        </CardHeader>
+                        <CardContent className="px-0">
+                            {errorMsg && (
+                                <div className="mb-6 p-3 bg-red-500/10 border border-red-500/20 rounded-md text-red-400 text-sm font-medium flex items-center gap-2">
+                                    <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                                    <span>{errorMsg}</span>
                                 </div>
-                                <div className="relative">
-                                    <input type={showPassword ? "text" : "password"} value={password} placeholder="••••••••" className="w-full bg-zinc-900/30 border border-white/5 text-white placeholder-zinc-700 pl-4 sm:pl-5 pr-12 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl focus:ring-2 focus:ring-white/10 focus:bg-zinc-900 outline-none transition-all text-sm font-medium" onChange={(e) => setPassword(e.target.value)} required />
-                                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 pr-4 flex items-center text-zinc-600 hover:text-white transition-colors">
-                                        {showPassword ? <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21"></path></svg> : <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>}
-                                    </button>
-                                </div>
-                            </div>
+                            )}
 
-                            <div className="pt-6 sm:pt-8">
-                                <button type="submit" disabled={isLoading} className="w-full flex justify-center items-center py-4 rounded-xl sm:rounded-2xl shadow-xl text-xs font-black uppercase tracking-[0.2em] text-white transition-all duration-300 hover:scale-[1.02] active:scale-95 disabled:opacity-50 bg-blue-600 shadow-blue-900/20 hover:bg-blue-500">
-                                    {isLoading ? "Authenticating..." : "Login"}
-                                </button>
-                                
-                                <div className="mt-6 text-center animate-in fade-in slide-in-from-bottom-2 duration-700 delay-300">
-                                    <p className="text-zinc-500 text-sm font-medium">
-                                        Don't have an account?{' '}
-                                        <Link href="/signup" className="text-blue-500 hover:text-blue-400 font-bold transition-colors underline-offset-4 hover:underline">
-                                            Apply now
+                            <form onSubmit={handleLogin} className="space-y-4">
+                                <div className="space-y-2">
+                                    <Label htmlFor="email">Email</Label>
+                                    <Input 
+                                        id="email" 
+                                        type="email" 
+                                        placeholder="name@example.com" 
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        required 
+                                        disabled={isLoading}
+                                    />
+                                </div>
+                                <div className="space-y-2">
+                                    <div className="flex items-center justify-between">
+                                        <Label htmlFor="password">Password</Label>
+                                        <Link href="#" className="text-sm font-medium text-blue-500 hover:text-blue-400 transition-colors">
+                                            Forgot password?
                                         </Link>
-                                    </p>
+                                    </div>
+                                    <Input 
+                                        id="password" 
+                                        type="password" 
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        required 
+                                        disabled={isLoading}
+                                    />
                                 </div>
-                            </div>
-                        </form>
-                    </div>
+                                <Button type="submit" className="w-full mt-4 bg-blue-600 hover:bg-blue-700 text-white" disabled={isLoading}>
+                                    {isLoading ? (
+                                        <>
+                                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                            Authenticating...
+                                        </>
+                                    ) : (
+                                        "Sign In"
+                                    )}
+                                </Button>
+                            </form>
+                        </CardContent>
+                        <CardFooter className="px-0 flex flex-col items-center">
+                            <p className="text-sm text-zinc-400 mt-4">
+                                Don&apos;t have an account?{' '}
+                                <Link href="/signup" className="text-blue-500 hover:text-blue-400 font-medium underline underline-offset-4">
+                                    Apply now
+                                </Link>
+                            </p>
+                        </CardFooter>
+                    </Card>
                 </div>
             </div>
         </motion.div>
