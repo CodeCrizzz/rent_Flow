@@ -144,7 +144,7 @@ export default function AdminChat() {
                 </div>
             </motion.div>
 
-            <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay:0.1}} className="flex-1 bg-white/40 dark:bg-[#0a0a0a]/60 backdrop-blur-2xl rounded-[2.5rem] shadow-2xl border border-slate-200/60 dark:border-zinc-800/60 overflow-hidden flex relative z-10">
+            <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay:0.1}} className="flex-1 bg-white dark:bg-black backdrop-blur-2xl rounded-[2.5rem] shadow-2xl border border-slate-200/60 dark:border-zinc-800/60 overflow-hidden flex relative z-10">
 
                 {/* Sidebar Contacts */}
                 <div className={`w-full md:w-[380px] border-r border-slate-200 dark:border-zinc-800/80 flex flex-col bg-white/50 dark:bg-zinc-950/40 ${selectedTenant ? 'hidden md:flex' : 'flex'}`}>

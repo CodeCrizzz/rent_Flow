@@ -274,7 +274,7 @@ export default function AdminBilling() {
                 </div>
             </motion.div>
 
-            <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay: 0.1}} className="flex flex-col md:flex-row gap-4 relative z-10 mb-8 bg-white/40 dark:bg-[#0a0a0a]/60 backdrop-blur-2xl p-4 rounded-[2rem] border border-slate-200/60 dark:border-zinc-800/60 shadow-xl dark:shadow-2xl">
+            <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay: 0.1}} className="flex flex-col md:flex-row gap-4 relative z-10 mb-8 bg-white dark:bg-black backdrop-blur-2xl p-4 rounded-[2rem] border border-slate-200/60 dark:border-zinc-800/60 shadow-xl dark:shadow-2xl">
                 <div className="relative flex-1 group">
                     <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-slate-400 dark:text-zinc-500 group-focus-within:text-emerald-500 transition-colors">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -313,7 +313,7 @@ export default function AdminBilling() {
                     </div>
                 </div>
             ) : filteredBills.length === 0 ? (
-                <motion.div initial={{opacity:0}} animate={{opacity:1}} className="bg-white/40 dark:bg-[#0a0a0a]/60 backdrop-blur-2xl rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 p-16 text-center shadow-2xl">
+                <motion.div initial={{opacity:0}} animate={{opacity:1}} className="bg-white dark:bg-black backdrop-blur-2xl rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 p-16 text-center shadow-2xl">
                     <div className="w-24 h-24 bg-slate-100 dark:bg-zinc-900 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-6 shadow-inner border border-slate-200 dark:border-zinc-800">✅</div>
                     <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2">No billing records found</h3>
                     <p className="text-sm font-bold text-slate-500 dark:text-zinc-500">{searchQuery ? "Try adjusting your filters." : "All tenants are caught up!"}</p>
@@ -326,7 +326,7 @@ export default function AdminBilling() {
                         return (
                             <motion.div key={b.id} variants={itemVariants} className="relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent hover:shadow-[0_0_40px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_0_40px_rgba(255,255,255,0.05)] transition-shadow duration-500">
                                 <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
-                                <div className="h-full w-full bg-white/80 dark:bg-[#0a0a0a]/90 backdrop-blur-3xl rounded-[23px] p-6 flex flex-col relative overflow-hidden transition-transform duration-500 group-hover:scale-[0.99]">
+                                <div className="h-full w-full bg-white dark:bg-black backdrop-blur-3xl rounded-[23px] p-6 flex flex-col relative overflow-hidden transition-transform duration-500 group-hover:scale-[0.99]">
                                     
                                     <div className="flex justify-between items-start mb-5">
                                         <div className="w-12 h-12 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center text-white font-black text-xl shadow-lg group-hover:scale-110 transition-transform duration-500">

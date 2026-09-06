@@ -268,7 +268,7 @@ export default function AdminTenants() {
             )}
 
             {/* Filters */}
-            <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay: 0.1}} className="flex flex-col sm:flex-row gap-4 relative z-10 mb-8 bg-white/40 dark:bg-[#0a0a0a]/60 backdrop-blur-2xl p-4 rounded-[2rem] border border-slate-200/60 dark:border-zinc-800/60 shadow-xl dark:shadow-2xl">
+            <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay: 0.1}} className="flex flex-col sm:flex-row gap-4 relative z-10 mb-8 bg-white dark:bg-black backdrop-blur-2xl p-4 rounded-[2rem] border border-slate-200/60 dark:border-zinc-800/60 shadow-xl dark:shadow-2xl">
                 <div className="relative">
                     <select 
                         value={statusFilter} 
@@ -308,7 +308,7 @@ export default function AdminTenants() {
                     </div>
                 </div>
             ) : filteredTenants.length === 0 ? (
-                <motion.div initial={{opacity:0}} animate={{opacity:1}} className="bg-white/40 dark:bg-[#0a0a0a]/60 backdrop-blur-2xl rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 p-16 text-center shadow-2xl">
+                <motion.div initial={{opacity:0}} animate={{opacity:1}} className="bg-white dark:bg-black backdrop-blur-2xl rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 p-16 text-center shadow-2xl">
                     <div className="w-24 h-24 bg-slate-100 dark:bg-zinc-900 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-6 shadow-inner border border-slate-200 dark:border-zinc-800">🕵️</div>
                     <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2">No residents found</h3>
                     <p className="text-sm font-bold text-slate-500 dark:text-zinc-500">{searchQuery ? "Try adjusting your search." : "There are currently no residents."}</p>
@@ -321,7 +321,7 @@ export default function AdminTenants() {
                         return (
                             <motion.div key={tenant.id} variants={itemVariants} className="relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent hover:shadow-[0_0_40px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_0_40px_rgba(255,255,255,0.05)] transition-shadow duration-500">
                                 <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
-                                <div className="h-full w-full bg-white/80 dark:bg-[#0a0a0a]/90 backdrop-blur-3xl rounded-[23px] p-6 flex flex-col relative overflow-hidden transition-transform duration-500 group-hover:scale-[0.99]">
+                                <div className="h-full w-full bg-white dark:bg-black backdrop-blur-3xl rounded-[23px] p-6 flex flex-col relative overflow-hidden transition-transform duration-500 group-hover:scale-[0.99]">
                                     
                                     {/* Top Row: Avatar & Status */}
                                     <div className="flex justify-between items-start mb-6">
@@ -405,8 +405,8 @@ export default function AdminTenants() {
             <AnimatePresence>
             {isModalOpen && (
                 <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="fixed inset-0 bg-black/60 backdrop-blur-md z-[100] flex items-center justify-center p-4">
-                    <motion.div initial={{scale:0.9, y:20, opacity:0}} animate={{scale:1, y:0, opacity:1}} exit={{scale:0.95, y:10, opacity:0}} transition={{type: "spring", damping: 25, stiffness: 300}} className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-3xl rounded-[2.5rem] w-full max-w-2xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.3)] border border-slate-200 dark:border-zinc-800 flex flex-col max-h-[90vh]">
-                        <div className="px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-white/50 dark:bg-zinc-900/50">
+                    <motion.div initial={{scale:0.9, y:20, opacity:0}} animate={{scale:1, y:0, opacity:1}} exit={{scale:0.95, y:10, opacity:0}} transition={{type: "spring", damping: 25, stiffness: 300}} className="bg-white dark:bg-black backdrop-blur-3xl rounded-[2.5rem] w-full max-w-2xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.3)] border border-slate-200 dark:border-zinc-800 flex flex-col max-h-[90vh]">
+                        <div className="px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-white dark:bg-black">
                             <div>
                                 <h2 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Edit Resident</h2>
                                 <p className="text-xs font-bold text-slate-500 dark:text-zinc-500 uppercase tracking-widest mt-1">Update profile and rental details</p>
@@ -520,8 +520,8 @@ export default function AdminTenants() {
 
             {isViewModalOpen && viewingTenant && (
                 <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="fixed inset-0 bg-black/60 backdrop-blur-md z-[100] flex items-center justify-center p-4">
-                    <motion.div initial={{scale:0.9, y:20, opacity:0}} animate={{scale:1, y:0, opacity:1}} exit={{scale:0.95, y:10, opacity:0}} transition={{type: "spring", damping: 25, stiffness: 300}} className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-3xl rounded-[2.5rem] w-full max-w-3xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.3)] border border-slate-200 dark:border-zinc-800 flex flex-col max-h-[90vh]">
-                        <div className="p-8 border-b border-slate-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/50 flex justify-between items-start gap-4">
+                    <motion.div initial={{scale:0.9, y:20, opacity:0}} animate={{scale:1, y:0, opacity:1}} exit={{scale:0.95, y:10, opacity:0}} transition={{type: "spring", damping: 25, stiffness: 300}} className="bg-white dark:bg-black backdrop-blur-3xl rounded-[2.5rem] w-full max-w-3xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.3)] border border-slate-200 dark:border-zinc-800 flex flex-col max-h-[90vh]">
+                        <div className="p-8 border-b border-slate-200 dark:border-zinc-800 bg-white dark:bg-black flex justify-between items-start gap-4">
                             <div className="flex items-center gap-5">
                                 <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-indigo-400 to-purple-500 text-white font-black text-2xl flex items-center justify-center shadow-lg">
                                     {viewingTenant.name.charAt(0)}

@@ -232,7 +232,7 @@ export default function AdminRooms() {
             )}
 
             {/* Filters */}
-            <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay: 0.1}} className="flex flex-col xl:flex-row gap-4 relative z-10 mb-8 bg-white/40 dark:bg-[#0a0a0a]/60 backdrop-blur-2xl p-4 rounded-[2rem] border border-slate-200/60 dark:border-zinc-800/60 shadow-xl dark:shadow-2xl">
+            <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay: 0.1}} className="flex flex-col xl:flex-row gap-4 relative z-10 mb-8 bg-white dark:bg-black backdrop-blur-2xl p-4 rounded-[2rem] border border-slate-200/60 dark:border-zinc-800/60 shadow-xl dark:shadow-2xl">
                 <div className="relative group flex-1">
                     <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-slate-400 dark:text-zinc-500 group-focus-within:text-blue-500 transition-colors">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -295,7 +295,7 @@ export default function AdminRooms() {
                     </div>
                 </div>
             ) : filteredRooms.length === 0 ? (
-                <motion.div initial={{opacity:0}} animate={{opacity:1}} className="bg-white/40 dark:bg-[#0a0a0a]/60 backdrop-blur-2xl rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 p-16 text-center shadow-2xl">
+                <motion.div initial={{opacity:0}} animate={{opacity:1}} className="bg-white dark:bg-black backdrop-blur-2xl rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 p-16 text-center shadow-2xl">
                     <div className="w-24 h-24 bg-slate-100 dark:bg-zinc-900 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-6 shadow-inner border border-slate-200 dark:border-zinc-800">📭</div>
                     <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2">No properties found</h3>
                     <p className="text-sm font-bold text-slate-500 dark:text-zinc-500">Try adjusting your search or filters.</p>
@@ -308,7 +308,7 @@ export default function AdminRooms() {
                         return (
                             <motion.div key={room.id} variants={itemVariants} className="relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent hover:shadow-[0_0_40px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_0_40px_rgba(255,255,255,0.05)] transition-shadow duration-500">
                                 <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
-                                <div className="h-full w-full bg-white/80 dark:bg-[#0a0a0a]/90 backdrop-blur-3xl rounded-[23px] p-6 flex flex-col relative overflow-hidden transition-transform duration-500 group-hover:scale-[0.99]">
+                                <div className="h-full w-full bg-white dark:bg-black backdrop-blur-3xl rounded-[23px] p-6 flex flex-col relative overflow-hidden transition-transform duration-500 group-hover:scale-[0.99]">
                                     
                                     {/* Top Row: Room # and Status */}
                                     <div className="flex justify-between items-start mb-6">
@@ -540,7 +540,7 @@ export default function AdminRooms() {
                                 ) : (
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                         {viewingRoom.occupants.map(tenant => (
-                                            <div key={tenant.id} className="flex items-center justify-between p-5 border border-slate-200 dark:border-zinc-800 rounded-3xl bg-white dark:bg-[#0a0a0a] shadow-md hover:shadow-lg transition-all group">
+                                            <div key={tenant.id} className="flex items-center justify-between p-5 border border-slate-200 dark:border-zinc-800 rounded-3xl bg-white dark:bg-black shadow-md hover:shadow-lg transition-all group">
                                                 <div className="flex items-center gap-4">
                                                     <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center text-white font-black text-lg shadow-md group-hover:scale-110 transition-transform">
                                                         {tenant.name.charAt(0)}
