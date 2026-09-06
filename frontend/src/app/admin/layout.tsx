@@ -89,9 +89,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
     return (
         <SidebarProvider>
-            <div className="flex h-screen w-full bg-slate-50 dark:bg-[#0a0a0a] text-slate-900 dark:text-zinc-50 overflow-hidden selection:bg-indigo-500/30">
+            <div className="flex h-screen w-full bg-white dark:bg-black text-slate-900 dark:text-zinc-50 overflow-hidden selection:bg-indigo-500/30">
                 {/* --- SHADCN SIDEBAR --- */}
-                <Sidebar variant="inset" collapsible="icon" className="border-r border-slate-200/60 dark:border-white/5 bg-white/40 dark:bg-zinc-950/40 backdrop-blur-3xl shadow-[4px_0_24px_rgba(0,0,0,0.02)] dark:shadow-[4px_0_24px_rgba(0,0,0,0.2)]">
+                <Sidebar variant="inset" collapsible="icon" className="border-r border-slate-200/60 dark:border-white/5 bg-white dark:bg-black backdrop-blur-3xl shadow-[4px_0_24px_rgba(0,0,0,0.02)] dark:shadow-[4px_0_24px_rgba(0,0,0,0.2)]">
                     <SidebarHeader className="p-5 flex items-center justify-between border-b border-transparent group-data-[collapsible=icon]:p-3 transition-all duration-300">
                         <Link href="/admin/dashboard" className="flex items-center gap-3 overflow-hidden group">
                             <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 bg-gradient-to-tr from-indigo-600 to-blue-500 shadow-lg shadow-indigo-500/20 text-white group-hover:scale-105 group-hover:rotate-3 transition-transform duration-300">
@@ -145,7 +145,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                         </SidebarGroup>
                     </SidebarContent>
 
-                    <SidebarFooter className="p-4 border-t border-slate-200/60 dark:border-white/5 group-data-[collapsible=icon]:p-2 group-data-[collapsible=icon]:items-center bg-slate-50/50 dark:bg-[#0a0a0a]/50 backdrop-blur-md">
+                    <SidebarFooter className="p-4 border-t border-slate-200/60 dark:border-white/5 group-data-[collapsible=icon]:p-2 group-data-[collapsible=icon]:items-center bg-white dark:bg-black backdrop-blur-md">
                         <div className="flex items-center gap-3 mb-4 group-data-[collapsible=icon]:hidden">
                             <div className="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-500/20 flex items-center justify-center shrink-0 text-sm font-black text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-500/30 ring-2 ring-white dark:ring-zinc-950 shadow-sm">
                                 {adminName.charAt(0).toUpperCase()}
@@ -171,7 +171,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
                 <SidebarInset className="flex-1 flex flex-col relative w-full h-[100dvh] overflow-hidden bg-transparent">
                     {/* Modern Top Header */}
-                    <header className="flex h-16 shrink-0 items-center justify-between gap-4 border-b border-slate-200/60 dark:border-white/5 bg-white/70 dark:bg-[#0a0a0a]/70 backdrop-blur-2xl px-4 sm:px-6 lg:px-8 sticky top-0 z-20 shadow-[0_4px_30px_rgba(0,0,0,0.02)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.2)]">
+                    <header className="flex h-16 shrink-0 items-center justify-between gap-4 border-b border-slate-200/60 dark:border-white/5 bg-white dark:bg-black backdrop-blur-2xl px-4 sm:px-6 lg:px-8 sticky top-0 z-20 shadow-[0_4px_30px_rgba(0,0,0,0.02)] dark:shadow-[0_4px_30px_rgba(0,0,0,0.2)]">
                         <div className="flex items-center gap-3 sm:gap-4 flex-1">
                             <SidebarTrigger className="-ml-2 text-slate-500 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white" />
                             <div className="h-5 w-px bg-slate-200 dark:bg-zinc-800 hidden sm:block" />
