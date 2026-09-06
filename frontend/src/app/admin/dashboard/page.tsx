@@ -1,9 +1,8 @@
 "use client";
 import { useEffect, useState } from 'react';
 import api from '@/lib/api';
-import Link from 'next/link';
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
-import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tooltip } from "recharts";
+import { motion, Variants } from "framer-motion";
 
 interface DashboardStats {
     rooms: { totalRooms: number; occupiedRooms: number; availableRooms: number; maintenanceRooms: number };
@@ -12,6 +11,20 @@ interface DashboardStats {
     maintenance: { totalRequests: number; pendingRequests: number; inProgressRequests: number; resolvedRequests: number };
     recentActivities: { id: string; type: string; title: string; description: string; date: string }[];
 }
+
+// Framer Motion Variants
+const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: { staggerChildren: 0.1 }
+    }
+};
+
+const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+};
 
 export default function AdminDashboard() {
     const [stats, setStats] = useState<DashboardStats | null>(null);
@@ -33,262 +46,273 @@ export default function AdminDashboard() {
 
     if (isLoading || !stats || !stats.billing) {
         return (
-            <div className="flex items-center justify-center min-h-[50vh] px-4">
-                <div className="flex flex-col items-center gap-4 text-center">
-                    <div className="w-10 h-10 border-4 border-[#5b21b6]/20 border-t-[#5b21b6] rounded-full animate-spin"></div>
-                    <p className="text-slate-500 dark:text-zinc-500 font-bold text-xs sm:text-sm uppercase tracking-widest">Initializing Dashboard...</p>
+            <div className="flex items-center justify-center min-h-[70vh]">
+                <div className="relative flex flex-col items-center justify-center">
+                    <div className="absolute inset-0 bg-[#5b21b6]/20 blur-[50px] rounded-full w-32 h-32 animate-pulse"></div>
+                    <div className="w-16 h-16 border-4 border-slate-200 dark:border-zinc-800 border-t-[#5b21b6] dark:border-t-[#8b5cf6] rounded-full animate-spin relative z-10 shadow-[0_0_30px_rgba(139,92,246,0.3)]"></div>
+                    <p className="text-slate-500 dark:text-zinc-400 font-bold text-xs uppercase tracking-[0.2em] mt-6 relative z-10 animate-pulse">Initializing Interface...</p>
                 </div>
             </div>
         );
     }
 
+    // Mock chart data using real revenue (distributed for visual effect)
+    const chartData = [
+        { month: 'Jan', revenue: stats.billing.monthlyIncome * 0.7 },
+        { month: 'Feb', revenue: stats.billing.monthlyIncome * 0.85 },
+        { month: 'Mar', revenue: stats.billing.monthlyIncome * 0.9 },
+        { month: 'Apr', revenue: stats.billing.monthlyIncome * 0.95 },
+        { month: 'May', revenue: stats.billing.monthlyIncome * 0.8 },
+        { month: 'Jun', revenue: Number(stats.billing.monthlyIncome) },
+    ];
+
     return (
-        /* Added px-4 sm:px-6 lg:px-8 for perfect mobile edge spacing */
-        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-10 pb-10 px-4 sm:px-6 lg:px-8 relative w-full overflow-hidden sm:overflow-visible">{/* Header */}
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 sm:gap-6 pt-4 sm:pt-0">
-                <div>
-                    <h1 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight transition-colors duration-500">System Overview</h1>
-                    <p className="text-xs sm:text-sm text-slate-500 dark:text-zinc-400 font-medium mt-1 sm:mt-2 transition-colors duration-500">Monitor your property's performance in real-time.</p>
-                </div>
-            </div>
+        <motion.div 
+            variants={containerVariants} 
+            initial="hidden" 
+            animate="show" 
+            className="max-w-[1600px] mx-auto pb-10"
+        >
+            {/* Ambient Background Blob */}
+            <div className="fixed top-0 left-[20%] w-[800px] h-[600px] bg-indigo-500/10 dark:bg-indigo-600/5 blur-[120px] rounded-full pointer-events-none -z-10 mix-blend-screen dark:mix-blend-lighten"></div>
+            <div className="fixed bottom-0 right-[-10%] w-[600px] h-[500px] bg-emerald-500/10 dark:bg-emerald-600/5 blur-[120px] rounded-full pointer-events-none -z-10 mix-blend-screen dark:mix-blend-lighten"></div>
 
             {/* Notifications / Alerts */}
             {(stats.billing.overduePayments > 0 || stats.tenants.pendingTenants > 0 || stats.maintenance.pendingRequests > 0) && (
-                <div className="bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 p-4 sm:p-5 rounded-2xl sm:rounded-3xl flex flex-col sm:flex-row gap-3 sm:gap-4 items-start sm:items-center backdrop-blur-md shadow-[0_0_30px_rgba(244,63,94,0.05)] transition-colors duration-500">
-                    <div className="w-10 h-10 bg-rose-100 dark:bg-rose-500/20 text-rose-500 dark:text-rose-400 rounded-xl flex items-center justify-center shrink-0 border border-rose-200 dark:border-rose-500/20">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                <motion.div variants={itemVariants} className="mb-8">
+                    <div className="relative overflow-hidden bg-linear-to-r from-rose-500/10 to-rose-600/5 dark:from-rose-500/20 dark:to-rose-900/10 border border-rose-200/50 dark:border-rose-500/20 p-5 rounded-2xl flex flex-col sm:flex-row gap-4 items-start sm:items-center backdrop-blur-xl shadow-lg shadow-rose-500/5">
+                        <div className="absolute top-0 left-0 w-1 h-full bg-rose-500 shadow-[0_0_15px_rgba(244,63,94,0.5)]"></div>
+                        <div className="w-12 h-12 bg-white dark:bg-[#0a0a0a] text-rose-500 dark:text-rose-400 rounded-xl flex items-center justify-center shrink-0 border border-rose-100 dark:border-rose-500/20 shadow-md">
+                            <svg className="w-6 h-6 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                        </div>
+                        <div className="flex-1 text-sm font-medium text-slate-700 dark:text-rose-100/80 leading-relaxed">
+                            <span className="font-black text-rose-600 dark:text-rose-400 uppercase tracking-widest text-[10px] sm:text-xs block mb-1">Attention Required</span>
+                            <div className="flex flex-wrap gap-2">
+                                {stats.billing.overduePayments > 0 && <span className="inline-flex items-center gap-1.5 bg-white dark:bg-rose-500/10 px-3 py-1 rounded-full border border-rose-100 dark:border-rose-500/20 shadow-sm"><div className="w-1.5 h-1.5 rounded-full bg-rose-500"></div>₱{Number(stats.billing.overduePayments).toLocaleString()} Overdue</span>}
+                                {stats.tenants.pendingTenants > 0 && <span className="inline-flex items-center gap-1.5 bg-white dark:bg-amber-500/10 px-3 py-1 rounded-full border border-amber-100 dark:border-amber-500/20 shadow-sm text-amber-700 dark:text-amber-300"><div className="w-1.5 h-1.5 rounded-full bg-amber-500"></div>{stats.tenants.pendingTenants} Pending Tenants</span>}
+                                {stats.maintenance.pendingRequests > 0 && <span className="inline-flex items-center gap-1.5 bg-white dark:bg-orange-500/10 px-3 py-1 rounded-full border border-orange-100 dark:border-orange-500/20 shadow-sm text-orange-700 dark:text-orange-300"><div className="w-1.5 h-1.5 rounded-full bg-orange-500"></div>{stats.maintenance.pendingRequests} Maintenance Requests</span>}
+                            </div>
+                        </div>
                     </div>
-                    <div className="flex-1 text-xs sm:text-sm font-medium text-rose-600 dark:text-rose-300 leading-relaxed">
-                        <span className="font-black text-rose-600 dark:text-rose-400 uppercase tracking-wider text-[10px] sm:text-xs block sm:inline mb-1 sm:mb-0 sm:mr-2">Attention Required:</span>
-                        {stats.billing.overduePayments > 0 && <span className="block sm:inline">₱{Number(stats.billing.overduePayments).toLocaleString()} in overdue payments. </span>}
-                        {stats.tenants.pendingTenants > 0 && <span className="block sm:inline">{stats.tenants.pendingTenants} pending tenant approvals. </span>}
-                        {stats.maintenance.pendingRequests > 0 && <span className="block sm:inline">{stats.maintenance.pendingRequests} pending maintenance requests.</span>}
-                    </div>
-                </div>
+                </motion.div>
             )}
 
-            {/* Main Content */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
-                {/* Left Column: Overviews */}
-                <div className="lg:col-span-2 space-y-6 sm:space-y-8">
-
-                    {/* Billing & Room Overview Row */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-                        {/* Billing Overview */}
-                        {/* Adjusted padding and border radius for mobile */}
-                        <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700 transition-colors duration-500 shadow-xl dark:shadow-2xl relative overflow-hidden group">
-                            <div className="absolute inset-0 bg-linear-to-br from-emerald-500/10 dark:from-emerald-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            
-                            <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mb-5 sm:mb-6 flex items-center gap-3 relative z-10 transition-colors duration-500">
-                                <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-lg sm:text-xl shadow-[0_0_15px_rgba(16,185,129,0.2)]">💰</span>
-                                Billing Overview
-                            </h3>
-                            <div className="space-y-4 sm:space-y-5 relative z-10">
-                                <div className="flex justify-between items-center">
-                                    <span className="text-[10px] sm:text-xs font-bold text-slate-500 dark:text-zinc-500 uppercase tracking-widest transition-colors duration-500">Collected this Mo.</span>
-                                    <span className="font-black text-slate-900 dark:text-white text-lg sm:text-xl transition-colors duration-500">₱{Number(stats.billing.monthlyIncome).toLocaleString()}</span>
-                                </div>
-                                <div className="h-px bg-slate-200 dark:bg-zinc-800 transition-colors duration-500"></div>
-                                <div className="flex justify-between items-center">
-                                    <span className="text-[10px] sm:text-xs font-bold text-slate-500 dark:text-zinc-500 uppercase tracking-widest transition-colors duration-500">Total Unpaid</span>
-                                    <span className="font-black text-amber-500 dark:text-amber-400 text-lg sm:text-xl transition-colors duration-500">₱{Number(stats.billing.pendingDues).toLocaleString()}</span>
-                                </div>
-                                <div className="h-px bg-slate-200 dark:bg-zinc-800 transition-colors duration-500"></div>
-                                <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0 bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 p-3 sm:p-4 rounded-xl sm:rounded-2xl transition-colors duration-500">
-                                    <span className="text-[10px] sm:text-xs font-black text-rose-600 dark:text-rose-400 uppercase tracking-widest">Overdue Payments</span>
-                                    <span className="font-black text-rose-600 dark:text-rose-400 text-lg sm:text-xl drop-shadow-[0_0_8px_rgba(244,63,94,0.2)] dark:drop-shadow-[0_0_8px_rgba(244,63,94,0.4)]">₱{Number(stats.billing.overduePayments).toLocaleString()}</span>
-                                </div>
-                            </div>
+            {/* BENTO GRID */}
+            <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-6 auto-rows-[minmax(180px,auto)]">
+                
+                {/* 1. Primary Stat: Revenue (Spans 4 columns) */}
+                <motion.div variants={itemVariants} className="md:col-span-3 lg:col-span-4 relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent">
+                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/30 to-emerald-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+                    <div className="h-full w-full bg-white/80 dark:bg-[#0a0a0a]/90 backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 dark:bg-emerald-500/20 rounded-bl-full pointer-events-none"></div>
+                        <div className="flex items-center justify-between mb-4 relative z-10">
+                            <span className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 text-white flex items-center justify-center text-xl shadow-[0_4px_20px_rgba(16,185,129,0.3)]">💰</span>
+                            <span className="text-[10px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-[0.2em]">Collected this Mo.</span>
                         </div>
+                        <div className="relative z-10">
+                            <h2 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tighter">₱{Number(stats.billing.monthlyIncome).toLocaleString()}</h2>
+                            <p className="text-xs font-bold text-amber-500 mt-2 flex items-center gap-1.5">
+                                <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                                ₱{Number(stats.billing.pendingDues).toLocaleString()} Unpaid
+                            </p>
+                        </div>
+                    </div>
+                </motion.div>
 
-                        {/* Room Status */}
-                        <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700 transition-colors duration-500 shadow-xl dark:shadow-2xl relative overflow-hidden group">
-                            <div className="absolute inset-0 bg-linear-to-br from-blue-500/10 dark:from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            
-                            <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mb-5 sm:mb-6 flex items-center gap-3 relative z-10 transition-colors duration-500">
-                                <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20 text-blue-600 dark:text-blue-400 flex items-center justify-center text-lg sm:text-xl shadow-[0_0_15px_rgba(59,130,246,0.2)]">🏢</span>
-                                Room Status
-                            </h3>
-                            <div className="space-y-5 sm:space-y-6 relative z-10">
-                                <div className="flex justify-between items-center">
-                                    <span className="text-[10px] sm:text-xs font-bold text-slate-500 dark:text-zinc-500 uppercase tracking-widest transition-colors duration-500">Total Rooms</span>
-                                    <span className="font-black text-slate-900 dark:text-white text-lg sm:text-xl transition-colors duration-500">{stats.rooms.totalRooms}</span>
-                                </div>
-                                {/* Sleek Progress Bar */}
-                                <div className="h-2 w-full bg-slate-200 dark:bg-zinc-800/80 rounded-full flex overflow-hidden shadow-inner p-0.5 transition-colors duration-500">
-                                    <div style={{width: `${(stats.rooms.occupiedRooms / Math.max(stats.rooms.totalRooms, 1)) * 100}%`}} className="bg-blue-500 h-full rounded-full shadow-[0_0_10px_rgba(59,130,246,0.5)] dark:shadow-[0_0_10px_rgba(59,130,246,0.8)] relative z-10"></div>
-                                    <div style={{width: `${(stats.rooms.availableRooms / Math.max(stats.rooms.totalRooms, 1)) * 100}%`}} className="bg-emerald-400 h-full rounded-full -ml-1"></div>
-                                    <div style={{width: `${(stats.rooms.maintenanceRooms / Math.max(stats.rooms.totalRooms, 1)) * 100}%`}} className="bg-rose-500 h-full rounded-full -ml-1"></div>
-                                </div>
-                                {/* Reduced gap and padding for mobile grid */}
-                                <div className="grid grid-cols-3 gap-2 sm:gap-3 text-center">
-                                    <div className="bg-linear-to-br from-slate-50/80 to-white/50 dark:from-[#0d0d0d]/60 dark:to-transparent backdrop-blur-xl border border-white/60 dark:border-white/10 border border-slate-200 dark:border-zinc-800 p-2 sm:p-3 rounded-xl sm:rounded-2xl transition-colors duration-500">
-                                        <p className="text-blue-600 dark:text-blue-400 font-black text-lg sm:text-xl">{stats.rooms.occupiedRooms}</p>
-                                        <p className="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest text-slate-500 dark:text-zinc-500 mt-1 transition-colors duration-500">Occupied</p>
-                                    </div>
-                                    <div className="bg-linear-to-br from-slate-50/80 to-white/50 dark:from-[#0d0d0d]/60 dark:to-transparent backdrop-blur-xl border border-white/60 dark:border-white/10 border border-slate-200 dark:border-zinc-800 p-2 sm:p-3 rounded-xl sm:rounded-2xl transition-colors duration-500">
-                                        <p className="text-emerald-600 dark:text-emerald-400 font-black text-lg sm:text-xl">{stats.rooms.availableRooms}</p>
-                                        <p className="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest text-slate-500 dark:text-zinc-500 mt-1 transition-colors duration-500">Available</p>
-                                    </div>
-                                    <div className="bg-linear-to-br from-slate-50/80 to-white/50 dark:from-[#0d0d0d]/60 dark:to-transparent backdrop-blur-xl border border-white/60 dark:border-white/10 border border-slate-200 dark:border-zinc-800 p-2 sm:p-3 rounded-xl sm:rounded-2xl transition-colors duration-500">
-                                        <p className="text-rose-600 dark:text-rose-400 font-black text-lg sm:text-xl">{stats.rooms.maintenanceRooms}</p>
-                                        <p className="text-[8px] sm:text-[9px] font-bold uppercase tracking-widest text-slate-500 dark:text-zinc-500 mt-1 transition-colors duration-500">Repair</p>
-                                    </div>
-                                </div>
+                {/* 2. Primary Stat: Tenants (Spans 4 columns) */}
+                <motion.div variants={itemVariants} className="md:col-span-3 lg:col-span-4 relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent">
+                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/30 to-indigo-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+                    <div className="h-full w-full bg-white/80 dark:bg-[#0a0a0a]/90 backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 dark:bg-indigo-500/20 rounded-bl-full pointer-events-none"></div>
+                        <div className="flex items-center justify-between mb-4 relative z-10">
+                            <span className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-400 to-indigo-600 text-white flex items-center justify-center text-xl shadow-[0_4px_20px_rgba(99,102,241,0.3)]">👥</span>
+                            <span className="text-[10px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-[0.2em]">Active Tenants</span>
+                        </div>
+                        <div className="relative z-10 flex items-end justify-between">
+                            <h2 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tighter">{stats.tenants.activeTenants}</h2>
+                            <div className="text-right">
+                                <p className="text-2xl font-black text-slate-400 dark:text-zinc-600">/{stats.tenants.totalTenants}</p>
+                                <p className="text-[10px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-widest mt-1">Total</p>
                             </div>
                         </div>
                     </div>
+                </motion.div>
 
-                    {/* Tenant & Maintenance Row */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-                        {/* Tenant Overview */}
-                        <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700 transition-colors duration-500 shadow-xl dark:shadow-2xl flex flex-col justify-center relative overflow-hidden group">
-                            <div className="absolute inset-0 bg-linear-to-br from-indigo-500/10 dark:from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                            
-                            <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mb-5 sm:mb-6 flex items-center gap-3 relative z-10 transition-colors duration-500">
-                                <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-lg sm:text-xl shadow-[0_0_15px_rgba(99,102,241,0.2)]">👥</span>
-                                Tenant Overview
-                            </h3>
-                            {/* Adjusted flex directions: stacks on very small screens and MD tablets, side-by-side on SM and LG */}
-                            <div className="flex flex-col sm:flex-row md:flex-col xl:flex-row items-center gap-6 sm:gap-8 relative z-10">
-                                <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-full border-8 sm:border-10 border-slate-100 dark:border-zinc-900 flex items-center justify-center shrink-0 shadow-[0_0_30px_rgba(99,102,241,0.15)] relative transition-colors duration-500">
-                                    {/* Glowing ring */}
-                                    <svg className="absolute inset-0 w-full h-full -rotate-90">
-                                        <circle cx="50%" cy="50%" r="48%" fill="none" stroke="rgba(99,102,241,0.2)" strokeWidth="4"></circle>
-                                        <circle cx="50%" cy="50%" r="48%" fill="none" stroke="#6366f1" strokeWidth="4" strokeDasharray="100 100" strokeDashoffset="20"></circle>
-                                    </svg>
-                                    <span className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white transition-colors duration-500">{stats.tenants.activeTenants}</span>
-                                </div>
-                                <div className="space-y-3 flex-1 w-full">
-                                    <div className="flex justify-between items-center bg-linear-to-br from-slate-50/80 to-white/50 dark:from-[#0d0d0d]/60 dark:to-transparent backdrop-blur-xl border border-white/60 dark:border-white/10 border border-slate-200 dark:border-zinc-800 px-4 sm:px-5 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl transition-colors duration-500">
-                                        <span className="text-[10px] sm:text-xs font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-widest transition-colors duration-500">Active</span>
-                                        <span className="font-black text-slate-900 dark:text-white text-base sm:text-lg transition-colors duration-500">{stats.tenants.activeTenants}</span>
-                                    </div>
-                                    <div className="flex justify-between items-center bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 px-4 sm:px-5 py-3 sm:py-3.5 rounded-xl sm:rounded-2xl transition-colors duration-500">
-                                        <span className="text-[10px] sm:text-xs font-bold text-amber-600 dark:text-amber-500 uppercase tracking-widest">Pending</span>
-                                        <span className="font-black text-amber-600 dark:text-amber-400 text-base sm:text-lg drop-shadow-[0_0_8px_rgba(245,158,11,0.2)] dark:drop-shadow-[0_0_8px_rgba(245,158,11,0.4)]">{stats.tenants.pendingTenants}</span>
-                                    </div>
-                                </div>
-                            </div>
+                {/* 3. Primary Stat: Rooms (Spans 4 columns) */}
+                <motion.div variants={itemVariants} className="md:col-span-6 lg:col-span-4 relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent">
+                    <div className="absolute inset-0 bg-gradient-to-br from-blue-500/30 to-blue-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+                    <div className="h-full w-full bg-white/80 dark:bg-[#0a0a0a]/90 backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 dark:bg-blue-500/20 rounded-bl-full pointer-events-none"></div>
+                        <div className="flex items-center justify-between mb-4 relative z-10">
+                            <span className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 text-white flex items-center justify-center text-xl shadow-[0_4px_20px_rgba(59,130,246,0.3)]">🏢</span>
+                            <span className="text-[10px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-[0.2em]">Property Status</span>
                         </div>
-
-                        {/* Maintenance Summary */}
-                        <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700 transition-colors duration-500 shadow-xl dark:shadow-2xl relative overflow-hidden group">
-                            <div className="absolute inset-0 bg-linear-to-br from-orange-500/10 dark:from-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        
+                        <div className="relative z-10">
+                            {/* Sleek Progress Bar */}
+                            <div className="flex justify-between items-end mb-2">
+                                <h2 className="text-3xl font-black text-slate-900 dark:text-white tracking-tighter">{Math.round((stats.rooms.occupiedRooms / Math.max(stats.rooms.totalRooms, 1)) * 100)}%</h2>
+                                <span className="text-[10px] font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-widest">Occupancy</span>
+                            </div>
+                            <div className="h-2.5 w-full bg-slate-200 dark:bg-zinc-800/80 rounded-full flex overflow-hidden shadow-inner mb-4">
+                                <motion.div initial={{width: 0}} animate={{width: `${(stats.rooms.occupiedRooms / Math.max(stats.rooms.totalRooms, 1)) * 100}%`}} transition={{duration: 1, delay: 0.2}} className="bg-blue-500 h-full rounded-full shadow-[0_0_10px_rgba(59,130,246,0.5)]"></motion.div>
+                                <motion.div initial={{width: 0}} animate={{width: `${(stats.rooms.availableRooms / Math.max(stats.rooms.totalRooms, 1)) * 100}%`}} transition={{duration: 1, delay: 0.4}} className="bg-emerald-400 h-full rounded-full -ml-1"></motion.div>
+                                <motion.div initial={{width: 0}} animate={{width: `${(stats.rooms.maintenanceRooms / Math.max(stats.rooms.totalRooms, 1)) * 100}%`}} transition={{duration: 1, delay: 0.6}} className="bg-rose-500 h-full rounded-full -ml-1"></motion.div>
+                            </div>
                             
-                            <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mb-5 sm:mb-6 flex items-center gap-3 relative z-10 transition-colors duration-500">
-                                <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-orange-50 dark:bg-orange-500/10 border border-orange-200 dark:border-orange-500/20 text-orange-600 dark:text-orange-400 flex items-center justify-center text-lg sm:text-xl shadow-[0_0_15px_rgba(249,115,22,0.2)]">🛠️</span>
-                                Maintenance Summary
-                            </h3>
-                            <div className="space-y-2 sm:space-y-3 relative z-10">
-                                <div className="flex justify-between items-center bg-linear-to-br from-slate-50/80 to-white/50 dark:from-[#0d0d0d]/60 dark:to-transparent backdrop-blur-xl border border-white/60 dark:border-white/10 border border-slate-200 dark:border-zinc-800 p-3 sm:p-4 rounded-xl sm:rounded-2xl mb-3 sm:mb-4 transition-colors duration-500">
-                                    <span className="text-[10px] sm:text-xs font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-widest transition-colors duration-500">Total Requests</span>
-                                    <span className="font-black text-slate-900 dark:text-white text-base sm:text-lg transition-colors duration-500">{stats.maintenance.totalRequests}</span>
-                                </div>
-                                <div className="flex justify-between items-center text-xs sm:text-sm px-3 sm:px-4 py-2 hover:bg-slate-50 dark:hover:bg-[#0d0d0d]/40 rounded-lg sm:rounded-xl transition-colors duration-500">
-                                    <span className="font-bold text-slate-500 dark:text-zinc-400 flex items-center gap-2 sm:gap-3 transition-colors duration-500">
-                                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.4)] dark:shadow-[0_0_8px_rgba(244,63,94,0.8)]"></div>
-                                        Pending
-                                    </span>
-                                    <span className="font-black text-slate-900 dark:text-white transition-colors duration-500">{stats.maintenance.pendingRequests}</span>
-                                </div>
-                                <div className="flex justify-between items-center text-xs sm:text-sm px-3 sm:px-4 py-2 hover:bg-slate-50 dark:hover:bg-[#0d0d0d]/40 rounded-lg sm:rounded-xl transition-colors duration-500">
-                                    <span className="font-bold text-slate-500 dark:text-zinc-400 flex items-center gap-2 sm:gap-3 transition-colors duration-500">
-                                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.4)] dark:shadow-[0_0_8px_rgba(245,158,11,0.8)]"></div>
-                                        In Progress
-                                    </span>
-                                    <span className="font-black text-slate-900 dark:text-white transition-colors duration-500">{stats.maintenance.inProgressRequests}</span>
-                                </div>
-                                <div className="flex justify-between items-center text-xs sm:text-sm px-3 sm:px-4 py-2 hover:bg-slate-50 dark:hover:bg-[#0d0d0d]/40 rounded-lg sm:rounded-xl transition-colors duration-500">
-                                    <span className="font-bold text-slate-500 dark:text-zinc-400 flex items-center gap-2 sm:gap-3 transition-colors duration-500">
-                                        <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.4)] dark:shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
-                                        Resolved
-                                    </span>
-                                    <span className="font-black text-slate-900 dark:text-white transition-colors duration-500">{stats.maintenance.resolvedRequests}</span>
-                                </div>
+                            <div className="flex items-center gap-4 text-xs font-bold text-slate-500 dark:text-zinc-400 uppercase tracking-widest">
+                                <span className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></div>{stats.rooms.availableRooms} Avail</span>
+                                <span className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.8)]"></div>{stats.rooms.maintenanceRooms} Repair</span>
                             </div>
                         </div>
                     </div>
+                </motion.div>
 
-                    {/* Revenue Chart Row */}
-                    <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700 transition-colors duration-500 shadow-xl dark:shadow-2xl relative overflow-hidden group">
-                        <div className="absolute inset-0 bg-linear-to-br from-indigo-500/10 dark:from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                        <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mb-5 sm:mb-6 flex items-center gap-3 relative z-10 transition-colors duration-500">
-                            <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-lg sm:text-xl shadow-[0_0_15px_rgba(99,102,241,0.2)]">📈</span>
-                            Revenue Analytics
-                        </h3>
-                        <div className="relative z-10 w-full min-h-[300px]">
-                            <ChartContainer 
-                                config={{
-                                    revenue: { label: "Revenue", color: "var(--color-emerald-500)" },
-                                }}
-                                className="h-full w-full"
-                            >
-                                <AreaChart data={[
-                                    { month: 'Jan', revenue: 45000 },
-                                    { month: 'Feb', revenue: 52000 },
-                                    { month: 'Mar', revenue: 48000 },
-                                    { month: 'Apr', revenue: 61000 },
-                                    { month: 'May', revenue: 59000 },
-                                    { month: 'Jun', revenue: 65000 },
-                                ]}>
+                {/* 4. Large Chart (Spans 8 columns) */}
+                <motion.div variants={itemVariants} className="md:col-span-6 lg:col-span-8 relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent min-h-[350px]">
+                    <div className="h-full w-full bg-white/80 dark:bg-[#0a0a0a]/90 backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col relative">
+                        <div className="flex items-center justify-between mb-8">
+                            <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-3">
+                                <span className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-sm shadow-[0_0_15px_rgba(99,102,241,0.2)]">📈</span>
+                                Revenue Analytics
+                            </h3>
+                            <span className="px-3 py-1 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-lg text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-zinc-400">Last 6 Months</span>
+                        </div>
+                        
+                        <div className="flex-1 w-full min-h-[250px]">
+                            <ResponsiveContainer width="100%" height="100%">
+                                <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                                     <defs>
-                                        <linearGradient id="fillRevenue" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="5%" stopColor="var(--color-emerald-500)" stopOpacity={0.3}/>
-                                            <stop offset="95%" stopColor="var(--color-emerald-500)" stopOpacity={0}/>
+                                        <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="5%" stopColor="#10b981" stopOpacity={0.4}/>
+                                            <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
                                         </linearGradient>
                                     </defs>
-                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" className="opacity-10 dark:opacity-20" />
-                                    <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={10} className="text-xs font-bold text-neutral-500" />
-                                    <YAxis tickFormatter={(val) => `₱${val / 1000}k`} tickLine={false} axisLine={false} tickMargin={10} className="text-xs font-bold text-neutral-500" />
-                                    <ChartTooltip content={<ChartTooltipContent />} />
-                                    <Area type="monotone" dataKey="revenue" stroke="var(--color-emerald-500)" fill="url(#fillRevenue)" strokeWidth={2} />
+                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" className="opacity-10 dark:opacity-[0.05]" />
+                                    <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={15} className="text-xs font-bold fill-slate-400 dark:fill-zinc-500" />
+                                    <YAxis tickFormatter={(val) => `₱${val / 1000}k`} tickLine={false} axisLine={false} tickMargin={15} className="text-xs font-bold fill-slate-400 dark:fill-zinc-500" />
+                                    <Tooltip 
+                                        contentStyle={{ backgroundColor: 'rgba(10, 10, 10, 0.9)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)' }}
+                                        itemStyle={{ color: '#10b981', fontWeight: 'bold' }}
+                                        labelStyle={{ color: '#71717a', fontWeight: 'bold', textTransform: 'uppercase', fontSize: '10px', letterSpacing: '0.1em' }}
+                                    />
+                                    <Area type="monotone" dataKey="revenue" stroke="#10b981" strokeWidth={3} fillOpacity={1} fill="url(#colorRevenue)" />
                                 </AreaChart>
-                            </ChartContainer>
+                            </ResponsiveContainer>
                         </div>
                     </div>
-                </div>
+                </motion.div>
 
-                {/* Right Column: Recent Activities */}
-                <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 shadow-xl dark:shadow-2xl h-full flex flex-col relative overflow-hidden group transition-colors duration-500">
-                    <div className="absolute inset-0 bg-linear-to-b from-purple-500/10 dark:from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                    
-                    <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mb-6 sm:mb-8 flex items-center gap-3 relative z-10 transition-colors duration-500">
-                        <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-purple-50 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center text-lg sm:text-xl shadow-[0_0_15px_rgba(168,85,247,0.2)]">⚡</span>
-                        Live Activity
-                    </h3>
-                    
-                    {stats.recentActivities.length === 0 ? (
-                        <div className="flex-1 flex flex-col items-center justify-center text-center opacity-50 relative z-10 min-h-[200px]">
-                            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-slate-50 dark:bg-zinc-900 flex items-center justify-center text-2xl sm:text-3xl mb-4 border border-slate-200 dark:border-zinc-800 transition-colors duration-500">📭</div>
-                            <p className="font-bold text-slate-500 dark:text-zinc-500 text-xs sm:text-sm transition-colors duration-500">No recent activities.</p>
+                {/* 5. Live Activity Feed (Spans 4 columns) */}
+                <motion.div variants={itemVariants} className="md:col-span-6 lg:col-span-4 relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent row-span-2">
+                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-purple-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+                    <div className="h-full w-full bg-white/80 dark:bg-[#0a0a0a]/90 backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col relative">
+                        <div className="flex items-center justify-between mb-8">
+                            <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-3">
+                                <span className="w-8 h-8 rounded-lg bg-purple-50 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center text-sm shadow-[0_0_15px_rgba(168,85,247,0.2)]">⚡</span>
+                                Live Activity
+                            </h3>
+                            <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse shadow-[0_0_10px_rgba(168,85,247,0.8)]"></span>
                         </div>
-                    ) : (
-                        <div className="relative border-l border-slate-200 dark:border-zinc-800 ml-3 sm:ml-4 space-y-6 sm:space-y-8 pb-4 z-10 transition-colors duration-500">
-                            {stats.recentActivities.map((activity, idx) => {
-                                const isPayment = activity.type === 'payment';
-                                const isTenant = activity.type === 'tenant';
-                                const isMaintenance = activity.type === 'maintenance';
-                                
-                                return (
-                                    <div key={activity.id} className="relative pl-6 sm:pl-8 group/item">
-                                        <div className={`absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full ring-4 ring-white dark:ring-[#0a0a0a] transition-all duration-300 group-hover/item:scale-150 ${
-                                            isPayment ? 'bg-emerald-500 dark:bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.5)] dark:shadow-[0_0_10px_rgba(52,211,153,0.8)]' : 
-                                            isTenant ? 'bg-blue-500 dark:bg-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.5)] dark:shadow-[0_0_10px_rgba(96,165,250,0.8)]' : 
-                                            'bg-orange-500 dark:bg-orange-400 shadow-[0_0_10px_rgba(251,146,60,0.5)] dark:shadow-[0_0_10px_rgba(251,146,60,0.8)]'
-                                        }`}></div>
-                                        
-                                        <p className="text-[9px] sm:text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-1 transition-colors duration-500">{new Date(activity.date).toLocaleString([], {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'})}</p>
-                                        <p className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white leading-tight mb-1 transition-colors duration-500">{activity.title}</p>
-                                        <p className="text-[10px] sm:text-xs font-medium text-slate-500 dark:text-zinc-400 leading-relaxed transition-colors duration-500">{activity.description}</p>
-                                    </div>
-                                );
-                            })}
+                        
+                        {stats.recentActivities.length === 0 ? (
+                            <div className="flex-1 flex flex-col items-center justify-center text-center opacity-50 relative z-10">
+                                <div className="w-16 h-16 rounded-2xl bg-slate-50 dark:bg-zinc-900 flex items-center justify-center text-3xl mb-4 border border-slate-200 dark:border-zinc-800 transition-colors duration-500">📭</div>
+                                <p className="font-bold text-slate-500 dark:text-zinc-500 text-sm">No recent activities.</p>
+                            </div>
+                        ) : (
+                            <div className="relative border-l border-slate-200 dark:border-zinc-800/60 ml-4 space-y-8 pb-4 flex-1 overflow-y-auto custom-scrollbar pr-2">
+                                {stats.recentActivities.map((activity) => {
+                                    const isPayment = activity.type === 'payment';
+                                    const isTenant = activity.type === 'tenant';
+                                    
+                                    return (
+                                        <div key={activity.id} className="relative pl-8 group/item">
+                                            <div className={`absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full ring-4 ring-white dark:ring-[#0a0a0a] transition-all duration-300 group-hover/item:scale-150 ${
+                                                isPayment ? 'bg-emerald-500 dark:bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]' : 
+                                                isTenant ? 'bg-blue-500 dark:bg-blue-400 shadow-[0_0_10px_rgba(96,165,250,0.8)]' : 
+                                                'bg-orange-500 dark:bg-orange-400 shadow-[0_0_10px_rgba(251,146,60,0.8)]'
+                                            }`}></div>
+                                            
+                                            <p className="text-[9px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-widest mb-1">{new Date(activity.date).toLocaleString([], {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'})}</p>
+                                            <p className="text-sm font-bold text-slate-900 dark:text-white leading-tight mb-1 group-hover/item:text-purple-600 dark:group-hover/item:text-purple-400 transition-colors">{activity.title}</p>
+                                            <p className="text-xs font-medium text-slate-500 dark:text-zinc-400 leading-relaxed">{activity.description}</p>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
+                    </div>
+                </motion.div>
+
+                {/* 6. Maintenance Summary (Spans 4 columns) */}
+                <motion.div variants={itemVariants} className="md:col-span-6 lg:col-span-4 relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent h-full">
+                    <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-orange-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+                    <div className="h-full w-full bg-white/80 dark:bg-[#0a0a0a]/90 backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col relative">
+                        <div className="flex items-center justify-between mb-6">
+                            <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-3">
+                                <span className="w-8 h-8 rounded-lg bg-orange-50 dark:bg-orange-500/10 border border-orange-200 dark:border-orange-500/20 text-orange-600 dark:text-orange-400 flex items-center justify-center text-sm shadow-[0_0_15px_rgba(249,115,22,0.2)]">🛠️</span>
+                                Maintenance
+                            </h3>
+                            <span className="text-2xl font-black text-slate-900 dark:text-white">{stats.maintenance.totalRequests}</span>
                         </div>
-                    )}
-                </div>
+                        
+                        <div className="space-y-3 mt-auto">
+                            <div className="flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 p-4 rounded-2xl">
+                                <span className="text-xs font-bold text-slate-500 dark:text-zinc-400 flex items-center gap-3">
+                                    <div className="w-2 h-2 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.8)]"></div>
+                                    Pending Fixes
+                                </span>
+                                <span className="font-black text-slate-900 dark:text-white">{stats.maintenance.pendingRequests}</span>
+                            </div>
+                            <div className="flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 p-4 rounded-2xl">
+                                <span className="text-xs font-bold text-slate-500 dark:text-zinc-400 flex items-center gap-3">
+                                    <div className="w-2 h-2 rounded-full bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.8)]"></div>
+                                    In Progress
+                                </span>
+                                <span className="font-black text-slate-900 dark:text-white">{stats.maintenance.inProgressRequests}</span>
+                            </div>
+                            <div className="flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 p-4 rounded-2xl">
+                                <span className="text-xs font-bold text-slate-500 dark:text-zinc-400 flex items-center gap-3">
+                                    <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></div>
+                                    Resolved
+                                </span>
+                                <span className="font-black text-slate-900 dark:text-white">{stats.maintenance.resolvedRequests}</span>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
+
+                {/* 7. Quick Actions (Spans 4 columns) */}
+                <motion.div variants={itemVariants} className="md:col-span-6 lg:col-span-4 relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent h-full">
+                    <div className="h-full w-full bg-white/80 dark:bg-[#0a0a0a]/90 backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col relative">
+                        <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-3 mb-6">
+                            <span className="w-8 h-8 rounded-lg bg-slate-100 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 text-slate-600 dark:text-zinc-400 flex items-center justify-center text-sm shadow-sm">⚡</span>
+                            Quick Actions
+                        </h3>
+                        
+                        <div className="grid grid-cols-2 gap-3 mt-auto h-full">
+                            <a href="/admin/rooms" className="bg-slate-50 dark:bg-zinc-900/50 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 border border-slate-200 dark:border-zinc-800 hover:border-indigo-200 dark:hover:border-indigo-500/30 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 text-center transition-all group/btn">
+                                <span className="text-2xl group-hover/btn:scale-110 transition-transform">🏢</span>
+                                <span className="text-xs font-bold text-slate-700 dark:text-zinc-300">Manage Rooms</span>
+                            </a>
+                            <a href="/admin/tenants" className="bg-slate-50 dark:bg-zinc-900/50 hover:bg-blue-50 dark:hover:bg-blue-500/10 border border-slate-200 dark:border-zinc-800 hover:border-blue-200 dark:hover:border-blue-500/30 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 text-center transition-all group/btn">
+                                <span className="text-2xl group-hover/btn:scale-110 transition-transform">👥</span>
+                                <span className="text-xs font-bold text-slate-700 dark:text-zinc-300">View Tenants</span>
+                            </a>
+                            <a href="/admin/billing" className="bg-slate-50 dark:bg-zinc-900/50 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 border border-slate-200 dark:border-zinc-800 hover:border-emerald-200 dark:hover:border-emerald-500/30 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 text-center transition-all group/btn">
+                                <span className="text-2xl group-hover/btn:scale-110 transition-transform">💳</span>
+                                <span className="text-xs font-bold text-slate-700 dark:text-zinc-300">Billing Log</span>
+                            </a>
+                            <a href="/admin/requests" className="bg-slate-50 dark:bg-zinc-900/50 hover:bg-orange-50 dark:hover:bg-orange-500/10 border border-slate-200 dark:border-zinc-800 hover:border-orange-200 dark:hover:border-orange-500/30 rounded-2xl p-4 flex flex-col items-center justify-center gap-2 text-center transition-all group/btn">
+                                <span className="text-2xl group-hover/btn:scale-110 transition-transform">🛠️</span>
+                                <span className="text-xs font-bold text-slate-700 dark:text-zinc-300">Fix Issues</span>
+                            </a>
+                        </div>
+                    </div>
+                </motion.div>
 
             </div>
-        </div>
+        </motion.div>
     );
 }

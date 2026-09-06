@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, useMemo } from 'react';
 import api from '@/lib/api';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 interface Request {
     id: number;
@@ -17,6 +18,19 @@ interface Request {
     scheduled_date: string | null;
     date_resolved: string | null;
 }
+
+const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    show: {
+        opacity: 1,
+        transition: { staggerChildren: 0.1 }
+    }
+};
+
+const itemVariants: Variants = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+};
 
 export default function AdminRequests() {
     const [requests, setRequests] = useState<Request[]>([]);
@@ -107,377 +121,458 @@ export default function AdminRequests() {
     // Dark Mode Badges
     const getStatusStyle = (status: string) => {
         switch (status) {
-            case 'Pending': return 'bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-500/20';
-            case 'In Progress': return 'bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-500/20 shadow-[0_0_10px_rgba(59,130,246,0.1)]';
-            case 'Resolved': return 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-500/20';
-            case 'Cancelled': return 'bg-slate-50 dark:bg-zinc-500/10 text-slate-600 dark:text-zinc-400 border-slate-200 dark:border-zinc-500/20';
-            default: return 'bg-slate-50 dark:bg-zinc-500/10 text-slate-600 dark:text-zinc-400 border-slate-200 dark:border-zinc-500/20';
+            case 'Pending': return {
+                bg: 'bg-amber-50 dark:bg-amber-500/10',
+                text: 'text-amber-700 dark:text-amber-400',
+                border: 'border-amber-200 dark:border-amber-500/20',
+                glow: 'shadow-[0_0_15px_rgba(245,158,11,0.3)]',
+                dot: 'bg-amber-500 shadow-[0_0_8px_rgba(245,158,11,0.8)]'
+            };
+            case 'In Progress': return {
+                bg: 'bg-blue-50 dark:bg-blue-500/10',
+                text: 'text-blue-700 dark:text-blue-400',
+                border: 'border-blue-200 dark:border-blue-500/20',
+                glow: 'shadow-[0_0_15px_rgba(59,130,246,0.3)]',
+                dot: 'bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]'
+            };
+            case 'Resolved': return {
+                bg: 'bg-emerald-50 dark:bg-emerald-500/10',
+                text: 'text-emerald-700 dark:text-emerald-400',
+                border: 'border-emerald-200 dark:border-emerald-500/20',
+                glow: 'shadow-[0_0_15px_rgba(16,185,129,0.3)]',
+                dot: 'bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]'
+            };
+            case 'Cancelled': return {
+                bg: 'bg-slate-50 dark:bg-zinc-500/10',
+                text: 'text-slate-600 dark:text-zinc-400',
+                border: 'border-slate-200 dark:border-zinc-500/20',
+                glow: '',
+                dot: 'bg-slate-500'
+            };
+            default: return {
+                bg: 'bg-slate-50 dark:bg-zinc-500/10',
+                text: 'text-slate-600 dark:text-zinc-400',
+                border: 'border-slate-200 dark:border-zinc-500/20',
+                glow: '',
+                dot: 'bg-slate-500'
+            };
         }
     };
 
     const getPriorityStyle = (priority: string) => {
         switch (priority) {
-            case 'Urgent': return 'bg-rose-50 dark:bg-rose-500/10 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-500/20 shadow-[0_0_10px_rgba(244,63,94,0.15)] animate-pulse';
-            case 'High': return 'bg-orange-50 dark:bg-orange-500/10 text-orange-700 dark:text-orange-400 border-orange-200 dark:border-orange-500/20';
-            case 'Medium': return 'bg-amber-50 dark:bg-amber-500/10 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-500/20';
-            case 'Low': return 'bg-blue-50 dark:bg-blue-500/10 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-500/20';
-            default: return 'bg-slate-50 dark:bg-zinc-500/10 text-slate-600 dark:text-zinc-400 border-slate-200 dark:border-zinc-500/20';
+            case 'Urgent': return {
+                bg: 'bg-rose-50 dark:bg-rose-500/10',
+                text: 'text-rose-700 dark:text-rose-400',
+                border: 'border-rose-200 dark:border-rose-500/20',
+                glow: 'shadow-[0_0_15px_rgba(244,63,94,0.3)] animate-pulse',
+                dot: 'bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.8)] animate-pulse'
+            };
+            case 'High': return {
+                bg: 'bg-orange-50 dark:bg-orange-500/10',
+                text: 'text-orange-700 dark:text-orange-400',
+                border: 'border-orange-200 dark:border-orange-500/20',
+                glow: 'shadow-[0_0_15px_rgba(249,115,22,0.2)]',
+                dot: 'bg-orange-500 shadow-[0_0_8px_rgba(249,115,22,0.6)]'
+            };
+            case 'Medium': return {
+                bg: 'bg-amber-50 dark:bg-amber-500/10',
+                text: 'text-amber-700 dark:text-amber-400',
+                border: 'border-amber-200 dark:border-amber-500/20',
+                glow: '',
+                dot: 'bg-amber-500'
+            };
+            case 'Low': return {
+                bg: 'bg-blue-50 dark:bg-blue-500/10',
+                text: 'text-blue-700 dark:text-blue-400',
+                border: 'border-blue-200 dark:border-blue-500/20',
+                glow: '',
+                dot: 'bg-blue-500'
+            };
+            default: return {
+                bg: 'bg-slate-50 dark:bg-zinc-500/10',
+                text: 'text-slate-600 dark:text-zinc-400',
+                border: 'border-slate-200 dark:border-zinc-500/20',
+                glow: '',
+                dot: 'bg-slate-500'
+            };
+        }
+    };
+
+    const getCategoryIcon = (category: string) => {
+        switch(category) {
+            case 'Plumbing': return '💧';
+            case 'Electrical': return '⚡';
+            case 'Furniture': return '🪑';
+            default: return '🔧';
         }
     };
 
     return (
-        <div className="max-w-7xl mx-auto space-y-6 sm:space-y-10 pb-10 px-4 sm:px-6 lg:px-8 relative w-full">{/* Header Area */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 relative z-10">
-                <div>
-                    <h1 className="text-4xl font-black text-slate-900 dark:text-white tracking-tight">Maintenance Requests</h1>
-                    <p className="text-slate-500 dark:text-zinc-400 font-medium mt-2">Manage tenant maintenance issues and track resolutions.</p>
-                </div>
-            </div>
+        <div className="max-w-[1600px] mx-auto pb-10 relative">
+            {/* Ambient Background */}
+            <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-blue-500/5 dark:bg-blue-600/5 blur-[120px] rounded-full pointer-events-none -z-10 mix-blend-screen dark:mix-blend-lighten"></div>
 
-            {/* Filters and Search Bar */}
-            <div className="flex flex-col md:flex-row gap-4 relative z-10">
+            <motion.div initial={{opacity:0, y:-20}} animate={{opacity:1, y:0}} className="flex flex-col md:flex-row md:items-end justify-between gap-6 relative z-10 mb-8">
+                <div>
+                    <h1 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tighter flex items-center gap-4">
+                        Maintenance
+                        {requests.filter(r => r.status === 'Pending').length > 0 && (
+                            <span className="inline-flex items-center px-4 py-1.5 rounded-2xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-amber-600 dark:text-amber-400 text-xs font-black uppercase tracking-widest shadow-[0_0_15px_rgba(245,158,11,0.3)] animate-pulse">
+                                {requests.filter(r => r.status === 'Pending').length} Pending
+                            </span>
+                        )}
+                        {requests.filter(r => r.priority === 'Urgent').length > 0 && (
+                            <span className="inline-flex items-center px-4 py-1.5 rounded-2xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-black uppercase tracking-widest shadow-[0_0_15px_rgba(244,63,94,0.3)] animate-pulse">
+                                {requests.filter(r => r.priority === 'Urgent').length} Urgent
+                            </span>
+                        )}
+                    </h1>
+                    <p className="text-slate-500 dark:text-zinc-400 font-bold text-sm uppercase tracking-[0.2em] mt-2">Track & Manage Tenant Requests</p>
+                </div>
+            </motion.div>
+
+            {/* Filters */}
+            <motion.div initial={{opacity:0, y:20}} animate={{opacity:1, y:0}} transition={{delay: 0.1}} className="flex flex-col xl:flex-row gap-4 relative z-10 mb-8 bg-white/40 dark:bg-[#0a0a0a]/60 backdrop-blur-2xl p-4 rounded-[2rem] border border-slate-200/60 dark:border-zinc-800/60 shadow-xl dark:shadow-2xl">
                 <div className="relative group flex-1">
-                    <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 dark:text-zinc-500">
-                        <svg className="w-5 h-5 group-focus-within:text-[#5b21b6] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none text-slate-400 dark:text-zinc-500 group-focus-within:text-blue-500 transition-colors">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                     </div>
                     <input 
                         type="text" 
-                        placeholder="Search tenant or issue..." 
-                        className="w-full pl-12 pr-6 py-3.5 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-sm font-medium text-slate-900 dark:text-white placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all outline-none"
-                        value={searchTerm}
-                        onChange={e => setSearchTerm(e.target.value)}
+                        value={searchTerm} 
+                        onChange={(e) => setSearchTerm(e.target.value)} 
+                        placeholder="Search issue or tenant..." 
+                        className="w-full pl-14 pr-6 py-4 rounded-2xl bg-white/50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white placeholder-zinc-500 font-bold text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-inner" 
                     />
                 </div>
-                <div className="grid grid-cols-3 gap-2 md:flex md:gap-4 shrink-0">
-                    <select 
-                        className="w-full py-3.5 px-2 sm:px-4 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-[10px] sm:text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none outline-none sm:w-40"
-                        value={statusFilter}
-                        onChange={e => setStatusFilter(e.target.value)}
-                    >
-                        <option value="All">All Statuses</option>
-                        <option value="Pending">Pending</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Resolved">Resolved</option>
-                        <option value="Cancelled">Cancelled</option>
-                    </select>
+                
+                <div className="flex flex-col sm:flex-row gap-4 shrink-0">
+                    <div className="relative w-full sm:w-40">
+                        <select 
+                            value={statusFilter} 
+                            onChange={(e) => setStatusFilter(e.target.value)} 
+                            className="w-full py-4 pl-5 pr-10 rounded-2xl bg-white/50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white font-bold text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all appearance-none cursor-pointer"
+                        >
+                            <option value="All">All Statuses</option>
+                            <option value="Pending">Pending</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Resolved">Resolved</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                        <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-slate-500">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
 
-                    <select 
-                        className="w-full py-3.5 px-2 sm:px-4 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-[10px] sm:text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none outline-none sm:w-40"
-                        value={priorityFilter}
-                        onChange={e => setPriorityFilter(e.target.value)}
-                    >
-                        <option value="All">All Priorities</option>
-                        <option value="Urgent">Urgent</option>
-                        <option value="High">High</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Low">Low</option>
-                        <option value="Normal">Normal</option>
-                    </select>
+                    <div className="relative w-full sm:w-40">
+                        <select 
+                            value={priorityFilter} 
+                            onChange={(e) => setPriorityFilter(e.target.value)} 
+                            className="w-full py-4 pl-5 pr-10 rounded-2xl bg-white/50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white font-bold text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all appearance-none cursor-pointer"
+                        >
+                            <option value="All">All Priorities</option>
+                            <option value="Urgent">Urgent</option>
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                            <option value="Normal">Normal</option>
+                        </select>
+                        <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-slate-500">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
 
-                    <select 
-                        className="w-full py-3.5 px-2 sm:px-4 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl text-[10px] sm:text-sm font-bold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#5b21b6] focus:border-transparent transition-all appearance-none outline-none sm:w-40"
-                        value={categoryFilter}
-                        onChange={e => setCategoryFilter(e.target.value)}
-                    >
-                        <option value="All">All Categories</option>
-                        <option value="Plumbing">Plumbing</option>
-                        <option value="Electrical">Electrical</option>
-                        <option value="Furniture">Furniture</option>
-                        <option value="Other">Other</option>
-                    </select>
+                    <div className="relative w-full sm:w-40">
+                        <select 
+                            value={categoryFilter} 
+                            onChange={(e) => setCategoryFilter(e.target.value)} 
+                            className="w-full py-4 pl-5 pr-10 rounded-2xl bg-white/50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white font-bold text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all appearance-none cursor-pointer"
+                        >
+                            <option value="All">All Categories</option>
+                            <option value="Plumbing">Plumbing</option>
+                            <option value="Electrical">Electrical</option>
+                            <option value="Furniture">Furniture</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <div className="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-slate-500">
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </motion.div>
 
-            {/* Main Table */}
-            <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl shadow-xl dark:shadow-2xl border border-slate-200 dark:border-zinc-800 overflow-hidden relative z-10 min-h-[400px]">
-                {isLoading ? (
-                    <div className="flex flex-col items-center justify-center p-20 gap-4">
-                        <div className="w-8 h-8 border-4 border-[#5b21b6]/20 border-t-[#5b21b6] rounded-full animate-spin"></div>
-                        <p className="text-[10px] font-bold text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Loading Requests...</p>
+            {/* Request Cards Grid */}
+            {isLoading ? (
+                <div className="flex items-center justify-center min-h-[40vh]">
+                    <div className="relative flex flex-col items-center justify-center">
+                        <div className="w-16 h-16 border-4 border-slate-200 dark:border-zinc-800 border-t-blue-500 dark:border-t-blue-500 rounded-full animate-spin relative z-10 shadow-[0_0_30px_rgba(59,130,246,0.3)]"></div>
+                        <p className="text-slate-500 dark:text-zinc-400 font-bold text-xs uppercase tracking-[0.2em] mt-6 animate-pulse">Loading Requests...</p>
                     </div>
-                ) : (
-                    <div className="overflow-x-auto custom-scrollbar">
-                        <table className="w-full text-left border-collapse whitespace-nowrap">
-                            <thead className="bg-slate-50 dark:bg-zinc-900/50">
-                                <tr className="border-b border-slate-200 dark:border-zinc-800 text-[10px] uppercase tracking-widest text-slate-500 dark:text-zinc-500 font-black">
-                                    <th className="px-8 py-5">ID</th>
-                                    <th className="px-8 py-5">Tenant Info</th>
-                                    <th className="px-8 py-5">Issue</th>
-                                    <th className="px-8 py-5">Category</th>
-                                    <th className="px-8 py-5">Priority</th>
-                                    <th className="px-8 py-5">Status</th>
-                                    <th className="px-8 py-5">Date Reported</th>
-                                    <th className="px-8 py-5 text-right">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-zinc-800/50 text-sm">
-                                {filteredRequests.map((req) => (
-                                    <tr key={req.id} className="hover:bg-indigo-50/50 dark:hover:bg-zinc-900/40 transition-colors group">
-                                        <td className="px-8 py-5 font-bold text-slate-500 dark:text-zinc-500">#{req.id}</td>
-                                        <td className="px-8 py-5">
-                                            <div className="font-bold text-slate-900 dark:text-white group-hover:text-indigo-400 transition-colors">{req.tenant_name}</div>
-                                            <div className="text-[10px] text-slate-500 dark:text-zinc-500 font-black uppercase tracking-wider mt-0.5">Rm {req.room_number || 'N/A'}</div>
-                                        </td>
-                                        <td className="px-8 py-5">
-                                            <div className="font-bold text-slate-700 dark:text-zinc-300 max-w-[200px] truncate">{req.title}</div>
-                                        </td>
-                                        <td className="px-8 py-5 font-bold text-slate-500 dark:text-zinc-500 text-[10px] uppercase tracking-wider">{req.category}</td>
-                                        <td className="px-8 py-5">
-                                            <span className={`inline-block px-3 py-1.5 rounded-lg text-[9px] font-black tracking-widest uppercase border ${getPriorityStyle(req.priority)}`}>
-                                                {req.priority}
-                                            </span>
-                                        </td>
-                                        <td className="px-8 py-5">
-                                            <span className={`inline-block px-3 py-1.5 rounded-lg text-[9px] font-black tracking-widest uppercase border ${getStatusStyle(req.status)}`}>
-                                                {req.status}
-                                            </span>
-                                        </td>
-                                        <td className="px-8 py-5 text-slate-500 dark:text-zinc-400 font-bold text-xs tracking-wide">
-                                            {new Date(req.created_at).toLocaleDateString()}
-                                        </td>
-                                        <td className="px-8 py-5">
-                                            <div className="flex items-center justify-end gap-1 opacity-100 transition-opacity">
-                                                <button 
-                                                    onClick={() => setViewModalReq(req)}
-                                                    className="p-2 text-slate-500 dark:text-zinc-400 hover:text-blue-400 hover:bg-blue-400/10 rounded-lg transition-colors" title="View Details"
-                                                >
-                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
-                                                </button>
-                                                <button 
-                                                    onClick={() => openUpdateModal(req)}
-                                                    className="p-2 text-indigo-500 dark:text-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-300 hover:bg-indigo-400/10 rounded-lg transition-colors" title="Update Request"
-                                                >
-                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                                                </button>
+                </div>
+            ) : filteredRequests.length === 0 ? (
+                <motion.div initial={{opacity:0}} animate={{opacity:1}} className="bg-white/40 dark:bg-[#0a0a0a]/60 backdrop-blur-2xl rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 p-16 text-center shadow-2xl">
+                    <div className="w-24 h-24 bg-slate-100 dark:bg-zinc-900 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-6 shadow-inner border border-slate-200 dark:border-zinc-800">✅</div>
+                    <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2">No maintenance requests found</h3>
+                    <p className="text-sm font-bold text-slate-500 dark:text-zinc-500">{searchTerm ? "Try adjusting your filters." : "Everything is running smoothly!"}</p>
+                </motion.div>
+            ) : (
+                <motion.div variants={containerVariants} initial="hidden" animate="show" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {filteredRequests.map((req) => {
+                        const sStyle = getStatusStyle(req.status);
+                        const pStyle = getPriorityStyle(req.priority);
+                        
+                        return (
+                            <motion.div key={req.id} variants={itemVariants} className="relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent hover:shadow-[0_0_40px_rgba(0,0,0,0.1)] dark:hover:shadow-[0_0_40px_rgba(255,255,255,0.05)] transition-all duration-500">
+                                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+                                <div className="h-full w-full bg-white/80 dark:bg-[#0a0a0a]/90 backdrop-blur-3xl rounded-[23px] p-6 flex flex-col relative overflow-hidden transition-transform duration-500 group-hover:scale-[0.99]">
+                                    
+                                    {/* Top Row: Category Icon & Badges */}
+                                    <div className="flex justify-between items-start mb-5">
+                                        <div className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-zinc-800/80 border border-slate-200 dark:border-zinc-700 flex items-center justify-center text-xl shadow-inner group-hover:scale-110 transition-transform duration-500">
+                                            {getCategoryIcon(req.category)}
+                                        </div>
+                                        <div className="flex flex-col items-end gap-2">
+                                            <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full border bg-white/50 dark:bg-[#0a0a0a]/50 backdrop-blur-md ${sStyle.border}`}>
+                                                <div className={`w-1.5 h-1.5 rounded-full ${sStyle.dot}`}></div>
+                                                <span className={`text-[9px] font-black uppercase tracking-widest ${sStyle.text}`}>{req.status}</span>
                                             </div>
-                                        </td>
-                                    </tr>
-                                ))}
-                                {filteredRequests.length === 0 && (
-                                    <tr>
-                                        <td colSpan={8} className="p-16 text-center">
-                                            <div className="text-slate-500 dark:text-zinc-500 font-bold tracking-tight text-lg mb-1">No requests found</div>
-                                            <p className="text-zinc-600 text-xs font-medium">Try adjusting your search or filters.</p>
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
-                    </div>
-                )}
-            </div>
+                                            <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md border bg-white/50 dark:bg-[#0a0a0a]/50 backdrop-blur-md ${pStyle.border}`}>
+                                                <svg className={`w-3 h-3 ${pStyle.text}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                                <span className={`text-[9px] font-black uppercase tracking-widest ${pStyle.text}`}>{req.priority}</span>
+                                            </div>
+                                        </div>
+                                    </div>
 
+                                    {/* Title & Description */}
+                                    <div className="mb-6 flex-1">
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <span className="text-[10px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-widest">#{req.id}</span>
+                                            <span className="text-[10px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-widest">•</span>
+                                            <span className="text-[10px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-widest">{new Date(req.created_at).toLocaleDateString()}</span>
+                                        </div>
+                                        <h3 className="font-black text-slate-900 dark:text-white text-xl leading-tight mb-2 line-clamp-2">{req.title}</h3>
+                                        <p className="text-xs font-bold text-slate-500 dark:text-zinc-400 line-clamp-2">{req.description}</p>
+                                    </div>
+
+                                    {/* Tenant Info */}
+                                    <div className="bg-slate-50 dark:bg-zinc-900/50 rounded-2xl p-4 border border-slate-200 dark:border-zinc-800 flex items-center gap-3">
+                                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center text-white font-black text-xs shadow-md">
+                                            {req.tenant_name.charAt(0)}
+                                        </div>
+                                        <div>
+                                            <p className="font-black text-slate-900 dark:text-white text-sm leading-none">{req.tenant_name}</p>
+                                            <p className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mt-1">Room {req.room_number || 'N/A'}</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Action Hover Overlay */}
+                                    <div className="absolute inset-0 bg-white/60 dark:bg-[#0a0a0a]/80 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
+                                        <button onClick={() => setViewModalReq(req)} className="w-12 h-12 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 shadow-xl flex items-center justify-center text-slate-700 dark:text-zinc-300 hover:text-blue-500 hover:border-blue-500 transition-colors hover:scale-110 active:scale-95" title="View Details">
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                        </button>
+                                        <button onClick={() => openUpdateModal(req)} className="w-12 h-12 rounded-2xl bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-700 shadow-xl flex items-center justify-center text-slate-700 dark:text-zinc-300 hover:text-indigo-500 hover:border-indigo-500 transition-colors hover:scale-110 active:scale-95" title="Update Status">
+                                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                        </button>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        );
+                    })}
+                </motion.div>
+            )}
+
+            {/* Modals */}
+            <AnimatePresence>
             {/* View Modal */}
             {viewModalReq && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-                    <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl w-full max-w-2xl shadow-2xl overflow-hidden border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300 max-h-[90vh] flex flex-col">
-                        <div className="p-8 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
+                <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="fixed inset-0 bg-black/60 backdrop-blur-md z-[100] flex items-center justify-center p-4">
+                    <motion.div initial={{scale:0.9, y:20, opacity:0}} animate={{scale:1, y:0, opacity:1}} exit={{scale:0.95, y:10, opacity:0}} transition={{type: "spring", damping: 25, stiffness: 300}} className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-3xl rounded-[2.5rem] w-full max-w-3xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.3)] border border-slate-200 dark:border-zinc-800 flex flex-col max-h-[90vh]">
+                        <div className="p-8 border-b border-slate-200 dark:border-zinc-800 bg-white/50 dark:bg-zinc-900/50 flex justify-between items-start gap-4">
                             <div>
-                                <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-4">
-                                    Request #{viewModalReq.id}
-                                    <span className={`px-3 py-1.5 rounded-lg text-[9px] font-black tracking-widest uppercase border ${getStatusStyle(viewModalReq.status)}`}>
-                                        {viewModalReq.status}
-                                    </span>
-                                </h3>
+                                <div className="flex items-center gap-3 mb-2">
+                                    <span className="text-[10px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-widest bg-slate-100 dark:bg-zinc-800 px-3 py-1 rounded-lg">Req #{viewModalReq.id}</span>
+                                    {(() => {
+                                        const sStyle = getStatusStyle(viewModalReq.status);
+                                        return (
+                                            <div className={`flex items-center gap-2 px-3 py-1 rounded-lg border ${sStyle.bg} ${sStyle.border}`}>
+                                                <div className={`w-1.5 h-1.5 rounded-full ${sStyle.dot}`}></div>
+                                                <span className={`text-[9px] font-black uppercase tracking-widest ${sStyle.text}`}>{viewModalReq.status}</span>
+                                            </div>
+                                        );
+                                    })()}
+                                </div>
+                                <h2 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight">{viewModalReq.title}</h2>
                             </div>
-                            <button onClick={() => setViewModalReq(null)} className="w-10 h-10 rounded-xl hover:bg-slate-200 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:hover:text-white transition-colors">
-                                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            <button onClick={() => setViewModalReq(null)} className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 hover:bg-slate-200 dark:hover:bg-zinc-700 flex items-center justify-center text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-colors shrink-0">
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
                         </div>
-                        <div className="p-8 space-y-6 overflow-y-auto custom-scrollbar w-full">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 text-sm gap-4 sm:gap-6">
-                                <div className="bg-slate-50 dark:bg-zinc-900/50 p-5 rounded-2xl border border-slate-200 dark:border-zinc-800">
-                                    <div className="text-slate-500 dark:text-zinc-500 font-black uppercase tracking-widest text-[10px] mb-2 flex items-center gap-2">
-                                        <svg className="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                                        Tenant
-                                    </div>
-                                    <div className="font-black text-slate-900 dark:text-white text-lg">{viewModalReq.tenant_name}</div>
+                        
+                        <div className="p-8 overflow-y-auto custom-scrollbar w-full">
+                            
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                                <div className="bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 p-5 rounded-2xl shadow-inner">
+                                    <p className="text-[9px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-widest mb-1 flex items-center gap-1.5">
+                                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                        Reported By
+                                    </p>
+                                    <p className="font-bold text-slate-900 dark:text-white text-base">{viewModalReq.tenant_name}</p>
+                                    <p className="text-[10px] font-bold text-slate-500 dark:text-zinc-500 mt-0.5">Room {viewModalReq.room_number || 'N/A'}</p>
                                 </div>
-                                <div className="bg-slate-50 dark:bg-zinc-900/50 p-5 rounded-2xl border border-slate-200 dark:border-zinc-800">
-                                    <div className="text-slate-500 dark:text-zinc-500 font-black uppercase tracking-widest text-[10px] mb-2 flex items-center gap-2">
-                                        <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                                        Room Number
-                                    </div>
-                                    <div className="font-black text-slate-900 dark:text-white text-lg">{viewModalReq.room_number || 'N/A'}</div>
+                                <div className="bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 p-5 rounded-2xl shadow-inner">
+                                    <p className="text-[9px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-widest mb-1 flex items-center gap-1.5">
+                                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        Date Reported
+                                    </p>
+                                    <p className="font-bold text-slate-900 dark:text-white text-base">{new Date(viewModalReq.created_at).toLocaleDateString()}</p>
+                                </div>
+                                <div className="bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 p-5 rounded-2xl shadow-inner">
+                                    <p className="text-[9px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-widest mb-1 flex items-center gap-1.5">
+                                        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>
+                                        Category
+                                    </p>
+                                    <p className="font-bold text-slate-900 dark:text-white text-base">{viewModalReq.category}</p>
                                 </div>
                             </div>
-                            
-                            <div className="grid grid-cols-1 sm:grid-cols-3 text-sm gap-4 sm:gap-6">
-                                <div className="bg-slate-50 dark:bg-zinc-900/50 p-5 rounded-2xl border border-slate-200 dark:border-zinc-800">
-                                    <div className="text-slate-500 dark:text-zinc-500 font-black uppercase tracking-widest text-[10px] mb-2">Date Reported</div>
-                                    <div className="font-bold text-slate-900 dark:text-white text-sm">{new Date(viewModalReq.created_at).toLocaleDateString()}</div>
-                                </div>
-                                <div className="bg-slate-50 dark:bg-zinc-900/50 p-5 rounded-2xl border border-slate-200 dark:border-zinc-800">
-                                    <div className="text-slate-500 dark:text-zinc-500 font-black uppercase tracking-widest text-[10px] mb-2">Category</div>
-                                    <div className="font-bold text-slate-900 dark:text-white text-sm">{viewModalReq.category}</div>
-                                </div>
-                                <div className="bg-slate-50 dark:bg-zinc-900/50 p-5 rounded-2xl border border-slate-200 dark:border-zinc-800">
-                                    <div className="text-slate-500 dark:text-zinc-500 font-black uppercase tracking-widest text-[10px] mb-2">Priority</div>
-                                    <span className={`inline-block px-3 py-1 rounded-lg text-[9px] font-black tracking-widest uppercase border ${getPriorityStyle(viewModalReq.priority)}`}>
-                                        {viewModalReq.priority}
-                                    </span>
-                                </div>
-                            </div>
-                            
-                            <div>
-                                <h4 className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-3">Issue Description</h4>
-                                <div className="bg-slate-50 dark:bg-zinc-900/30 p-6 rounded-3xl text-slate-700 dark:text-zinc-300 text-sm whitespace-pre-wrap leading-relaxed border border-slate-200 dark:border-zinc-800 border-dashed">
-                                    <strong className="text-slate-900 dark:text-white block mb-3 text-lg font-black">{viewModalReq.title}</strong>
+
+                            <div className="mb-8">
+                                <h3 className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-3">Description</h3>
+                                <div className="bg-slate-50 dark:bg-zinc-900/30 border border-slate-200 dark:border-zinc-800 border-dashed rounded-2xl p-6 text-sm font-medium text-slate-700 dark:text-zinc-300 leading-relaxed whitespace-pre-wrap">
                                     {viewModalReq.description}
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                                 <div>
-                                    <h4 className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-3">Assigned Staff</h4>
-                                    <div className="bg-slate-50 dark:bg-zinc-900/50 p-5 rounded-2xl text-slate-900 dark:text-white text-sm border border-slate-200 dark:border-zinc-800 font-bold">
-                                        {viewModalReq.assigned_to || <span className="text-slate-400 dark:text-zinc-600 font-medium italic">Not assigned yet</span>}
+                                    <h3 className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-3">Assigned Staff</h3>
+                                    <div className="bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl p-4 font-bold text-slate-900 dark:text-white text-sm">
+                                        {viewModalReq.assigned_to ? (
+                                            <div className="flex items-center gap-3">
+                                                <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-zinc-700 flex items-center justify-center text-xs">
+                                                    👷
+                                                </div>
+                                                {viewModalReq.assigned_to}
+                                            </div>
+                                        ) : (
+                                            <span className="text-slate-400 dark:text-zinc-500 italic">Not assigned yet</span>
+                                        )}
                                     </div>
                                 </div>
                                 <div>
-                                    <h4 className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-3">Scheduling</h4>
-                                    <div className="bg-slate-50 dark:bg-zinc-900/50 p-5 rounded-2xl text-slate-900 dark:text-white text-sm border border-slate-200 dark:border-zinc-800 font-medium space-y-2">
-                                        <div><span className="text-slate-500 dark:text-zinc-500 font-bold uppercase tracking-widest text-[9px] mr-2">Scheduled:</span> {viewModalReq.scheduled_date ? new Date(viewModalReq.scheduled_date).toLocaleDateString() : <span className="text-slate-400 italic">Not set</span>}</div>
-                                        <div><span className="text-slate-500 dark:text-zinc-500 font-bold uppercase tracking-widest text-[9px] mr-2">Resolved:</span> {viewModalReq.date_resolved ? new Date(viewModalReq.date_resolved).toLocaleDateString() : <span className="text-slate-400 italic">Not set</span>}</div>
+                                    <h3 className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-3">Scheduling</h3>
+                                    <div className="bg-slate-50 dark:bg-zinc-900/50 border border-slate-200 dark:border-zinc-800 rounded-2xl p-4 font-bold text-sm space-y-3">
+                                        <div className="flex justify-between items-center border-b border-slate-200 dark:border-zinc-800 pb-2">
+                                            <span className="text-[10px] text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Scheduled</span>
+                                            <span className="text-slate-900 dark:text-white">{viewModalReq.scheduled_date ? new Date(viewModalReq.scheduled_date).toLocaleDateString() : <span className="text-slate-400 italic">Not set</span>}</span>
+                                        </div>
+                                        <div className="flex justify-between items-center">
+                                            <span className="text-[10px] text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Resolved</span>
+                                            <span className="text-slate-900 dark:text-white">{viewModalReq.date_resolved ? new Date(viewModalReq.date_resolved).toLocaleDateString() : <span className="text-slate-400 italic">Not set</span>}</span>
+                                        </div>
                                     </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h3 className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-3">Admin Notes</h3>
+                                <div className="bg-indigo-50/50 dark:bg-indigo-500/5 border border-indigo-100 dark:border-indigo-500/10 rounded-2xl p-5 text-sm font-medium text-slate-700 dark:text-zinc-300 leading-relaxed">
+                                    {viewModalReq.admin_notes ? viewModalReq.admin_notes : <span className="text-slate-400 dark:text-zinc-500 italic">No notes added.</span>}
                                 </div>
                             </div>
 
-                            <div>
-                                <h4 className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-3">Admin Notes</h4>
-                                <div className="bg-slate-50 dark:bg-zinc-900/50 p-5 rounded-2xl text-slate-700 dark:text-zinc-300 text-sm border border-slate-200 dark:border-zinc-800 font-medium leading-relaxed">
-                                    {viewModalReq.admin_notes || <span className="text-slate-400 dark:text-zinc-600 italic">No notes</span>}
-                                </div>
-                            </div>
                         </div>
-                        <div className="p-6 border-t border-slate-200 dark:border-zinc-800 bg-slate-50 dark:bg-zinc-900/50 flex justify-end gap-3">
-                            <button onClick={() => setViewModalReq(null)} className="px-6 py-3.5 font-bold text-slate-900 dark:text-white bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 rounded-xl transition-colors shadow-sm">
-                                Close
-                            </button>
-                            <button 
-                                onClick={() => {
-                                    const req = viewModalReq;
-                                    setViewModalReq(null);
-                                    openUpdateModal(req);
-                                }} 
-                                className="px-6 py-3.5 bg-[#5b21b6] text-white font-bold rounded-xl hover:bg-[#4c1d95] shadow-[0_0_20px_rgba(91,33,182,0.4)] transition-all tracking-wide flex items-center gap-2"
-                            >
-                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
-                                Update Status
+
+                        <div className="p-6 border-t border-slate-200 dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-900/30 flex justify-end gap-3">
+                            <button onClick={() => setViewModalReq(null)} className="px-6 py-3.5 font-bold text-slate-500 dark:text-zinc-400 bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 rounded-xl transition-colors text-xs uppercase tracking-widest">Close</button>
+                            <button onClick={() => { const req = viewModalReq; setViewModalReq(null); openUpdateModal(req); }} className="px-6 py-3.5 font-bold bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-xl transition-all shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_30px_rgba(79,70,229,0.5)] flex items-center justify-center gap-2 text-xs uppercase tracking-widest">
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                                Edit Request
                             </button>
                         </div>
-                    </div>
-                </div>
+                    </motion.div>
+                </motion.div>
             )}
 
             {/* Update Modal */}
             {updateModalReq && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-300">
-                    <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden border border-slate-200 dark:border-zinc-800 animate-in zoom-in-95 duration-300">
-                        <div className="p-8 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-slate-50 dark:bg-zinc-900/50">
-                            <h3 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">Update Request</h3>
-                            <button onClick={() => setUpdateModalReq(null)} className="w-10 h-10 rounded-xl hover:bg-slate-200 dark:bg-zinc-800 flex items-center justify-center text-slate-500 dark:text-zinc-500 hover:text-slate-900 dark:hover:text-white transition-colors">
+                <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}} className="fixed inset-0 bg-black/60 backdrop-blur-md z-[100] flex items-center justify-center p-4">
+                    <motion.div initial={{scale:0.9, y:20, opacity:0}} animate={{scale:1, y:0, opacity:1}} exit={{scale:0.95, y:10, opacity:0}} transition={{type: "spring", damping: 25, stiffness: 300}} className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-3xl rounded-[2.5rem] w-full max-w-2xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.3)] border border-slate-200 dark:border-zinc-800 flex flex-col max-h-[90vh]">
+                        <div className="px-8 py-6 border-b border-slate-200 dark:border-zinc-800 flex justify-between items-center bg-white/50 dark:bg-zinc-900/50">
+                            <div>
+                                <h2 className="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Update Request</h2>
+                                <p className="text-xs font-bold text-slate-500 dark:text-zinc-500 uppercase tracking-widest mt-1">Req #{updateModalReq.id}</p>
+                            </div>
+                            <button onClick={() => setUpdateModalReq(null)} className="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 hover:bg-slate-200 dark:hover:bg-zinc-700 flex items-center justify-center text-slate-500 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white transition-colors">
                                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M6 18L18 6M6 6l12 12"></path></svg>
                             </button>
                         </div>
-                        <form onSubmit={handleUpdateSubmit} className="p-8 flex flex-col gap-6">
-                            
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Status</label>
-                                    <select 
-                                        className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl outline-none focus:border-indigo-500 text-slate-900 dark:text-white font-bold transition-colors appearance-none"
-                                        value={updateStatus}
-                                        onChange={(e) => setUpdateStatus(e.target.value)}
-                                    >
-                                        <option value="Pending">Pending</option>
-                                        <option value="In Progress">In Progress</option>
-                                        <option value="Resolved">Resolved</option>
-                                        <option value="Cancelled">Cancelled</option>
-                                    </select>
+                        <form onSubmit={handleUpdateSubmit} className="flex-1 overflow-y-auto custom-scrollbar p-8">
+                            <div className="space-y-6">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Status</label>
+                                        <div className="relative">
+                                            <select value={updateStatus} onChange={e => setUpdateStatus(e.target.value)} className="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white font-bold focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none appearance-none transition-all shadow-inner cursor-pointer">
+                                                <option value="Pending">Pending</option>
+                                                <option value="In Progress">In Progress</option>
+                                                <option value="Resolved">Resolved</option>
+                                                <option value="Cancelled">Cancelled</option>
+                                            </select>
+                                            <div className="absolute inset-y-0 right-0 pr-5 flex items-center pointer-events-none text-slate-500">
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Priority</label>
+                                        <div className="relative">
+                                            <select value={updatePriority} onChange={e => setUpdatePriority(e.target.value)} className="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white font-bold focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none appearance-none transition-all shadow-inner cursor-pointer">
+                                                <option value="Urgent">Urgent</option>
+                                                <option value="High">High</option>
+                                                <option value="Medium">Medium</option>
+                                                <option value="Low">Low</option>
+                                                <option value="Normal">Normal</option>
+                                            </select>
+                                            <div className="absolute inset-y-0 right-0 pr-5 flex items-center pointer-events-none text-slate-500">
+                                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7"></path></svg>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                
+
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Priority</label>
-                                    <select 
-                                        className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl outline-none focus:border-indigo-500 text-slate-900 dark:text-white font-bold transition-colors appearance-none"
-                                        value={updatePriority}
-                                        onChange={(e) => setUpdatePriority(e.target.value)}
-                                    >
-                                        <option value="Urgent">Urgent</option>
-                                        <option value="High">High</option>
-                                        <option value="Medium">Medium</option>
-                                        <option value="Low">Low</option>
-                                        <option value="Normal">Normal</option>
-                                    </select>
+                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Assigned Staff</label>
+                                    <input type="text" value={updateAssigned} onChange={e => setUpdateAssigned(e.target.value)} placeholder="e.g. John Doe (Plumber)" className="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white font-bold focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all shadow-inner placeholder-zinc-500" />
                                 </div>
-                            </div>
 
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Assigned Staff</label>
-                                <input 
-                                    type="text" 
-                                    placeholder="e.g. John Doe (Plumber)"
-                                    className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl outline-none focus:border-indigo-500 text-slate-900 dark:text-white font-bold transition-colors placeholder:text-zinc-600 placeholder:font-medium"
-                                    value={updateAssigned}
-                                    onChange={(e) => setUpdateAssigned(e.target.value)}
-                                />
-                            </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Scheduled Date</label>
+                                        <input type="date" value={updateScheduledDate} onChange={e => setUpdateScheduledDate(e.target.value)} className="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white font-bold focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all shadow-inner [color-scheme:light_dark]" />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Date Resolved</label>
+                                        <input type="date" value={updateDateResolved} onChange={e => setUpdateDateResolved(e.target.value)} className="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white font-bold focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all shadow-inner [color-scheme:light_dark]" />
+                                    </div>
+                                </div>
 
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                                 <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Scheduled Date</label>
-                                    <input 
-                                        type="date"
-                                        className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl outline-none focus:border-indigo-500 text-slate-900 dark:text-white font-bold transition-colors [color-scheme:light_dark]"
-                                        value={updateScheduledDate}
-                                        onChange={(e) => setUpdateScheduledDate(e.target.value)}
-                                    />
+                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest pl-1">Admin Notes</label>
+                                    <textarea rows={4} value={updateNotes} onChange={e => setUpdateNotes(e.target.value)} placeholder="Add any internal notes, spare parts used, or resolution details here..." className="w-full px-5 py-4 rounded-2xl bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white font-bold focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all shadow-inner resize-none placeholder-zinc-500 custom-scrollbar" />
                                 </div>
-                                <div className="space-y-2">
-                                    <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Date Resolved</label>
-                                    <input 
-                                        type="date"
-                                        className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl outline-none focus:border-indigo-500 text-slate-900 dark:text-white font-bold transition-colors [color-scheme:light_dark]"
-                                        value={updateDateResolved}
-                                        onChange={(e) => setUpdateDateResolved(e.target.value)}
-                                    />
-                                </div>
-                            </div>
-
-                            <div className="space-y-2">
-                                <label className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest">Admin Notes</label>
-                                <textarea 
-                                    rows={4}
-                                    placeholder="Add any internal notes, spare parts used, or resolution details here..."
-                                    className="w-full px-4 py-3.5 bg-slate-50 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl outline-none focus:border-indigo-500 text-slate-900 dark:text-white font-medium transition-colors resize-none placeholder:text-zinc-600 custom-scrollbar"
-                                    value={updateNotes}
-                                    onChange={(e) => setUpdateNotes(e.target.value)}
-                                />
-                            </div>
-
-                            <div className="flex justify-end gap-3 pt-6 border-t border-slate-200 dark:border-zinc-800">
-                                <button 
-                                    type="button" 
-                                    onClick={() => setUpdateModalReq(null)}
-                                    className="px-6 py-3.5 text-slate-500 dark:text-zinc-400 font-bold hover:text-slate-900 dark:hover:text-white rounded-xl transition-colors"
-                                >
-                                    Cancel
-                                </button>
-                                <button 
-                                    type="submit" 
-                                    disabled={isUpdating}
-                                    className="px-6 py-3.5 bg-[#5b21b6] text-white font-bold rounded-xl hover:bg-[#4c1d95] shadow-[0_0_20px_rgba(91,33,182,0.4)] transition-all disabled:opacity-50 flex items-center gap-2"
-                                >
-                                    {isUpdating ? (
-                                        <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-                                    ) : 'Save Changes'}
-                                </button>
                             </div>
                         </form>
-                    </div>
-                </div>
+                        <div className="p-8 border-t border-slate-200 dark:border-zinc-800/80 flex flex-col-reverse sm:flex-row justify-end gap-3 bg-slate-50/50 dark:bg-zinc-900/30">
+                            <button type="button" onClick={() => setUpdateModalReq(null)} className="w-full sm:w-auto px-8 py-4 font-black text-slate-500 dark:text-zinc-400 bg-slate-100 dark:bg-zinc-800 hover:bg-slate-200 dark:hover:bg-zinc-700 rounded-2xl transition-all uppercase tracking-widest text-xs">Cancel</button>
+                            <button type="submit" disabled={isUpdating} className="w-full sm:w-auto px-8 py-4 font-black bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-2xl transition-all shadow-[0_0_20px_rgba(79,70,229,0.3)] hover:shadow-[0_0_30px_rgba(79,70,229,0.5)] flex items-center justify-center gap-2 uppercase tracking-widest text-xs disabled:opacity-70">
+                                {isUpdating ? <div className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div> : 'Save Changes'}
+                            </button>
+                        </div>
+                    </motion.div>
+                </motion.div>
             )}
+            </AnimatePresence>
         </div>
     );
 }
