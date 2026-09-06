@@ -22,6 +22,8 @@ export const metadata: Metadata = {
   description: "Boarding House Management System",
 };
 
+import { TooltipProvider } from "@/components/ui/tooltip";
+
 // --- Root Layout Component ---    
 export default function RootLayout({
   children,
@@ -36,7 +38,9 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          {children}
+          <TooltipProvider>
+            {children}
+          </TooltipProvider>
         </ThemeProvider>
       </body>
     </html>
