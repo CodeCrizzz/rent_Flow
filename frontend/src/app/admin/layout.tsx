@@ -218,7 +218,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                         {/* Sub-header background gradient extension */}
                         <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-indigo-50/50 dark:from-indigo-900/10 to-transparent pointer-events-none -z-10"></div>
                         
-                        <div className="p-4 md:p-6 lg:p-8 flex-1 flex flex-col">
+                        <div className="px-3 py-4 md:px-4 md:py-6 lg:px-5 lg:py-6 flex-1 flex flex-col">
                             <AnimatePresence mode="wait">
                                 <PageTransition key={pathname}>
                                     {children}
