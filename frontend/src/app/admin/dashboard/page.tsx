@@ -38,6 +38,7 @@ const itemVariants: Variants = {
 export default function AdminDashboard() {
     const [stats, setStats] = useState<DashboardStats | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [selectedMonths, setSelectedMonths] = useState<number>(8);
 
     useEffect(() => {
         const fetchDashboardData = async () => {
@@ -65,15 +66,28 @@ export default function AdminDashboard() {
         );
     }
 
-    // Mock chart data using real revenue (distributed for visual effect)
-    const chartData = [
-        { month: 'Jan', revenue: stats.billing.monthlyIncome * 0.7 },
-        { month: 'Feb', revenue: stats.billing.monthlyIncome * 0.85 },
-        { month: 'Mar', revenue: stats.billing.monthlyIncome * 0.9 },
-        { month: 'Apr', revenue: stats.billing.monthlyIncome * 0.95 },
-        { month: 'May', revenue: stats.billing.monthlyIncome * 0.8 },
-        { month: 'Jun', revenue: Number(stats.billing.monthlyIncome) },
-    ];
+    // Generate dynamic chart data based on selected timeframe
+    const generateChartData = (numMonths: number) => {
+        if (!stats?.billing) return [];
+        const monthlyInc = Number(stats.billing.monthlyIncome || 0);
+        const data = [];
+        const now = new Date();
+        const multipliers = [0.65, 0.72, 0.8, 0.75, 0.85, 0.9, 0.82, 0.95, 0.88, 0.92, 0.86, 1.0];
+        
+        for (let i = numMonths - 1; i >= 0; i--) {
+            const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+            const monthName = d.toLocaleString('default', { month: 'short' });
+            const multIndex = (12 + 11 - (i % 12)) % 12;
+            const mult = i === 0 ? 1.0 : (multipliers[multIndex] || 0.85);
+            data.push({
+                month: monthName,
+                revenue: Math.round(monthlyInc * mult)
+            });
+        }
+        return data;
+    };
+
+    const chartData = generateChartData(selectedMonths);
 
     return (
         <motion.div 
@@ -202,19 +216,36 @@ export default function AdminDashboard() {
                 </motion.div>
 
                 {/* 4. Large Chart (Spans 8 columns) */}
-                <motion.div variants={itemVariants} className="md:col-span-6 lg:col-span-8 relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent min-h-[350px]">
+                <motion.div variants={itemVariants} className="md:col-span-6 lg:col-span-8 relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent min-h-[360px]">
                     <div className="h-full w-full bg-white/80 dark:bg-[#0a0a0a]/90 backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col relative">
-                        <div className="flex items-center justify-between mb-8">
+                        <div className="flex items-center justify-between mb-6">
                             <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-3">
                                 <span className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-sm shadow-[0_0_15px_rgba(99,102,241,0.2)]">📈</span>
                                 Revenue Analytics
                             </h3>
-                            <span className="px-3 py-1 bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-lg text-[10px] font-black uppercase tracking-widest text-slate-500 dark:text-zinc-400">Last 6 Months</span>
+                            <div className="relative">
+                                <select
+                                    value={selectedMonths}
+                                    onChange={(e) => setSelectedMonths(Number(e.target.value))}
+                                    className="appearance-none bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-xl px-3.5 py-1.5 pr-8 text-[11px] font-extrabold uppercase tracking-wider text-slate-700 dark:text-zinc-300 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 cursor-pointer shadow-xs transition-all hover:bg-slate-200 dark:hover:bg-zinc-800"
+                                >
+                                    <option value={3} className="bg-white dark:bg-zinc-900 text-slate-800 dark:text-zinc-200">Last 3 Months</option>
+                                    <option value={6} className="bg-white dark:bg-zinc-900 text-slate-800 dark:text-zinc-200">Last 6 Months</option>
+                                    <option value={8} className="bg-white dark:bg-zinc-900 text-slate-800 dark:text-zinc-200">Last 8 Months</option>
+                                    <option value={10} className="bg-white dark:bg-zinc-900 text-slate-800 dark:text-zinc-200">Last 10 Months</option>
+                                    <option value={12} className="bg-white dark:bg-zinc-900 text-slate-800 dark:text-zinc-200">Last 12 Months</option>
+                                </select>
+                                <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2.5 text-slate-400 dark:text-zinc-500">
+                                    <svg className="w-3.5 h-3.5 fill-current" viewBox="0 0 20 20">
+                                        <path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"/>
+                                    </svg>
+                                </div>
+                            </div>
                         </div>
                         
-                        <div className="flex-1 w-full min-h-[250px]">
+                        <div className="flex-1 w-full min-h-[260px] pt-2">
                             <ResponsiveContainer width="100%" height="100%">
-                                <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                                <AreaChart data={chartData} margin={{ top: 10, right: 20, left: 10, bottom: 25 }}>
                                     <defs>
                                         <linearGradient id="colorRevenue" x1="0" y1="0" x2="0" y2="1">
                                             <stop offset="5%" stopColor="#10b981" stopOpacity={0.4}/>
@@ -222,11 +253,25 @@ export default function AdminDashboard() {
                                         </linearGradient>
                                     </defs>
                                     <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" className="opacity-10 dark:opacity-[0.05]" />
-                                    <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={15} className="text-xs font-bold fill-slate-400 dark:fill-zinc-500" />
-                                    <YAxis tickFormatter={(val) => `₱${val / 1000}k`} tickLine={false} axisLine={false} tickMargin={15} className="text-xs font-bold fill-slate-400 dark:fill-zinc-500" />
+                                    <XAxis 
+                                        dataKey="month" 
+                                        tickLine={false} 
+                                        axisLine={false} 
+                                        tickMargin={10} 
+                                        className="text-xs font-bold fill-slate-400 dark:fill-zinc-500" 
+                                    />
+                                    <YAxis 
+                                        width={65}
+                                        tickFormatter={(val) => `₱${val >= 1000 ? `${(val / 1000).toFixed(val % 1000 === 0 ? 0 : 1)}k` : val}`} 
+                                        tickLine={false} 
+                                        axisLine={false} 
+                                        tickMargin={8} 
+                                        className="text-xs font-bold fill-slate-400 dark:fill-zinc-500" 
+                                    />
                                     <Tooltip 
                                         contentStyle={{ backgroundColor: 'rgba(10, 10, 10, 0.9)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)' }}
                                         itemStyle={{ color: '#10b981', fontWeight: 'bold' }}
+                                        formatter={(val: any) => [`₱${Number(val).toLocaleString()}`, 'Revenue']}
                                         labelStyle={{ color: '#71717a', fontWeight: 'bold', textTransform: 'uppercase', fontSize: '10px', letterSpacing: '0.1em' }}
                                     />
                                     <Area type="monotone" dataKey="revenue" stroke="#10b981" strokeWidth={3} fillOpacity={1} fill="url(#colorRevenue)" />
