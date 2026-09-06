@@ -27,7 +27,7 @@ interface Room {
     occupants: Tenant[];
 }
 
-const listVariants: Variants = {
+const containerVariants: Variants = {
     hidden: { opacity: 0 },
     show: {
         opacity: 1,
