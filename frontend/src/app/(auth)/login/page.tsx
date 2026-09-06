@@ -54,7 +54,7 @@ export default function LoginPage() {
             {/* Header branding (absolute top) */}
             <header className="absolute top-0 w-full px-6 md:px-12 h-24 flex items-center justify-between z-50">
                 <Link href="/" className="flex items-center gap-3 group">
-                    <div className="w-10 h-10 bg-cyan-600 rounded-xl flex items-center justify-center text-white shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
+                    <div className="w-10 h-10 bg-gradient-to-tr from-cyan-600 to-blue-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-cyan-500/20 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
                         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
                     </div>
                     <span className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">
@@ -66,8 +66,10 @@ export default function LoginPage() {
 
             {/* Ambient Background Glow */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-500/10 dark:bg-cyan-500/10 blur-[120px] rounded-full mix-blend-multiply dark:mix-blend-screen" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-blue-500/10 dark:bg-blue-600/10 blur-[100px] rounded-full mix-blend-multiply dark:mix-blend-screen" />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-500/20 dark:bg-cyan-500/10 blur-[120px] rounded-full mix-blend-multiply dark:mix-blend-screen animate-pulse duration-[10s]" />
+                <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-blue-500/20 dark:bg-blue-600/10 blur-[100px] rounded-full mix-blend-multiply dark:mix-blend-screen" />
+                <div className="absolute top-[-10%] left-[-10%] w-[400px] h-[400px] bg-purple-500/10 dark:bg-purple-600/10 blur-[100px] rounded-full mix-blend-multiply dark:mix-blend-screen" />
+                <div className="absolute inset-0 glass-noise"></div>
             </div>
 
             {/* Login Card */}
@@ -75,10 +77,10 @@ export default function LoginPage() {
                 initial={{ opacity: 0, scale: 0.95, y: 20 }}
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="relative z-10 w-full max-w-md px-6 py-10 sm:p-12 mx-4 bg-white/60 dark:bg-zinc-900/60 backdrop-blur-3xl rounded-[2.5rem] border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.12)]"
+                className="relative z-10 w-full max-w-md px-6 py-10 sm:p-12 mx-4 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-3xl rounded-[2.5rem] border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)]"
             >
-                <div className="text-center mb-8">
-                    <h1 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-2">Welcome Back</h1>
+                <div className="text-center mb-10">
+                    <h1 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-3">Welcome Back</h1>
                     <p className="text-sm text-slate-500 dark:text-zinc-400 font-medium">Enter your credentials to access your portal.</p>
                 </div>
 
@@ -89,8 +91,8 @@ export default function LoginPage() {
                     </motion.div>
                 )}
 
-                <form onSubmit={handleLogin} className="space-y-5">
-                    <div className="space-y-2">
+                <form onSubmit={handleLogin} className="space-y-6">
+                    <div className="space-y-2.5">
                         <Label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400 ml-1">Email</Label>
                         <Input 
                             id="email" 
@@ -100,10 +102,10 @@ export default function LoginPage() {
                             onChange={(e) => setEmail(e.target.value)}
                             required 
                             disabled={isLoading}
-                            className="h-12 bg-white/50 dark:bg-zinc-950/50 border-slate-200 dark:border-white/10 rounded-2xl px-4 font-medium focus-visible:ring-cyan-500 focus-visible:ring-offset-0 focus-visible:border-cyan-500 transition-all shadow-inner"
+                            className="h-14 bg-white/80 dark:bg-zinc-950/80 border-slate-200 dark:border-white/10 rounded-2xl px-5 text-base font-medium focus-visible:ring-cyan-500 focus-visible:ring-offset-0 focus-visible:border-cyan-500 transition-all shadow-inner"
                         />
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-2.5">
                         <div className="flex items-center justify-between ml-1">
                             <Label htmlFor="password" className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400">Password</Label>
                             <Link href="#" className="text-xs font-bold text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 transition-colors">
@@ -118,12 +120,12 @@ export default function LoginPage() {
                             onChange={(e) => setPassword(e.target.value)}
                             required 
                             disabled={isLoading}
-                            className="h-12 bg-white/50 dark:bg-zinc-950/50 border-slate-200 dark:border-white/10 rounded-2xl px-4 font-medium focus-visible:ring-cyan-500 focus-visible:ring-offset-0 focus-visible:border-cyan-500 transition-all shadow-inner"
+                            className="h-14 bg-white/80 dark:bg-zinc-950/80 border-slate-200 dark:border-white/10 rounded-2xl px-5 text-base font-medium focus-visible:ring-cyan-500 focus-visible:ring-offset-0 focus-visible:border-cyan-500 transition-all shadow-inner"
                         />
                     </div>
                     <Button 
                         type="submit" 
-                        className="w-full h-12 mt-2 bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-slate-900 rounded-2xl font-bold tracking-wide transition-all shadow-[0_0_20px_rgba(0,0,0,0.1)] dark:shadow-[0_0_20px_rgba(255,255,255,0.1)]" 
+                        className="w-full h-14 mt-4 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-2xl font-bold tracking-wide text-base transition-all shadow-[0_0_20px_rgba(8,145,178,0.2)] dark:shadow-[0_0_20px_rgba(8,145,178,0.3)] hover:shadow-[0_0_30px_rgba(8,145,178,0.4)]" 
                         disabled={isLoading}
                     >
                         {isLoading ? (
@@ -137,7 +139,7 @@ export default function LoginPage() {
                     </Button>
                 </form>
 
-                <div className="mt-8 text-center">
+                <div className="mt-10 text-center">
                     <p className="text-sm font-medium text-slate-500 dark:text-zinc-400">
                         Don&apos;t have an account?{' '}
                         <Link href="/signup" className="text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 font-bold ml-1 transition-colors">
