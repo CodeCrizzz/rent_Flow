@@ -314,7 +314,9 @@ export default function AdminBilling() {
                 </div>
             ) : filteredBills.length === 0 ? (
                 <motion.div initial={{opacity:0}} animate={{opacity:1}} className="bg-white dark:bg-black backdrop-blur-2xl rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 p-16 text-center shadow-2xl">
-                    <div className="w-24 h-24 bg-slate-100 dark:bg-zinc-900 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-6 shadow-inner border border-slate-200 dark:border-zinc-800">✅</div>
+                    <div className="w-24 h-24 bg-slate-100 dark:bg-zinc-900 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-inner border border-slate-200 dark:border-zinc-800">
+                        <svg className="w-10 h-10 text-emerald-500 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" /></svg>
+                    </div>
                     <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2">No billing records found</h3>
                     <p className="text-sm font-bold text-slate-500 dark:text-zinc-500">{searchQuery ? "Try adjusting your filters." : "All tenants are caught up!"}</p>
                 </motion.div>

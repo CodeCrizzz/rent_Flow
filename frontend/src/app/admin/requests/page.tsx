@@ -201,10 +201,10 @@ export default function AdminRequests() {
 
     const getCategoryIcon = (category: string) => {
         switch(category) {
-            case 'Plumbing': return '💧';
-            case 'Electrical': return '⚡';
-            case 'Furniture': return '🪑';
-            default: return '🔧';
+            case 'Plumbing': return <svg className="w-5 h-5 text-blue-500 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12 6a3.75 3.75 0 1 0 0 7.5A3.75 3.75 0 0 0 12 6Z" /></svg>;
+            case 'Electrical': return <svg className="w-5 h-5 text-amber-500 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>;
+            case 'Furniture': return <svg className="w-5 h-5 text-purple-500 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h12A2.25 2.25 0 0 1 20.25 6v12A2.25 2.25 0 0 1 18 20.25H6A2.25 2.25 0 0 1 3.75 18V6Z" /></svg>;
+            default: return <svg className="w-5 h-5 text-orange-500 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75a4.5 4.5 0 0 1-4.884 4.484c-1.076-.091-2.264.071-2.95.904l-7.152 8.651a2.25 2.25 0 0 1-3.266.13l-.337-.337a2.25 2.25 0 0 1 .13-3.266l8.651-7.152c.833-.686.995-1.874.904-2.95a4.5 4.5 0 0 1 8.954-.464Z" /></svg>;
         }
     };
 
@@ -312,7 +312,9 @@ export default function AdminRequests() {
                 </div>
             ) : filteredRequests.length === 0 ? (
                 <motion.div initial={{opacity:0}} animate={{opacity:1}} className="bg-white dark:bg-black backdrop-blur-2xl rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 p-16 text-center shadow-2xl">
-                    <div className="w-24 h-24 bg-slate-100 dark:bg-zinc-900 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-6 shadow-inner border border-slate-200 dark:border-zinc-800">✅</div>
+                    <div className="w-24 h-24 bg-slate-100 dark:bg-zinc-900 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-inner border border-slate-200 dark:border-zinc-800">
+                        <svg className="w-10 h-10 text-emerald-500 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" /></svg>
+                    </div>
                     <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2">No maintenance requests found</h3>
                     <p className="text-sm font-bold text-slate-500 dark:text-zinc-500">{searchTerm ? "Try adjusting your filters." : "Everything is running smoothly!"}</p>
                 </motion.div>

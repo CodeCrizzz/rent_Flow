@@ -296,7 +296,9 @@ export default function AdminRooms() {
                 </div>
             ) : filteredRooms.length === 0 ? (
                 <motion.div initial={{opacity:0}} animate={{opacity:1}} className="bg-white dark:bg-black backdrop-blur-2xl rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 p-16 text-center shadow-2xl">
-                    <div className="w-24 h-24 bg-slate-100 dark:bg-zinc-900 rounded-3xl flex items-center justify-center text-4xl mx-auto mb-6 shadow-inner border border-slate-200 dark:border-zinc-800">📭</div>
+                    <div className="w-24 h-24 bg-slate-100 dark:bg-zinc-900 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-inner border border-slate-200 dark:border-zinc-800">
+                        <svg className="w-10 h-10 text-slate-400 dark:text-zinc-500 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5s0 0 0 0m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" /></svg>
+                    </div>
                     <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2">No properties found</h3>
                     <p className="text-sm font-bold text-slate-500 dark:text-zinc-500">Try adjusting your search or filters.</p>
                 </motion.div>

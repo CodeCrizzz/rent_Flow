@@ -185,22 +185,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                             </div>
                         </div>
 
-                        <div className="flex items-center gap-2 sm:gap-4">
-                            {/* Search Bar (Visual Only for Layout) */}
-                            <div className="relative hidden md:block">
-                                <svg className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 dark:text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                                <input 
-                                    type="text" 
-                                    placeholder="Search anything..." 
-                                    className="h-9 w-64 bg-slate-100/80 dark:bg-zinc-900/80 border border-slate-200/60 dark:border-white/5 rounded-full pl-9 pr-4 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all placeholder:text-slate-400 dark:placeholder:text-zinc-500"
-                                />
-                                <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1">
-                                    <kbd className="hidden sm:inline-flex items-center gap-1 px-1.5 rounded text-[10px] font-mono font-bold bg-white dark:bg-zinc-800 text-slate-400 dark:text-zinc-500 border border-slate-200 dark:border-zinc-700">⌘K</kbd>
-                                </div>
-                            </div>
-
-                            <div className="h-5 w-px bg-slate-200 dark:bg-zinc-800 hidden sm:block mx-1" />
-
                             <div className="flex items-center gap-2">
                                 <button className="relative p-2 text-slate-500 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-white/5 rounded-full transition-colors">
                                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
@@ -210,7 +194,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                                 </button>
                                 <ThemeToggle />
                             </div>
-                        </div>
                     </header>
 
                     {/* Main Content Area */}

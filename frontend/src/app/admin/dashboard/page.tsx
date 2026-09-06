@@ -129,7 +129,9 @@ export default function AdminDashboard() {
                     <div className="h-full w-full bg-white dark:bg-black backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 dark:bg-emerald-500/20 rounded-bl-full pointer-events-none"></div>
                         <div className="flex items-center justify-between mb-4 relative z-10">
-                            <span className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 text-white flex items-center justify-center text-xl shadow-[0_4px_20px_rgba(16,185,129,0.3)]">💰</span>
+                            <span className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 text-white flex items-center justify-center shadow-[0_4px_20px_rgba(16,185,129,0.3)]">
+                                <svg className="w-6 h-6 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-9h4.5a2.25 2.25 0 0 1 0 4.5H9m0 0h4.5a2.25 2.25 0 0 1 0 4.5H9" /></svg>
+                            </span>
                             <div className="flex items-center gap-3">
                                 {/* Collection Rate Ring */}
                                 <div className="relative w-11 h-11" title={`${stats.billing.collectionRate}% collected`}>
@@ -172,7 +174,9 @@ export default function AdminDashboard() {
                     <div className="h-full w-full bg-white dark:bg-black backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 dark:bg-indigo-500/20 rounded-bl-full pointer-events-none"></div>
                         <div className="flex items-center justify-between mb-4 relative z-10">
-                            <span className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-400 to-indigo-600 text-white flex items-center justify-center text-xl shadow-[0_4px_20px_rgba(99,102,241,0.3)]">👥</span>
+                            <span className="w-12 h-12 rounded-2xl bg-gradient-to-br from-indigo-400 to-indigo-600 text-white flex items-center justify-center shadow-[0_4px_20px_rgba(99,102,241,0.3)]">
+                                <svg className="w-6 h-6 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15 19.128a9.38 9.38 0 0 0 2.625.372 9.337 9.337 0 0 0 4.121-.952 4.125 4.125 0 0 0-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 0 1 8.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0 1 11.964-3.07M12 6.375a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0Zm8.25 2.25a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z" /></svg>
+                            </span>
                             <span className="text-[10px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-[0.2em]">Active Tenants</span>
                         </div>
                         <div className="relative z-10 flex items-end justify-between">
@@ -191,7 +195,9 @@ export default function AdminDashboard() {
                     <div className="h-full w-full bg-white dark:bg-black backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col justify-between relative overflow-hidden">
                         <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 dark:bg-blue-500/20 rounded-bl-full pointer-events-none"></div>
                         <div className="flex items-center justify-between mb-4 relative z-10">
-                            <span className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 text-white flex items-center justify-center text-xl shadow-[0_4px_20px_rgba(59,130,246,0.3)]">🏢</span>
+                            <span className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 text-white flex items-center justify-center shadow-[0_4px_20px_rgba(59,130,246,0.3)]">
+                                <svg className="w-6 h-6 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5s0 0 0 0m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" /></svg>
+                            </span>
                             <span className="text-[10px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-[0.2em]">Property Status</span>
                         </div>
                         
@@ -220,7 +226,9 @@ export default function AdminDashboard() {
                     <div className="h-full w-full bg-white dark:bg-black backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col relative">
                         <div className="flex items-center justify-between mb-6">
                             <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-3">
-                                <span className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-sm shadow-[0_0_15px_rgba(99,102,241,0.2)]">📈</span>
+                                <span className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center shadow-[0_0_15px_rgba(99,102,241,0.2)]">
+                                    <svg className="w-4 h-4 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 0 5.814-5.518l2.74-1.22m0 0-5.94-2.281m5.94 2.28-2.28 5.941" /></svg>
+                                </span>
                                 Revenue Analytics
                             </h3>
                             <div className="relative">
@@ -287,7 +295,9 @@ export default function AdminDashboard() {
                     <div className="h-full w-full bg-white dark:bg-black backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col relative">
                         <div className="flex items-center justify-between mb-8">
                             <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-3">
-                                <span className="w-8 h-8 rounded-lg bg-purple-50 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center text-sm shadow-[0_0_15px_rgba(168,85,247,0.2)]">⚡</span>
+                                <span className="w-8 h-8 rounded-lg bg-purple-50 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+                                    <svg className="w-4 h-4 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
+                                </span>
                                 Live Activity
                             </h3>
                             <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse shadow-[0_0_10px_rgba(168,85,247,0.8)]"></span>
@@ -295,7 +305,9 @@ export default function AdminDashboard() {
                         
                         {stats.recentActivities.length === 0 ? (
                             <div className="flex-1 flex flex-col items-center justify-center text-center opacity-50 relative z-10">
-                                <div className="w-16 h-16 rounded-2xl bg-slate-50 dark:bg-zinc-900 flex items-center justify-center text-3xl mb-4 border border-slate-200 dark:border-zinc-800 transition-colors duration-500">📭</div>
+                                <div className="w-16 h-16 rounded-2xl bg-slate-50 dark:bg-zinc-900 flex items-center justify-center mb-4 border border-slate-200 dark:border-zinc-800 transition-colors duration-500">
+                                    <svg className="w-8 h-8 text-slate-400 dark:text-zinc-500 stroke-[2]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" /></svg>
+                                </div>
                                 <p className="font-bold text-slate-500 dark:text-zinc-500 text-sm">No recent activities.</p>
                             </div>
                         ) : (
@@ -329,7 +341,9 @@ export default function AdminDashboard() {
                     <div className="h-full w-full bg-white dark:bg-black backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col relative">
                         <div className="flex items-center justify-between mb-6">
                             <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-3">
-                                <span className="w-8 h-8 rounded-lg bg-orange-50 dark:bg-orange-500/10 border border-orange-200 dark:border-orange-500/20 text-orange-600 dark:text-orange-400 flex items-center justify-center text-sm shadow-[0_0_15px_rgba(249,115,22,0.2)]">🛠️</span>
+                                <span className="w-8 h-8 rounded-lg bg-orange-50 dark:bg-orange-500/10 border border-orange-200 dark:border-orange-500/20 text-orange-600 dark:text-orange-400 flex items-center justify-center shadow-[0_0_15px_rgba(249,115,22,0.2)]">
+                                    <svg className="w-4 h-4 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75a4.5 4.5 0 0 1-4.884 4.484c-1.076-.091-2.264.071-2.95.904l-7.152 8.651a2.25 2.25 0 0 1-3.266.13l-.337-.337a2.25 2.25 0 0 1 .13-3.266l8.651-7.152c.833-.686.995-1.874.904-2.95a4.5 4.5 0 0 1 8.954-.464Z" /></svg>
+                                </span>
                                 Maintenance
                             </h3>
                             <span className="text-2xl font-black text-slate-900 dark:text-white">{stats.maintenance.totalRequests}</span>
@@ -367,7 +381,9 @@ export default function AdminDashboard() {
                     <div className="h-full w-full bg-white dark:bg-black backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col relative">
                         <div className="flex items-center justify-between mb-6">
                             <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-3">
-                                <span className="w-8 h-8 rounded-lg bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center text-sm shadow-[0_0_15px_rgba(244,63,94,0.2)]">📋</span>
+                                <span className="w-8 h-8 rounded-lg bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center shadow-[0_0_15px_rgba(244,63,94,0.2)]">
+                                    <svg className="w-4 h-4 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" /></svg>
+                                </span>
                                 Expiring Soon
                             </h3>
                             {stats.expiringContracts.length > 0 && (
@@ -379,7 +395,9 @@ export default function AdminDashboard() {
                         
                         {stats.expiringContracts.length === 0 ? (
                             <div className="flex-1 flex flex-col items-center justify-center text-center opacity-50 relative z-10">
-                                <div className="w-16 h-16 rounded-2xl bg-slate-50 dark:bg-zinc-900 flex items-center justify-center text-3xl mb-4 border border-slate-200 dark:border-zinc-800">✅</div>
+                                <div className="w-16 h-16 rounded-2xl bg-slate-50 dark:bg-zinc-900 flex items-center justify-center mb-4 border border-slate-200 dark:border-zinc-800">
+                                    <svg className="w-8 h-8 text-emerald-500 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z" /></svg>
+                                </div>
                                 <p className="font-bold text-slate-500 dark:text-zinc-500 text-sm">No contracts expiring within 30 days.</p>
                             </div>
                         ) : (
