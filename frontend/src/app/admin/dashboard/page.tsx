@@ -2,6 +2,8 @@
 import { useEffect, useState } from 'react';
 import api from '@/lib/api';
 import Link from 'next/link';
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 
 interface DashboardStats {
     rooms: { totalRooms: number; occupiedRooms: number; availableRooms: number; maintenanceRooms: number };
@@ -205,6 +207,44 @@ export default function AdminDashboard() {
                                     <span className="font-black text-slate-900 dark:text-white transition-colors duration-500">{stats.maintenance.resolvedRequests}</span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+
+                    {/* Revenue Chart Row */}
+                    <div className="bg-linear-to-br from-white/80 to-slate-50/50 dark:from-[#0a0a0a]/80 dark:to-transparent backdrop-blur-2xl p-6 sm:p-8 rounded-3xl sm:rounded-[2.5rem] border border-slate-200 dark:border-zinc-800 hover:border-slate-300 dark:hover:border-zinc-700 transition-colors duration-500 shadow-xl dark:shadow-2xl relative overflow-hidden group">
+                        <div className="absolute inset-0 bg-linear-to-br from-indigo-500/10 dark:from-indigo-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white mb-5 sm:mb-6 flex items-center gap-3 relative z-10 transition-colors duration-500">
+                            <span className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-lg sm:text-xl shadow-[0_0_15px_rgba(99,102,241,0.2)]">📈</span>
+                            Revenue Analytics
+                        </h3>
+                        <div className="relative z-10 w-full min-h-[300px]">
+                            <ChartContainer 
+                                config={{
+                                    revenue: { label: "Revenue", color: "var(--color-emerald-500)" },
+                                }}
+                                className="h-full w-full"
+                            >
+                                <AreaChart data={[
+                                    { month: 'Jan', revenue: 45000 },
+                                    { month: 'Feb', revenue: 52000 },
+                                    { month: 'Mar', revenue: 48000 },
+                                    { month: 'Apr', revenue: 61000 },
+                                    { month: 'May', revenue: 59000 },
+                                    { month: 'Jun', revenue: 65000 },
+                                ]}>
+                                    <defs>
+                                        <linearGradient id="fillRevenue" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="5%" stopColor="var(--color-emerald-500)" stopOpacity={0.3}/>
+                                            <stop offset="95%" stopColor="var(--color-emerald-500)" stopOpacity={0}/>
+                                        </linearGradient>
+                                    </defs>
+                                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="currentColor" className="opacity-10 dark:opacity-20" />
+                                    <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={10} className="text-xs font-bold text-neutral-500" />
+                                    <YAxis tickFormatter={(val) => `₱${val / 1000}k`} tickLine={false} axisLine={false} tickMargin={10} className="text-xs font-bold text-neutral-500" />
+                                    <ChartTooltip content={<ChartTooltipContent />} />
+                                    <Area type="monotone" dataKey="revenue" stroke="var(--color-emerald-500)" fill="url(#fillRevenue)" strokeWidth={2} />
+                                </AreaChart>
+                            </ChartContainer>
                         </div>
                     </div>
                 </div>
