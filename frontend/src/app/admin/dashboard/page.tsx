@@ -15,7 +15,7 @@ interface ExpiringContract {
 interface DashboardStats {
     rooms: { totalRooms: number; occupiedRooms: number; availableRooms: number; maintenanceRooms: number };
     tenants: { totalTenants: number; activeTenants: number; pendingTenants: number };
-    billing: { monthlyIncome: number; pendingDues: number; overduePayments: number; totalBilled: number; collectionRate: number };
+    billing: { monthlyIncome: number; pendingDues: number; overduePayments: number; totalBilled: number; collectionRate: number; historicalIncome?: { year: number, month: number, total: number }[] };
     maintenance: { totalRequests: number; pendingRequests: number; inProgressRequests: number; resolvedRequests: number };
     recentActivities: { id: string; type: string; title: string; description: string; date: string }[];
     expiringContracts: ExpiringContract[];
@@ -69,19 +69,20 @@ export default function AdminDashboard() {
     // Generate dynamic chart data based on selected timeframe
     const generateChartData = (numMonths: number) => {
         if (!stats?.billing) return [];
-        const monthlyInc = Number(stats.billing.monthlyIncome || 0);
+        const historical = stats.billing.historicalIncome || [];
         const data = [];
         const now = new Date();
-        const multipliers = [0.65, 0.72, 0.8, 0.75, 0.85, 0.9, 0.82, 0.95, 0.88, 0.92, 0.86, 1.0];
         
         for (let i = numMonths - 1; i >= 0; i--) {
             const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
             const monthName = d.toLocaleString('default', { month: 'short' });
-            const multIndex = (12 + 11 - (i % 12)) % 12;
-            const mult = i === 0 ? 1.0 : (multipliers[multIndex] || 0.85);
+            
+            // Look for matching month and year in historical data
+            const found = historical.find(h => h.year === d.getFullYear() && h.month === (d.getMonth() + 1));
+            
             data.push({
                 month: monthName,
-                revenue: Math.round(monthlyInc * mult)
+                revenue: found ? found.total : 0
             });
         }
         return data;
