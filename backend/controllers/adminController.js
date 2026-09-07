@@ -8,7 +8,7 @@ const getDashboardStats = async (req, res) => {
             tenantsResult, tenantStatusResult, recentTenantsResult,
             incomeResult, duesResult,
             requestsResult, recentPaymentsResult, recentRequestsResult,
-            expiringContractsResult, totalBilledResult
+            expiringContractsResult, totalBilledResult, historicalIncomeResult
         ] = await Promise.all([
             // Rooms Overview
             db.query('SELECT COUNT(*) FROM rooms'),
@@ -56,6 +56,18 @@ const getDashboardStats = async (req, res) => {
 
             // Total billed this month (for collection rate)
             db.query("SELECT SUM(total_amount) FROM bills WHERE EXTRACT(MONTH FROM due_date) = EXTRACT(MONTH FROM CURRENT_DATE) AND EXTRACT(YEAR FROM due_date) = EXTRACT(YEAR FROM CURRENT_DATE)"),
+
+            // Historical Income (last 12 months)
+            db.query(`
+                SELECT 
+                    EXTRACT(YEAR FROM payment_date) as year,
+                    EXTRACT(MONTH FROM payment_date) as month,
+                    SUM(amount_paid) as total
+                FROM payments
+                WHERE payment_date >= CURRENT_DATE - INTERVAL '12 months'
+                GROUP BY year, month
+                ORDER BY year DESC, month DESC
+            `),
         ]);
 
         // --- Process Room Stats ---
@@ -146,11 +158,18 @@ const getDashboardStats = async (req, res) => {
         const totalBilled = parseFloat(totalBilledResult.rows[0].sum) || 0;
         const collectionRate = totalBilled > 0 ? Math.round((monthlyIncome / totalBilled) * 100) : 0;
 
+        // --- Historical Income ---
+        const historicalIncome = historicalIncomeResult.rows.map(r => ({
+            year: parseInt(r.year),
+            month: parseInt(r.month),
+            total: parseFloat(r.total) || 0
+        }));
+
         // --- Final Response Object ---
         res.status(200).json({
             rooms: { totalRooms, occupiedRooms, availableRooms, maintenanceRooms },
             tenants: { totalTenants, activeTenants, pendingTenants },
-            billing: { monthlyIncome, pendingDues, overduePayments, totalBilled, collectionRate },
+            billing: { monthlyIncome, pendingDues, overduePayments, totalBilled, collectionRate, historicalIncome },
             maintenance: { totalRequests, pendingRequests, inProgressRequests, resolvedRequests },
             recentActivities: activities,
             expiringContracts
