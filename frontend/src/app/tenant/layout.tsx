@@ -77,10 +77,10 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
                     <SidebarHeader className="p-5 flex items-center justify-between border-b border-transparent group-data-[collapsible=icon]:p-3 transition-all duration-300">
                         <Link href="/tenant/dashboard" className="flex items-center gap-3 overflow-hidden group">
                             <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0 bg-gradient-to-tr from-cyan-600 to-blue-600 shadow-lg shadow-blue-500/20 text-white group-hover:scale-105 group-hover:rotate-3 transition-transform duration-300">
-                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" /><circle cx="12" cy="10" r="3" strokeWidth="2.5" /></svg>
                             </div>
                             <span className="text-xl font-black tracking-tight whitespace-nowrap group-data-[collapsible=icon]:hidden">
-                                Rent<span className="text-blue-600 dark:text-blue-400">Flow</span>
+                                Stay<span className="text-blue-600 dark:text-blue-400">Track</span>
                             </span>
                         </Link>
                     </SidebarHeader>
