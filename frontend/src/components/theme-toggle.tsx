@@ -9,7 +9,7 @@ export function ThemeToggle() {
   const { setTheme, theme } = useTheme();
   const pathname = usePathname();
 
-  const isAuthPage = pathname === "/login" || pathname === "/signup";
+  const isAuthPage = pathname === "/" || pathname === "/signup";
 
   if (isAuthPage) return null;
 
