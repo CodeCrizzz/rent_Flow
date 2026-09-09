@@ -161,7 +161,7 @@ export default function SignupPage() {
                 <div className="mt-10 text-center">
                     <p className="text-sm font-medium text-slate-500 dark:text-zinc-400">
                         Already have an account?{' '}
-                        <Link href="/login" className="text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 font-bold ml-1 transition-colors">
+                        <Link href="/" className="text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 font-bold ml-1 transition-colors">
                             Log in here
                         </Link>
                     </p>
@@ -186,7 +186,7 @@ export default function SignupPage() {
                             <button 
                                 onClick={() => {
                                     setShowSuccessModal(false);
-                                    router.push('/login?registered=true');
+                                    router.push('/?registered=true');
                                 }}
                                 className="absolute top-5 right-5 text-slate-400 hover:text-slate-600 dark:text-zinc-500 dark:hover:text-white transition-colors bg-slate-100 dark:bg-white/5 hover:bg-slate-200 dark:hover:bg-white/10 rounded-full p-2"
                                 aria-label="Close"
@@ -216,7 +216,7 @@ export default function SignupPage() {
                             <Button 
                                 onClick={() => {
                                     setShowSuccessModal(false);
-                                    router.push('/login?registered=true');
+                                    router.push('/?registered=true');
                                 }}
                                 className="w-full h-12 bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-slate-900 rounded-2xl font-bold"
                             >
