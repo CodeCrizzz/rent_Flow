@@ -20,6 +20,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "StayTrack",
   description: "Boarding House Management System",
+  icons: {
+    icon: "/logo.png",
+  },
 };
 
 import { TooltipProvider } from "@/components/ui/tooltip";
