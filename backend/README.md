@@ -1,6 +1,6 @@
-# RentFlow Backend ⚙️
+# StayTrack Backend ⚙️
 
-This is the backend service for the RentFlow Boarding House Management System, built with **Node.js** and **Express**.
+This is the backend service for the StayTrack Boarding House Management System, built with **Node.js** and **Express**.
 
 ## 🚀 API Responsibilities
 - **Authentication**: Managing user logins and session states.
