@@ -55,10 +55,10 @@ export default function LoginPage() {
             <header className="absolute top-0 w-full px-6 md:px-12 h-24 flex items-center justify-between z-50">
                 <Link href="/" className="flex items-center gap-3 group">
                     <div className="w-10 h-10 bg-gradient-to-tr from-cyan-600 to-blue-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-cyan-500/20 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2-2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
+                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" /><circle cx="12" cy="10" r="3" strokeWidth="2.5" /></svg>
                     </div>
                     <span className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">
-                        Rent<span className="text-cyan-600 dark:text-cyan-400">Flow</span>
+                        Stay<span className="text-cyan-600 dark:text-cyan-400">Track</span>
                     </span>
                 </Link>
                 <ThemeToggle />
