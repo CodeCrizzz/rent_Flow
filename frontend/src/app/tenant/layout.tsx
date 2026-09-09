@@ -51,7 +51,7 @@ export default function TenantLayout({ children }: { children: React.ReactNode }
     const handleLogout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        router.push('/login');
+        router.push('/');
     };
 
     const navItems = [
