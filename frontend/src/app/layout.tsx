@@ -18,7 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "RentFlow",
+  title: "StayTrack",
   description: "Boarding House Management System",
 };
 
