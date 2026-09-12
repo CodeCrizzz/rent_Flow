@@ -1,7 +1,7 @@
-RentFlow - Project Review (Last Updated: 5 Months Ago)
+RentTrack - Project Review (Last Updated: 5 Months Ago)
 
 🏠 Project Overview
-RentFlow is a modern, full-stack Boarding House Management System designed to streamline property operations. It simplifies room allocation, billing, and maintenance tracking, and provides two main interfaces:
+RentTrack is a modern, full-stack Boarding House Management System designed to streamline property operations. It simplifies room allocation, billing, and maintenance tracking, and provides two main interfaces:
 - Admin Portal: For property managers to oversee residents, handle automated billing, and track maintenance requests.
 - Tenant Portal: A user-friendly dashboard for residents to pay rent, view room details, and submit repair requests.
 
@@ -18,7 +18,7 @@ Built with a strong focus on premium design, fluid animations, and modern React 
 Backend (/backend)
 A robust, standalone RESTful API to handle business logic and database interactions.
 - Runtime & Framework: Node.js with Express.js v5.
-- Database: PostgreSQL (using the pg library). It connects to a local database named rentFlow_db and utilizes a specific schema (rentFlow_schema). The raw SQL schema is stored in rentFlow_db.sql.
+- Database: PostgreSQL (using the pg library). It connects to a local database named rentTrack_db and utilizes a specific schema (rentTrack_schema). The raw SQL schema is stored in rentTrack_db.sql.
 - Authentication: Secured via JWT (jsonwebtoken) and Bcrypt (bcryptjs) for password hashing.
 - File Uploads: Managed locally using Multer (saved in the /uploads directory).
 - Automated Tasks: Uses node-cron to handle automated background tasks (specifically for generating bills via billingCron.js).

@@ -1,168 +1,57 @@
 "use client";
-import { useState, useEffect } from 'react';
+
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { ThemeToggle } from "@/components/theme-toggle";
 import { motion } from 'framer-motion';
-import api from '@/lib/api';
 
-// shadcn UI components
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Loader2 } from "lucide-react";
+export default function Home() {
+  const router = useRouter();
 
-export default function LoginPage() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [isLoading, setIsLoading] = useState(false); 
-    const [errorMsg, setErrorMsg] = useState('');
-    const [isMounted, setIsMounted] = useState(false);
-    
-    const router = useRouter();
+  useEffect(() => {
+    // Wait for the loading animation to play, then redirect
+    const timer = setTimeout(() => {
+      router.push('/login');
+    }, 2800);
 
-    useEffect(() => { setIsMounted(true); }, []);
+    return () => clearTimeout(timer);
+  }, [router]);
 
-    const handleLogin = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsLoading(true);
-        setErrorMsg('');
-        
-        try {
-            const response = await api.post('/auth/login', { email, password });
-            
-            if (response.data.token) {
-                localStorage.setItem('token', response.data.token);
-                localStorage.setItem('user', JSON.stringify(response.data.user));
-                
-                router.push(response.data.user.role === 'admin' ? '/admin/dashboard' : '/tenant/dashboard');
-            } else {
-                throw new Error("No token returned");
-            }
-        } catch (err: any) {
-            setErrorMsg(err.response?.data?.message || err.message || "Login failed. Please check credentials.");
-        } finally {
-            setIsLoading(false);
-        }
-    };
+  return (
+    <div className="dark min-h-screen w-full flex flex-col items-center justify-center relative overflow-hidden bg-black font-sans selection:bg-cyan-500/30">
+      
 
-    if (!isMounted) return <div className="min-h-screen bg-slate-50 dark:bg-zinc-950" />;
 
-    return (
-        <div className="min-h-screen w-full flex flex-col items-center justify-center relative overflow-hidden bg-slate-50 dark:bg-zinc-950 font-sans selection:bg-cyan-500/30">
-            
-            {/* Header branding (absolute top) */}
-            <header className="absolute top-0 w-full px-6 md:px-12 h-24 flex items-center justify-between z-50">
-                <Link href="/" className="flex items-center gap-3 group">
-                    <div className="w-10 h-10 bg-gradient-to-tr from-cyan-600 to-blue-500 rounded-xl flex items-center justify-center text-white shadow-lg shadow-cyan-500/20 group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500">
-                        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z" /><circle cx="12" cy="10" r="3" strokeWidth="2.5" /></svg>
-                    </div>
-                    <span className="text-2xl font-black tracking-tight text-slate-900 dark:text-white">
-                        Stay<span className="text-cyan-600 dark:text-cyan-400">Track</span>
-                    </span>
-                </Link>
-                <ThemeToggle />
-            </header>
-
-            {/* Ambient Background Glow */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-cyan-500/20 dark:bg-cyan-500/10 blur-[120px] rounded-full mix-blend-multiply dark:mix-blend-screen animate-pulse duration-[10s]" />
-                <div className="absolute bottom-[-10%] right-[-10%] w-[500px] h-[500px] bg-blue-500/20 dark:bg-blue-600/10 blur-[100px] rounded-full mix-blend-multiply dark:mix-blend-screen" />
-                <div className="absolute top-[-10%] left-[-10%] w-[400px] h-[400px] bg-purple-500/10 dark:bg-purple-600/10 blur-[100px] rounded-full mix-blend-multiply dark:mix-blend-screen" />
-                <div className="absolute inset-0 glass-noise"></div>
-            </div>
-
-            {/* Login Card (2 Columns) */}
-            <motion.div 
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="relative z-10 w-full max-w-4xl px-0 py-0 mx-4 bg-white/70 dark:bg-zinc-900/70 backdrop-blur-3xl rounded-[2.5rem] border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-[0_8px_30px_rgb(0,0,0,0.2)] overflow-hidden flex flex-col md:flex-row"
-            >
-                {/* Left Column: Logo & Welcome Text */}
-                <div className="w-full md:w-1/2 p-8 md:p-12 flex flex-col items-center justify-center bg-gradient-to-br from-cyan-500/10 to-blue-500/10 dark:from-cyan-900/20 dark:to-blue-900/20 border-b md:border-b-0 md:border-r border-white/20 dark:border-white/5">
-                    <div className="relative w-48 h-48 mb-6 flex items-center justify-center drop-shadow-2xl">
-                        {/* We use a standard img tag here, Next.js Image might require width/height but we can just use img for simplicity if it's a generic public logo */}
-                        <img src="/logo.png" alt="StayTrack Logo" className="w-full h-full object-contain drop-shadow-lg" />
-                    </div>
-                    <div className="text-center">
-                        <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight mb-2">Welcome to StayTrack</h2>
-                        <p className="text-slate-600 dark:text-zinc-400 font-medium">Your all-in-one property management solution.</p>
-                    </div>
-                </div>
-
-                {/* Right Column: Form */}
-                <div className="w-full md:w-1/2 p-8 sm:p-12">
-                    <div className="text-center mb-10">
-                        <h1 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-white tracking-tight mb-3">Sign In</h1>
-                        <p className="text-sm text-slate-500 dark:text-zinc-400 font-medium">Enter your credentials to access your portal.</p>
-                    </div>
-
-                    {errorMsg && (
-                        <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mb-6 p-4 bg-red-500/10 border border-red-500/20 rounded-2xl text-red-600 dark:text-red-400 text-sm font-bold flex items-center gap-3">
-                            <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                            <span>{errorMsg}</span>
-                        </motion.div>
-                    )}
-
-                    <form onSubmit={handleLogin} className="space-y-6">
-                        <div className="space-y-2.5">
-                            <Label htmlFor="email" className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400 ml-1">Email</Label>
-                            <Input 
-                                id="email" 
-                                type="email" 
-                                placeholder="name@example.com" 
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                required 
-                                disabled={isLoading}
-                                className="h-14 bg-white/80 dark:bg-zinc-950/80 border-slate-200 dark:border-white/10 rounded-2xl px-5 text-base font-medium focus-visible:ring-cyan-500 focus-visible:ring-offset-0 focus-visible:border-cyan-500 transition-all shadow-inner"
-                            />
-                        </div>
-                        <div className="space-y-2.5">
-                            <div className="flex items-center justify-between ml-1">
-                                <Label htmlFor="password" className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-zinc-400">Password</Label>
-                                <Link href="#" className="text-xs font-bold text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 transition-colors">
-                                    Forgot?
-                                </Link>
-                            </div>
-                            <Input 
-                                id="password" 
-                                type="password" 
-                                placeholder="••••••••"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required 
-                                disabled={isLoading}
-                                className="h-14 bg-white/80 dark:bg-zinc-950/80 border-slate-200 dark:border-white/10 rounded-2xl px-5 text-base font-medium focus-visible:ring-cyan-500 focus-visible:ring-offset-0 focus-visible:border-cyan-500 transition-all shadow-inner"
-                            />
-                        </div>
-                        <Button 
-                            type="submit" 
-                            className="w-full h-14 mt-4 bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white rounded-2xl font-bold tracking-wide text-base transition-all shadow-[0_0_20px_rgba(8,145,178,0.2)] dark:shadow-[0_0_20px_rgba(8,145,178,0.3)] hover:shadow-[0_0_30px_rgba(8,145,178,0.4)]" 
-                            disabled={isLoading}
-                        >
-                            {isLoading ? (
-                                <>
-                                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
-                                    Authenticating...
-                                </>
-                            ) : (
-                                "Sign In"
-                            )}
-                        </Button>
-                    </form>
-
-                    <div className="mt-10 text-center">
-                        <p className="text-sm font-medium text-slate-500 dark:text-zinc-400">
-                            Don&apos;t have an account?{' '}
-                            <Link href="/signup" className="text-cyan-600 dark:text-cyan-400 hover:text-cyan-700 dark:hover:text-cyan-300 font-bold ml-1 transition-colors">
-                                Apply now
-                            </Link>
-                        </p>
-                    </div>
-                </div>
-            </motion.div>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 1.05 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-10 flex flex-col items-center justify-center"
+      >
+        <div className="w-48 sm:w-64 h-48 sm:h-64 mb-2 flex items-center justify-center">
+            <img src="/rentTrack_logo_ver2.png" alt="RentTrack Logo" className="w-full h-full object-contain" />
         </div>
-    );
+        
+        <div className="flex flex-col items-center gap-3">
+            {/* Loading Bar */}
+            <div className="w-48 h-[2px] bg-white/10 rounded-full overflow-hidden">
+                <motion.div 
+                    initial={{ x: "-100%" }}
+                    animate={{ x: "100%" }}
+                    transition={{ 
+                        repeat: Infinity, 
+                        duration: 1.5, 
+                        ease: "easeInOut" 
+                    }}
+                    className="w-full h-full bg-cyan-400 rounded-full"
+                />
+            </div>
+            
+            <p className="text-xs font-bold uppercase tracking-widest text-slate-500 dark:text-zinc-400 mt-2 animate-pulse">
+                please wait...
+            </p>
+        </div>
+      </motion.div>
+    </div>
+  );
 }

@@ -318,27 +318,8 @@ const submitTenantPayment = async (req, res) => {
     }
 
     try {
-        if (req.file && req.file.buffer) {
-            const supabase = require('../config/supabase');
-            const fileExt = req.file.originalname.split('.').pop();
-            const fileName = `${Date.now()}-${tenantId}.${fileExt}`;
-            
-            const { data, error } = await supabase.storage
-                .from('uploads')
-                .upload(`payments/${fileName}`, req.file.buffer, {
-                    contentType: req.file.mimetype
-                });
-                
-            if (error) {
-                console.error('Supabase upload error:', error);
-                return res.status(500).json({ message: 'Failed to upload proof of payment' });
-            }
-            
-            const { data: publicUrlData } = supabase.storage
-                .from('uploads')
-                .getPublicUrl(`payments/${fileName}`);
-                
-            proof_url = publicUrlData.publicUrl;
+        if (req.file && req.file.filename) {
+            proof_url = `/uploads/payments/${req.file.filename}`;
         }
 
         await db.query('BEGIN');

@@ -26,11 +26,11 @@ app.use('/api/requests', requestRoutes);
 app.use('/api/cron', cronRoutes);
 
 app.get('/', (req, res) => {
-    res.send('Welcome to the RentFlow API');
+    res.send('Welcome to the RentTrack API');
 });
 
 app.get('/api/health', (req, res) => {
-    res.status(200).json({ status: 'success', message: 'RentFlow API is running!' });
+    res.status(200).json({ status: 'success', message: 'RentTrack API is running!' });
 });
 
 if (process.env.NODE_ENV !== 'production') {

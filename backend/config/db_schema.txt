@@ -1,11 +1,11 @@
--- 0. Enable required extensions (Supabase defaults to the 'extensions' schema)
-CREATE EXTENSION IF NOT EXISTS pgcrypto WITH SCHEMA extensions;
+-- 0. Enable required extensions (Supabase defaults to the 'extensions' schema, but locally we use default public)
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 -- 1. Create the new schema and switch to it
-CREATE SCHEMA IF NOT EXISTS "rentFlow_schema";
+CREATE SCHEMA IF NOT EXISTS "rentTrack_schema";
 
 -- Include 'extensions' in the search path so pgcrypto functions work smoothly
-SET search_path TO "rentFlow_schema", public, extensions;
+SET search_path TO "rentTrack_schema", public;
 
 -- 2. Drop existing tables if they exist (Order matters due to foreign keys)
 DROP TABLE IF EXISTS messages CASCADE;
@@ -108,8 +108,8 @@ CREATE TABLE messages (
 INSERT INTO users (name, email, password, role, status) 
 VALUES (
     'Admin', 
-    'admin@rentflow.com', 
-    extensions.crypt('admin123', extensions.gen_salt('bf')), 
+    'admin@renttrack.com', 
+    public.crypt('admin123', public.gen_salt('bf')), 
     'admin',
     'Active'
 );

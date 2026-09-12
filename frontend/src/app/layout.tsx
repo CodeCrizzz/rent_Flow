@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
-import { ThemeToggle } from "@/components/theme-toggle";
+
 
 // --- Sans Font ---
 const geistSans = Geist({
@@ -18,10 +18,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "StayTrack",
+  title: "RentTrack",
   description: "Boarding House Management System",
   icons: {
-    icon: "/logo.png",
+    icon: "/rentTrack_logo_ver2.png",
   },
 };
 

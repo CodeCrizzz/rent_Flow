@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import api from '@/lib/api';
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tooltip } from "recharts";
 import { motion, Variants } from "framer-motion";
@@ -19,6 +20,8 @@ interface DashboardStats {
     maintenance: { totalRequests: number; pendingRequests: number; inProgressRequests: number; resolvedRequests: number };
     recentActivities: { id: string; type: string; title: string; description: string; date: string }[];
     expiringContracts: ExpiringContract[];
+    overdueAccounts: { tenant_id: number; tenant_name: string; room_number: string | null; total_overdue: number }[];
+    upcomingRent: { id: number; tenant_name: string; room_number: string | null; balance: number; due_date: string }[];
 }
 
 // Framer Motion Variants
@@ -121,9 +124,57 @@ export default function AdminDashboard() {
                 </motion.div>
             )}
 
+            {/* QUICK ACTIONS GRID */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6">
+                
+                {/* Quick Action: Add Tenant */}
+                <motion.div variants={itemVariants} className="relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent h-[120px]">
+                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 to-cyan-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+                    <Link href="/admin/tenants" className="h-full w-full bg-white dark:bg-zinc-900 backdrop-blur-3xl rounded-[23px] p-4 flex flex-col items-center justify-center relative hover:bg-cyan-50/50 dark:hover:bg-cyan-900/10 transition-all">
+                        <span className="w-12 h-12 rounded-2xl bg-cyan-50 dark:bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(6,182,212,0.2)]">
+                            <svg className="w-6 h-6 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                        </span>
+                        <span className="text-xs font-black text-slate-700 dark:text-zinc-300 tracking-wide">Add Tenant</span>
+                    </Link>
+                </motion.div>
+
+                {/* Quick Action: Record Payment */}
+                <motion.div variants={itemVariants} className="relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent h-[120px]">
+                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/20 to-emerald-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+                    <Link href="/admin/billing" className="h-full w-full bg-white dark:bg-zinc-900 backdrop-blur-3xl rounded-[23px] p-4 flex flex-col items-center justify-center relative hover:bg-emerald-50/50 dark:hover:bg-emerald-900/10 transition-all">
+                        <span className="w-12 h-12 rounded-2xl bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+                            <svg className="w-6 h-6 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m-3-9h4.5a2.25 2.25 0 0 1 0 4.5H9m0 0h4.5a2.25 2.25 0 0 1 0 4.5H9" /></svg>
+                        </span>
+                        <span className="text-xs font-black text-slate-700 dark:text-zinc-300 tracking-wide">Record Payment</span>
+                    </Link>
+                </motion.div>
+
+                {/* Quick Action: Log Request */}
+                <motion.div variants={itemVariants} className="relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent h-[120px]">
+                    <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-orange-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+                    <Link href="/admin/requests" className="h-full w-full bg-white dark:bg-zinc-900 backdrop-blur-3xl rounded-[23px] p-4 flex flex-col items-center justify-center relative hover:bg-orange-50/50 dark:hover:bg-orange-900/10 transition-all">
+                        <span className="w-12 h-12 rounded-2xl bg-orange-50 dark:bg-orange-500/10 text-orange-600 dark:text-orange-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(249,115,22,0.2)]">
+                            <svg className="w-6 h-6 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.83M11.42 15.17l-.496-.496c-.45-.45-1.123-.45-1.573 0l-.828.828c-.45.45-.45 1.124 0 1.574l.496.496m4.823-4.823l-3.353-3.353c-.45-.45-1.123-.45-1.573 0l-.828.828c-.45.45-.45 1.123 0 1.573l3.353 3.353m-4.823-4.823l-2.072-2.072c-.45-.45-.45-1.123 0-1.573l2.828-2.829c.45-.45 1.124-.45 1.574 0l2.072 2.072" /></svg>
+                        </span>
+                        <span className="text-xs font-black text-slate-700 dark:text-zinc-300 tracking-wide">Log Request</span>
+                    </Link>
+                </motion.div>
+
+                {/* Quick Action: Announce */}
+                <motion.div variants={itemVariants} className="relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent h-[120px]">
+                    <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-purple-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+                    <Link href="/admin/chat" className="h-full w-full bg-white dark:bg-zinc-900 backdrop-blur-3xl rounded-[23px] p-4 flex flex-col items-center justify-center relative hover:bg-purple-50/50 dark:hover:bg-purple-900/10 transition-all">
+                        <span className="w-12 h-12 rounded-2xl bg-purple-50 dark:bg-purple-500/10 text-purple-600 dark:text-purple-400 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+                            <svg className="w-6 h-6 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 1 1 0-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 0 1-1.44-4.282m3.102.069a18.03 18.03 0 0 1-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 0 1 8.835 2.535M10.34 6.66a23.847 23.847 0 0 0 8.835-2.535m0 0A23.74 23.74 0 0 0 18.795 3m.38 1.125a23.91 23.91 0 0 1 1.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 0 0 1.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 0 1 0 3.46" /></svg>
+                        </span>
+                        <span className="text-xs font-black text-slate-700 dark:text-zinc-300 tracking-wide">Announce</span>
+                    </Link>
+                </motion.div>
+            </div>
+
             {/* BENTO GRID */}
             <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-12 gap-6 auto-rows-[minmax(180px,auto)]">
-                
+
                 {/* 1. Primary Stat: Revenue + Collection Rate (Spans 4 columns) */}
                 <motion.div variants={itemVariants} className="md:col-span-3 lg:col-span-4 relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent">
                     <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/30 to-emerald-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
@@ -270,8 +321,9 @@ export default function AdminDashboard() {
                                         className="text-xs font-bold fill-slate-400 dark:fill-zinc-500" 
                                     />
                                     <YAxis 
-                                        width={65}
-                                        tickFormatter={(val) => `₱${val >= 1000 ? `${(val / 1000).toFixed(val % 1000 === 0 ? 0 : 1)}k` : val}`} 
+                                        width={80}
+                                        domain={[0, (dataMax: number) => Math.max(dataMax, 50000)]}
+                                        tickFormatter={(val) => new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(val)} 
                                         tickLine={false} 
                                         axisLine={false} 
                                         tickMargin={8} 
@@ -280,7 +332,7 @@ export default function AdminDashboard() {
                                     <Tooltip 
                                         contentStyle={{ backgroundColor: 'rgba(10, 10, 10, 0.9)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.1)', backdropFilter: 'blur(10px)' }}
                                         itemStyle={{ color: '#10b981', fontWeight: 'bold' }}
-                                        formatter={(val: any) => [`₱${Number(val).toLocaleString()}`, 'Revenue']}
+                                        formatter={(val: any) => [new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(Number(val)), 'Revenue']}
                                         labelStyle={{ color: '#71717a', fontWeight: 'bold', textTransform: 'uppercase', fontSize: '10px', letterSpacing: '0.1em' }}
                                     />
                                     <Area type="monotone" dataKey="revenue" stroke="#10b981" strokeWidth={3} fillOpacity={1} fill="url(#colorRevenue)" />
@@ -299,7 +351,7 @@ export default function AdminDashboard() {
                                 <span className="w-8 h-8 rounded-lg bg-purple-50 dark:bg-purple-500/10 border border-purple-200 dark:border-purple-500/20 text-purple-600 dark:text-purple-400 flex items-center justify-center shadow-[0_0_15px_rgba(168,85,247,0.2)]">
                                     <svg className="w-4 h-4 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" /></svg>
                                 </span>
-                                Live Activity
+                                Recent Activity
                             </h3>
                             <span className="w-2 h-2 rounded-full bg-purple-500 animate-pulse shadow-[0_0_10px_rgba(168,85,247,0.8)]"></span>
                         </div>
@@ -432,6 +484,84 @@ export default function AdminDashboard() {
                                             </span>
                                         </div>
                                     );
+                                })}
+                            </div>
+                        )}
+                    </div>
+                </motion.div>
+
+
+                {/* 9. Overdue Accounts (Spans 4 columns) */}
+                <motion.div variants={itemVariants} className="md:col-span-6 lg:col-span-4 relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent h-full">
+                    <div className="absolute inset-0 bg-gradient-to-br from-rose-500/20 to-rose-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+                    <div className="h-full w-full bg-white dark:bg-zinc-900 backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col relative">
+                        <div className="flex items-center justify-between mb-6">
+                            <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-3">
+                                <span className="w-8 h-8 rounded-lg bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 text-rose-600 dark:text-rose-400 flex items-center justify-center shadow-[0_0_15px_rgba(244,63,94,0.2)]">
+                                    <svg className="w-4 h-4 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                                </span>
+                                Overdue Accounts
+                            </h3>
+                        </div>
+                        
+                        {stats.overdueAccounts && stats.overdueAccounts.length === 0 ? (
+                            <div className="flex-1 flex flex-col items-center justify-center text-center opacity-50 relative z-10">
+                                <p className="font-bold text-slate-500 dark:text-zinc-500 text-sm">No overdue accounts.</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-3 mt-auto flex-1 overflow-y-auto custom-scrollbar">
+                                {stats.overdueAccounts?.map((acc) => (
+                                    <div key={acc.tenant_id} className="flex items-center justify-between p-4 rounded-2xl bg-rose-50/50 dark:bg-rose-500/5 border border-rose-100 dark:border-rose-500/10">
+                                        <div className="min-w-0 flex-1">
+                                            <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{acc.tenant_name}</p>
+                                            <p className="text-[10px] font-black text-slate-400 dark:text-zinc-500 uppercase tracking-widest mt-0.5">
+                                                Room {acc.room_number || 'N/A'}
+                                            </p>
+                                        </div>
+                                        <span className="shrink-0 ml-3 text-sm font-black text-rose-600 dark:text-rose-400">
+                                            ₱{acc.total_overdue.toLocaleString()}
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </motion.div>
+
+                {/* 10. Upcoming Rent Due (Spans 4 columns) */}
+                <motion.div variants={itemVariants} className="md:col-span-6 lg:col-span-4 relative group rounded-3xl p-[1px] overflow-hidden bg-gradient-to-b from-slate-200 to-slate-100 dark:from-white/10 dark:to-transparent h-full">
+                    <div className="absolute inset-0 bg-gradient-to-br from-amber-500/20 to-amber-600/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl"></div>
+                    <div className="h-full w-full bg-white dark:bg-zinc-900 backdrop-blur-3xl rounded-[23px] p-6 sm:p-8 flex flex-col relative">
+                        <div className="flex items-center justify-between mb-6">
+                            <h3 className="text-lg font-black text-slate-900 dark:text-white flex items-center gap-3">
+                                <span className="w-8 h-8 rounded-lg bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-amber-600 dark:text-amber-400 flex items-center justify-center shadow-[0_0_15px_rgba(245,158,11,0.2)]">
+                                    <svg className="w-4 h-4 stroke-[2.5]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" /></svg>
+                                </span>
+                                Upcoming Rent
+                            </h3>
+                        </div>
+                        
+                        {stats.upcomingRent && stats.upcomingRent.length === 0 ? (
+                            <div className="flex-1 flex flex-col items-center justify-center text-center opacity-50 relative z-10">
+                                <p className="font-bold text-slate-500 dark:text-zinc-500 text-sm">No upcoming rent in 7 days.</p>
+                            </div>
+                        ) : (
+                            <div className="space-y-3 mt-auto flex-1 overflow-y-auto custom-scrollbar">
+                                {stats.upcomingRent?.map((bill) => {
+                                    const daysLeft = Math.max(0, Math.ceil((new Date(bill.due_date).getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)));
+                                    return (
+                                        <div key={bill.id} className="flex items-center justify-between p-4 rounded-2xl bg-amber-50/50 dark:bg-amber-500/5 border border-amber-100 dark:border-amber-500/10">
+                                            <div className="min-w-0 flex-1">
+                                                <p className="text-sm font-bold text-slate-900 dark:text-white truncate">{bill.tenant_name}</p>
+                                                <p className="text-[10px] font-black text-amber-600 dark:text-amber-500 uppercase tracking-widest mt-0.5">
+                                                    Due in {daysLeft} day{daysLeft !== 1 ? 's' : ''}
+                                                </p>
+                                            </div>
+                                            <span className="shrink-0 ml-3 text-sm font-black text-slate-900 dark:text-white">
+                                                ₱{bill.balance.toLocaleString()}
+                                            </span>
+                                        </div>
+                                    )
                                 })}
                             </div>
                         )}

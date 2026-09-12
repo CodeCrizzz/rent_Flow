@@ -9,7 +9,23 @@ const {
 } = require('../controllers/tenantController');
 
 const multer = require('multer');
-const storage = multer.memoryStorage();
+const fs = require('fs');
+const path = require('path');
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        const dir = path.join(__dirname, '../uploads/payments');
+        if (!fs.existsSync(dir)) {
+            fs.mkdirSync(dir, { recursive: true });
+        }
+        cb(null, dir);
+    },
+    filename: function (req, file, cb) {
+        const fileExt = file.originalname.split('.').pop();
+        const tenantId = req.user ? req.user.id : 'unknown';
+        cb(null, `${Date.now()}-${tenantId}.${fileExt}`);
+    }
+});
 const upload = multer({ storage: storage });
 
 router.use(protect);

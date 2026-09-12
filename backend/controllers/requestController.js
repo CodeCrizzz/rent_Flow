@@ -9,27 +9,8 @@ const createRequest = async (req, res) => {
         const { title, description, category, priority } = req.body;
         let attachment_url = null;
 
-        if (req.file && req.file.buffer) {
-            const supabase = require('../config/supabase');
-            const fileExt = req.file.originalname.split('.').pop();
-            const fileName = `${Date.now()}-${tenant_id}.${fileExt}`;
-            
-            const { data, error } = await supabase.storage
-                .from('uploads')
-                .upload(`requests/${fileName}`, req.file.buffer, {
-                    contentType: req.file.mimetype
-                });
-                
-            if (error) {
-                console.error('Supabase upload error:', error);
-                return res.status(500).json({ message: 'Failed to upload attachment' });
-            }
-            
-            const { data: publicUrlData } = supabase.storage
-                .from('uploads')
-                .getPublicUrl(`requests/${fileName}`);
-                
-            attachment_url = publicUrlData.publicUrl;
+        if (req.file && req.file.filename) {
+            attachment_url = `/uploads/requests/${req.file.filename}`;
         }
 
         const newRequest = await db.query(

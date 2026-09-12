@@ -8,7 +8,8 @@ const getDashboardStats = async (req, res) => {
             tenantsResult, tenantStatusResult, recentTenantsResult,
             incomeResult, duesResult,
             requestsResult, recentPaymentsResult, recentRequestsResult,
-            expiringContractsResult, totalBilledResult, historicalIncomeResult
+            expiringContractsResult, totalBilledResult, historicalIncomeResult,
+            overdueAccountsResult, upcomingRentResult
         ] = await Promise.all([
             // Rooms Overview
             db.query('SELECT COUNT(*) FROM rooms'),
@@ -67,6 +68,29 @@ const getDashboardStats = async (req, res) => {
                 WHERE payment_date >= CURRENT_DATE - INTERVAL '12 months'
                 GROUP BY year, month
                 ORDER BY year DESC, month DESC
+            `),
+
+            // Overdue Accounts (Top 5 tenants with highest unpaid balances)
+            db.query(`
+                SELECT u.id as tenant_id, u.name as tenant_name, r.room_number, SUM(b.balance) as total_overdue
+                FROM bills b
+                JOIN users u ON b.tenant_id = u.id
+                LEFT JOIN rooms r ON u.room_id = r.id
+                WHERE b.status IN ('Unpaid', 'Partial', 'Overdue') AND b.due_date < CURRENT_DATE
+                GROUP BY u.id, u.name, r.room_number
+                ORDER BY total_overdue DESC
+                LIMIT 5
+            `),
+
+            // Upcoming Rent Due (bills due in next 7 days)
+            db.query(`
+                SELECT b.id, u.name as tenant_name, r.room_number, b.balance, b.due_date 
+                FROM bills b
+                JOIN users u ON b.tenant_id = u.id
+                LEFT JOIN rooms r ON u.room_id = r.id
+                WHERE b.status IN ('Unpaid', 'Partial') AND b.due_date >= CURRENT_DATE AND b.due_date <= CURRENT_DATE + INTERVAL '7 days'
+                ORDER BY b.due_date ASC
+                LIMIT 5
             `),
         ]);
 
@@ -165,6 +189,23 @@ const getDashboardStats = async (req, res) => {
             total: parseFloat(r.total) || 0
         }));
 
+        // --- Overdue Accounts ---
+        const overdueAccounts = overdueAccountsResult.rows.map(r => ({
+            tenant_id: r.tenant_id,
+            tenant_name: r.tenant_name,
+            room_number: r.room_number,
+            total_overdue: parseFloat(r.total_overdue) || 0
+        }));
+
+        // --- Upcoming Rent Due ---
+        const upcomingRent = upcomingRentResult.rows.map(r => ({
+            id: r.id,
+            tenant_name: r.tenant_name,
+            room_number: r.room_number,
+            balance: parseFloat(r.balance) || 0,
+            due_date: r.due_date
+        }));
+
         // --- Final Response Object ---
         res.status(200).json({
             rooms: { totalRooms, occupiedRooms, availableRooms, maintenanceRooms },
@@ -172,7 +213,9 @@ const getDashboardStats = async (req, res) => {
             billing: { monthlyIncome, pendingDues, overduePayments, totalBilled, collectionRate, historicalIncome },
             maintenance: { totalRequests, pendingRequests, inProgressRequests, resolvedRequests },
             recentActivities: activities,
-            expiringContracts
+            expiringContracts,
+            overdueAccounts,
+            upcomingRent
         });
 
     } catch (error) {
@@ -294,7 +337,7 @@ const deleteRoom = async (req, res) => {
     const { id } = req.params;
     
     try {
-        // Safety Check: Don't delete if an active tenant is still assigned to this room
+        // Safety Check: Don't  delete if an active tenant is still assigned to this room
         const tenantCheck = await db.query("SELECT * FROM users WHERE room_id = $1 AND role = 'tenant' AND status != 'Moved Out'", [id]);
         if (tenantCheck.rows.length > 0) {
             return res.status(400).json({ message: 'Cannot delete this room because an active tenant is currently assigned to it.' });

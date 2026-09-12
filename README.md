@@ -1,6 +1,6 @@
-# RentFlow
+# RentTrack
 
-- RentFlow is a modern, full-stack **Boarding House Management System** designed to streamline property operations for both administrators and tenants. Built with a focus on speed, aesthetics, and user experience, RentFlow simplifies room allocation, billing, and maintenance tracking.
+- RentTrack is a modern, full-stack **Boarding House Management System** designed to streamline property operations for both administrators and tenants. Built with a focus on speed, aesthetics, and user experience, RentTrack simplifies room allocation, billing, and maintenance tracking.
 
 ## Key Features
 
@@ -50,7 +50,7 @@ A real-time repair request system. Tenants can report issues directly from their
 
    ```bash
    git clone <repository-url>
-   cd rentflow
+   cd renttrack
    ```
 
 2. **Setup Backend**
