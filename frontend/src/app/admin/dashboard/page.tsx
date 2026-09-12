@@ -107,7 +107,7 @@ export default function AdminDashboard() {
             variants={containerVariants} 
             initial="hidden" 
             animate="show" 
-            className="max-w-[1600px] mx-auto pb-24 space-y-6"
+            className="max-w-400 mx-auto pb-24 space-y-6"
         >
             {/* Header Section */}
             <motion.div variants={itemVariants} className="flex flex-col md:flex-row md:items-end justify-between gap-4 bg-white dark:bg-[#0a0a0a] p-6 rounded-3xl border border-slate-200 dark:border-zinc-800 relative overflow-hidden">
@@ -264,7 +264,7 @@ export default function AdminDashboard() {
                                 <option value={12}>Last 12 Months</option>
                             </select>
                         </div>
-                        <div className="h-[250px] w-full">
+                        <div className="h-62.5 w-full">
                             <ResponsiveContainer width="100%" height="100%">
                                 <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                                     <defs>
@@ -290,7 +290,7 @@ export default function AdminDashboard() {
                                     <Tooltip 
                                         contentStyle={{ backgroundColor: 'rgba(10, 10, 10, 0.9)', borderColor: 'rgba(255,255,255,0.1)', borderRadius: '12px', color: '#fff', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
                                         itemStyle={{ color: '#fff' }}
-                                        formatter={(value: number) => [`₱${value.toLocaleString()}`, 'Collected']}
+                                        formatter={(value: any) => [`₱${Number(value).toLocaleString()}`, 'Collected']}
                                         cursor={{ stroke: 'rgba(255,255,255,0.1)', strokeWidth: 1, strokeDasharray: '4 4' }}
                                     />
                                     <Area type="monotone" dataKey="revenue" stroke="#0ea5e9" strokeWidth={3} fillOpacity={1} fill="url(#colorRevenue)" />
@@ -362,7 +362,7 @@ export default function AdminDashboard() {
                 {/* Lists Column 2 */}
                 <div className="space-y-6">
                     {/* Recent Maintenance Requests */}
-                    <motion.div variants={itemVariants} className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-3xl p-5 flex flex-col h-[340px] overflow-hidden relative">
+                    <motion.div variants={itemVariants} className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-3xl p-5 flex flex-col h-85 overflow-hidden relative">
                         <div className="flex items-center justify-between mb-4">
                             <h3 className="font-bold text-slate-700 dark:text-zinc-300 flex items-center gap-2"><Wrench className="w-4 h-4 text-orange-500" /> Recent Maintenance</h3>
                             <Link href="/admin/requests" className="text-xs text-orange-600 dark:text-orange-400 hover:underline font-bold">View all</Link>
@@ -388,7 +388,7 @@ export default function AdminDashboard() {
                     </motion.div>
 
                     {/* Recent Messages */}
-                    <motion.div variants={itemVariants} className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-3xl p-5 flex flex-col h-[340px] overflow-hidden relative">
+                    <motion.div variants={itemVariants} className="bg-white dark:bg-[#0a0a0a] border border-slate-200 dark:border-zinc-800 rounded-3xl p-5 flex flex-col h-85 overflow-hidden relative">
                         <div className="flex items-center justify-between mb-4">
                             <h3 className="font-bold text-slate-700 dark:text-zinc-300 flex items-center gap-2"><MessageSquare className="w-4 h-4 text-indigo-500" /> Recent Messages</h3>
                             <Link href="/admin/chat" className="text-xs text-indigo-600 dark:text-indigo-400 hover:underline font-bold">Reply all</Link>
