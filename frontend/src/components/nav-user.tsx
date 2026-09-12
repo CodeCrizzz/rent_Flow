@@ -66,22 +66,24 @@ export function NavUser({
             align="end"
             sideOffset={4}
           >
-            <DropdownMenuLabel className="p-0 font-normal">
-              <div className="flex items-center gap-3 px-3 py-2.5 text-left text-sm">
-                <Avatar className="h-9 w-9 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
-                  <AvatarFallback className="rounded-lg bg-indigo-100 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 font-bold border border-indigo-200 dark:border-indigo-500/30">
-                    {initials}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-bold">{user.name}</span>
-                  <span className="truncate text-[10px] uppercase font-black tracking-widest text-emerald-600 dark:text-emerald-400">
-                    {user.email}
-                  </span>
+            <DropdownMenuGroup>
+              <DropdownMenuLabel className="p-0 font-normal">
+                <div className="flex items-center gap-3 px-3 py-2.5 text-left text-sm">
+                  <Avatar className="h-9 w-9 rounded-lg">
+                    <AvatarImage src={user.avatar} alt={user.name} />
+                    <AvatarFallback className="rounded-lg bg-indigo-100 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 font-bold border border-indigo-200 dark:border-indigo-500/30">
+                      {initials}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="grid flex-1 text-left text-sm leading-tight">
+                    <span className="truncate font-bold">{user.name}</span>
+                    <span className="truncate text-[10px] uppercase font-black tracking-widest text-emerald-600 dark:text-emerald-400">
+                      {user.email}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </DropdownMenuLabel>
+              </DropdownMenuLabel>
+            </DropdownMenuGroup>
             <DropdownMenuSeparator className="bg-slate-200 dark:bg-white/10" />
             <DropdownMenuGroup>
               <DropdownMenuItem className="cursor-pointer hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg">
