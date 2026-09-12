@@ -43,7 +43,7 @@ export function NavMain({
                 tooltip={item.title}
                 className={`transition-all duration-300 rounded-xl ${
                   item.isActive 
-                    ? 'bg-cyan-50 dark:bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 font-bold shadow-sm ring-1 ring-cyan-500/20' 
+                    ? 'bg-cyan-50 dark:bg-cyan-500/10 text-cyan-700 dark:text-cyan-400 font-bold ring-1 ring-cyan-500/20' 
                     : 'text-slate-600 dark:text-zinc-400 hover:bg-slate-100/80 dark:hover:bg-white/5 hover:text-slate-900 dark:hover:text-white font-medium'
                 }`}
               >
