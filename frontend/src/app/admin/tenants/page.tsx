@@ -251,7 +251,7 @@ export default function AdminTenants() {
                     <h1 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tighter flex items-center gap-4">
                         Residents
                         {tenants.filter(t => t.status === 'Pending').length > 0 && (
-                            <span className="inline-flex items-center px-4 py-1.5 rounded-2xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-amber-600 dark:text-amber-400 text-xs font-black uppercase tracking-widest shadow-[0_0_15px_rgba(245,158,11,0.3)] animate-pulse">
+                            <span className="inline-flex items-center px-4 py-1.5 rounded-2xl bg-amber-50 dark:bg-amber-500/10 border border-amber-200 dark:border-amber-500/20 text-amber-600 dark:text-amber-400 text-xs font-black uppercase tracking-widest animate-pulse">
                                 {tenants.filter(t => t.status === 'Pending').length} Pending
                             </span>
                         )}

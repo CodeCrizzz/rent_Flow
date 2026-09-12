@@ -265,7 +265,7 @@ export default function AdminBilling() {
                     <h1 className="text-4xl sm:text-5xl font-black text-slate-900 dark:text-white tracking-tighter flex items-center gap-4">
                         Billing
                         {bills.filter(b => b.status === 'Unpaid' || b.status === 'Overdue').length > 0 && (
-                            <span className="inline-flex items-center px-4 py-1.5 rounded-2xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-black uppercase tracking-widest shadow-[0_0_15px_rgba(244,63,94,0.3)] animate-pulse">
+                            <span className="inline-flex items-center px-4 py-1.5 rounded-2xl bg-rose-50 dark:bg-rose-500/10 border border-rose-200 dark:border-rose-500/20 text-rose-600 dark:text-rose-400 text-xs font-black uppercase tracking-widest animate-pulse">
                                 {bills.filter(b => b.status === 'Unpaid' || b.status === 'Overdue').length} Unpaid
                             </span>
                         )}
@@ -371,7 +371,7 @@ export default function AdminBilling() {
                                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                                         </button>
                                         {b.status !== 'Paid' && (
-                                            <button onClick={() => openPayModal(b)} className="flex-1 h-12 rounded-2xl bg-emerald-500 border border-emerald-400 shadow-[0_0_15px_rgba(16,185,129,0.3)] flex items-center justify-center text-white hover:bg-emerald-400 transition-colors hover:scale-[1.02] active:scale-95 text-xs font-bold uppercase tracking-widest gap-2" title="Record Payment">
+                                            <button onClick={() => openPayModal(b)} className="flex-1 h-12 rounded-2xl bg-emerald-500 border border-emerald-400 flex items-center justify-center text-white hover:bg-emerald-400 transition-colors hover:scale-[1.02] active:scale-95 text-xs font-bold uppercase tracking-widest gap-2" title="Record Payment">
                                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                                             </button>
                                         )}

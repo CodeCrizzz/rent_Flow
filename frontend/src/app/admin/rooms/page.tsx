@@ -406,8 +406,8 @@ export default function AdminRooms() {
                                             <p className="text-[10px] font-black text-slate-500 dark:text-zinc-500 uppercase tracking-widest mb-1">Capacity</p>
                                             <p className="text-2xl xl:text-3xl font-black text-slate-900 dark:text-white tracking-tighter">{selectedRoom.capacity} <span className="text-sm text-slate-500 dark:text-zinc-500">Max</span></p>
                                         </div>
-                                        <div className="bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 p-6 rounded-3xl shadow-[0_0_15px_rgba(99,102,241,0.1)] relative overflow-hidden group">
-                                            <div className="w-10 h-10 rounded-xl bg-indigo-500 text-white flex items-center justify-center mb-4 text-xl shadow-[0_0_15px_rgba(99,102,241,0.5)]"><Sparkles className="w-5 h-5" /></div>
+                                        <div className="bg-indigo-50 dark:bg-indigo-500/10 border border-indigo-200 dark:border-indigo-500/20 p-6 rounded-3xl relative overflow-hidden group">
+                                            <div className="w-10 h-10 rounded-xl bg-indigo-500 text-white flex items-center justify-center mb-4 text-xl"><Sparkles className="w-5 h-5" /></div>
                                             <p className="text-[10px] font-black text-indigo-600 dark:text-indigo-400 uppercase tracking-widest mb-1">Available Slots</p>
                                             <p className="text-2xl xl:text-3xl font-black text-indigo-600 dark:text-indigo-400 tracking-tighter">{selectedRoom.available_slots}</p>
                                         </div>

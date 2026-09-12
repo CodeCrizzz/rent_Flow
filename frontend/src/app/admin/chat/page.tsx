@@ -163,7 +163,7 @@ export default function AdminChat() {
                     <div className="flex-1 overflow-y-auto custom-scrollbar p-3">
                         {isLoading ? (
                             <div className="p-10 text-center flex flex-col items-center gap-4">
-                                <div className="w-8 h-8 border-4 border-slate-200 dark:border-zinc-800 border-t-emerald-500 dark:border-t-emerald-500 rounded-full animate-spin shadow-[0_0_15px_rgba(16,185,129,0.3)]"></div>
+                                <div className="w-8 h-8 border-4 border-slate-200 dark:border-zinc-800 border-t-emerald-500 dark:border-t-emerald-500 rounded-full animate-spin"></div>
                                 <span className="font-bold text-slate-500 dark:text-zinc-500 text-xs uppercase tracking-widest animate-pulse">Loading Chats...</span>
                             </div>
                         ) : filteredConversations.length === 0 ? (
@@ -227,7 +227,7 @@ export default function AdminChat() {
                                     <button onClick={() => setSelectedTenant(null)} className="md:hidden w-10 h-10 rounded-xl bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-700 flex items-center justify-center text-slate-500 hover:text-slate-900 dark:text-zinc-400 dark:hover:text-white shadow-sm transition-colors">
                                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M15 19l-7-7 7-7"></path></svg>
                                     </button>
-                                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 text-white flex items-center justify-center font-black text-xl shadow-[0_0_15px_rgba(16,185,129,0.3)]">
+                                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 text-white flex items-center justify-center font-black text-xl">
                                         {selectedTenant.name.charAt(0)}
                                     </div>
                                     <div>
@@ -315,7 +315,7 @@ export default function AdminChat() {
                                     <button 
                                         type="submit" 
                                         disabled={!newMessage.trim()}
-                                        className="px-6 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-black text-xs uppercase tracking-widest rounded-xl hover:from-emerald-400 hover:to-teal-400 transition-all shadow-[0_0_15px_rgba(16,185,129,0.3)] active:scale-95 disabled:opacity-50 disabled:active:scale-100 disabled:shadow-none flex items-center gap-2"
+                                        className="px-6 py-3.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-black text-xs uppercase tracking-widest rounded-xl hover:from-emerald-400 hover:to-teal-400 transition-all active:scale-95 disabled:opacity-50 disabled:active:scale-100 disabled:shadow-none flex items-center gap-2"
                                     >
                                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
                                         <span className="hidden sm:inline">Send</span>
@@ -327,7 +327,7 @@ export default function AdminChat() {
                         <div className="flex-1 flex flex-col items-center justify-center text-slate-500 dark:text-zinc-500 gap-6 opacity-80 relative z-10 py-10">
                             <motion.div initial={{scale:0.8, opacity:0}} animate={{scale:1, opacity:1}} transition={{type:"spring", bounce:0.5}} className="w-32 h-32 bg-white dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 rounded-[2rem] flex items-center justify-center text-5xl shadow-2xl relative">
                                 📬
-                                <div className="absolute -top-3 -right-3 w-8 h-8 bg-emerald-500 rounded-full shadow-[0_0_15px_rgba(16,185,129,0.5)] animate-pulse border-4 border-white dark:border-[#0a0a0a]"></div>
+                                <div className="absolute -top-3 -right-3 w-8 h-8 bg-emerald-500 rounded-full animate-pulse border-4 border-white dark:border-[#0a0a0a]"></div>
                             </motion.div>
                             <div className="text-center">
                                 <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight mb-2">Select a conversation</h2>
