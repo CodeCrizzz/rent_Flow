@@ -20,87 +20,81 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar"
-import { ChevronsUpDownIcon, SparklesIcon, BadgeCheckIcon, CreditCardIcon, BellIcon, LogOutIcon } from "lucide-react"
+import { ChevronsUpDownIcon, BadgeCheckIcon, LogOutIcon } from "lucide-react"
 
 export function NavUser({
   user,
+  onLogout,
 }: {
   user: {
     name: string
     email: string
     avatar: string
+    role: string
   }
+  onLogout: () => void
 }) {
   const { isMobile } = useSidebar()
+  const initials = user.name.charAt(0).toUpperCase()
+
   return (
     <SidebarMenu>
       <SidebarMenuItem>
         <DropdownMenu>
           <DropdownMenuTrigger
             render={
-              <SidebarMenuButton size="lg" className="aria-expanded:bg-muted" />
+              <SidebarMenuButton size="lg" className="aria-expanded:bg-muted aria-expanded:text-muted-foreground transition-colors" />
             }
           >
-            <Avatar>
+            <Avatar className="h-8 w-8 rounded-lg">
               <AvatarImage src={user.avatar} alt={user.name} />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarFallback className="rounded-lg bg-indigo-100 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 font-bold border border-indigo-200 dark:border-indigo-500/30">
+                {initials}
+              </AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
-              <span className="truncate font-medium">{user.name}</span>
-              <span className="truncate text-xs">{user.email}</span>
+              <span className="truncate font-bold">{user.name}</span>
+              <span className="truncate text-[10px] uppercase font-black tracking-widest text-emerald-600 dark:text-emerald-400">
+                {user.role}
+              </span>
             </div>
-            <ChevronsUpDownIcon className="ml-auto size-4" />
+            <ChevronsUpDownIcon className="ml-auto size-4 text-slate-500" />
           </DropdownMenuTrigger>
           <DropdownMenuContent
-            className="w-fit"
+            className="w-56 rounded-xl border border-slate-200 dark:border-white/10 shadow-lg dark:bg-zinc-950"
             side={isMobile ? "bottom" : "right"}
             align="end"
             sideOffset={4}
           >
-            <DropdownMenuGroup>
-              <DropdownMenuLabel className="p-0 font-normal">
-                <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
-                  <Avatar>
-                    <AvatarImage src={user.avatar} alt={user.name} />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                  <div className="grid flex-1 text-left text-sm leading-tight">
-                    <span className="truncate font-medium">{user.name}</span>
-                    <span className="truncate text-xs">{user.email}</span>
-                  </div>
+            <DropdownMenuLabel className="p-0 font-normal">
+              <div className="flex items-center gap-3 px-3 py-2.5 text-left text-sm">
+                <Avatar className="h-9 w-9 rounded-lg">
+                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarFallback className="rounded-lg bg-indigo-100 dark:bg-indigo-500/20 text-indigo-700 dark:text-indigo-300 font-bold border border-indigo-200 dark:border-indigo-500/30">
+                    {initials}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-bold">{user.name}</span>
+                  <span className="truncate text-[10px] uppercase font-black tracking-widest text-emerald-600 dark:text-emerald-400">
+                    {user.email}
+                  </span>
                 </div>
-              </DropdownMenuLabel>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
+              </div>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator className="bg-slate-200 dark:bg-white/10" />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <SparklesIcon
-                />
-                Upgrade to Pro
+              <DropdownMenuItem className="cursor-pointer hover:bg-slate-100 dark:hover:bg-white/5 rounded-lg">
+                <BadgeCheckIcon className="mr-2 h-4 w-4 text-cyan-500" />
+                Account Settings
               </DropdownMenuItem>
             </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheckIcon
-                />
-                Account
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <CreditCardIcon
-                />
-                Billing
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <BellIcon
-                />
-                Notifications
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogOutIcon
-              />
+            <DropdownMenuSeparator className="bg-slate-200 dark:bg-white/10" />
+            <DropdownMenuItem 
+              onClick={onLogout}
+              className="cursor-pointer text-rose-600 hover:bg-rose-50 dark:text-rose-400 dark:hover:bg-rose-500/10 rounded-lg font-bold transition-colors"
+            >
+              <LogOutIcon className="mr-2 h-4 w-4" />
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
