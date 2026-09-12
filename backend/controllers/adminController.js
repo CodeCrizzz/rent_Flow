@@ -9,7 +9,7 @@ const getDashboardStats = async (req, res) => {
             incomeResult, duesResult,
             requestsResult, recentPaymentsResult, recentRequestsResult,
             expiringContractsResult, totalBilledResult, historicalIncomeResult,
-            overdueAccountsResult, upcomingRentResult
+            overdueAccountsResult, upcomingRentResult, recentMessagesResult, pendingTenantsListResult
         ] = await Promise.all([
             // Rooms Overview
             db.query('SELECT COUNT(*) FROM rooms'),
@@ -92,6 +92,23 @@ const getDashboardStats = async (req, res) => {
                 ORDER BY b.due_date ASC
                 LIMIT 5
             `),
+
+            // Recent Messages
+            db.query(`
+                SELECT m.id, u.name as tenant_name, m.message, m.created_at, m.status 
+                FROM messages m 
+                JOIN users u ON m.sender_id = u.id 
+                WHERE m.sender_type = 'tenant'
+                ORDER BY m.created_at DESC LIMIT 5
+            `),
+
+            // Pending Tenants
+            db.query(`
+                SELECT id, name, email, created_at 
+                FROM users 
+                WHERE role = 'tenant' AND status = 'Pending'
+                ORDER BY created_at DESC LIMIT 5
+            `),
         ]);
 
         // --- Process Room Stats ---
@@ -102,6 +119,7 @@ const getDashboardStats = async (req, res) => {
             else if (r.status.toLowerCase() === 'available') availableRooms += parseInt(r.count);
             else if (r.status.toLowerCase() === 'maintenance') maintenanceRooms += parseInt(r.count);
         });
+        const unavailableRooms = totalRooms - occupiedRooms - availableRooms;
 
         // --- Process Tenant Stats ---
         const totalTenants = parseInt(tenantsResult.rows[0].count);
@@ -110,6 +128,7 @@ const getDashboardStats = async (req, res) => {
             if (r.status.toLowerCase() === 'active') activeTenants += parseInt(r.count);
             else if (r.status.toLowerCase() === 'pending') pendingTenants += parseInt(r.count);
         });
+        const inactiveTenants = totalTenants - activeTenants - pendingTenants;
 
         // --- Process Billing Stats ---
         const monthlyIncome = incomeResult.rows[0].sum || 0;
@@ -165,9 +184,53 @@ const getDashboardStats = async (req, res) => {
             });
         });
 
+        // Add recent messages to activities (optional, but requested separately)
+        recentMessagesResult.rows.forEach(m => {
+            activities.push({
+                id: `m_${m.id}`,
+                type: 'message',
+                title: 'New message',
+                description: `From ${m.tenant_name}`,
+                date: m.created_at
+            });
+        });
+
         // Sort activities by date DESC and keep top 10
         activities.sort((a, b) => new Date(b.date) - new Date(a.date));
         activities = activities.slice(0, 10);
+        
+        // Detailed recent messages array
+        const recentMessages = recentMessagesResult.rows.map(m => ({
+            id: m.id,
+            tenant_name: m.tenant_name,
+            message: m.message,
+            status: m.status,
+            created_at: m.created_at
+        }));
+
+        // Pending Tenants List
+        const pendingTenantsList = pendingTenantsListResult.rows.map(t => ({
+            id: t.id,
+            name: t.name,
+            email: t.email,
+            created_at: t.created_at
+        }));
+
+        // Recent Payments List
+        const recentPayments = recentPaymentsResult.rows.map(p => ({
+            id: p.id,
+            tenant_name: p.tenant_name,
+            amount_paid: p.amount_paid,
+            payment_date: p.payment_date
+        }));
+
+        // Recent Requests List
+        const recentRequests = recentRequestsResult.rows.map(r => ({
+            id: r.id,
+            tenant_name: r.tenant_name,
+            title: r.title,
+            created_at: r.created_at
+        }));
 
         // --- Process Expiring Contracts ---
         const expiringContracts = expiringContractsResult.rows.map(t => ({
@@ -208,11 +271,15 @@ const getDashboardStats = async (req, res) => {
 
         // --- Final Response Object ---
         res.status(200).json({
-            rooms: { totalRooms, occupiedRooms, availableRooms, maintenanceRooms },
-            tenants: { totalTenants, activeTenants, pendingTenants },
+            rooms: { totalRooms, occupiedRooms, availableRooms, maintenanceRooms, unavailableRooms },
+            tenants: { totalTenants, activeTenants, pendingTenants, inactiveTenants },
             billing: { monthlyIncome, pendingDues, overduePayments, totalBilled, collectionRate, historicalIncome },
             maintenance: { totalRequests, pendingRequests, inProgressRequests, resolvedRequests },
             recentActivities: activities,
+            recentMessages,
+            pendingTenantsList,
+            recentPayments,
+            recentRequests,
             expiringContracts,
             overdueAccounts,
             upcomingRent

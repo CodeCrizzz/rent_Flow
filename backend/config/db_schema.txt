@@ -88,8 +88,14 @@ CREATE TABLE requests (
     tenant_id INT REFERENCES users(id) ON DELETE CASCADE,
     title VARCHAR(255) NOT NULL,
     description TEXT NOT NULL,
+    category VARCHAR(100),
     priority VARCHAR(20) DEFAULT 'Normal',
     status VARCHAR(20) DEFAULT 'Pending', -- 'Pending', 'In Progress', 'Resolved'
+    attachment_url VARCHAR(255),
+    assigned_to VARCHAR(255),
+    admin_notes TEXT,
+    scheduled_date DATE,
+    date_resolved DATE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
