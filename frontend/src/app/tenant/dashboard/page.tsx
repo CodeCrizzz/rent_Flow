@@ -149,7 +149,7 @@ export default function TenantDashboard() {
                             </div>
                             <div className="relative z-10">
                                 <div className="flex items-center gap-1.5 sm:gap-2 mb-0.5 sm:mb-1">
-                                    <span className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full shadow-[0_0_12px_rgba(249,115,22,0.8)] animate-pulse ${tenantData.status === 'Active' ? 'bg-emerald-500' : 'bg-orange-500'}`}></span>
+                                    <span className={`w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full animate-pulse ${tenantData.status === 'Active' ? 'bg-emerald-500' : 'bg-orange-500'}`}></span>
                                     <p className="text-base sm:text-2xl font-bold leading-none">{tenantData.status || 'Pending'}</p>
                                 </div>
                                 <p className="text-xs sm:text-sm font-medium text-neutral-500 dark:text-neutral-400 leading-tight mt-1">
